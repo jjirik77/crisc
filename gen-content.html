@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Content Generation | CRISC Workshop</title>
+<link rel="stylesheet" href="crisc-lesson.css">
+<style>
+  .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: start; }
+  .builder { display: grid; gap: 1.1rem; min-width: 0; }
+  .group-label { font-family: 'Arial Narrow', Arial, sans-serif; font-weight: 900; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); border-bottom: 1px solid var(--border); padding-bottom: 0.3rem; margin-top: 0.4rem; }
+  .field { display: grid; gap: 0.4rem; min-width: 0; }
+  .field label, .field .flabel { font-family: 'Arial Narrow', Arial, sans-serif; font-weight: 900; font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-primary); }
+  .field .lbl-opt { font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--text-muted); }
+  .field .hint { font-family: Arial, sans-serif; font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; }
+  .field select, .field input[type=text], .field textarea {
+    width: 100%; font-family: Arial, sans-serif; font-size: 0.92rem; color: var(--text-primary);
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; padding: 0.6rem 0.7rem;
+    transition: border-color 0.15s;
+  }
+  .field textarea { min-height: 76px; resize: vertical; line-height: 1.5; }
+  .field select:focus, .field input[type=text]:focus, .field textarea:focus { outline: 2px solid var(--gold); outline-offset: 1px; border-color: var(--gold); }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+  .chk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  .chk { display: flex; align-items: center; gap: 0.5rem; font-family: Arial, sans-serif; font-size: 0.84rem; color: var(--text-secondary); background: var(--card-bg); border: 1px solid var(--border); border-radius: 5px; padding: 0.5rem 0.6rem; cursor: pointer; }
+  .field label.chk { font-family: Arial, sans-serif; font-weight: 400; font-size: 0.84rem; letter-spacing: 0; text-transform: none; color: var(--text-secondary); }
+  .chk input { accent-color: var(--gold); flex-shrink: 0; }
+  .field-check { display: flex; align-items: flex-start; gap: 0.6rem; background: var(--blue-pale); border: 1px solid var(--blue-pale-border); border-radius: 6px; padding: 0.7rem 0.9rem; cursor: pointer; }
+  .field-check input { margin-top: 0.15rem; accent-color: var(--gold); flex-shrink: 0; }
+  .field-check span { font-family: Arial, sans-serif; font-size: 0.84rem; color: var(--text-secondary); line-height: 1.45; }
+  .field-check b { color: var(--text-primary); }
+
+  .preview-wrap { position: sticky; top: 78px; display: grid; gap: 0.9rem; min-width: 0; }
+  .preview-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .preview-head .ph-title { font-family: 'Arial Narrow', Arial, sans-serif; font-weight: 900; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-primary); }
+  .ph-actions { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+  #promptOut {
+    width: 100%; min-height: 520px; resize: vertical; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 0.8rem; line-height: 1.55; color: var(--text-primary); background: var(--blue-pale);
+    border: 1px solid var(--blue-pale-border); border-radius: 6px; padding: 1rem 1.1rem;
+  }
+  .prompt-meta { font-family: Arial, sans-serif; font-size: 0.76rem; color: var(--text-muted); }
+  .copy-note { font-family: Arial, sans-serif; font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; background: var(--card-bg); border: 1px solid var(--border); border-left: 4px solid var(--jade); border-radius: 0 4px 4px 0; padding: 0.85rem 1.05rem; }
+  .copy-note b { color: var(--text-primary); }
+  #copyMsg { font-family: Arial, sans-serif; font-size: 0.8rem; font-weight: 700; color: var(--correct); }
+  @media (max-width: 880px) {
+    .tool-grid { grid-template-columns: 1fr; gap: 1.75rem; }
+    .preview-wrap { position: static; }
+    .two-col, .chk-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-seal">CRISC<br>PREP</div>
+    <span class="nav-title">5-Day Faculty Workshop</span>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#lessons">Lessons</a></li>
+      <li><a href="index.html#practice">Practice</a></li>
+      <li><a href="index.html#schedule">Schedule</a></li>
+      <li><a href="index.html#domains">Domains</a></li>
+      <li><a href="index.html#exam-prep">Exam Prep</a></li>
+      <li><a href="index.html#faculty-tools">Faculty Tools</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="lesson-hero">
+  <div class="lesson-hero-inner">
+    <p class="breadcrumb"><a href="index.html">Workshop</a> &nbsp;&rsaquo;&nbsp; <a href="index.html#faculty-tools">Faculty Tools</a> &nbsp;&rsaquo;&nbsp; <span>Content Generation</span></p>
+    <span class="lesson-badge-lg">Faculty Tool &bull; Content Development</span>
+    <h1>Content <span>Generation</span></h1>
+    <p class="lesson-lede">Build a structured prompt for CRISC instructional content: lesson text, scenario questions in the CRISC style, a one-page domain summary, flashcards, worked calculations, or an assignment with a rubric. Set the part, topic, course context, and rigor, and the prompt assembles as you go.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="block">
+    <p class="eyebrow">Build Your Prompt</p>
+    <h2 class="h2">Configure the content</h2>
+    <div class="rule"></div>
+
+    <div class="tool-grid">
+
+      <form class="builder" id="builder" oninput="buildPrompt()" onchange="buildPrompt()" onsubmit="return false">
+
+        <div class="group-label">1 &middot; Topic and Purpose</div>
+        <div class="field">
+          <label for="platform">AI Platform</label>
+          <select id="platform">
+            <option value="Claude" data-url="https://claude.ai" selected>Claude</option>
+            <option value="ChatGPT" data-url="https://chatgpt.com">ChatGPT</option>
+            <option value="Gemini" data-url="https://gemini.google.com">Google Gemini</option>
+            <option value="any capable AI assistant" data-url="https://claude.ai">Any capable AI</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="title">Content Title <span class="lbl-opt">(optional)</span></label>
+          <input type="text" id="title" placeholder="e.g., Appetite, Tolerance, and Capacity: Reading and Check">
+        </div>
+        <div class="field">
+          <label for="part">CRISC Domain and Part</label>
+          <select id="part" onchange="fillTopics()">
+            <option value="L0">Orientation: exam, tasks, and mindset</option>
+            <optgroup label="Domain 1: Governance (26%)">
+              <option value="1A" selected>1A Organizational Governance</option>
+              <option value="1B">1B Risk Governance</option>
+            </optgroup>
+            <optgroup label="Domain 2: Risk Assessment (22%)">
+              <option value="2A">2A Risk Identification</option>
+              <option value="2B">2B Risk Analysis</option>
+            </optgroup>
+            <optgroup label="Domain 3: Risk Response and Reporting (32%)">
+              <option value="3A">3A Risk Response</option>
+              <option value="3B">3B Control Design and Implementation</option>
+              <option value="3C">3C Risk Monitoring and Reporting</option>
+            </optgroup>
+            <optgroup label="Domain 4: Technology and Security (20%)">
+              <option value="4A">4A Technology and Security</option>
+              <option value="4B">4B Information Security Principles</option>
+            </optgroup>
+            <option value="MIX">Cross-domain: integrated capstone</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="topic">Topic Focus</label>
+          <select id="topic"></select>
+          <span class="hint">Topics come from the CRISC outline and update with the part. &ldquo;Let the AI choose&rdquo; leaves it open within the part.</span>
+        </div>
+        <div class="field">
+          <label for="purpose">Purpose <span class="lbl-opt">(optional)</span></label>
+          <input type="text" id="purpose" placeholder="e.g., help learners decide who accepts a risk that exceeds tolerance">
+        </div>
+
+        <div class="group-label">2 &middot; Content Type</div>
+        <div class="chk-grid" id="ctypes">
+          <label class="chk"><input type="checkbox" value="lesson text: a structured reading with headings, defined terms, one worked example, and an exam tip box" checked> Lesson text</label>
+          <label class="chk"><input type="checkbox" value="CRISC-style scenario questions" checked> Scenario questions</label>
+          <label class="chk"><input type="checkbox" value="a domain summary: a one-page review sheet of key terms, ownership rules, formulas, and common traps"> Domain summary</label>
+          <label class="chk"><input type="checkbox" value="a flashcard set (term and definition)"> Flashcards</label>
+          <label class="chk"><input type="checkbox" value="a worked calculation example (for example, ALE or a FAIR-style estimate) with a practice problem"> Worked calculation</label>
+          <label class="chk"><input type="checkbox" value="discussion prompts"> Discussion prompts</label>
+          <label class="chk"><input type="checkbox" value="a signature assignment with a prompt and an analytic rubric"> Assignment and rubric</label>
+          <label class="chk"><input type="checkbox" value="a short tabletop exercise with injects and facilitator notes"> Tabletop injects</label>
+        </div>
+
+        <div class="group-label">3 &middot; Scenario Questions</div>
+        <div class="two-col">
+          <div class="field">
+            <label for="qcount">Number of Questions</label>
+            <select id="qcount"><option>5</option><option selected>8</option><option>10</option><option>15</option><option>20</option></select>
+          </div>
+          <div class="field">
+            <label for="difficulty">Difficulty</label>
+            <select id="difficulty">
+              <option value="foundational">Foundational</option>
+              <option value="practitioner" selected>Practitioner</option>
+              <option value="exam-ready, with close distractors">Exam-ready</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <span class="flabel">Stem Qualifiers to Use</span>
+          <div class="chk-grid" id="quals">
+            <label class="chk"><input type="checkbox" value="BEST" checked> BEST</label>
+            <label class="chk"><input type="checkbox" value="MOST" checked> MOST</label>
+            <label class="chk"><input type="checkbox" value="FIRST" checked> FIRST</label>
+            <label class="chk"><input type="checkbox" value="PRIMARY" checked> PRIMARY</label>
+            <label class="chk"><input type="checkbox" value="MOST LIKELY"> MOST LIKELY</label>
+            <label class="chk"><input type="checkbox" value="GREATEST concern"> GREATEST concern</label>
+          </div>
+          <span class="hint">Applies when scenario questions are selected.</span>
+        </div>
+
+        <div class="group-label">4 &middot; Audience and Objectives</div>
+        <div class="field">
+          <label for="context">Course Context</label>
+          <select id="context">
+            <option value="a CRISC exam-preparation cohort of faculty and working professionals" selected>CRISC exam-prep cohort</option>
+            <option value="an undergraduate IT risk management course">Undergraduate IT risk management course</option>
+            <option value="a governance, risk, and compliance (GRC) course">GRC / compliance course</option>
+            <option value="a community college cybersecurity program (AAS or certificate)">Community college cybersecurity program</option>
+            <option value="a graduate cybersecurity management or MBA elective">Graduate cybersecurity management course</option>
+            <option value="a faculty development workshop on teaching IT risk">Faculty development workshop</option>
+            <option value="a corporate or public-sector risk team training session">Workplace risk team training</option>
+          </select>
+          <span class="hint">Sets the audience, depth, and examples the AI should assume.</span>
+        </div>
+        <div class="field">
+          <label for="objectives">Learning Objectives <span class="lbl-opt">(one per line, optional)</span></label>
+          <textarea id="objectives" placeholder="Distinguish risk appetite, tolerance, and capacity&#10;Recommend who should accept a risk that exceeds tolerance"></textarea>
+          <span class="hint">Use measurable action verbs (Explain, Apply, Analyze, Evaluate). Leave blank to let the AI draft them.</span>
+        </div>
+        <div class="field">
+          <span class="flabel">Bloom&rsquo;s Levels</span>
+          <div class="chk-grid" id="blooms">
+            <label class="chk"><input type="checkbox" value="Remember"> Remember</label>
+            <label class="chk"><input type="checkbox" value="Understand"> Understand</label>
+            <label class="chk"><input type="checkbox" value="Apply" checked> Apply</label>
+            <label class="chk"><input type="checkbox" value="Analyze" checked> Analyze</label>
+            <label class="chk"><input type="checkbox" value="Evaluate" checked> Evaluate</label>
+            <label class="chk"><input type="checkbox" value="Create"> Create</label>
+          </div>
+          <span class="hint">CRISC items sit mostly at <b>Apply to Evaluate</b>.</span>
+        </div>
+
+        <div class="group-label">5 &middot; Output</div>
+        <div class="two-col">
+          <div class="field">
+            <label for="readlevel">Reading Level</label>
+            <select id="readlevel">
+              <option value="plain language, about grade 10 (Flesch-Kincaid), with every technical term defined on first use">Plain (grade 10)</option>
+              <option value="professional, for readers who already know security fundamentals" selected>Professional</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="format">Output Format</label>
+            <select id="format">
+              <option value="clean structured Markdown" selected>Markdown</option>
+              <option value="a single self-contained, interactive HTML file (all CSS and JavaScript inline, no libraries, works offline)">Interactive HTML</option>
+              <option value="a Word-ready document outline with headings and tables">Word-ready text</option>
+              <option value="JSON structured for LMS import (questions with options, answer, rationale, and part tag)">JSON for LMS import</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="extra">Additional Instructions <span class="lbl-opt">(optional)</span></label>
+          <input type="text" id="extra" placeholder="e.g., use a clinic network as the running example; keep the reading under 900 words">
+        </div>
+
+      </form>
+
+      <div class="preview-wrap">
+        <div class="preview-head">
+          <span class="ph-title">&#128221; Generated prompt</span>
+          <div class="ph-actions">
+            <span id="copyMsg" role="status" aria-live="polite"></span>
+            <button type="button" class="btn secondary" onclick="resetForm()">Reset</button>
+            <button type="button" class="btn secondary" onclick="openPlatform()">&#8599; Open</button>
+            <button type="button" class="btn" onclick="copyPrompt()">&#128203; Copy</button>
+          </div>
+        </div>
+        <textarea id="promptOut" readonly aria-label="Generated prompt"></textarea>
+        <span class="prompt-meta" id="promptMeta"></span>
+        <div class="copy-note"><b>How to use:</b> Copy the prompt into your AI platform to draft the content, then <b>review it for accuracy</b> against the CRISC Exam Content Outline before classroom use. Do not paste student names or institutional data into AI tools.</div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-logo">CRISC 5-DAY FACULTY WORKSHOP</div>
+  <p class="footer-disclaimer">This workshop is an independent educational resource. It is not affiliated with, endorsed by, or sponsored by ISACA. CRISC&#174; is a registered mark of ISACA. All lesson text, questions, and scenarios are original and do not reproduce the ISACA CRISC Review Manual or question database. eMates are provided by the myEMATES library and open in a new tab. Always verify the current exam content outline at isaca.org before registering.</p>
+  <p class="footer-disclaimer">Content generated with this tool is an AI draft. Review it for accuracy before instructional use.</p>
+</footer>
+
+<script src="crisc-lesson.js"></script>
+<script>
+
+  const PARTS = {
+    L0:  {label: "Orientation", scope: "Orientation: the CRISC exam (150 questions, 4 hours, scaled score 200 to 800 with 450 to pass), the four domains and 24 supporting tasks, the ISACA Code of Professional Ethics, and the risk practitioner mindset"},
+    "1A": {label: "Domain 1 (Governance), Part 1A Organizational Governance", scope: "Domain 1 Governance (26%), Part 1A Organizational Governance: strategy, goals, and objectives; organizational structure, roles, and responsibilities; organizational culture and ethics; policies and standards; business processes and resilience (BCP, DRP); organizational asset management"},
+    "1B": {label: "Domain 1 (Governance), Part 1B Risk Governance", scope: "Domain 1 Governance (26%), Part 1B Risk Governance: enterprise risk management; the three lines model; risk profile; risk appetite and tolerance; risk frameworks; legal, regulatory, and contractual requirements"},
+    "2A": {label: "Domain 2 (Risk Assessment), Part 2A Risk Identification", scope: "Domain 2 Risk Assessment (22%), Part 2A Risk Identification: risk events; threat modeling and the threat landscape; vulnerability and control deficiency analysis; risk scenario development and evaluation"},
+    "2B": {label: "Domain 2 (Risk Assessment), Part 2B Risk Analysis", scope: "Domain 2 Risk Assessment (22%), Part 2B Risk Analysis: risk assessment concepts and standards; business impact analysis; the risk register; risk analysis methodologies; inherent and residual risk"},
+    "3A": {label: "Domain 3 (Risk Response and Reporting), Part 3A Risk Response", scope: "Domain 3 Risk Response and Reporting (32%), Part 3A Risk Response: risk response options; risk and control ownership; third-party (vendor and supply chain) risk management; issues, findings, exceptions, and exemptions"},
+    "3B": {label: "Domain 3 (Risk Response and Reporting), Part 3B Control Design and Implementation", scope: "Domain 3 Risk Response and Reporting (32%), Part 3B Control Design and Implementation: control types, standards, and frameworks; control design, selection, and analysis; control implementation; control testing and effectiveness evaluation"},
+    "3C": {label: "Domain 3 (Risk Response and Reporting), Part 3C Risk Monitoring and Reporting", scope: "Domain 3 Risk Response and Reporting (32%), Part 3C Risk Monitoring and Reporting: risk treatment and action plans; data collection, aggregation, analysis, and validation; KRIs, KCIs, and KPIs; monitoring techniques; reporting (heat maps, scorecards, dashboards); emerging risks"},
+    "4A": {label: "Domain 4 (Technology and Security), Part 4A Technology and Security", scope: "Domain 4 Technology and Security (20%), Part 4A Technology and Security: technology principles; technology roadmaps and enterprise architecture; IT operations management (change, assets, DevOps, problems, incidents); the SDLC; data lifecycle management; portfolio and project management, including Agile; technology resilience and disaster recovery; emerging technologies such as AI"},
+    "4B": {label: "Domain 4 (Technology and Security), Part 4B Information Security Principles", scope: "Domain 4 Technology and Security (20%), Part 4B Information Security Principles: information security concepts, frameworks, and standards; security and risk awareness and training; data privacy and data protection principles"},
+    MIX: {label: "Cross-domain (all four CRISC domains)", scope: "Cross-domain: an integrated scenario that moves through all four CRISC domains (Governance, Risk Assessment, Risk Response and Reporting, Technology and Security)"}
+  };
+  const TOPICS = {
+    L0: ["The risk practitioner's role: advise; the risk owner decides","Best-answer tactics for BEST, MOST, FIRST, and PRIMARY stems","The 24 supporting tasks and how they map to the domains","The ISACA Code of Professional Ethics","How CRISC differs from audit, security management, and security engineering credentials"],
+    "1A": ["Governance vs. management (COBIT 2019)","The COBIT 2019 goals cascade","Strategy, goals, and objectives as risk context","Organizational structure, roles, and RACI","Board and steering committee oversight","Segregation of duties","Risk culture and ethics","The policy hierarchy and policy exceptions","Business processes and resilience (BCP and DRP)","Asset inventory, ownership, and the CMDB"],
+    "1B": ["Enterprise risk management (COSO ERM 2017, ISO 31000:2018)","The ISACA Risk IT Framework","The IIA Three Lines Model (2020)","The risk profile","Risk appetite vs. tolerance vs. capacity","Risk culture and tone at the top","Risk frameworks (NIST RMF, NIST CSF 2.0, ISO/IEC 27005, NIST SP 800-30/-37/-39)","Legal, regulatory, and contractual requirements (SOX, GLBA, HIPAA, GDPR, PCI DSS, SEC cyber disclosure)"],
+    "2A": ["Risk events, threat sources, and threat actors","The threat landscape and threat intelligence","Threat modeling (STRIDE, attack trees, MITRE ATT&CK)","Vulnerability management (CVSS, EPSS, CISA KEV)","Top-down and bottom-up risk scenarios","Risk scenario components (actor, threat, event, asset, time)","Evaluating and prioritizing risk scenarios"],
+    "2B": ["The risk assessment process (NIST SP 800-30, ISO 31000)","Likelihood and impact","Business impact analysis (MTD, RTO, RPO)","Risk register fields and maintenance","Qualitative, semi-quantitative, and quantitative analysis","SLE, ARO, and ALE","FAIR-style analysis (loss event frequency x loss magnitude)","Monte Carlo simulation and loss exceedance curves","Inherent, residual, and current risk","Risk aggregation"],
+    "3A": ["Response options: accept, mitigate, transfer or share, avoid","Cost-benefit analysis of risk responses","Cyber insurance as risk transfer","Risk owner vs. control owner","The third-party risk lifecycle (due diligence, contract, monitoring, offboarding)","Fourth parties, supply chain risk, and SBOMs","Issues, findings, exceptions, and exemptions","Escalation when risk exceeds appetite"],
+    "3B": ["Control types (preventive, detective, corrective, deterrent, compensating)","Control categories (administrative, technical, physical)","Control frameworks (NIST SP 800-53, ISO/IEC 27002:2022, CIS Controls v8.1, COBIT)","Control design principles and selection","Control implementation and change","Control testing (inquiry, observation, inspection, reperformance)","Design effectiveness vs. operating effectiveness","Sampling for control testing"],
+    "3C": ["Risk action plans and tracking","Data collection, aggregation, and validation","KRIs (leading and lagging) and thresholds","KCIs and KPIs compared with KRIs","Continuous monitoring and control self-assessment","Heat maps, scorecards, and dashboards","Reporting risk by audience (board, executives, owners)","Emerging risk and horizon scanning"],
+    "4A": ["Enterprise architecture (TOGAF) and technology roadmaps","Technical debt and legacy systems","IT operations (change, problem, incident, and asset management)","DevOps and CI/CD risk","SDLC risk","The data lifecycle","Portfolio and project management (Agile)","Technology resilience and disaster recovery","AI risk (NIST AI RMF, ISO/IEC 42001, EU AI Act)","Cloud, OT/IoT, and post-quantum risk"],
+    "4B": ["CIA and related security concepts","ISO/IEC 27001:2022 and NIST CSF 2.0","Security and risk awareness training","Building a risk-aware culture","Privacy principles (GDPR, OECD, privacy by design)","Data protection and data classification"],
+    MIX: ["An integrated case from governance context through assessment, response, and technology risk","Facilitating a tabletop exercise (Task 24)","Reporting an enterprise risk profile to the board"]
+  };
+  const MINDSET = "Ground every item in the CRISC risk practitioner mindset: start from business objectives; identify and assess risk before responding; make sure every risk and every control has an accountable owner; the risk practitioner advises and facilitates, and the risk owner (not the practitioner, not IT, not audit) makes the risk decision; report risk in business terms the audience can act on.";
+  const ORIGINAL = "All content must be original. Do not reproduce, closely paraphrase, or imitate specific text, questions, figures, or scenarios from ISACA materials, including the CRISC Review Manual, the CRISC Questions, Answers and Explanations (QAE) database, or the exam itself. Use fictional organizations, people, and figures; never real companies or real individuals.";
+  const CRISC_STYLE = "Use the CRISC exam's style: a short scenario stem written from the risk practitioner's point of view, four options (A to D) with one BEST answer, and qualifier words such as BEST, MOST, FIRST, PRIMARY, or MOST LIKELY. Distractors should be plausible actions that are technically true but wrong for the role, wrong in sequence (for example, responding before assessing), or wrong in ownership. Avoid \"all of the above,\" \"none of the above,\" and trick wording.";
+
+  function $(id){ return document.getElementById(id); }
+  function val(id){ return $(id).value; }
+  function checked(id){ return $(id).checked; }
+  function collect(containerId){
+    return Array.from(document.querySelectorAll('#'+containerId+' input:checked')).map(c=>c.value);
+  }
+  function fillTopics(){
+    const sel = $('topic');
+    if (sel) {
+      const key = val('part');
+      sel.innerHTML = '<option value="">Let the AI choose within this part</option>' +
+        TOPICS[key].map(t => '<option>'+t.replace(/&/g,'&amp;')+'</option>').join('');
+    }
+    buildPrompt();
+  }
+  function setPrompt(p){
+    $('promptOut').value = p;
+    const words = p.split(/\s+/).filter(Boolean).length;
+    $('promptMeta').textContent = words + " words, " + p.length + " characters";
+  }
+  function copyPrompt(){
+    const ta = $('promptOut');
+    ta.select(); ta.setSelectionRange(0, ta.value.length);
+    const done = (ok) => {
+      const msg = $('copyMsg');
+      msg.textContent = ok ? "✓ Copied" : "Press Ctrl/Cmd+C to copy";
+      setTimeout(()=>{ msg.textContent=""; }, 2500);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(ta.value).then(()=>done(true)).catch(()=>{
+        try { done(document.execCommand('copy')); } catch(e){ done(false); }
+      });
+    } else {
+      try { done(document.execCommand('copy')); } catch(e){ done(false); }
+    }
+  }
+  function openPlatform(){
+    copyPrompt();
+    window.open($('platform').selectedOptions[0].dataset.url, '_blank', 'noopener');
+  }
+  function resetForm(){
+    $('builder').reset();
+    fillTopics();
+    $('copyMsg').textContent = "";
+  }
+
+
+  function buildPrompt(){
+    const platform = val('platform');
+    const title = val('title').trim();
+    const part = PARTS[val('part')];
+    const topicRaw = val('topic');
+    const topic = topicRaw ? topicRaw : "a representative topic within this part (you choose)";
+    const purpose = val('purpose').trim();
+    const ctypes = collect('ctypes');
+    const hasQ = ctypes.some(c => c.indexOf('scenario questions') !== -1);
+    const quals = collect('quals');
+    const objectives = val('objectives').split('\n').map(s=>s.trim()).filter(Boolean);
+    const blooms = collect('blooms');
+    const format = val('format');
+    const extra = val('extra').trim();
+
+    let p = "";
+    p += "You are an expert instructional designer and CRISC (Certified in Risk and Information Systems Control) subject-matter expert writing instructional content for " + val('context') + ".";
+    if (platform !== "any capable AI assistant") p += " Optimize your response for " + platform + ".";
+    p += "\n\n";
+    p += "## CONTENT\n";
+    if (title) p += "- Title: " + title + "\n";
+    p += "- CRISC alignment: " + part.scope + "\n";
+    p += "- Topic: " + topic + "\n";
+    if (purpose) p += "- Purpose: " + purpose + "\n";
+    p += "- Produce: " + (ctypes.length ? ctypes.join("; ") : "lesson text and a short set of scenario questions") + ".\n\n";
+
+    p += "## AUDIENCE AND OBJECTIVES\n";
+    p += "- Audience: " + val('context') + ".\n";
+    if (objectives.length){ p += "- Learning objectives:\n"; objectives.forEach(o => p += "   - " + o + "\n"); }
+    else { p += "- Draft 3 to 5 measurable learning objectives using Bloom action verbs.\n"; }
+    p += "- Target Bloom's levels: " + (blooms.length ? blooms.join(", ") : "Apply, Analyze, Evaluate") + ".\n";
+    p += "- Reading level: " + val('readlevel') + ".\n\n";
+
+    if (hasQ){
+      p += "## SCENARIO QUESTIONS\n";
+      p += "- Write " + val('qcount') + " " + val('difficulty') + " questions.\n";
+      p += "- " + CRISC_STYLE + "\n";
+      if (quals.length) p += "- Use these stem qualifiers across the set, in capitals: " + quals.join(", ") + ".\n";
+      p += "- Vary the position of the correct answer. For each question give the answer, a rationale for every option (why the best answer is right and why each distractor fails), the CRISC part code, and the Bloom level.\n\n";
+    }
+
+    p += "## VOICE AND ACCURACY\n";
+    p += "- " + MINDSET + "\n";
+    p += "- Be accurate to the current ISACA CRISC Exam Content Outline (four domains: Governance 26%, Risk Assessment 22%, Risk Response and Reporting 32%, Technology and Security 20%) and to current frameworks: COBIT 2019, ISACA Risk IT Framework, COSO ERM 2017, ISO 31000:2018, ISO/IEC 27005:2022, NIST SP 800-30 Rev. 1, NIST CSF 2.0, and the IIA Three Lines Model (2020). Do not invent citations; if you name a standard, name it exactly.\n";
+    p += "- Use multi-sector examples (for example, healthcare, finance, education, manufacturing, government).\n";
+    p += "- " + ORIGINAL + "\n";
+    p += "- Use American English, short paragraphs, and no em dashes.\n\n";
+
+    p += "## OUTPUT\n";
+    p += "- Format: " + format + ".\n";
+    if (format.indexOf("HTML") !== -1) p += "- Deliver one file with all CSS and JavaScript inline, a light theme, keyboard-operable controls, and no external libraries.\n";
+    if (extra) p += "- Additional instructions: " + extra + "\n";
+    p += "- End with a short note listing any facts the instructor should verify against primary sources before classroom use.";
+    setPrompt(p);
+  }
+
+  fillTopics();
+</script>
+</body>
+</html>

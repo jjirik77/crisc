@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Graphics Generation | CRISC Workshop</title>
+<link rel="stylesheet" href="crisc-lesson.css">
+<style>
+  .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: start; }
+  .builder { display: grid; gap: 1.1rem; min-width: 0; }
+  .group-label { font-family: 'Arial Narrow', Arial, sans-serif; font-weight: 900; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); border-bottom: 1px solid var(--border); padding-bottom: 0.3rem; margin-top: 0.4rem; }
+  .field { display: grid; gap: 0.4rem; min-width: 0; }
+  .field label, .field .flabel { font-family: 'Arial Narrow', Arial, sans-serif; font-weight: 900; font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-primary); }
+  .field .lbl-opt { font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--text-muted); }
+  .field .hint { font-family: Arial, sans-serif; font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; }
+  .field select, .field input[type=text], .field textarea {
+    width: 100%; font-family: Arial, sans-serif; font-size: 0.92rem; color: var(--text-primary);
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; padding: 0.6rem 0.7rem;
+    transition: border-color 0.15s;
+  }
+  .field textarea { min-height: 76px; resize: vertical; line-height: 1.5; }
+  .field select:focus, .field input[type=text]:focus, .field textarea:focus { outline: 2px solid var(--gold); outline-offset: 1px; border-color: var(--gold); }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+  .chk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  .chk { display: flex; align-items: center; gap: 0.5rem; font-family: Arial, sans-serif; font-size: 0.84rem; color: var(--text-secondary); background: var(--card-bg); border: 1px solid var(--border); border-radius: 5px; padding: 0.5rem 0.6rem; cursor: pointer; }
+  .field label.chk { font-family: Arial, sans-serif; font-weight: 400; font-size: 0.84rem; letter-spacing: 0; text-transform: none; color: var(--text-secondary); }
+  .chk input { accent-color: var(--gold); flex-shrink: 0; }
+  .field-check { display: flex; align-items: flex-start; gap: 0.6rem; background: var(--blue-pale); border: 1px solid var(--blue-pale-border); border-radius: 6px; padding: 0.7rem 0.9rem; cursor: pointer; }
+  .field-check input { margin-top: 0.15rem; accent-color: var(--gold); flex-shrink: 0; }
+  .field-check span { font-family: Arial, sans-serif; font-size: 0.84rem; color: var(--text-secondary); line-height: 1.45; }
+  .field-check b { color: var(--text-primary); }
+
+  .preview-wrap { position: sticky; top: 78px; display: grid; gap: 0.9rem; min-width: 0; }
+  .preview-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .preview-head .ph-title { font-family: 'Arial Narrow', Arial, sans-serif; font-weight: 900; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-primary); }
+  .ph-actions { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+  #promptOut {
+    width: 100%; min-height: 520px; resize: vertical; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 0.8rem; line-height: 1.55; color: var(--text-primary); background: var(--blue-pale);
+    border: 1px solid var(--blue-pale-border); border-radius: 6px; padding: 1rem 1.1rem;
+  }
+  .prompt-meta { font-family: Arial, sans-serif; font-size: 0.76rem; color: var(--text-muted); }
+  .copy-note { font-family: Arial, sans-serif; font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; background: var(--card-bg); border: 1px solid var(--border); border-left: 4px solid var(--jade); border-radius: 0 4px 4px 0; padding: 0.85rem 1.05rem; }
+  .copy-note b { color: var(--text-primary); }
+  #copyMsg { font-family: Arial, sans-serif; font-size: 0.8rem; font-weight: 700; color: var(--correct); }
+  @media (max-width: 880px) {
+    .tool-grid { grid-template-columns: 1fr; gap: 1.75rem; }
+    .preview-wrap { position: static; }
+    .two-col, .chk-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-seal">CRISC<br>PREP</div>
+    <span class="nav-title">5-Day Faculty Workshop</span>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#lessons">Lessons</a></li>
+      <li><a href="index.html#practice">Practice</a></li>
+      <li><a href="index.html#schedule">Schedule</a></li>
+      <li><a href="index.html#domains">Domains</a></li>
+      <li><a href="index.html#exam-prep">Exam Prep</a></li>
+      <li><a href="index.html#faculty-tools">Faculty Tools</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="lesson-hero">
+  <div class="lesson-hero-inner">
+    <p class="breadcrumb"><a href="index.html">Workshop</a> &nbsp;&rsaquo;&nbsp; <a href="index.html#faculty-tools">Faculty Tools</a> &nbsp;&rsaquo;&nbsp; <span>Graphics Generation</span></p>
+    <span class="lesson-badge-lg">Faculty Tool &bull; Content Development</span>
+    <h1>Graphics <span>Generation</span></h1>
+    <p class="lesson-lede">Build a precise prompt for a classroom-ready CRISC diagram: a heat map, the Three Lines Model, a bow-tie, a loss exceedance curve, a goals cascade, a RACI matrix, a KRI dashboard, or the third-party lifecycle. Choose the subject, style, and output, then paste the prompt into an image-capable or diagram-capable AI.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="block">
+    <p class="eyebrow">Build Your Prompt</p>
+    <h2 class="h2">Compose the graphic</h2>
+    <div class="rule"></div>
+
+    <div class="tool-grid">
+
+      <form class="builder" id="builder" oninput="buildPrompt()" onchange="buildPrompt()" onsubmit="return false">
+
+        <div class="group-label">1 &middot; Subject</div>
+        <div class="field">
+          <label for="platform">Target Tool</label>
+          <select id="platform">
+            <option value="an image-capable AI" data-url="https://claude.ai" selected>Any image-capable AI</option>
+            <option value="Claude (as an SVG or HTML diagram)" data-url="https://claude.ai">Claude (SVG or HTML diagram)</option>
+            <option value="ChatGPT image generation" data-url="https://chatgpt.com">ChatGPT image generation</option>
+            <option value="Google Gemini" data-url="https://gemini.google.com">Google Gemini</option>
+          </select>
+          <span class="hint">Diagrams with exact labels and numbers render best as SVG or HTML.</span>
+        </div>
+        <div class="field">
+          <label for="dtype">Diagram Type</label>
+          <select id="dtype">
+            <option value="heatmap" selected>Risk heat map</option>
+            <option value="threelines">Three Lines Model</option>
+            <option value="bowtie">Bow-tie diagram</option>
+            <option value="lec">Loss exceedance curve</option>
+            <option value="cascade">Goals cascade</option>
+            <option value="raci">RACI matrix</option>
+            <option value="kri">KRI dashboard</option>
+            <option value="tplc">Third-party risk lifecycle</option>
+            <option value="flow">Process flow (other)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="part">CRISC Domain and Part</label>
+          <select id="part" onchange="fillTopics()">
+            <option value="L0">Orientation: exam, tasks, and mindset</option>
+            <optgroup label="Domain 1: Governance (26%)">
+              <option value="1A" selected>1A Organizational Governance</option>
+              <option value="1B">1B Risk Governance</option>
+            </optgroup>
+            <optgroup label="Domain 2: Risk Assessment (22%)">
+              <option value="2A">2A Risk Identification</option>
+              <option value="2B">2B Risk Analysis</option>
+            </optgroup>
+            <optgroup label="Domain 3: Risk Response and Reporting (32%)">
+              <option value="3A">3A Risk Response</option>
+              <option value="3B">3B Control Design and Implementation</option>
+              <option value="3C">3C Risk Monitoring and Reporting</option>
+            </optgroup>
+            <optgroup label="Domain 4: Technology and Security (20%)">
+              <option value="4A">4A Technology and Security</option>
+              <option value="4B">4B Information Security Principles</option>
+            </optgroup>
+            <option value="MIX">Cross-domain: integrated capstone</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="topic">Topic Focus</label>
+          <select id="topic"></select>
+          <span class="hint">Topics come from the CRISC outline and update with the part. &ldquo;Let the AI choose&rdquo; leaves it open within the part.</span>
+        </div>
+        <div class="field">
+          <label for="scenario">Example Scenario <span class="lbl-opt">(optional)</span></label>
+          <input type="text" id="scenario" placeholder="e.g., a regional credit union facing ransomware and wire fraud">
+          <span class="hint">Gives the diagram realistic, fictional labels and numbers.</span>
+        </div>
+        <div class="field">
+          <label for="elements">Required Labels <span class="lbl-opt">(optional)</span></label>
+          <input type="text" id="elements" placeholder="e.g., Risk appetite line; R1 Ransomware; R2 Vendor outage">
+          <span class="hint">Name the exact boxes, stages, or labels. Leave blank to let the AI choose.</span>
+        </div>
+
+        <div class="group-label">2 &middot; Visual Style</div>
+        <div class="two-col">
+          <div class="field">
+            <label for="style">Style</label>
+            <select id="style">
+              <option value="clean flat vector" selected>Flat vector</option>
+              <option value="minimal line art">Line art</option>
+              <option value="editorial infographic">Editorial infographic</option>
+              <option value="technical schematic">Technical schematic</option>
+              <option value="minimal, with generous white space">Minimal</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="color">Color Scheme</label>
+            <select id="color">
+              <option value="the CRISC workshop plum and copper palette: deep plum #3b1838, plum #86198f, copper #b45309, on a white or #faf7fb background" selected>CRISC plum and copper</option>
+              <option value="a red, amber, and green risk scale with neutral grays">Risk scale (red, amber, green)</option>
+              <option value="neutral grayscale with a single accent color">Grayscale plus one accent</option>
+              <option value="a high-contrast palette that prints well in black and white">High contrast, print safe</option>
+            </select>
+          </div>
+        </div>
+        <div class="two-col">
+          <div class="field">
+            <label for="density">Density</label>
+            <select id="density">
+              <option value="minimal, with only the core elements">Minimal</option>
+              <option value="moderate detail" selected>Moderate</option>
+              <option value="rich and information-dense">Rich</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="textamt">Amount of Text</label>
+            <select id="textamt">
+              <option value="a title and key terms only">Title and key terms</option>
+              <option value="moderate labels and short captions" selected>Moderate labels</option>
+              <option value="full text, so the graphic works as a standalone reference">Standalone reference</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="group-label">3 &middot; Output</div>
+        <div class="two-col">
+          <div class="field">
+            <label for="size">Size and Aspect</label>
+            <select id="size">
+              <option value="16:9 slide" selected>16:9 slide</option>
+              <option value="4:3 slide">4:3 slide</option>
+              <option value="1080 x 1080 square">Square (1080)</option>
+              <option value="US Letter, portrait">Letter portrait</option>
+              <option value="US Letter, landscape">Letter landscape</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="format">File Format</label>
+            <select id="format">
+              <option value="SVG (vector)" selected>SVG</option>
+              <option value="PNG">PNG</option>
+              <option value="a self-contained HTML file with inline SVG">HTML with inline SVG</option>
+              <option value="PDF">PDF</option>
+            </select>
+          </div>
+        </div>
+        <label class="field-check"><input type="checkbox" id="cvd" checked><span><b>Color-blind safe.</b> Use labels, patterns, or shapes as well as color.</span></label>
+        <label class="field-check"><input type="checkbox" id="caption" checked><span><b>Caption.</b> Add a one-line caption naming the CRISC part the graphic supports.</span></label>
+        <label class="field-check"><input type="checkbox" id="alt" checked><span><b>Alt text.</b> Also return descriptive alt text for accessibility.</span></label>
+        <label class="field-check"><input type="checkbox" id="notes"><span><b>Teaching notes.</b> Add three talking points and one question to ask the class about the graphic.</span></label>
+        <div class="field">
+          <label for="extra">Additional Instructions <span class="lbl-opt">(optional)</span></label>
+          <input type="text" id="extra" placeholder="e.g., leave space at the bottom right for a logo; number the stages">
+        </div>
+
+      </form>
+
+      <div class="preview-wrap">
+        <div class="preview-head">
+          <span class="ph-title">&#128221; Generated prompt</span>
+          <div class="ph-actions">
+            <span id="copyMsg" role="status" aria-live="polite"></span>
+            <button type="button" class="btn secondary" onclick="resetForm()">Reset</button>
+            <button type="button" class="btn secondary" onclick="openPlatform()">&#8599; Open</button>
+            <button type="button" class="btn" onclick="copyPrompt()">&#128203; Copy</button>
+          </div>
+        </div>
+        <textarea id="promptOut" readonly aria-label="Generated prompt"></textarea>
+        <span class="prompt-meta" id="promptMeta"></span>
+        <div class="copy-note"><b>How to use:</b> Paste the prompt into an image-capable AI, or ask Claude for SVG when labels and numbers must be exact. <b>Proofread every label.</b> Image models often misspell technical terms, so check the result against the outline before you use it in class.</div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-logo">CRISC 5-DAY FACULTY WORKSHOP</div>
+  <p class="footer-disclaimer">This workshop is an independent educational resource. It is not affiliated with, endorsed by, or sponsored by ISACA. CRISC&#174; is a registered mark of ISACA. All lesson text, questions, and scenarios are original and do not reproduce the ISACA CRISC Review Manual or question database. eMates are provided by the myEMATES library and open in a new tab. Always verify the current exam content outline at isaca.org before registering.</p>
+  <p class="footer-disclaimer">Graphics generated with this tool are AI drafts. Review them for accuracy before instructional use.</p>
+</footer>
+
+<script src="crisc-lesson.js"></script>
+<script>
+
+  const PARTS = {
+    L0:  {label: "Orientation", scope: "Orientation: the CRISC exam (150 questions, 4 hours, scaled score 200 to 800 with 450 to pass), the four domains and 24 supporting tasks, the ISACA Code of Professional Ethics, and the risk practitioner mindset"},
+    "1A": {label: "Domain 1 (Governance), Part 1A Organizational Governance", scope: "Domain 1 Governance (26%), Part 1A Organizational Governance: strategy, goals, and objectives; organizational structure, roles, and responsibilities; organizational culture and ethics; policies and standards; business processes and resilience (BCP, DRP); organizational asset management"},
+    "1B": {label: "Domain 1 (Governance), Part 1B Risk Governance", scope: "Domain 1 Governance (26%), Part 1B Risk Governance: enterprise risk management; the three lines model; risk profile; risk appetite and tolerance; risk frameworks; legal, regulatory, and contractual requirements"},
+    "2A": {label: "Domain 2 (Risk Assessment), Part 2A Risk Identification", scope: "Domain 2 Risk Assessment (22%), Part 2A Risk Identification: risk events; threat modeling and the threat landscape; vulnerability and control deficiency analysis; risk scenario development and evaluation"},
+    "2B": {label: "Domain 2 (Risk Assessment), Part 2B Risk Analysis", scope: "Domain 2 Risk Assessment (22%), Part 2B Risk Analysis: risk assessment concepts and standards; business impact analysis; the risk register; risk analysis methodologies; inherent and residual risk"},
+    "3A": {label: "Domain 3 (Risk Response and Reporting), Part 3A Risk Response", scope: "Domain 3 Risk Response and Reporting (32%), Part 3A Risk Response: risk response options; risk and control ownership; third-party (vendor and supply chain) risk management; issues, findings, exceptions, and exemptions"},
+    "3B": {label: "Domain 3 (Risk Response and Reporting), Part 3B Control Design and Implementation", scope: "Domain 3 Risk Response and Reporting (32%), Part 3B Control Design and Implementation: control types, standards, and frameworks; control design, selection, and analysis; control implementation; control testing and effectiveness evaluation"},
+    "3C": {label: "Domain 3 (Risk Response and Reporting), Part 3C Risk Monitoring and Reporting", scope: "Domain 3 Risk Response and Reporting (32%), Part 3C Risk Monitoring and Reporting: risk treatment and action plans; data collection, aggregation, analysis, and validation; KRIs, KCIs, and KPIs; monitoring techniques; reporting (heat maps, scorecards, dashboards); emerging risks"},
+    "4A": {label: "Domain 4 (Technology and Security), Part 4A Technology and Security", scope: "Domain 4 Technology and Security (20%), Part 4A Technology and Security: technology principles; technology roadmaps and enterprise architecture; IT operations management (change, assets, DevOps, problems, incidents); the SDLC; data lifecycle management; portfolio and project management, including Agile; technology resilience and disaster recovery; emerging technologies such as AI"},
+    "4B": {label: "Domain 4 (Technology and Security), Part 4B Information Security Principles", scope: "Domain 4 Technology and Security (20%), Part 4B Information Security Principles: information security concepts, frameworks, and standards; security and risk awareness and training; data privacy and data protection principles"},
+    MIX: {label: "Cross-domain (all four CRISC domains)", scope: "Cross-domain: an integrated scenario that moves through all four CRISC domains (Governance, Risk Assessment, Risk Response and Reporting, Technology and Security)"}
+  };
+  const TOPICS = {
+    L0: ["The risk practitioner's role: advise; the risk owner decides","Best-answer tactics for BEST, MOST, FIRST, and PRIMARY stems","The 24 supporting tasks and how they map to the domains","The ISACA Code of Professional Ethics","How CRISC differs from audit, security management, and security engineering credentials"],
+    "1A": ["Governance vs. management (COBIT 2019)","The COBIT 2019 goals cascade","Strategy, goals, and objectives as risk context","Organizational structure, roles, and RACI","Board and steering committee oversight","Segregation of duties","Risk culture and ethics","The policy hierarchy and policy exceptions","Business processes and resilience (BCP and DRP)","Asset inventory, ownership, and the CMDB"],
+    "1B": ["Enterprise risk management (COSO ERM 2017, ISO 31000:2018)","The ISACA Risk IT Framework","The IIA Three Lines Model (2020)","The risk profile","Risk appetite vs. tolerance vs. capacity","Risk culture and tone at the top","Risk frameworks (NIST RMF, NIST CSF 2.0, ISO/IEC 27005, NIST SP 800-30/-37/-39)","Legal, regulatory, and contractual requirements (SOX, GLBA, HIPAA, GDPR, PCI DSS, SEC cyber disclosure)"],
+    "2A": ["Risk events, threat sources, and threat actors","The threat landscape and threat intelligence","Threat modeling (STRIDE, attack trees, MITRE ATT&CK)","Vulnerability management (CVSS, EPSS, CISA KEV)","Top-down and bottom-up risk scenarios","Risk scenario components (actor, threat, event, asset, time)","Evaluating and prioritizing risk scenarios"],
+    "2B": ["The risk assessment process (NIST SP 800-30, ISO 31000)","Likelihood and impact","Business impact analysis (MTD, RTO, RPO)","Risk register fields and maintenance","Qualitative, semi-quantitative, and quantitative analysis","SLE, ARO, and ALE","FAIR-style analysis (loss event frequency x loss magnitude)","Monte Carlo simulation and loss exceedance curves","Inherent, residual, and current risk","Risk aggregation"],
+    "3A": ["Response options: accept, mitigate, transfer or share, avoid","Cost-benefit analysis of risk responses","Cyber insurance as risk transfer","Risk owner vs. control owner","The third-party risk lifecycle (due diligence, contract, monitoring, offboarding)","Fourth parties, supply chain risk, and SBOMs","Issues, findings, exceptions, and exemptions","Escalation when risk exceeds appetite"],
+    "3B": ["Control types (preventive, detective, corrective, deterrent, compensating)","Control categories (administrative, technical, physical)","Control frameworks (NIST SP 800-53, ISO/IEC 27002:2022, CIS Controls v8.1, COBIT)","Control design principles and selection","Control implementation and change","Control testing (inquiry, observation, inspection, reperformance)","Design effectiveness vs. operating effectiveness","Sampling for control testing"],
+    "3C": ["Risk action plans and tracking","Data collection, aggregation, and validation","KRIs (leading and lagging) and thresholds","KCIs and KPIs compared with KRIs","Continuous monitoring and control self-assessment","Heat maps, scorecards, and dashboards","Reporting risk by audience (board, executives, owners)","Emerging risk and horizon scanning"],
+    "4A": ["Enterprise architecture (TOGAF) and technology roadmaps","Technical debt and legacy systems","IT operations (change, problem, incident, and asset management)","DevOps and CI/CD risk","SDLC risk","The data lifecycle","Portfolio and project management (Agile)","Technology resilience and disaster recovery","AI risk (NIST AI RMF, ISO/IEC 42001, EU AI Act)","Cloud, OT/IoT, and post-quantum risk"],
+    "4B": ["CIA and related security concepts","ISO/IEC 27001:2022 and NIST CSF 2.0","Security and risk awareness training","Building a risk-aware culture","Privacy principles (GDPR, OECD, privacy by design)","Data protection and data classification"],
+    MIX: ["An integrated case from governance context through assessment, response, and technology risk","Facilitating a tabletop exercise (Task 24)","Reporting an enterprise risk profile to the board"]
+  };
+  const MINDSET = "Ground every item in the CRISC risk practitioner mindset: start from business objectives; identify and assess risk before responding; make sure every risk and every control has an accountable owner; the risk practitioner advises and facilitates, and the risk owner (not the practitioner, not IT, not audit) makes the risk decision; report risk in business terms the audience can act on.";
+  const ORIGINAL = "All content must be original. Do not reproduce, closely paraphrase, or imitate specific text, questions, figures, or scenarios from ISACA materials, including the CRISC Review Manual, the CRISC Questions, Answers and Explanations (QAE) database, or the exam itself. Use fictional organizations, people, and figures; never real companies or real individuals.";
+  const CRISC_STYLE = "Use the CRISC exam's style: a short scenario stem written from the risk practitioner's point of view, four options (A to D) with one BEST answer, and qualifier words such as BEST, MOST, FIRST, PRIMARY, or MOST LIKELY. Distractors should be plausible actions that are technically true but wrong for the role, wrong in sequence (for example, responding before assessing), or wrong in ownership. Avoid \"all of the above,\" \"none of the above,\" and trick wording.";
+
+  function $(id){ return document.getElementById(id); }
+  function val(id){ return $(id).value; }
+  function checked(id){ return $(id).checked; }
+  function collect(containerId){
+    return Array.from(document.querySelectorAll('#'+containerId+' input:checked')).map(c=>c.value);
+  }
+  function fillTopics(){
+    const sel = $('topic');
+    if (sel) {
+      const key = val('part');
+      sel.innerHTML = '<option value="">Let the AI choose within this part</option>' +
+        TOPICS[key].map(t => '<option>'+t.replace(/&/g,'&amp;')+'</option>').join('');
+    }
+    buildPrompt();
+  }
+  function setPrompt(p){
+    $('promptOut').value = p;
+    const words = p.split(/\s+/).filter(Boolean).length;
+    $('promptMeta').textContent = words + " words, " + p.length + " characters";
+  }
+  function copyPrompt(){
+    const ta = $('promptOut');
+    ta.select(); ta.setSelectionRange(0, ta.value.length);
+    const done = (ok) => {
+      const msg = $('copyMsg');
+      msg.textContent = ok ? "✓ Copied" : "Press Ctrl/Cmd+C to copy";
+      setTimeout(()=>{ msg.textContent=""; }, 2500);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(ta.value).then(()=>done(true)).catch(()=>{
+        try { done(document.execCommand('copy')); } catch(e){ done(false); }
+      });
+    } else {
+      try { done(document.execCommand('copy')); } catch(e){ done(false); }
+    }
+  }
+  function openPlatform(){
+    copyPrompt();
+    window.open($('platform').selectedOptions[0].dataset.url, '_blank', 'noopener');
+  }
+  function resetForm(){
+    $('builder').reset();
+    fillTopics();
+    $('copyMsg').textContent = "";
+  }
+
+
+  const DIAGRAMS = {
+    heatmap: {name:"risk heat map", spec:"A 5 x 5 grid with likelihood on the vertical axis (Rare to Almost certain) and impact on the horizontal axis (Minimal to Severe). Shade cells from low to high. Draw a clear risk appetite boundary. Plot 6 to 8 fictional risks as labeled markers (R1, R2, ...) with a short legend, and show at least two arrows from inherent position to residual position after controls."},
+    threelines: {name:"Three Lines Model", spec:"An original rendering of the roles in the IIA Three Lines Model (2020); do not copy the IIA's published figure. Show the governing body (accountability to stakeholders) at the top; management with first-line roles (deliver products and services, own and manage risk) and second-line roles (expertise, support, monitoring, and challenge on risk); internal audit as the third line (independent assurance); and external assurance providers to the side. Use labeled connectors for accountability, delegation and oversight, and coordination. Note where the risk practitioner usually sits."},
+    bowtie: {name:"bow-tie diagram", spec:"A central risk event (the knot). Threats or causes on the left, each passing through preventive controls drawn as barriers. Consequences on the right, each passing through detective and corrective (mitigating) controls. Optionally show one escalation factor that weakens a barrier. Label each control with its owner role."},
+    lec: {name:"loss exceedance curve", spec:"A line chart. X axis: annual loss in US dollars (a log scale is acceptable). Y axis: probability that annual loss exceeds that amount (0% to 100%). Draw an inherent risk curve, a residual risk curve after a proposed control, and a risk tolerance curve. Annotate one reading, such as 'a 10% chance of losing more than $X in a year.' Use fictional, plausible numbers and state that they are illustrative."},
+    cascade: {name:"goals cascade", spec:"A top-to-bottom cascade in the COBIT 2019 structure: stakeholder drivers and needs, enterprise goals, alignment goals, and governance and management objectives. Trace one fictional IT initiative upward to the enterprise goal it supports, and show one enterprise goal with no supporting initiative flagged as a gap."},
+    raci: {name:"RACI matrix", spec:"A table. Rows are risk activities (for example: set risk appetite, accept a risk, own a risk, design a control, operate a control, monitor a KRI, test a control, report to the board). Columns are roles (board, risk committee, risk owner, control owner, risk practitioner or second line, internal audit, IT operations). Cells hold R, A, C, or I, with exactly one A per row. Include a legend."},
+    kri: {name:"KRI dashboard", spec:"A one-screen dashboard with 4 to 6 tiles. Each tile shows a metric name, its current value, threshold bands (within appetite, warning, breach), a small trend line, and the owner. Include at least one leading and one lagging KRI, and add one KCI and one KPI that are clearly labeled so learners can contrast the three metric types."},
+    tplc: {name:"third-party risk lifecycle", spec:"A circular or left-to-right lifecycle: planning and risk tiering, due diligence, contracting (right to audit, SLAs, breach notification), onboarding, ongoing monitoring (for example, SOC 2 report review and vendor KRIs), issue and exception management, and offboarding. Show a side note for fourth-party and supply chain risk."},
+    flow: {name:"process flow", spec:"A process flow or lifecycle diagram with clearly ordered, arrow-connected stages, decision points shown as diamonds, and the owner role named at each stage."}
+  };
+
+  function buildPrompt(){
+    const platform = val('platform');
+    const d = DIAGRAMS[val('dtype')];
+    const part = PARTS[val('part')];
+    const topicRaw = val('topic');
+    const scenario = val('scenario').trim();
+    const elements = val('elements').trim();
+    const extra = val('extra').trim();
+
+    let p = "";
+    p += "You are an expert instructional graphic designer with CRISC (Certified in Risk and Information Systems Control) expertise. Create a classroom-ready " + d.name + " for a CRISC faculty workshop and IT risk courses, using " + platform + ".\n\n";
+    p += "## SUBJECT\n";
+    p += "- Diagram: " + d.name + ". " + d.spec + "\n";
+    p += "- CRISC alignment: " + part.scope + "\n";
+    if (topicRaw) p += "- Concept to emphasize: " + topicRaw + "\n";
+    if (scenario) p += "- Example scenario for labels and figures: " + scenario + " (fictional)\n";
+    if (elements) p += "- Include these labels, spelled exactly: " + elements + "\n";
+    p += "\n## VISUAL STYLE\n";
+    p += "- Style: " + val('style') + ".\n";
+    p += "- Color scheme: " + val('color') + ".\n";
+    p += "- Density: " + val('density') + "; text: " + val('textamt') + ".\n";
+    p += "- Light background only. Clear visual hierarchy, generous spacing, and type that stays legible when projected.\n";
+    p += "\n## OUTPUT\n";
+    p += "- Size and aspect: " + val('size') + "; format: " + val('format') + ".\n";
+    if (checked('cvd'))     p += "- Use a color-blind-safe palette and distinguish elements by label, shape, or pattern, not color alone.\n";
+    if (checked('caption')) p += "- Add a one-line caption: 'Supports CRISC " + part.label + ".'\n";
+    if (checked('alt'))     p += "- Also return descriptive alt text (2 to 4 sentences) that conveys the diagram's meaning.\n";
+    if (checked('notes'))   p += "- Also return three short teaching talking points and one discussion question for the class.\n";
+    if (extra)              p += "- Additional instructions: " + extra + "\n";
+    p += "\n## ACCURACY AND ORIGINALITY\n";
+    p += "- Use terminology consistent with the current ISACA CRISC Exam Content Outline and the named frameworks, spelled correctly, in American English.\n";
+    p += "- Keep the risk practitioner's framing: risk owners decide and are accountable; the risk practitioner identifies, assesses, advises, monitors, and reports.\n";
+    p += "- " + ORIGINAL + " Do not copy published figures from ISACA, the IIA, COBIT, or any other source; create an original layout.";
+    setPrompt(p);
+  }
+
+  fillTopics();
+</script>
+</body>
+</html>

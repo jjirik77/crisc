@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 7: Risk Monitoring and Reporting | CRISC Workshop</title>
+<link rel="stylesheet" href="crisc-lesson.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-seal">CRISC<br>PREP</div>
+    <span class="nav-title">5-Day Faculty Workshop</span>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#lessons">Lessons</a></li>
+      <li><a href="index.html#practice">Practice</a></li>
+      <li><a href="index.html#schedule">Schedule</a></li>
+      <li><a href="index.html#domains">Domains</a></li>
+      <li><a href="index.html#exam-prep">Exam Prep</a></li>
+      <li><a href="index.html#faculty-tools">Faculty Tools</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="lesson-hero">
+  <div class="lesson-hero-inner">
+    <p class="breadcrumb"><a href="index.html">Workshop</a> &nbsp;&rsaquo;&nbsp; <a href="index.html#lessons">Lessons</a> &nbsp;&rsaquo;&nbsp; <span>Lesson 7</span></p>
+    <span class="lesson-badge-lg">Day 4, Afternoon &bull; Domain 3C</span>
+    <h1>Risk Monitoring and <span>Reporting</span></h1>
+    <p class="lesson-lede">Risk does not hold still after it is assessed and treated. Domain 3C covers how a risk practitioner tracks action plans, gathers and validates data, builds indicators that warn before a loss, monitors controls and risk over time, and reports the result in a form each audience can act on.</p>
+    <div class="meta-chips">
+      <span class="meta-chip">Session: <strong>Day 4, 1:00 to 4:00</strong></span>
+      <span class="meta-chip">Duration: <strong>~3 hrs</strong></span>
+      <span class="meta-chip">Exam Weight: <strong>32%</strong></span>
+      <span class="meta-chip">Knowledge Check: <strong>8 Questions</strong></span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="block">
+    <p class="eyebrow">Overview</p>
+    <h2 class="h2">Early warning, not late news</h2>
+    <div class="rule"></div>
+    <p class="lead">Monitoring answers three questions on a schedule: Is the risk changing? Are the controls still working? Are the agreed actions getting done? Reporting then turns those answers into decisions. A good monitoring program tells the risk owner that exposure is rising while there is still time to act. A weak one reports the incident after it happens.</p>
+    <p class="lead">This lesson covers risk action plans, data collection and validation, the three families of metrics (KRIs, KCIs, and KPIs), monitoring techniques, reporting by audience, and emerging risks. The case continues at Penmore Technical College, where an October breach of the student information system tests whether its indicators gave any warning.</p>
+    <div class="mindset"><span class="tip-label">&#9878;&#65039; Think like a risk practitioner</span>The risk practitioner monitors and reports; the risk owner decides and acts. When an indicator crosses a threshold, the practitioner's job is to make sure the right owner knows, with validated data and a clear statement of what changed, not to fix the problem alone or quietly adjust the threshold.</div>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Learning Objectives</p>
+    <h2 class="h2">By the end of this lesson you will be able to&hellip;</h2>
+    <div class="rule"></div>
+    <ul class="objectives">
+      <li><span><strong>Build</strong> a risk action plan with owners, milestones, and tracking that supports escalation. <em class="bloom-tag">Bloom: Apply</em></span></li>
+      <li><span><strong>Distinguish</strong> KRIs, KCIs, and KPIs, and leading from lagging indicators. <em class="bloom-tag">Bloom: Understand</em></span></li>
+      <li><span><strong>Set</strong> KRI thresholds that give early warning without excessive false alarms. <em class="bloom-tag">Bloom: Evaluate</em></span></li>
+      <li><span><strong>Explain</strong> how data quality, aggregation, and validation affect the reliability of risk reports. <em class="bloom-tag">Bloom: Understand</em></span></li>
+      <li><span><strong>Tailor</strong> risk reports (heat maps, scorecards, dashboards) to the board, management, and operations. <em class="bloom-tag">Bloom: Apply</em></span></li>
+      <li><span><strong>Design</strong> a one-page board risk dashboard assignment, with a rubric, for your own course. <em class="bloom-tag">Bloom: Create</em></span></li>
+    </ul>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Key Terms</p>
+    <h2 class="h2">Vocabulary flashcards</h2>
+    <div class="rule"></div>
+    <p class="flip-hint-top">&#128072; Read the term, recall the definition, then click or press Enter to check yourself.</p>
+    <div class="vocab-grid">
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Key Risk Indicator (KRI)</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">A metric that measures risk exposure and signals when a risk is moving toward or beyond appetite, ideally before a loss.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Key Control Indicator (KCI)</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">A metric that measures how effective a control is, such as the percentage of SIS accounts enrolled in MFA.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Key Performance Indicator (KPI)</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">A metric that measures how well a process or goal is performing, such as help-desk tickets resolved within target time.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Leading Indicator</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">A metric that changes before a loss event, giving time to act. Preferred for KRIs.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Lagging Indicator</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">A metric that records what has already happened, such as incidents or losses last quarter. Useful for trends and validation, not warning.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Threshold</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">A preset indicator value that triggers a defined action, such as closer watch at amber and escalation to the risk owner at red.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Risk Action Plan</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">The tracked set of actions that carry out a risk response: what will be done, by whom, by when, with what resources, and to what target.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Control Self-Assessment (CSA)</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">A structured review in which process and control owners evaluate their own risks and controls, through workshops or questionnaires.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Heat Map</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">A likelihood-by-impact grid that places risks in colored zones. Quick to read, but it can hide uncertainty and aggregation.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Horizon Scanning</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">Systematic review of external signals (technology, threats, regulation, markets) to spot emerging risks before they reach the register.</div></div>
+        </div>
+      </button>
+
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Lesson Content</p>
+    <h2 class="h2">Study the material</h2>
+    <div class="rule"></div>
+    <div class="lesson-content">
+      <nav class="toc" aria-label="On this page">
+        <div class="toc-title">On this page</div>
+        <ul>
+          <li><a href="#s1">1. Risk Action Plans</a></li>
+          <li><a href="#s2">2. Data Collection and Validation</a></li>
+          <li><a href="#s3">3. KRIs, KCIs, and KPIs</a></li>
+          <li><a href="#s4">4. Monitoring Techniques</a></li>
+          <li><a href="#s5">5. Reporting by Audience</a></li>
+          <li><a href="#s6">6. Emerging Risks</a></li>
+          <li><a href="#s7">7. Interactive: KRI Threshold Tuner</a></li>
+          <li><a href="#s8">8. Faculty Teaching Segment</a></li>
+        </ul>
+      </nav>
+      <div class="content-main">
+
+        <article class="content-section" id="s1">
+          <div class="cs-head"><span class="cs-num">1</span><h3>Risk Action Plans</h3></div>
+          <p>A risk response decision means little until someone carries it out. The risk action plan (also called a risk treatment plan) turns the decision into tracked work. It is the bridge between Lesson 5's choice of response, Lesson 6's controls, and the monitoring in this lesson.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Field</th><th>Purpose</th><th>Penmore example</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Risk reference</td><td>Links the plan to the register entry and scenario.</td><td>R-14: Compromise of the SIS through an unpatched web component</td></tr>
+              <tr><td class="term">Response and target</td><td>States the response and the residual risk it aims for.</td><td>Mitigate to a residual score of 8 or less</td></tr>
+              <tr><td class="term">Actions and milestones</td><td>Breaks the work into dated, checkable steps.</td><td>Inventory internet-facing SIS components by March; patch SLA in place by May</td></tr>
+              <tr><td class="term">Action owner</td><td>Names the person accountable for each action.</td><td>Infrastructure manager</td></tr>
+              <tr><td class="term">Resources and budget</td><td>Records what was approved.</td><td>$22k and 0.3 FTE for the year</td></tr>
+              <tr><td class="term">Status and evidence</td><td>Shows progress with evidence, not opinion.</td><td>Amber: SLA drafted, not yet approved</td></tr>
+            </tbody>
+          </table></div>
+          <ul class="detail">
+            <li><strong>Tracking:</strong> plans are reviewed on a set cycle, often monthly for high risks, in the risk register or a GRC tool.</li>
+            <li><strong>Escalation:</strong> missed milestones are escalated to the risk owner, and repeated slippage goes to the risk committee. A late action means the risk stays above target longer than the owner agreed.</li>
+            <li><strong>Closure:</strong> a plan closes when the evidence shows the target residual risk was reached, not when the last task is ticked.</li>
+          </ul>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a question says an action plan is behind schedule, the BEST answer usually involves reporting the delay and its effect on residual risk to the risk owner. The practitioner does not reset the deadline or accept the delay on the owner's behalf.</div>
+          <div class="in-practice"><span class="ip-label">&#128270; In practice</span><p>Penmore's plan for R-14 slipped twice because the infrastructure team was moving a data center. Each slip was recorded, but the status stayed &ldquo;amber&rdquo; and was never escalated. In the post-incident review, the risk committee asked why it learned about the delay from the breach notice rather than from the action plan.</p></div>
+        </article>
+
+        <article class="content-section" id="s2">
+          <div class="cs-head"><span class="cs-num">2</span><h3>Data Collection, Aggregation, Analysis, and Validation</h3></div>
+          <p>Every indicator and report is only as good as the data under it. The risk practitioner identifies reliable sources, collects data on a consistent schedule, checks its quality, and combines it carefully.</p>
+          <h4>Common sources</h4>
+          <ul class="detail">
+            <li><strong>Technical:</strong> vulnerability scanners, patch management tools, security information and event management (SIEM) systems, identity platforms, and the configuration management database (CMDB).</li>
+            <li><strong>Business and process:</strong> HR rosters, ticketing systems, change records, finance systems, and project status reports.</li>
+            <li><strong>Assurance:</strong> internal and external audit reports, control self-assessments, and third-party reports such as SOC 2.</li>
+            <li><strong>External:</strong> threat intelligence, regulator guidance, industry loss data, and sector information-sharing groups.</li>
+          </ul>
+          <h4>Data quality</h4>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Dimension</th><th>Question</th><th>Failure example</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Accuracy</td><td>Does the value reflect reality?</td><td>A scanner reports patches as missing on servers that were decommissioned.</td></tr>
+              <tr><td class="term">Completeness</td><td>Is the whole population included?</td><td>Cloud-hosted SIS components are not in the scan scope.</td></tr>
+              <tr><td class="term">Timeliness</td><td>Is it current enough to act on?</td><td>A quarterly report on a risk that changes weekly.</td></tr>
+              <tr><td class="term">Consistency</td><td>Is it measured the same way each period and across units?</td><td>Two campuses define &ldquo;critical patch&rdquo; differently.</td></tr>
+              <tr><td class="term">Validity</td><td>Does it measure what the indicator claims?</td><td>Counting training enrollments as completions.</td></tr>
+            </tbody>
+          </table></div>
+          <h4>Aggregation and validation</h4>
+          <p><strong>Aggregation</strong> combines risks or measures across systems, units, or time. It is necessary for a board view and dangerous when done badly. Averaging hides the worst unit, and several moderate risks with a shared cause can add up to a severe one. Look for concentration: many risks that depend on the same vendor, platform, or person. <strong>Validation</strong> confirms the data before anyone relies on it: reconcile totals to the source system, spot-check a sample, and have the data owner confirm it. Governance, risk, and compliance (GRC) platforms help by collecting data automatically and recording who changed what, but they do not make poor data good.</p>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a question asks what to do FIRST before reporting a surprising indicator value, look for validating the data. A report built on unvalidated data can trigger the wrong decision and damage the credibility of the whole risk function.</div>
+        </article>
+
+        <article class="content-section" id="s3">
+          <div class="cs-head"><span class="cs-num">3</span><h3>Metrics: KRIs, KCIs, and KPIs</h3></div>
+          <p>Three families of metrics answer three different questions. Mixing them up is one of the most common errors in practice and a frequent exam distractor.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Metric</th><th>What it measures</th><th>Question it answers</th><th>Penmore example</th></tr></thead>
+            <tbody>
+              <tr><td class="term">KRI</td><td>Risk exposure and early warning</td><td>Is the risk rising toward or beyond appetite?</td><td>% of critical patches overdue more than 30 days on internet-facing SIS components</td></tr>
+              <tr><td class="term">KCI</td><td>Control effectiveness</td><td>Is this control working as intended?</td><td>% of SIS accounts enrolled in MFA; % of access reviews completed on time with no missed leavers</td></tr>
+              <tr><td class="term">KPI</td><td>Process or goal performance</td><td>Is this process or goal performing as expected?</td><td>% of help-desk tickets resolved within target; % of IT projects delivered on time</td></tr>
+            </tbody>
+          </table></div>
+          <p>The families are related. A failing control (KCI) often drives a rising risk (KRI), and a poorly performing process (KPI) can cause both. The same raw data can feed more than one metric depending on what it is used to judge. The test is the question the metric answers.</p>
+          <h4>Leading and lagging</h4>
+          <div class="compare-2col">
+            <div><b>Leading indicator</b>Moves before the loss. Overdue critical patches, privileged accounts past recertification, and rising exploit activity against a platform you run. Preferred for KRIs because they leave time to act.</div>
+            <div><b>Lagging indicator</b>Records what already happened. Incidents last quarter, losses, and audit findings. Useful to confirm trends and validate leading indicators, but they warn too late.</div>
+          </div>
+          <h4>Good KRIs and their thresholds</h4>
+          <ul class="detail">
+            <li><strong>SMART:</strong> specific, measurable, achievable, relevant, and time-bound. &ldquo;Security is improving&rdquo; is not a KRI.</li>
+            <li><strong>Selection criteria:</strong> relevance to a high-priority risk scenario, sensitivity (it moves when the risk moves), reliability of the data, and a cost of collection that is proportionate.</li>
+            <li><strong>Thresholds:</strong> each KRI has defined levels, commonly green, amber, and red. Thresholds should be linked to appetite and tolerance: amber as the risk approaches appetite, red when it nears or exceeds tolerance. Each level has a predefined action and owner.</li>
+            <li><strong>Calibration:</strong> thresholds set too low create alert fatigue and get ignored; thresholds set too high warn after the loss. Thresholds are reviewed with the risk owner when the environment or appetite changes, and the change is documented.</li>
+          </ul>
+          <div class="resource-link">
+            <span class="rl-icon" aria-hidden="true">&#128202;</span>
+            <div class="rl-body"><span class="rl-label">Explore with an eMate</span><span class="rl-text"><strong>Risk Analysis</strong>: revisit likelihood and impact, the two quantities a KRI is meant to track between assessments.</span></div>
+            <div class="rl-actions"><a class="btn secondary" href="https://d2hie3dpn9wvbb.cloudfront.net/risk_analysis/risk_analysis.html" target="_blank" rel="noopener noreferrer">Risk Analysis <span class="ext">&#8599;</span></a></div>
+          </div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a question asks which metric BEST gives early warning of a risk, choose a leading KRI tied to the scenario. When the metric describes how well a control works, it is a KCI. When it describes how efficiently a process runs, it is a KPI, even if security staff collect it.</div>
+          <div class="tip jade"><span class="tip-label">&#128200; One data set, three metrics</span>Patch data can produce all three. &ldquo;Critical patches overdue more than 30 days on internet-facing systems&rdquo; is a KRI (exposure). &ldquo;Percentage of patches deployed through the approved, tested process&rdquo; is a KCI (the patch control works). &ldquo;Average hours of staff time per patch cycle&rdquo; is a KPI (process efficiency).</div>
+        </article>
+
+        <article class="content-section" id="s4">
+          <div class="cs-head"><span class="cs-num">4</span><h3>Monitoring Techniques</h3></div>
+          <p>Monitoring combines ongoing activities built into operations with separate, periodic evaluations. The right mix depends on how fast the risk changes and how much assurance the owner needs.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Technique</th><th>How it works</th><th>Strength</th><th>Limit</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Continuous monitoring</td><td>Automated, ongoing collection of security and control data. NIST SP 800-137 describes information security continuous monitoring (ISCM) for federal systems.</td><td>Timely, consistent, scales well</td><td>Covers only what is instrumented; can overwhelm staff</td></tr>
+              <tr><td class="term">Control self-assessment (CSA)</td><td>Process and control owners assess their own risks and controls, through facilitated workshops or questionnaires.</td><td>Builds ownership and risk awareness; cheap</td><td>Not independent; tends to be optimistic</td></tr>
+              <tr><td class="term">Internal and external audit</td><td>Independent, evidence-based evaluation by the third line or outside assessors.</td><td>Highest independence and rigor</td><td>Periodic; a snapshot</td></tr>
+              <tr><td class="term">Trend analysis</td><td>Compares indicators over time to find direction and rate of change.</td><td>Reveals drift before thresholds trip</td><td>Needs consistent definitions over time</td></tr>
+              <tr><td class="term">Threat and vulnerability monitoring</td><td>Tracks threat intelligence, exploited-vulnerability lists such as CISA KEV, and detection tools.</td><td>Connects external change to internal exposure</td><td>Requires an accurate asset inventory</td></tr>
+            </tbody>
+          </table></div>
+          <p>Detection technology, such as intrusion detection and prevention systems (IDS/IPS), is a source of monitoring data, not a monitoring program. Its alert volumes and tuning feed KCIs, and the attacks it sees can feed KRIs.</p>
+          <div class="resource-link">
+            <span class="rl-icon" aria-hidden="true">&#128225;</span>
+            <div class="rl-body"><span class="rl-label">Explore with an eMate</span><span class="rl-text"><strong>IDS/IPS</strong>: see how detection and prevention systems generate the alerts that monitoring programs turn into indicators.</span></div>
+            <div class="rl-actions"><a class="btn secondary" href="https://d2hie3dpn9wvbb.cloudfront.net/IDS_IPS/IDS_IPS.html" target="_blank" rel="noopener noreferrer">IDS/IPS <span class="ext">&#8599;</span></a></div>
+          </div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a question asks how to raise risk ownership and awareness among business managers, control self-assessment is a strong answer. When it asks for the MOST objective assurance, choose an independent audit. CSA results should be validated, not reported as audit evidence.</div>
+          <div class="in-practice"><span class="ip-label">&#128270; In practice</span><p>Penmore ran a control self-assessment with its enrollment and financial aid managers each spring. The managers rated patching as &ldquo;effective&rdquo; because IT told them it was. The scanner data said otherwise. The risk practitioner now attaches the KRI trend to each CSA question, so owners assess against evidence instead of reassurance.</p></div>
+        </article>
+
+        <article class="content-section" id="s5">
+          <div class="cs-head"><span class="cs-num">5</span><h3>Reporting Techniques by Audience</h3></div>
+          <p>The same risk data supports different reports for different readers. The board needs to know whether the organization is within appetite and what decisions it must make. Operations needs to know what to fix this week.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Audience</th><th>Needs</th><th>Typical format</th><th>Frequency</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Board or audit and risk committee</td><td>Top risks against appetite, trends, major incidents, decisions required</td><td>One- or two-page summary, heat map, short narrative</td><td>Quarterly</td></tr>
+              <tr><td class="term">Executive management</td><td>Risk profile by business unit, action-plan status, emerging risks</td><td>Scorecard with KRIs and plan status</td><td>Monthly</td></tr>
+              <tr><td class="term">Risk owners</td><td>Their risks, KRIs, KCIs, overdue actions</td><td>Dashboard with drill-down</td><td>Monthly or on threshold breach</td></tr>
+              <tr><td class="term">Operations and control owners</td><td>Specific exceptions and tasks</td><td>Exception lists, tickets, operational dashboards</td><td>Daily or weekly</td></tr>
+            </tbody>
+          </table></div>
+          <h4>Formats and their limits</h4>
+          <ul class="detail">
+            <li><strong>Heat maps:</strong> place risks on a likelihood-by-impact grid. They are fast to read but can suggest false precision, hide uncertainty, and cannot show aggregation. Pair them with trend arrows and a short narrative.</li>
+            <li><strong>Scorecards:</strong> list a fixed set of measures with targets and status, sometimes organized like a balanced scorecard. They are good for accountability over time.</li>
+            <li><strong>Dashboards:</strong> visual, often interactive views of current indicator values and thresholds. They suit owners who need to drill into detail.</li>
+          </ul>
+          <p>Good reports use business language, show direction of travel, compare against appetite, and end with the decision or action needed. They state the data's date and known limitations. In the United States, public companies also report under the SEC cybersecurity disclosure rules adopted in 2023, which require disclosure of material cybersecurity incidents and an annual description of cybersecurity risk management and governance. Reporting inside the organization should be strong enough to support those disclosures.</p>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a question asks what a board report should contain, the BEST answer is a concise view of the top risks against appetite, their trends, and the decisions required. Detailed technical metrics belong in operational reports.</div>
+        </article>
+
+        <article class="content-section" id="s6">
+          <div class="cs-head"><span class="cs-num">6</span><h3>Emerging Risks</h3></div>
+          <p>Emerging risks are new or changing risks that are not yet well understood, often with little data and uncertain impact. Monitoring must look outward as well as inward, because the indicators that matter next year may not exist yet.</p>
+          <ul class="detail">
+            <li><strong>Horizon scanning:</strong> a regular review of technology, threat, regulatory, economic, and social signals. Sources include threat intelligence, regulator consultations, vendor roadmaps, and peer networks.</li>
+            <li><strong>Emerging risk register:</strong> a watch list with a named owner, the signals to track, and a trigger for moving the item into full assessment.</li>
+            <li><strong>Scenario thinking:</strong> because data is thin, emerging risks are often explored through scenarios and expert judgment rather than statistics.</li>
+          </ul>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Emerging area</th><th>Signal to watch</th><th>First response</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Artificial intelligence</td><td>Staff using generative AI tools with student data; new AI features in the SIS</td><td>Inventory AI use; assess with the NIST AI RMF 1.0; consider ISO/IEC 42001:2023 for an AI management system</td></tr>
+              <tr><td class="term">Regulation</td><td>New or amended rules, such as the EU AI Act for organizations it reaches, or updated state privacy laws</td><td>Assess applicability and impact on the risk profile before committing to controls</td></tr>
+              <tr><td class="term">Post-quantum cryptography</td><td>NIST published its first post-quantum standards (FIPS 203, 204, and 205) in 2024</td><td>Build a cryptographic inventory; ask vendors for migration plans</td></tr>
+              <tr><td class="term">Supply chain concentration</td><td>Several critical services moving to the same cloud or software vendor</td><td>Map dependencies; add a concentration KRI</td></tr>
+            </tbody>
+          </table></div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a question describes a new technology or regulation and asks what the risk practitioner should do FIRST, look for assessing its potential impact on the organization's risk profile. Buying controls or writing policy before that assessment skips a step.</div>
+        </article>
+
+        <article class="content-section" id="s7">
+          <div class="cs-head"><span class="cs-num">7</span><h3>Interactive: KRI Threshold Tuner</h3></div>
+          <p>In October (month 10), attackers breached Penmore's student information system through an unpatched internet-facing component, then used a stale administrator account to reach the database. The chart shows twelve months of synthetic data for three candidate KRIs. Choose a KRI and move the amber and red thresholds. The tuner counts alerts (months at amber or above), false alarms (alerts more than four months before the incident), lead time (months between the first useful alert and the incident), and escalations (months at red). Aim for at least two months of warning with no more than one false alarm. The starting thresholds are the ones Penmore actually used.</p>
+
+          <style>
+            .kri-wrap{display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start;}
+            .kri-in{flex:1 1 260px;min-width:0;}
+            .kri-out{flex:1.4 1 320px;min-width:0;}
+            .kri-seg{display:flex;flex-direction:column;gap:.3rem;margin-bottom:.6rem;}
+            .kri-seg .iw-btn{text-align:left;width:100%;}
+            #kri-root .kri-desc{font-family:Arial,sans-serif;font-size:.72rem;color:var(--text-secondary);line-height:1.45;background:var(--blue-pale);border:1px solid var(--blue-pale-border);border-radius:4px;padding:.45rem .6rem;margin:0 0 .6rem;}
+            .kri-desc b{color:var(--text-primary);}
+            .kri-f{margin-bottom:.55rem;}
+            .kri-f label{display:flex;justify-content:space-between;font-size:.68rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.15rem;}
+            .kri-f output{font-family:Georgia,serif;font-size:.9rem;letter-spacing:0;text-transform:none;color:var(--text-primary);}
+            .kri-f.amb input[type="range"]{accent-color:var(--amber);}
+            .kri-f.red input[type="range"]{accent-color:var(--wrong);}
+            .kri-row{display:flex;gap:.5rem;flex-wrap:wrap;}
+            .kri-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.45rem;margin-bottom:.55rem;}
+            .kri-tile{background:var(--card-bg);border:1px solid var(--border);border-radius:5px;padding:.3rem .55rem;}
+            .kri-tile span{display:block;font-family:Arial,sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);}
+            .kri-tile b{display:inline-block;margin-right:.35rem;font-family:Georgia,serif;font-size:1.08rem;color:var(--text-primary);line-height:1.25;}
+            .kri-tile em{font-style:normal;font-family:Arial,sans-serif;font-size:.66rem;color:var(--text-muted);}
+            .kri-verd{min-height:3.2rem;}
+          </style>
+
+          <div class="iw" id="kri-root">
+            <div class="iw-card">
+              <div class="iw-topbar">
+                <span class="iw-eyebrow">Interactive &middot; tune the thresholds before the breach</span>
+                <button type="button" class="iw-expand" aria-expanded="false" title="Open a larger view">&#10530; Expand</button>
+              </div>
+              <div class="kri-wrap">
+                <div class="iw-panel kri-in">
+                  <h5 class="iw-h5" id="kri-lh">Candidate KRI</h5>
+                  <div class="kri-seg" role="group" aria-labelledby="kri-lh">
+                    <button type="button" class="iw-btn" id="kri-k-patch" data-k="patch" aria-pressed="true">Critical patches overdue &gt; 30 days (%)</button>
+                    <button type="button" class="iw-btn" id="kri-k-priv" data-k="priv" aria-pressed="false">Privileged accounts past recertification</button>
+                    <button type="button" class="iw-btn" id="kri-k-phish" data-k="phish" aria-pressed="false">Phishing simulation click rate (%)</button>
+                  </div>
+                  <p class="kri-desc" id="kri-desc"></p>
+                  <div class="kri-f amb"><label for="kri-amber">Amber threshold <output id="kri-amberv" for="kri-amber"></output></label><input type="range" id="kri-amber"></div>
+                  <div class="kri-f red"><label for="kri-red">Red threshold <output id="kri-redv" for="kri-red"></output></label><input type="range" id="kri-red"></div>
+                  <div class="kri-row">
+                    <button type="button" class="iw-btn" id="kri-model">Show model answer</button>
+                    <button type="button" class="iw-btn jade" id="kri-reset">Reset to Penmore&rsquo;s thresholds</button>
+                  </div>
+                </div>
+                <div class="iw-panel kri-out">
+                  <div class="kri-tiles">
+                    <div class="kri-tile"><span>Alerts raised</span><b id="kri-t1">0</b><em>months at amber or red</em></div>
+                    <div class="kri-tile"><span>False alarms</span><b id="kri-t2">0</b><em>alerts in months 1 to 5</em></div>
+                    <div class="kri-tile"><span>Lead time</span><b id="kri-t3">0</b><em id="kri-t3s">months before incident</em></div>
+                    <div class="kri-tile"><span>Escalations</span><b id="kri-t4">0</b><em id="kri-t4s">months at red</em></div>
+                  </div>
+                  <canvas id="kri-canvas" role="img" aria-label="Line chart of the KRI over twelve months with green, amber, and red threshold bands, alert markers, and the incident in month 10"></canvas>
+                  <div aria-live="polite" class="kri-verd" id="kri-verdwrap">
+                    <div class="iw-verdict" id="kri-verdict"><span class="iw-pill" id="kri-pill">Ready</span><span id="kri-coach"></span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <script>
+          (function(){
+            var root=document.getElementById('kri-root'); if(!root) return;
+            var $=function(id){return root.querySelector('#'+id);};
+            var INC=10, WIN=4, MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+            var K={
+              patch:{nm:'Critical patches overdue more than 30 days',unit:'%',yl:'% overdue',base:[6,7,6,8,9,11,14,17,21,26,15,9],amp:1.2,dec:1,seed:3107,min:0,max:40,step:.5,a:20,r:30,ma:12,mr:20,
+                desc:'<b>Leading KRI.</b> Share of critical patches on internet-facing SIS components still missing after 30 days. Source: vulnerability scanner, monthly. Owner: infrastructure manager.',
+                pred:'This KRI sat directly on the attack path: the breach used an unpatched internet-facing component, and the backlog climbed for four months before October.'},
+              priv:{nm:'Privileged accounts past recertification',unit:'',yl:'Accounts',base:[4,6,3,7,5,6,5,7,8,9,3,3],amp:.45,dec:0,seed:4211,min:0,max:15,step:1,a:8,r:10,ma:7,mr:8,
+                desc:'<b>Leading KRI.</b> Number of SIS administrator accounts past their quarterly recertification date. Source: identity platform and HR roster, monthly. Owner: identity and access manager.',
+                pred:'This KRI is a supporting signal: the attacker used a stale administrator account to move into the database. It rose before the incident, but its month-to-month noise makes it hard to tune without a false alarm.'},
+              phish:{nm:'Phishing simulation click rate',unit:'%',yl:'% clicked',base:[12,9,14,8,13,10,11,9,12,10,13,8],amp:1,dec:1,seed:5303,min:0,max:25,step:.5,a:15,r:20,ma:null,mr:null,
+                desc:'<b>Leading KRI for credential phishing.</b> Share of staff who clicked the monthly simulated phishing message. Source: awareness platform. Owner: security awareness lead.',
+                pred:'This KRI does not track the path this attack took. The breach began with an unpatched component, not a phishing message, so the click rate stays flat noise. It is still a good KRI for a credential-phishing scenario, just not this one.'}
+            };
+            Object.keys(K).forEach(function(k){var c=K[k],r=mulberry32(c.seed),p=Math.pow(10,c.dec);c.s=c.base.map(function(b){return Math.round((b+(r()-.5)*2*c.amp)*p)/p;});});
+            var cur='patch', A, R, last;
+            function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
+            function fmt(v){var c=K[cur];return (c.dec?v.toFixed(1):String(v))+c.unit;}
+            function evalK(s,a,r){
+              var alerts=0,fa=0,first=null,esc=0,firstRed=null;
+              s.forEach(function(v,i){var m=i+1;
+                if(v>=a){alerts++; if(m<INC-WIN) fa++; else if(m<=INC&&first===null) first=m;}
+                if(v>=r){esc++; if(m>=INC-WIN&&m<=INC&&firstRed===null) firstRed=m;}});
+              return {alerts:alerts,fa:fa,lead:first===null?null:INC-first,esc:esc,redLead:firstRed===null?null:INC-firstRed};
+            }
+            function load(k,useModel){
+              cur=k; var c=K[k];
+              ['patch','priv','phish'].forEach(function(x){$('kri-k-'+x).setAttribute('aria-pressed',x===k?'true':'false');});
+              $('kri-desc').innerHTML=c.desc;
+              ['kri-amber','kri-red'].forEach(function(id){var el=$(id); el.min=c.min; el.max=c.max; el.step=c.step;});
+              A=useModel&&c.ma!=null?c.ma:c.a; R=useModel&&c.mr!=null?c.mr:c.r;
+              $('kri-amber').value=A; $('kri-red').value=R; update(useModel);
+            }
+            function verdict(cls,p,msg){$('kri-verdict').className='iw-verdict '+cls;$('kri-pill').className='iw-pill '+cls;$('kri-pill').textContent=p;$('kri-coach').textContent=msg;}
+            function update(model){
+              var c=K[cur]; A=+$('kri-amber').value; R=+$('kri-red').value;
+              $('kri-amberv').textContent=fmt(A); $('kri-redv').textContent=fmt(R);
+              var e=evalK(c.s,A,R); last=e;
+              $('kri-t1').textContent=e.alerts; $('kri-t2').textContent=e.fa;
+              $('kri-t3').textContent=e.lead===null?'None':e.lead; $('kri-t3s').textContent=e.lead===null?'incident not flagged':(e.lead===1?'month before incident':'months before incident');
+              $('kri-t4').textContent=e.esc; $('kri-t4s').textContent=e.redLead===null?'none before the incident':'first red '+(e.redLead===0?'in the incident month':e.redLead+' month'+(e.redLead>1?'s':'')+' ahead');
+              var msg, cls, pill;
+              if(A>=R){ verdict('warn','Check thresholds','Amber must sit below red. Amber means watch closely and prepare; red means escalate to the risk owner. Move red above amber.'); draw(); return; }
+              var late=(e.lead===null||e.lead<2), noisy=e.fa>=2;
+              if(late && !noisy){ cls='bad'; pill='Too late';
+                msg=(e.lead===null?'No alert fired in the four months before the incident, so the KRI never warned anyone. ':e.lead===0?'The first useful alert fired in the incident month itself, which reports the breach instead of predicting it. ':'The first useful alert came only one month before the incident, too little time to patch, test, and verify. ')+(cur==='phish'?'Lowering amber here only adds false alarms; check whether the indicator tracks this risk at all.':'Lower the amber threshold toward the level the series reached in summer.');
+              } else if(noisy && !late){ cls='warn'; pill='Too noisy';
+                msg=e.fa+' alerts fired in months 1 to 5 with no incident following. Owners who see repeated false alarms stop responding, which is how real warnings get ignored. Raise amber until the early-year noise stays green.';
+              } else if(noisy && late){ cls='bad'; pill='Too noisy and late';
+                msg='This setting raises '+e.fa+' false alarms and still gives less than two months of warning. No threshold can fix an indicator whose signal is buried in noise.';
+              } else { cls='good'; pill='Well tuned';
+                msg='Amber gives '+e.lead+' months of warning with '+(e.fa?'one false alarm':'no false alarms')+'. '+(e.redLead===null||e.redLead<1?'Red never fired before the incident, so the risk owner was not formally engaged until the loss. Consider lowering red so escalation happens while action is still possible. ':'Red escalated to the risk owner '+e.redLead+' month'+(e.redLead>1?'s':'')+' ahead, while there was still time to act. ');
+              }
+              msg+=' '+c.pred;
+              if(cur==='phish' && !model) msg+=' Try the patch KRI to see a signal that does predict this incident.';
+              if(model){ msg=(c.ma==null?'Model answer: there is no good setting for this KRI. ':'Model answer: amber '+fmt(c.ma)+', red '+fmt(c.mr)+'. ')+msg; }
+              verdict(cls,pill,msg); draw();
+            }
+            function draw(){
+              var cv=$('kri-canvas'), c=K[cur]; var w=cv.parentNode.clientWidth-2; if(w<10) return;
+              var h=Math.max(230,Math.min(290,w*0.55));
+              if(root.classList.contains('is-expanded')){ var below=$('kri-verdwrap').offsetHeight+100; h=Math.max(200,Math.min(w*0.55,window.innerHeight-cv.getBoundingClientRect().top-below)); }
+              var dpr=window.devicePixelRatio||1; cv.width=Math.round(w*dpr); cv.height=Math.round(h*dpr); cv.style.height=h+'px';
+              var g=cv.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,w,h);
+              var gold=css('--gold'),muted=css('--text-muted'),txt=css('--text-primary'),bord=css('--border'),ok=css('--correct'),bad=css('--wrong'),amb=css('--amber');
+              var L=48,Rm=12,T=18,B=h-40, PW=w-L-Rm, PH=B-T;
+              var ymax=Math.max(c.max*0.75, Math.max.apply(null,c.s)*1.15, Math.min(R,c.max)*1.08); ymax=Math.ceil(ymax/5)*5;
+              function X(m){return L+PW*(m-0.5)/12;} function Y(v){return B-PH*Math.min(v,ymax)/ymax;}
+              // bands
+              g.fillStyle='rgba(21,128,61,0.10)'; g.fillRect(L,Y(Math.min(A,ymax)),PW,B-Y(Math.min(A,ymax)));
+              if(A<ymax){ g.fillStyle='rgba(180,83,9,0.14)'; g.fillRect(L,Y(Math.min(R,ymax)),PW,Y(A)-Y(Math.min(R,ymax))); }
+              if(R<ymax){ g.fillStyle='rgba(185,28,28,0.12)'; g.fillRect(L,T,PW,Y(R)-T); }
+              // warning window
+              g.fillStyle='rgba(134,25,143,0.06)'; g.fillRect(X(INC-WIN)-PW/24,T,PW*(WIN+1)/12,PH);
+              g.fillStyle=muted; g.font='10px Arial'; g.textAlign='center'; g.fillText('useful warning window',X(INC-WIN/2)-PW/24,T+11);
+              // grid and y axis
+              g.strokeStyle=bord; g.lineWidth=1; g.textAlign='right';
+              for(var i=0;i<=5;i++){var v=ymax*i/5,y=Y(v); g.beginPath(); g.moveTo(L,y); g.lineTo(L+PW,y); g.stroke(); g.fillStyle=muted; g.fillText((c.dec?Math.round(v):v)+'',L-6,y+3);}
+              g.save(); g.translate(12,T+PH/2); g.rotate(-Math.PI/2); g.textAlign='center'; g.fillStyle=muted; g.font='bold 10px Arial'; g.fillText(c.yl,0,0); g.restore();
+              // threshold lines
+              function tl(v,col,lab){ if(v>ymax) return; g.strokeStyle=col; g.lineWidth=1.5; g.setLineDash([5,4]); g.beginPath(); g.moveTo(L,Y(v)); g.lineTo(L+PW,Y(v)); g.stroke(); g.setLineDash([]); g.fillStyle=col; g.font='bold 10px Arial'; g.textAlign='left'; g.fillText(lab+' '+fmt(v),L+4,Y(v)-4); }
+              tl(A,amb,'Amber'); tl(R,bad,'Red');
+              // incident
+              g.strokeStyle=bad; g.lineWidth=2; g.beginPath(); g.moveTo(X(INC),T); g.lineTo(X(INC),B); g.stroke();
+              g.fillStyle=bad; g.font='bold 10px Arial'; g.textAlign='center'; g.fillText('Incident',X(INC),B+28>h-2?B+26:B+28);
+              // x axis
+              g.fillStyle=muted; g.font='10px Arial';
+              MON.forEach(function(mn,i){ if(i+1!==INC) g.fillText(mn,X(i+1),B+14); else { g.fillStyle=bad; g.fillText(mn,X(i+1),B+14); g.fillStyle=muted; } });
+              g.textAlign='left'; g.fillText('Month',L,B+28);
+              // line
+              g.strokeStyle=gold; g.lineWidth=2.2; g.beginPath(); c.s.forEach(function(v,i){var x=X(i+1),y=Y(v); if(i) g.lineTo(x,y); else g.moveTo(x,y);}); g.stroke();
+              c.s.forEach(function(v,i){var x=X(i+1),y=Y(v),m=i+1, col=v>=R?bad:(v>=A?amb:ok);
+                g.fillStyle='#fff'; g.beginPath(); g.arc(x,y,4.5,0,7); g.fill(); g.strokeStyle=col; g.lineWidth=2; g.stroke();
+                if(v>=A){ var fa=m<INC-WIN; g.fillStyle=fa?muted:col; g.beginPath(); g.moveTo(x,y-9); g.lineTo(x-5,y-17); g.lineTo(x+5,y-17); g.closePath(); g.fill();
+                  if(fa){ g.font='9px Arial'; g.textAlign='center'; g.fillText('false',x,y-20); } }
+              });
+            }
+            ['patch','priv','phish'].forEach(function(k){$('kri-k-'+k).addEventListener('click',function(){load(k,false);});});
+            $('kri-amber').addEventListener('input',function(){update(false);});
+            $('kri-red').addEventListener('input',function(){update(false);});
+            $('kri-model').addEventListener('click',function(){load(cur,true);});
+            $('kri-reset').addEventListener('click',function(){load(cur,false);});
+            var rt; window.addEventListener('resize',function(){clearTimeout(rt); rt=setTimeout(draw,60);});
+            load('patch',false);
+          })();
+          </script>
+
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>The tuner teaches three exam lessons. A KRI is only useful if it is leading and tied to the scenario that matters; thresholds must balance early warning against alert fatigue; and red must trigger escalation to the risk owner while action is still possible. When a question asks why a KRI failed to warn of an incident, check whether it measured the right risk before blaming the threshold.</div>
+        </article>
+
+        <article class="content-section" id="s8">
+          <div class="cs-head"><span class="cs-num">8</span><h3>Faculty Teaching Segment</h3></div>
+          <p>Reporting is a communication skill as much as a technical one. Students learn it best by compressing a messy register into one page that a busy board member could act on in five minutes.</p>
+          <ul class="detail">
+            <li><strong>Signature assignment:</strong> provide a synthetic risk register for a fictional college (fifteen risks with likelihood, impact, owner, KRI values for four quarters, and action-plan status) as a spreadsheet file. Students produce a one-page board risk report: a heat map of the top five risks, a trend arrow for each, three KRIs with thresholds and current status, overdue actions, and two decisions the board must make. They also write a half-page memo explaining which KRI is leading, which is lagging, and why.</li>
+            <li><strong>Rubric criteria:</strong> (1) the top risks are chosen by exposure against appetite, not by alphabet or by IT system; (2) KRIs, KCIs, and KPIs are classified correctly, and at least two KRIs are leading; (3) thresholds are justified by the appetite statement and data, and overdue actions are escalated with owners named; (4) the page uses business language, states the data date and limitations, and ends with clear decisions.</li>
+            <li><strong>Lab idea:</strong> give students twelve months of synthetic indicator data with one incident and ask them to set thresholds that would have warned in time, as in the tuner. Then give them a second year of data and ask whether their thresholds still work. Use only data you generate.</li>
+            <li><strong>Course fit:</strong> a GRC, security management, or IT audit course. It supports the CAE-CD Cybersecurity Planning and Management (CPM), IA Compliance (IAC), and Policy, Legal, Ethics, and Compliance (PLE) Knowledge Units.</li>
+          </ul>
+          <div class="tip"><span class="tip-label">&#127891; Teaching note</span>Run the KRI Threshold Tuner in pairs with a one-page handout (as a file or printout) that has a row for each KRI: chosen amber and red values, lead time, false alarms, and a sentence on whether the KRI measured the right risk. Assign each pair a different KRI first, then have them compare. The phishing pair will discover that no setting works, which opens the best discussion of the session.</div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="emates">
+    <p class="eyebrow">Explore with eMates</p>
+    <h2 class="h2">Interactive refreshers for this lesson</h2>
+    <div class="rule"></div>
+    <p class="lead">Short, self-paced eMates from the myEMATES library. Each opens in a new tab. Concept refreshers support your own exam study. Student-ready modules also work as warm-ups in your own courses.</p>
+    <div class="em-grid">
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 2</span></div><h3>IDS/IPS</h3><p>Detection and prevention systems, the source of many alerts that monitoring turns into indicators.</p><div class="em-foot"><span class="em-level student">Student-ready</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/IDS_IPS/IDS_IPS.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: IDS/IPS (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 4</span></div><h3>Risk Analysis</h3><p>Likelihood and impact, the quantities a KRI tracks between formal assessments.</p><div class="em-foot"><span class="em-level">Concept refresher</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/risk_analysis/risk_analysis.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Risk Analysis (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 1</span></div><h3>Cybersecurity Scenario</h3><p>Work through an incident scenario and ask which indicators would have warned before it happened.</p><div class="em-foot"><span class="em-level student">Student-ready</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/cyber_scenario/cyber_scenario.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Cybersecurity Scenario (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 3</span></div><h3>Phishing Mystery</h3><p>A phishing case that shows when a click-rate KRI is the right indicator and what it can miss.</p><div class="em-foot"><span class="em-level student">Student-ready</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/phishing/phishing.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Phishing Mystery (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 4</span></div><h3>Risk Management</h3><p>The full risk management cycle, with monitoring and reporting closing the loop.</p><div class="em-foot"><span class="em-level">Concept refresher</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/risk_management/risk_management.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Risk Management (opens in a new tab)">Open &#8599;</a></div></article>
+    </div>
+  </section>
+
+  <section class="block" id="practice-this-lesson">
+    <p class="eyebrow">Practice</p>
+    <h2 class="h2">Practice this lesson</h2>
+    <div class="rule"></div>
+    <p class="lead">Self-checking practice for this lesson, ready to use with your own students. Each item ends with a report you can print or save as a PDF. See all items in the <a href="practices.html">CRISC Practices</a> and the <a href="labs.html">CRISC Risk Lab</a>.</p>
+    <div class="pl-grid">
+      <article class="pl-card"><div class="pl-top"><span class="pl-type">CRISC Practices &middot; A8</span><span class="pl-time">&#9201; 35 min</span></div><h3><a href="activity08.html">Metrics, Monitoring, and Reporting</a></h3><p>Sort KRIs, KCIs, and KPIs, leading and lagging, handle threshold breaches, and fit the report to the audience.</p><div class="pl-foot"><span class="pl-level">Intermediate</span><a class="pl-open" href="activity08.html" aria-label="Open activity A8: Metrics, Monitoring, and Reporting">Open &#8594;</a></div></article>
+      <article class="pl-card pl-lab"><div class="pl-top"><span class="pl-type">CRISC Risk Lab &middot; B6</span><span class="pl-time">&#9201; 60 min</span></div><h3><a href="lab06.html">KRI Dashboard and Board Report</a></h3><p>Classify metrics, set thresholds on a live RAG dashboard, and assemble a one-page board risk report.</p><div class="pl-foot"><span class="pl-level">Intermediate</span><a class="pl-open" href="lab06.html" aria-label="Open lab B6: KRI Dashboard and Board Report">Open &#8594;</a></div></article>
+    </div>
+  </section>
+
+  <section class="block" id="knowledge-check">
+    <p class="eyebrow">Scored Knowledge Check</p>
+    <h2 class="h2">Test your understanding</h2>
+    <div class="rule"></div>
+    <p class="lead" style="margin-bottom:1.5rem">Select the best answer for each question, then submit for your score and the rationale for every item. Like the exam, several options may be true; choose the best one.</p>
+    <div class="quiz-card">
+      <form id="quiz">
+
+        <div class="q" data-answer="C">
+          <p class="q-stem"><span class="qn">Q1.</span>A college wants an indicator that gives the EARLIEST warning that its risk of a breach through unpatched internet-facing systems is rising. Which indicator is BEST?</p>
+          <fieldset class="options">
+            <legend>Question 1 options</legend>
+            <label class="opt"><input type="radio" name="q1" value="A"><span><span class="opt-letter">A.</span> Number of security incidents reported last quarter</span></label>
+            <label class="opt"><input type="radio" name="q1" value="B"><span><span class="opt-letter">B.</span> Total cost of incident response in the past year</span></label>
+            <label class="opt"><input type="radio" name="q1" value="C"><span><span class="opt-letter">C.</span> Percentage of critical patches on internet-facing systems overdue more than 30 days</span></label>
+            <label class="opt"><input type="radio" name="q1" value="D"><span><span class="opt-letter">D.</span> Number of audit findings closed this year</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: C.</b> Overdue critical patches on exposed systems is a leading KRI tied directly to the scenario: it rises before a breach. Incident counts and response costs are lagging, and closed audit findings measure remediation performance rather than current exposure.</div>
+        </div>
+
+        <div class="q" data-answer="A">
+          <p class="q-stem"><span class="qn">Q2.</span>Which metric is BEST described as a key control indicator (KCI)?</p>
+          <fieldset class="options">
+            <legend>Question 2 options</legend>
+            <label class="opt"><input type="radio" name="q2" value="A"><span><span class="opt-letter">A.</span> Percentage of SIS user accounts enrolled in multi-factor authentication</span></label>
+            <label class="opt"><input type="radio" name="q2" value="B"><span><span class="opt-letter">B.</span> Number of phishing campaigns targeting the sector this month</span></label>
+            <label class="opt"><input type="radio" name="q2" value="C"><span><span class="opt-letter">C.</span> Average time for the help desk to resolve a ticket</span></label>
+            <label class="opt"><input type="radio" name="q2" value="D"><span><span class="opt-letter">D.</span> Estimated annual loss from account takeover</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: A.</b> MFA enrollment measures how fully a control is in effect, which is what a KCI does. Sector phishing volume is a threat signal that could feed a KRI, help-desk resolution time is a KPI, and estimated annual loss is a risk analysis output.</div>
+        </div>
+
+        <div class="q" data-answer="D">
+          <p class="q-stem"><span class="qn">Q3.</span>What is the PRIMARY purpose of setting amber and red thresholds for a key risk indicator?</p>
+          <fieldset class="options">
+            <legend>Question 3 options</legend>
+            <label class="opt"><input type="radio" name="q3" value="A"><span><span class="opt-letter">A.</span> To make the dashboard easier to read with colors</span></label>
+            <label class="opt"><input type="radio" name="q3" value="B"><span><span class="opt-letter">B.</span> To measure the performance of the security team</span></label>
+            <label class="opt"><input type="radio" name="q3" value="C"><span><span class="opt-letter">C.</span> To satisfy the requirements of a control framework</span></label>
+            <label class="opt"><input type="radio" name="q3" value="D"><span><span class="opt-letter">D.</span> To trigger predefined action and escalation before the risk exceeds appetite</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: D.</b> Thresholds link the indicator to appetite and tolerance and tell people when to act and whom to involve. Colors are a side effect, team performance is the job of KPIs, and no framework requirement is the primary reason.</div>
+        </div>
+
+        <div class="q" data-answer="B">
+          <p class="q-stem"><span class="qn">Q4.</span>A risk practitioner is preparing the quarterly report for the board's risk committee. Which content is MOST appropriate?</p>
+          <fieldset class="options">
+            <legend>Question 4 options</legend>
+            <label class="opt"><input type="radio" name="q4" value="A"><span><span class="opt-letter">A.</span> A full export of the risk register with all KRI values</span></label>
+            <label class="opt"><input type="radio" name="q4" value="B"><span><span class="opt-letter">B.</span> The top risks against appetite, their trends, and the decisions the board needs to make</span></label>
+            <label class="opt"><input type="radio" name="q4" value="C"><span><span class="opt-letter">C.</span> A list of open vulnerabilities by CVSS score</span></label>
+            <label class="opt"><input type="radio" name="q4" value="D"><span><span class="opt-letter">D.</span> Detailed status of every control test performed this quarter</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: B.</b> The board needs a concise view of exposure against appetite, direction of travel, and the decisions it owns. A register export, vulnerability lists, and control-test detail are too granular and belong in management or operational reports.</div>
+        </div>
+
+        <div class="q" data-answer="A">
+          <p class="q-stem"><span class="qn">Q5.</span>A KRI that has been stable for a year suddenly shows a sharp spike just before the monthly risk report is due. What should the risk practitioner do FIRST?</p>
+          <fieldset class="options">
+            <legend>Question 5 options</legend>
+            <label class="opt"><input type="radio" name="q5" value="A"><span><span class="opt-letter">A.</span> Validate the underlying data with the data source and owner</span></label>
+            <label class="opt"><input type="radio" name="q5" value="B"><span><span class="opt-letter">B.</span> Raise the threshold so the KRI returns to green</span></label>
+            <label class="opt"><input type="radio" name="q5" value="C"><span><span class="opt-letter">C.</span> Report the spike to the board as a new critical risk</span></label>
+            <label class="opt"><input type="radio" name="q5" value="D"><span><span class="opt-letter">D.</span> Leave the value out of the report until next month</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: A.</b> A sudden change may reflect a real shift or a data problem, such as a changed scan scope. Validating first keeps the report accurate. Raising the threshold hides the signal, escalating to the board skips validation and the risk owner, and leaving it out suppresses information.</div>
+        </div>
+
+        <div class="q" data-answer="C">
+          <p class="q-stem"><span class="qn">Q6.</span>Which of the following is a key performance indicator (KPI) rather than a KRI or KCI?</p>
+          <fieldset class="options">
+            <legend>Question 6 options</legend>
+            <label class="opt"><input type="radio" name="q6" value="A"><span><span class="opt-letter">A.</span> Number of privileged accounts past their recertification date</span></label>
+            <label class="opt"><input type="radio" name="q6" value="B"><span><span class="opt-letter">B.</span> Percentage of firewall rule changes that went through approved change control</span></label>
+            <label class="opt"><input type="radio" name="q6" value="C"><span><span class="opt-letter">C.</span> Percentage of IT projects delivered on schedule</span></label>
+            <label class="opt"><input type="radio" name="q6" value="D"><span><span class="opt-letter">D.</span> Percentage of critical vendors with an expired security assessment</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: C.</b> On-schedule delivery measures how well a process performs against its goal, which is a KPI. Stale privileged accounts and expired vendor assessments measure rising exposure (KRIs), and approved firewall changes measure whether the change control works (a KCI).</div>
+        </div>
+
+        <div class="q" data-answer="B">
+          <p class="q-stem"><span class="qn">Q7.</span>A KRI turns amber almost every month, no incidents have followed, and the owners have started ignoring it. What is the BEST course of action?</p>
+          <fieldset class="options">
+            <legend>Question 7 options</legend>
+            <label class="opt"><input type="radio" name="q7" value="A"><span><span class="opt-letter">A.</span> Retire the KRI because it has not predicted any incidents</span></label>
+            <label class="opt"><input type="radio" name="q7" value="B"><span><span class="opt-letter">B.</span> Review the KRI and its thresholds with the risk owner, using historical data, and document any change</span></label>
+            <label class="opt"><input type="radio" name="q7" value="C"><span><span class="opt-letter">C.</span> Report the owners to internal audit for failing to respond</span></label>
+            <label class="opt"><input type="radio" name="q7" value="D"><span><span class="opt-letter">D.</span> Move the amber threshold to the red level so fewer alerts fire</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: B.</b> Constant false alarms suggest a calibration or relevance problem. Reviewing it with the owner, using data, and documenting the change fixes the cause while keeping governance intact. Retiring it may remove a valid signal, reporting owners treats the symptom, and collapsing amber into red removes the early-warning band.</div>
+        </div>
+
+        <div class="q" data-answer="D">
+          <p class="q-stem"><span class="qn">Q8.</span>Horizon scanning shows that a new regulation on the use of AI in student services is likely to take effect next year. What should the risk practitioner do FIRST?</p>
+          <fieldset class="options">
+            <legend>Question 8 options</legend>
+            <label class="opt"><input type="radio" name="q8" value="A"><span><span class="opt-letter">A.</span> Ban all AI tools in student services until the rule is final</span></label>
+            <label class="opt"><input type="radio" name="q8" value="B"><span><span class="opt-letter">B.</span> Buy an AI governance platform</span></label>
+            <label class="opt"><input type="radio" name="q8" value="C"><span><span class="opt-letter">C.</span> Draft a new AI acceptable use policy</span></label>
+            <label class="opt"><input type="radio" name="q8" value="D"><span><span class="opt-letter">D.</span> Assess how the regulation could affect the organization's risk profile and inform the relevant risk owners</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: D.</b> An emerging risk is assessed for applicability and impact before a response is chosen, and the owners decide on the response. A ban, a purchase, or a new policy may all be reasonable later, but each skips the assessment step.</div>
+        </div>
+
+        <div class="quiz-actions">
+          <button type="button" class="btn" onclick="gradeQuiz()">Submit Answers</button>
+          <button type="button" class="btn secondary" onclick="resetQuiz()">Reset</button>
+          <span class="score" id="score" aria-live="polite"></span>
+        </div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<nav class="pager" aria-label="Lesson navigation">
+  <div class="pager-inner">
+    <a href="lesson06.html" class="prev"><span class="pager-dir">&#8592; Previous</span><span class="pager-name">Lesson 6: Control Design and Implementation</span></a>
+    <a href="lesson08.html" class="next"><span class="pager-dir">Next &#8594;</span><span class="pager-name">Lesson 8: Technology and Security</span></a>
+  </div>
+</nav>
+
+<footer>
+  <div class="footer-logo">CRISC 5-DAY FACULTY WORKSHOP</div>
+  <p class="footer-disclaimer">This workshop is an independent educational resource. It is not affiliated with, endorsed by, or sponsored by ISACA. CRISC&#174; is a registered mark of ISACA. All lesson text, questions, and scenarios are original and do not reproduce the ISACA CRISC Review Manual or question database. eMates are provided by the myEMATES library and open in a new tab. Always verify the current exam content outline at isaca.org before registering.</p>
+</footer>
+
+<script src="crisc-lesson.js"></script>
+</body>
+</html>

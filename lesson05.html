@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 5: Risk Response | CRISC Workshop</title>
+<link rel="stylesheet" href="crisc-lesson.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-seal">CRISC<br>PREP</div>
+    <span class="nav-title">5-Day Faculty Workshop</span>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#lessons">Lessons</a></li>
+      <li><a href="index.html#practice">Practice</a></li>
+      <li><a href="index.html#schedule">Schedule</a></li>
+      <li><a href="index.html#domains">Domains</a></li>
+      <li><a href="index.html#exam-prep">Exam Prep</a></li>
+      <li><a href="index.html#faculty-tools">Faculty Tools</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="lesson-hero">
+  <div class="lesson-hero-inner">
+    <p class="breadcrumb"><a href="index.html">Workshop</a> &nbsp;&rsaquo;&nbsp; <a href="index.html#lessons">Lessons</a> &nbsp;&rsaquo;&nbsp; <span>Lesson 5</span></p>
+    <span class="lesson-badge-lg">Day 3, Afternoon &bull; Domain 3A</span>
+    <h1>Risk <span>Response</span></h1>
+    <p class="lesson-lede">Analysis tells the risk owner how big a risk is. Response decides what to do about it. This lesson covers the four response options, how to justify a response by cost and residual risk, who owns which decision, how to manage risk that lives with vendors and their suppliers, and how to handle the issues, findings, exceptions, and exemptions that every program accumulates.</p>
+    <div class="meta-chips">
+      <span class="meta-chip">Session: <strong>Day 3, 1:00 to 4:00</strong></span>
+      <span class="meta-chip">Duration: <strong>~3 hrs</strong></span>
+      <span class="meta-chip">Exam Weight: <strong>32%</strong></span>
+      <span class="meta-chip">Knowledge Check: <strong>8 Questions</strong></span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="block">
+    <p class="eyebrow">Overview</p>
+    <h2 class="h2">Bring residual risk within appetite, at a cost the business can justify</h2>
+    <div class="rule"></div>
+    <p class="lead">Every risk response has the same goal: move residual risk to a level the enterprise is willing to accept, without spending more than the reduction is worth. Sometimes that means a new control. Sometimes it means insurance, a contract clause, or walking away from an activity. Sometimes it means a documented decision to live with the risk. None of these is the default answer; each is right in some situations and wrong in others.</p>
+    <p class="lead">Domain 3 carries the largest share of the exam, and response is where its judgment questions concentrate. This lesson builds the decision logic, then applies it to Corveth Logistics, a fictional freight company whose telematics vendor has a SOC 2 exception. The Risk Response Decision Console lets you compare all five response choices on one chart.</p>
+    <div class="mindset"><span class="tip-label">&#9878;&#65039; Think like a risk practitioner</span>The risk practitioner recommends; the risk owner decides. A response is selected for a business reason, not because a control is available. Transfer moves money, not accountability. And acceptance is a decision made at the right level of authority, written down, and revisited, never a default for risks nobody wanted to discuss.</div>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Learning Objectives</p>
+    <h2 class="h2">By the end of this lesson you will be able to&hellip;</h2>
+    <div class="rule"></div>
+    <ul class="objectives">
+      <li><span><strong>Distinguish</strong> accept, mitigate, transfer or share, and avoid, and the conditions under which each is appropriate. <em class="bloom-tag">Bloom: Understand</em></span></li>
+      <li><span><strong>Calculate</strong> residual ALE, annual response cost, and total cost of risk to compare responses. <em class="bloom-tag">Bloom: Apply</em></span></li>
+      <li><span><strong>Assign</strong> risk ownership and control ownership, and document a risk acceptance at the right level of authority. <em class="bloom-tag">Bloom: Apply</em></span></li>
+      <li><span><strong>Evaluate</strong> third-party risk across the vendor lifecycle, including SOC 2 reports, contract clauses, fourth parties, and SBOMs. <em class="bloom-tag">Bloom: Evaluate</em></span></li>
+      <li><span><strong>Differentiate</strong> issues, findings, exceptions, and exemptions, and route each through the correct process. <em class="bloom-tag">Bloom: Analyze</em></span></li>
+      <li><span><strong>Design</strong> a third-party due-diligence assignment built on a student-written SOC 2-style summary. <em class="bloom-tag">Bloom: Create</em></span></li>
+    </ul>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Key Terms</p>
+    <h2 class="h2">Vocabulary flashcards</h2>
+    <div class="rule"></div>
+    <p class="flip-hint-top">&#128072; Read the term, recall the definition, then click or press Enter to check yourself.</p>
+    <div class="vocab-grid">
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Risk Acceptance</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">A formal, documented decision by an authorized owner to retain a risk at its current level, with a rationale and a review date.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Risk Mitigation</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">Implementing controls that reduce the likelihood, the impact, or both, of a risk event.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Risk Transfer (Sharing)</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">Moving part of the financial impact to another party through insurance or contract. Accountability for the risk stays with the enterprise.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Risk Avoidance</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">Ending or never starting the activity that creates the risk. It removes the risk and also the benefit the activity provided.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Control Owner</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">The person accountable for designing, operating, and maintaining a specific control so that it works as intended.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">SOC 2 Type II Report</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">An independent auditor&rsquo;s report on a service organization&rsquo;s controls relevant to the Trust Services Criteria, covering design and operating effectiveness over a period.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Fourth Party</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">A vendor&rsquo;s own supplier or subcontractor, such as the cloud provider that hosts a SaaS product you buy.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Software Bill of Materials (SBOM)</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">A machine-readable inventory of the components and dependencies in a piece of software, used to find exposure when a component vulnerability is announced.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Exception</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">An approved, time-boxed deviation from a policy or standard, supported by compensating controls and ending on a stated expiry date.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Exemption</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">A formally approved, longer-term exclusion from a requirement, usually because it does not fit the situation, reviewed periodically.</div></div>
+        </div>
+      </button>
+
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Lesson Content</p>
+    <h2 class="h2">Study the material</h2>
+    <div class="rule"></div>
+    <div class="lesson-content">
+      <nav class="toc" aria-label="On this page">
+        <div class="toc-title">On this page</div>
+        <ul>
+          <li><a href="#s1">1. Response Options and Selection</a></li>
+          <li><a href="#s2">2. Cost-Benefit and Residual Risk</a></li>
+          <li><a href="#s3">3. Risk and Control Ownership</a></li>
+          <li><a href="#s4">4. Vendor and Supply Chain Risk</a></li>
+          <li><a href="#s5">5. Issues, Findings, Exceptions, Exemptions</a></li>
+          <li><a href="#s6">6. Interactive: Risk Response Decision Console</a></li>
+          <li><a href="#s7">7. Faculty Teaching Segment</a></li>
+        </ul>
+      </nav>
+      <div class="content-main">
+
+        <article class="content-section" id="s1">
+          <div class="cs-head"><span class="cs-num">1</span><h3>Risk Response Options and Selection Criteria</h3></div>
+          <p>The CRISC outline, the ISACA Risk IT Framework, and ISO 31000:2018 describe the same four basic choices, with slightly different names. ISO 31000 calls the step &ldquo;risk treatment&rdquo; and lists more variations, but they all reduce to the four below. Real responses often combine them: mitigate first, then transfer part of what remains, then accept the rest.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Option</th><th>What it does</th><th>When it fits</th><th>Corveth example</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Accept</td><td>Retains the risk at its current level, with a documented decision.</td><td>Risk is within appetite, or the cost of any response exceeds the benefit and an authorized person agrees.</td><td>A low-value internal dashboard runs on an older library; the owner accepts it for one year.</td></tr>
+              <tr><td class="term">Mitigate</td><td>Reduces likelihood, impact, or both with controls.</td><td>A cost-effective control can bring residual risk within appetite.</td><td>Require phishing-resistant MFA and token rotation on the telematics vendor portal.</td></tr>
+              <tr><td class="term">Transfer or share</td><td>Moves part of the financial impact to an insurer or a contract partner.</td><td>Impact is severe but infrequent, and the loss is mostly financial and insurable.</td><td>Cyber insurance that covers breach response and notification costs.</td></tr>
+              <tr><td class="term">Avoid</td><td>Stops the activity that creates the risk.</td><td>The risk exceeds appetite, no response reduces it enough at reasonable cost, and the activity is not essential.</td><td>Stop sending driver personal data to the vendor, or exit the service.</td></tr>
+            </tbody>
+          </table></div>
+          <h4>Selection criteria</h4>
+          <ul class="detail">
+            <li><strong>Appetite and tolerance:</strong> the response must bring residual risk within limits the board has set. This is the first test, not the last.</li>
+            <li><strong>Cost and benefit:</strong> the reduction in expected loss should exceed the cost of the response over its life, including operating costs, not just purchase price.</li>
+            <li><strong>Effect on objectives:</strong> a response that removes risk by crippling the business process fails the business, even when it succeeds on paper.</li>
+            <li><strong>Legal, regulatory, and contractual requirements:</strong> some controls are mandatory regardless of cost-benefit, such as PCI DSS v4.0 requirements for card data.</li>
+            <li><strong>Capability and timing:</strong> can the organization implement and operate the response, and how long will exposure remain until it does?</li>
+            <li><strong>Side effects and new risks:</strong> every response can create secondary risk, such as a new vendor, a more complex system, or an insurance exclusion.</li>
+          </ul>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a question asks for the PRIMARY consideration in selecting a response, look for alignment with risk appetite and business objectives, or cost-benefit. Answers that name a specific tool, &ldquo;industry best practice,&rdquo; or &ldquo;the most secure option&rdquo; are usually distractors.</div>
+          <div class="resource-link">
+            <span class="rl-icon" aria-hidden="true">&#129482;</span>
+            <div class="rl-body"><span class="rl-label">Explore with an eMate</span><span class="rl-text"><strong>Cybersecurity Controls</strong>: refresh control categories and functions before choosing which ones a mitigation response should include.</span></div>
+            <div class="rl-actions"><a class="btn secondary" href="https://d2hie3dpn9wvbb.cloudfront.net/controls/cybersecurity_controls.html" target="_blank" rel="noopener noreferrer">Cybersecurity Controls <span class="ext">&#8599;</span></a></div>
+          </div>
+        </article>
+
+        <article class="content-section" id="s2">
+          <div class="cs-head"><span class="cs-num">2</span><h3>Cost-Benefit Analysis and Residual Risk</h3></div>
+          <p>A response is worth funding when the risk it removes is worth more than it costs. In annual terms:</p>
+          <ul class="detail">
+            <li><strong>Value of a response:</strong> ALE before the response, minus ALE after the response, minus the annual cost of the response.</li>
+            <li><strong>Total cost of risk:</strong> residual ALE plus annual response cost. Comparing options on this single number shows which one leaves the business best off, provided residual risk is also within appetite.</li>
+            <li><strong>Annual cost:</strong> includes licenses, staff time, operating overhead, and the amortized cost of implementation. A cheap tool that needs a full-time analyst is not cheap.</li>
+          </ul>
+          <p>Cost-benefit is necessary but not sufficient. The lowest total cost of risk can still leave residual risk above appetite, for example when a cheap insurance policy leaves a large reputational loss uncovered. The two tests are applied together: first appetite, then cost.</p>
+          <h4>Cyber insurance: what it covers and what it does not</h4>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Policy term</th><th>Meaning</th><th>Risk practitioner&rsquo;s question</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Premium</td><td>The annual price of the policy.</td><td>Is it a cost of transfer that belongs in the cost-benefit comparison?</td></tr>
+              <tr><td class="term">Deductible or retention</td><td>The part of each loss the insured pays first.</td><td>Can we absorb this amount for every claim, perhaps more than once a year?</td></tr>
+              <tr><td class="term">Limit and sublimits</td><td>The maximum the insurer pays, overall and for specific loss types.</td><td>Does the limit match the tail of our loss distribution, not just the average?</td></tr>
+              <tr><td class="term">Exclusions</td><td>Events or conditions the policy does not cover.</td><td>Do any exclusions match our top scenarios, such as failures to maintain required controls?</td></tr>
+              <tr><td class="term">Conditions and warranties</td><td>Controls the insured promises to maintain, such as MFA or backups.</td><td>If a control fails, will a claim be denied?</td></tr>
+            </tbody>
+          </table></div>
+          <p>Insurance pays for financial loss. It does not restore member trust, prevent customers from leaving, or reduce the enterprise&rsquo;s accountability to regulators. Those impacts remain, which is why insurance alone rarely brings a severe reputational risk within appetite.</p>
+          <div class="in-practice"><span class="ip-label">&#128270; In practice</span><p>Corveth&rsquo;s CFO proposed buying a larger cyber policy instead of funding vendor-access controls because the premium was lower than the control budget. The risk practitioner showed that the policy covered notification and forensics but not the lost shipping contracts that would follow a public breach. Residual risk stayed above appetite even with the policy in place. The final response combined two controls with a smaller policy.</p></div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>If a question asks what remains with the organization after it buys insurance, the answer is accountability (and usually reputational impact). Insurance transfers financial loss, never ownership of the risk.</div>
+        </article>
+
+        <article class="content-section" id="s3">
+          <div class="cs-head"><span class="cs-num">3</span><h3>Risk and Control Ownership</h3></div>
+          <p>Two kinds of ownership run through every response. The <strong>risk owner</strong> is accountable for the risk: deciding the response, accepting residual risk, and answering for the outcome. The <strong>control owner</strong> is accountable for a specific control: making sure it is designed well, operates as intended, and produces evidence. One risk often depends on several controls with different owners, and one control often reduces several risks.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Activity</th><th>Risk owner</th><th>Control owner</th><th>Risk practitioner</th><th>Internal audit</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Select the response option</td><td>A</td><td>C</td><td>R (recommends)</td><td>I</td></tr>
+              <tr><td class="term">Accept residual risk</td><td>A</td><td>I</td><td>C</td><td>I</td></tr>
+              <tr><td class="term">Design and operate the control</td><td>I</td><td>A / R</td><td>C</td><td>I</td></tr>
+              <tr><td class="term">Monitor KRIs and report status</td><td>I</td><td>C</td><td>R</td><td>I</td></tr>
+              <tr><td class="term">Independently test the control</td><td>I</td><td>C</td><td>I</td><td>A / R</td></tr>
+            </tbody>
+          </table></div>
+          <p class="les-small" style="font-size:.85rem;color:var(--text-muted)">R = responsible, A = accountable, C = consulted, I = informed. This is an illustrative pattern; each enterprise sets its own RACI.</p>
+          <h4>Documenting a risk acceptance</h4>
+          <ul class="detail">
+            <li><strong>The risk:</strong> scenario, current and residual rating, and how it compares with appetite.</li>
+            <li><strong>The decision maker:</strong> the risk owner, plus senior management or the board when residual risk exceeds appetite or the owner&rsquo;s delegated authority.</li>
+            <li><strong>The rationale:</strong> why other responses were rejected, with costs considered.</li>
+            <li><strong>Conditions:</strong> compensating measures, KRIs to watch, and triggers that would reopen the decision.</li>
+            <li><strong>A review or expiry date:</strong> acceptance is not permanent. Risks and businesses change.</li>
+          </ul>
+          <div class="tip jade"><span class="tip-label">&#128204; Authority matters</span>An acceptance signed by someone without the authority to accept that level of risk is not an acceptance. It is an undocumented exposure with a signature on it. Delegation of authority should state who may accept which levels of residual risk.</div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a question asks who should accept a risk, choose the risk owner (a business manager with the authority and accountability), not IT, the CISO, or the risk practitioner. If the risk exceeds appetite, look for escalation to senior management.</div>
+        </article>
+
+        <article class="content-section" id="s4">
+          <div class="cs-head"><span class="cs-num">4</span><h3>Vendor and Supply Chain Risk</h3></div>
+          <p>Outsourcing a service does not outsource the risk. When Corveth sends shipment and driver data to a telematics vendor, the vendor operates the controls, but Corveth still answers to its customers and regulators if the data is exposed. Third-party risk management (TPRM) follows the vendor relationship from the first idea to the final exit.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Lifecycle stage</th><th>Key activities</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Planning and tiering</td><td>Define the business need; rate the vendor&rsquo;s criticality and data sensitivity to set the depth of review (for example, Tier 1 critical to Tier 3 low).</td></tr>
+              <tr><td class="term">Due diligence</td><td>Security questionnaires, SOC 2 or ISO/IEC 27001 certification evidence, financial health, ownership, location of data and support, fourth parties, incident history.</td></tr>
+              <tr><td class="term">Contracting</td><td>Security requirements, right to audit, breach notification timelines, subcontractor approval, data location, return and destruction of data, SLAs, indemnity, insurance requirements, termination assistance.</td></tr>
+              <tr><td class="term">Onboarding</td><td>Least-privilege access, integration security review, named contacts on both sides, inclusion in the risk register.</td></tr>
+              <tr><td class="term">Ongoing monitoring</td><td>Annual reassessment by tier, new SOC reports, security ratings, SLA and KRI tracking, news and breach monitoring, review of changes in fourth parties.</td></tr>
+              <tr><td class="term">Offboarding</td><td>Revoke access, retrieve or certify destruction of data, transition the service, close contract obligations, update the inventory.</td></tr>
+            </tbody>
+          </table></div>
+          <h4>Reading a SOC 2 report</h4>
+          <ul class="detail">
+            <li><strong>Type I vs Type II:</strong> a Type I report covers the design of controls at a point in time. A Type II report also tests operating effectiveness over a period, so it is far stronger evidence.</li>
+            <li><strong>Scope and period:</strong> confirm the system you use is in scope, and that the period is recent. A bridge (gap) letter from the vendor covers the time since the period ended.</li>
+            <li><strong>Exceptions:</strong> the auditor lists controls that did not operate as described. Read each one and the vendor&rsquo;s response, and judge the impact on your own risk.</li>
+            <li><strong>Complementary user entity controls (CUECs):</strong> controls the vendor assumes you operate, such as reviewing your own users&rsquo; access. If you do not perform them, the vendor&rsquo;s controls may not protect you.</li>
+            <li><strong>Subservice organizations:</strong> the vendor&rsquo;s own providers (fourth parties). A carve-out means their controls are excluded from the report and need separate assurance.</li>
+          </ul>
+          <h4>Software supply chain</h4>
+          <p>A software bill of materials (SBOM) lists the components inside a product. When a widely used library has a critical vulnerability, an SBOM lets the enterprise answer &ldquo;are we affected?&rdquo; in hours rather than weeks. Common SBOM formats include SPDX and CycloneDX. Ask critical software vendors whether they provide SBOMs and how quickly they notify customers of vulnerable components.</p>
+          <div class="in-practice"><span class="ip-label">&#128270; In practice</span><p>The telematics vendor&rsquo;s SOC 2 Type II report included one exception: quarterly access reviews for production systems were not performed in two of four quarters. The report also listed a CUEC requiring Corveth to review its own users on the vendor portal, which Corveth had never done. The risk practitioner recorded both gaps, recommended that the vendor relationship owner request a remediation plan and a bridge letter, and added a KRI for overdue access reviews.</p></div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a vendor&rsquo;s assurance report shows an exception, the FIRST step is usually to evaluate its impact on the enterprise&rsquo;s own risk, including whether compensating or complementary controls exist. Terminating the contract or ignoring the exception are both premature.</div>
+          <div class="resource-link">
+            <span class="rl-icon" aria-hidden="true">&#129482;</span>
+            <div class="rl-body"><span class="rl-label">Explore with an eMate</span><span class="rl-text"><strong>Heart-bleed Bug</strong>: one flaw in a shared open-source library exposed thousands of products, a clear case for SBOMs and supplier monitoring.</span></div>
+            <div class="rl-actions"><a class="btn secondary" href="https://d2hie3dpn9wvbb.cloudfront.net/heartbleed/heartbleed.html" target="_blank" rel="noopener noreferrer">Heart-bleed Bug <span class="ext">&#8599;</span></a></div>
+          </div>
+        </article>
+
+        <article class="content-section" id="s5">
+          <div class="cs-head"><span class="cs-num">5</span><h3>Issues, Findings, Exceptions, and Exemptions</h3></div>
+          <p>Every risk program generates a stream of known problems. Calling them by the right name matters, because each one follows a different path to closure.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Term</th><th>What it is</th><th>Source</th><th>How it is handled</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Issue</td><td>A known problem or gap that needs action, whatever its source.</td><td>Incidents, self-assessments, monitoring, staff reports</td><td>Logged with an owner and a due date, tracked to closure, linked to the affected risks.</td></tr>
+              <tr><td class="term">Finding</td><td>A documented result of an audit, assessment, or test that shows a control gap or noncompliance.</td><td>Internal or external audit, regulators, assessors</td><td>Management response, action plan, owner, due date, and validation by the party that raised it.</td></tr>
+              <tr><td class="term">Exception</td><td>An approved, time-boxed deviation from a policy or standard.</td><td>A business need that cannot meet the requirement yet</td><td>Risk assessed, compensating controls defined, approved by the right authority, expiry date set, reviewed before renewal.</td></tr>
+              <tr><td class="term">Exemption</td><td>A formally approved, longer-term exclusion from a requirement.</td><td>A requirement that does not fit the situation for the foreseeable future</td><td>Approved at a higher level than an exception, documented with rationale, reviewed periodically rather than expiring on a short timer.</td></tr>
+            </tbody>
+          </table></div>
+          <div class="compare-2col">
+            <div><b>Exception: temporary</b>&ldquo;This legacy server cannot take the required patch for 90 days. We will isolate it on its own network segment and monitor it daily. The exception expires on 31 March.&rdquo;</div>
+            <div><b>Exemption: longer-term</b>&ldquo;The field depots have no on-site staff, so the standard requiring a staffed visitor desk is replaced by camera monitoring. Approved by the security steering committee and reviewed each year.&rdquo;</div>
+          </div>
+          <h4>Making exceptions work</h4>
+          <ul class="detail">
+            <li><strong>Time-boxed:</strong> every exception has an expiry date. An exception that is renewed every year without change is an undeclared exemption and should be escalated.</li>
+            <li><strong>Compensating controls:</strong> the exception states what reduces the risk in the meantime, and the control owner confirms those controls operate.</li>
+            <li><strong>Risk-based approval:</strong> the approver is set by the residual risk, not by the requester&rsquo;s seniority.</li>
+            <li><strong>Tracked centrally:</strong> exceptions appear in the risk register and in reporting, so their combined effect is visible.</li>
+          </ul>
+          <h4>Escalation</h4>
+          <p>When an issue or finding misses its due date, or when the residual risk of an exception exceeds the approver&rsquo;s authority, it escalates along a defined path: control owner, risk owner, the risk committee, and then senior management or the board. Escalation is not a punishment. It puts the decision with someone who has the authority to make it.</p>
+          <div class="warn tip"><span class="tip-label">&#9888;&#65039; Common mistake</span>Treating an open audit finding as closed because management has written an action plan. A finding closes when the action is complete and the party that raised it (or an independent function) validates that the gap is fixed.</div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a team cannot meet a standard for a defined period, the BEST answer is usually a formal, time-limited exception with compensating controls and an expiry date. Changing the standard, ignoring the gap, or granting a permanent exemption are weaker answers.</div>
+        </article>
+
+        <article class="content-section" id="s6">
+          <div class="cs-head"><span class="cs-num">6</span><h3>Interactive: Risk Response Decision Console</h3></div>
+          <p>Corveth Logistics faces a breach at its telematics vendor that would expose shipment and driver data. Set the scenario on the left: how often a breach is expected each year, the financial loss per event (forensics, notification, regulatory costs, downtime), the reputational loss per event (lost contracts and customers, which insurance does not cover), and the appetite, expressed as the highest residual ALE the board will accept. Then choose a response and adjust its parameters. The console computes residual ALE, the annual cost of the response, and the total cost of risk (residual ALE plus response cost) for all five choices, and charts them side by side. All figures are annual and rounded to the nearest $1,000.</p>
+
+          <style>
+            .rrd-row{display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start;}
+            .rrd-in{flex:1 1 260px;min-width:0;}
+            .rrd-out{flex:1.4 1 320px;min-width:0;}
+            .rrd-sl{margin-bottom:.45rem;}
+            .rrd-sl label{display:flex;justify-content:space-between;gap:.5rem;font-size:.7rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.1rem;}
+            .rrd-sl label b{color:var(--gold);font-size:.8rem;letter-spacing:0;text-transform:none;white-space:nowrap;}
+            .rrd-sl input[type=range]{margin:0;}
+            .rrd-opts{display:flex;flex-wrap:wrap;gap:.35rem;margin:.35rem 0 .55rem;}
+            .rrd-opts .iw-btn{padding:.38rem .6rem;}
+            .rrd-params{background:var(--section-alt);border:1px solid var(--border);border-radius:5px;padding:.55rem .65rem;}
+            .rrd-params h6{font-family:Arial,sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--jade-dark);margin:0 0 .4rem;}
+            .rrd-chk{display:flex;align-items:flex-start;gap:.45rem;font-size:.78rem;color:var(--text-secondary);margin:.25rem 0;line-height:1.35;cursor:pointer;}
+            .rrd-chk input{margin-top:.15rem;accent-color:var(--gold);}
+            .rrd-chk em{font-style:normal;color:var(--text-muted);}
+            .rrd-hide{display:none;}
+            .rrd-p{font-family:Arial,sans-serif;font-size:.74rem;color:var(--text-muted);line-height:1.45;margin:.3rem 0 0;}
+            .rrd-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem;}
+            .rrd-tile{background:var(--section-alt);border:1px solid var(--border);border-radius:5px;padding:.45rem .6rem;min-width:0;}
+            .rrd-tile .rrd-k{display:block;font-family:Arial,sans-serif;font-size:.64rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);}
+            .rrd-tile .rrd-v{display:block;font-family:'Arial Narrow',Arial,sans-serif;font-weight:900;font-size:1.2rem;color:var(--text-primary);line-height:1.2;}
+            .rrd-tile .rrd-s{display:block;font-family:Arial,sans-serif;font-size:.68rem;color:var(--text-muted);}
+            .rrd-tile.rrd-bad .rrd-v{color:var(--wrong);} .rrd-tile.rrd-good .rrd-v{color:var(--correct);}
+            .rrd-out .iw-verdict{margin:.5rem 0;}
+            .iw.is-expanded .rrd-tile .rrd-v{font-size:1.35rem;}
+          </style>
+
+          <div class="iw" id="rrd-root">
+            <div class="iw-card">
+              <div class="iw-topbar">
+                <span class="iw-eyebrow">Interactive &middot; Corveth Logistics &middot; compare five responses</span>
+                <button type="button" class="iw-expand" aria-expanded="false" title="Open a larger view">&#10530; Expand</button>
+              </div>
+              <div class="rrd-row">
+                <div class="iw-panel rrd-in">
+                  <h5 class="iw-h5">Scenario: telematics vendor breach</h5>
+                  <div class="rrd-sl"><label for="rrd-aro"><span>Breaches per year</span><b id="rrd-aro-v"></b></label><input type="range" id="rrd-aro" min="0.05" max="1" step="0.05" value="0.4"></div>
+                  <div class="rrd-sl"><label for="rrd-fin"><span>Financial loss per event</span><b id="rrd-fin-v"></b></label><input type="range" id="rrd-fin" min="250" max="5000" step="50" value="2000"></div>
+                  <div class="rrd-sl"><label for="rrd-rep"><span>Reputational loss per event</span><b id="rrd-rep-v"></b></label><input type="range" id="rrd-rep" min="0" max="2000" step="50" value="750"></div>
+                  <div class="rrd-sl"><label for="rrd-app"><span>Appetite: max residual ALE</span><b id="rrd-app-v"></b></label><input type="range" id="rrd-app" min="100" max="1200" step="25" value="400"></div>
+                  <h5 class="iw-h5" style="margin-top:.55rem">Choose a response</h5>
+                  <div class="rrd-opts" role="group" aria-label="Response option">
+                    <button type="button" class="iw-btn" data-o="accept" aria-pressed="false">Accept</button>
+                    <button type="button" class="iw-btn" data-o="mitigate" aria-pressed="false">Mitigate</button>
+                    <button type="button" class="iw-btn" data-o="transfer" aria-pressed="true">Transfer</button>
+                    <button type="button" class="iw-btn" data-o="avoid" aria-pressed="false">Avoid</button>
+                    <button type="button" class="iw-btn" data-o="share" aria-pressed="false">Share</button>
+                  </div>
+                  <div class="rrd-params" id="rrd-pp-accept">
+                    <h6>Accept: retain the risk</h6>
+                    <label class="rrd-chk"><input type="checkbox" id="rrd-own"> <span>Risk owner (VP Operations) signs the acceptance with a review date</span></label>
+                    <label class="rrd-chk"><input type="checkbox" id="rrd-snr"> <span>Senior management approves <em>(required when residual risk is above appetite)</em></span></label>
+                    <p class="rrd-p">Response cost: $10k a year for monitoring and the annual re-review.</p>
+                  </div>
+                  <div class="rrd-params" id="rrd-pp-mitigate">
+                    <h6>Mitigate: select up to three controls</h6>
+                    <label class="rrd-chk"><input type="checkbox" id="rrd-c1" checked> <span>Phishing-resistant MFA and token rotation on the vendor portal <em>($70k/yr, &minus;40% frequency)</em></span></label>
+                    <label class="rrd-chk"><input type="checkbox" id="rrd-c2" checked> <span>Anomaly monitoring on the telematics data feed <em>($90k/yr, &minus;30% frequency)</em></span></label>
+                    <label class="rrd-chk"><input type="checkbox" id="rrd-c3"> <span>Contractual security requirements with an annual vendor assessment <em>($40k/yr, &minus;20% frequency)</em></span></label>
+                    <p class="rrd-p">Reductions combine multiplicatively: two 50% controls leave 25%, not 0%.</p>
+                  </div>
+                  <div class="rrd-params" id="rrd-pp-transfer">
+                    <h6>Transfer: cyber insurance (per event)</h6>
+                    <div class="rrd-sl"><label for="rrd-prem"><span>Annual premium</span><b id="rrd-prem-v"></b></label><input type="range" id="rrd-prem" min="25" max="250" step="5" value="85"></div>
+                    <div class="rrd-sl"><label for="rrd-ded"><span>Deductible</span><b id="rrd-ded-v"></b></label><input type="range" id="rrd-ded" min="0" max="1000" step="25" value="250"></div>
+                    <div class="rrd-sl"><label for="rrd-lim"><span>Policy limit</span><b id="rrd-lim-v"></b></label><input type="range" id="rrd-lim" min="250" max="5000" step="250" value="1500"></div>
+                  </div>
+                  <div class="rrd-params" id="rrd-pp-avoid">
+                    <h6>Avoid: exit the telematics service</h6>
+                    <div class="rrd-sl"><label for="rrd-ben"><span>Lost annual benefit (routing and fuel savings)</span><b id="rrd-ben-v"></b></label><input type="range" id="rrd-ben" min="0" max="2000" step="25" value="650"></div>
+                  </div>
+                  <div class="rrd-params" id="rrd-pp-share">
+                    <h6>Share: contract indemnity from the vendor</h6>
+                    <div class="rrd-sl"><label for="rrd-cap"><span>Indemnity cap per event</span><b id="rrd-cap-v"></b></label><input type="range" id="rrd-cap" min="0" max="3000" step="100" value="1000"></div>
+                    <div class="rrd-sl"><label for="rrd-upl"><span>Annual contract price increase</span><b id="rrd-upl-v"></b></label><input type="range" id="rrd-upl" min="0" max="200" step="5" value="60"></div>
+                  </div>
+                </div>
+                <div class="iw-panel rrd-out">
+                  <div class="rrd-tiles">
+                    <div class="rrd-tile"><span class="rrd-k">Residual ALE</span><span class="rrd-v" id="rrd-t1">&nbsp;</span><span class="rrd-s" id="rrd-t1s">&nbsp;</span></div>
+                    <div class="rrd-tile"><span class="rrd-k">Annual response cost</span><span class="rrd-v" id="rrd-t2">&nbsp;</span><span class="rrd-s" id="rrd-t2s">&nbsp;</span></div>
+                    <div class="rrd-tile"><span class="rrd-k">Total cost of risk</span><span class="rrd-v" id="rrd-t3">&nbsp;</span><span class="rrd-s">residual ALE + response cost</span></div>
+                    <div class="rrd-tile" id="rrd-t4b"><span class="rrd-k">Within appetite?</span><span class="rrd-v" id="rrd-t4">&nbsp;</span><span class="rrd-s" id="rrd-t4s">&nbsp;</span></div>
+                  </div>
+                  <div aria-live="polite">
+                    <div class="iw-verdict" id="rrd-verdict"><span class="iw-pill" id="rrd-pill">Ready</span><span id="rrd-coach">Choose a response.</span></div>
+                  </div>
+                  <canvas id="rrd-cv" role="img" aria-label="Stacked bars of residual ALE and response cost for each of the five responses, with the appetite line"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <script>
+          (function(){
+            var root=document.getElementById('rrd-root'); if(!root) return;
+            var $=function(id){return root.querySelector('#'+id);};
+            var OPTS=['accept','mitigate','transfer','avoid','share'];
+            var NAMES={accept:'Accept',mitigate:'Mitigate',transfer:'Transfer',avoid:'Avoid',share:'Share'};
+            var CTRL=[{id:'rrd-c1',cost:70,red:0.40},{id:'rrd-c2',cost:90,red:0.30},{id:'rrd-c3',cost:40,red:0.20}];
+            var ACCEPT_COST=10, sel='transfer', last=null;
+            /* All money values are in $ thousands */
+            function k(v){v=Math.round(v);if(v===0)return '$0';return v>=1000?'$'+parseFloat((v/1000).toFixed(3))+'M':'$'+v+'k';}
+            function num(id){return +$(id).value;}
+            function css(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}
+            function compute(){
+              var aro=num('rrd-aro'), fin=num('rrd-fin'), rep=num('rrd-rep'), app=num('rrd-app');
+              var inh=aro*(fin+rep), o={};
+              o.accept={res:inh,cost:ACCEPT_COST};
+              var f=1,c=0,n=0; CTRL.forEach(function(x){if($(x.id).checked){f*=1-x.red;c+=x.cost;n++;}});
+              o.mitigate={res:inh*f,cost:c,n:n,f:f};
+              var ded=num('rrd-ded'), lim=num('rrd-lim'), rec=Math.min(Math.max(fin-ded,0),lim);
+              o.transfer={res:aro*(rep+fin-rec),cost:num('rrd-prem'),rec:rec,retFin:aro*(fin-rec),rep:aro*rep};
+              o.avoid={res:0,cost:num('rrd-ben')};
+              var cap=num('rrd-cap'), ind=Math.min(fin,cap);
+              o.share={res:aro*(rep+fin-ind),cost:num('rrd-upl'),ind:ind,rep:aro*rep};
+              /* round residual and cost first so displayed totals always add up */
+              OPTS.forEach(function(key){var x=o[key];x.res=Math.round(x.res);x.cost=Math.round(x.cost);x.total=x.res+x.cost;x.ok=x.res<=app;});
+              var best=null; OPTS.forEach(function(key){var x=o[key];if(x.ok&&(!best||x.total<o[best].total))best=key;});
+              return {aro:aro,fin:fin,rep:rep,app:app,inh:Math.round(inh),o:o,best:best};
+            }
+            function setPill(cls,txt,msg){var v=$('rrd-verdict');v.className='iw-verdict '+cls;var p=$('rrd-pill');p.className='iw-pill '+cls;p.textContent=txt;$('rrd-coach').innerHTML=msg;}
+            function render(){
+              $('rrd-aro-v').textContent=num('rrd-aro').toFixed(2)+' (1 in '+(1/num('rrd-aro')).toFixed(1)+' yrs)';
+              $('rrd-fin-v').textContent=k(num('rrd-fin')); $('rrd-rep-v').textContent=k(num('rrd-rep')); $('rrd-app-v').textContent=k(num('rrd-app'));
+              $('rrd-prem-v').textContent=k(num('rrd-prem')); $('rrd-ded-v').textContent=k(num('rrd-ded')); $('rrd-lim-v').textContent=k(num('rrd-lim'));
+              $('rrd-ben-v').textContent=k(num('rrd-ben')); $('rrd-cap-v').textContent=k(num('rrd-cap')); $('rrd-upl-v').textContent=k(num('rrd-upl'));
+              OPTS.forEach(function(key){$('rrd-pp-'+key).classList.toggle('rrd-hide',key!==sel);});
+              root.querySelectorAll('.rrd-opts .iw-btn').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.o===sel?'true':'false');});
+              var R=compute(), x=R.o[sel]; last=R;
+              $('rrd-t1').textContent=k(x.res); $('rrd-t1s').textContent='Inherent ALE: '+k(R.inh);
+              $('rrd-t2').textContent=k(x.cost); $('rrd-t2s').textContent=NAMES[sel];
+              $('rrd-t3').textContent=k(x.total);
+              $('rrd-t4').textContent=x.ok?'Yes':'No'; $('rrd-t4s').textContent='Limit: residual ALE ≤ '+k(R.app);
+              $('rrd-t4b').className='rrd-tile '+(x.ok?'rrd-good':'rrd-bad');
+              verdict(R); draw();
+            }
+            function verdict(R){
+              var x=R.o[sel], b=R.best, bx=b?R.o[b]:null, msg='', cls, pill;
+              var bestTxt=b?NAMES[b]+' has the lowest total cost of risk among options that meet appetite ('+k(bx.total)+': '+k(bx.res)+' residual + '+k(bx.cost)+' cost).':'No single option brings residual ALE within the '+k(R.app)+' appetite. Combine responses (for example, mitigate and then insure what remains) or escalate to senior management for a decision.';
+              if(!b){cls='bad';pill='No option meets appetite';msg=bestTxt;}
+              else if(sel===b){cls='good';pill='Best option';msg=bestTxt+' It meets appetite and leaves the business better off than every other compliant option'+(function(){var r=null;OPTS.forEach(function(q){if(q!==b&&R.o[q].ok&&(!r||R.o[q].total<R.o[r].total))r=q;});return r?', saving '+k(R.o[r].total-bx.total)+' a year over '+NAMES[r]:'';})()+'.';}
+              else if(x.ok){cls='warn';pill='Meets appetite, costs more';msg=NAMES[sel]+' brings residual ALE to '+k(x.res)+', within appetite, but its total cost of risk is '+k(x.total)+', which is '+k(x.total-bx.total)+' a year more than '+NAMES[b]+'. '+bestTxt;}
+              else {cls='bad';pill='Above appetite';msg=NAMES[sel]+' leaves residual ALE at '+k(x.res)+', above the '+k(R.app)+' appetite, even though its total cost of risk is '+k(x.total)+'. Cost-benefit cannot override appetite. '+bestTxt;}
+              /* option-specific coaching */
+              if(sel==='accept'){
+                if(!x.ok&&!$('rrd-snr').checked){cls='bad';pill='Unauthorized acceptance';msg='Accepting '+k(x.res)+' a year of residual risk when appetite is '+k(R.app)+' needs approval from senior management (or the board, under the delegation of authority). A risk owner cannot accept risk above appetite alone. '+bestTxt;}
+                else if(!x.ok){cls='warn';pill='Accepted above appetite';msg='Senior management has approved accepting '+k(x.res)+' a year above the '+k(R.app)+' appetite. That is a legitimate decision only if it is documented, time-bound, monitored with KRIs, and revisited. It is still not the best economic choice: '+bestTxt;}
+                if(!$('rrd-own').checked) msg+=' The acceptance is also incomplete: the risk owner has not signed it with a review date.';
+              }
+              if(sel==='transfer'){msg+=' Insurance moves the financial impact only: Corveth still carries '+k(x.rep)+' a year of reputational loss and '+k(x.retFin)+' a year of retained financial loss (deductible and amounts above the limit), and it remains accountable to customers and regulators.';}
+              if(sel==='share'){msg+=' Indemnity moves the financial impact only, and only up to '+k(x.ind)+' per event, if the vendor can pay. The '+k(x.rep)+' a year of reputational loss and the accountability stay with Corveth.';}
+              if(sel==='avoid'){msg+=' Avoidance removes this risk by giving up the service, so '+k(x.cost)+' a year of routing and fuel savings disappears. That is a business decision for the risk owner, not a security default.';}
+              if(sel==='mitigate'){msg+=x.n===0?' No controls are selected, so this is acceptance under another name.':' The selected controls leave '+Math.round(x.f*100)+'% of the original breach frequency. Each control needs a named control owner and testing.';}
+              if(b&&b!=='accept'&&bx.total>R.o.accept.total) msg+=' Note that the cheapest compliant option costs more each year than simply carrying the risk ('+k(R.o.accept.total)+'). When that happens, the response is not cost-justified: senior management may accept the risk above appetite, or the board may need to revisit the appetite itself.';
+              if(b==='avoid'&&sel!=='mitigate') msg+=' Before giving up the service, check whether a stronger mitigation package meets appetite at a lower total cost.';
+              setPill(cls,pill,msg);
+            }
+            function draw(){
+              var cv=$('rrd-cv'); if(!cv||!last) return;
+              var w=cv.parentNode.clientWidth-2; if(w<=0) return;
+              var h;
+              if(root.classList.contains('is-expanded')){h=Math.min(w*0.55,window.innerHeight-cv.getBoundingClientRect().top-90);h=Math.max(h,220);}
+              else h=Math.max(220,Math.min(w*0.55,280));
+              var dpr=window.devicePixelRatio||1;
+              cv.width=Math.round(w*dpr); cv.height=Math.round(h*dpr); cv.style.height=h+'px';
+              var g=cv.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,w,h);
+              var R=last, cGold=css('--gold')||'#86198f', cJade=css('--jade')||'#b45309', cMuted=css('--text-muted')||'#6c5669', cBorder=css('--border')||'#e3d2e1', cWrong=css('--wrong')||'#b91c1c', cText=css('--text-primary')||'#2a1328', cOk=css('--correct')||'#15803d';
+              var L=64,Rr=10,T=26,B=40,pw=w-L-Rr,ph=h-T-B;
+              var maxV=R.app; OPTS.forEach(function(q){maxV=Math.max(maxV,R.o[q].total);});
+              var step=[50,100,200,250,500,1000,2000][0]; [50,100,200,250,500,1000,2000].some(function(s){step=s;return maxV/s<=6;});
+              var ymax=Math.ceil(maxV*1.12/step)*step;
+              function Y(v){return T+ph-v/ymax*ph;}
+              g.font='11px Arial, sans-serif'; g.textAlign='right'; g.textBaseline='middle'; g.lineWidth=1;
+              for(var v=0;v<=ymax+1e-9;v+=step){var yy=Y(v);g.strokeStyle=cBorder;g.beginPath();g.moveTo(L,yy);g.lineTo(L+pw,yy);g.stroke();g.fillStyle=cMuted;g.fillText(k(v),L-6,yy);}
+              g.strokeStyle=cMuted; g.beginPath(); g.moveTo(L,T); g.lineTo(L,T+ph); g.lineTo(L+pw,T+ph); g.stroke();
+              g.save(); g.translate(10,T+ph/2); g.rotate(-Math.PI/2); g.textAlign='center'; g.fillStyle=cText; g.font='bold 11px Arial, sans-serif'; g.fillText('$ per year',0,0); g.restore();
+              var slot=pw/OPTS.length, bw=Math.min(64,slot*0.56);
+              OPTS.forEach(function(q,i){
+                var x=R.o[q], cx=L+slot*(i+0.5), x0=cx-bw/2, on=q===sel;
+                g.globalAlpha=on?1:0.38;
+                g.fillStyle=cGold; g.fillRect(x0,Y(x.res),bw,Y(0)-Y(x.res));
+                g.fillStyle=cJade; g.fillRect(x0,Y(x.total),bw,Y(x.res)-Y(x.total));
+                g.globalAlpha=1;
+                if(on){g.strokeStyle=cText;g.lineWidth=2;g.strokeRect(x0-1,Y(x.total)-1,bw+2,Y(0)-Y(x.total)+1);g.lineWidth=1;}
+                g.fillStyle=cText; g.font=(on?'bold ':'')+'11px Arial, sans-serif'; g.textAlign='center'; g.textBaseline='bottom';
+                g.fillText(k(x.total),cx,Y(x.total)-3);
+                g.textBaseline='top'; g.fillStyle=on?cText:cMuted; g.fillText(NAMES[q],cx,T+ph+5);
+                g.font='bold 10px Arial, sans-serif'; g.fillStyle=x.ok?cOk:cWrong; g.fillText(x.ok?(q===R.best?'★ best':'meets'):'above',cx,T+ph+19);
+              });
+              /* appetite line */
+              var ay=Y(R.app); g.strokeStyle=cWrong; g.lineWidth=1.5; g.setLineDash([6,4]); g.beginPath(); g.moveTo(L,ay); g.lineTo(L+pw,ay); g.stroke(); g.setLineDash([]);
+              g.font='bold 10px Arial, sans-serif'; g.textAlign='right'; g.textBaseline='bottom'; var at='Appetite: residual ALE ≤ '+k(R.app), aw=g.measureText(at).width; g.fillStyle='rgba(255,255,255,0.88)'; g.fillRect(L+pw-aw-4,ay-15,aw+4,13); g.fillStyle=cWrong; g.fillText(at,L+pw-2,ay-2);
+              /* legend */
+              g.textAlign='left'; g.textBaseline='middle'; g.font='11px Arial, sans-serif';
+              g.fillStyle=cGold; g.fillRect(L,8,12,10); g.fillStyle=cText; g.fillText('Residual ALE',L+16,13);
+              g.fillStyle=cJade; g.fillRect(L+110,8,12,10); g.fillStyle=cText; g.fillText('Response cost',L+126,13);
+            }
+            root.querySelectorAll('.rrd-opts .iw-btn').forEach(function(b){b.addEventListener('click',function(){sel=b.dataset.o;render();});});
+            root.querySelectorAll('input').forEach(function(i){i.addEventListener('input',render);i.addEventListener('change',render);});
+            var rt=null; window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(draw,30);});
+            render();
+          })();
+          </script>
+
+          <div class="in-practice"><span class="ip-label">&#128270; In practice</span><p>With the default figures, insurance looks attractive: the lowest total cost of risk on the chart. Yet it leaves residual ALE above appetite, because the $300k a year of reputational loss is not insurable. Avoidance meets appetite but gives up $650k a year of savings. Add the third mitigation control and watch the answer change: three modest controls bring residual ALE within appetite at a lower total cost than walking away. That is the conversation the risk practitioner brings to Corveth&rsquo;s VP of Operations, who makes the call.</p></div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>This console teaches the order of the tests. First: does the response bring residual risk within appetite? Second: among responses that do, which is most cost-effective? Third: who must approve it? Transfer never moves accountability, and acceptance above appetite always needs a higher authority than the risk owner alone.</div>
+        </article>
+
+        <article class="content-section" id="s7">
+          <div class="cs-head"><span class="cs-num">7</span><h3>Faculty Teaching Segment</h3></div>
+          <p>Third-party risk is one of the most marketable GRC skills a student can bring to an interview, and it is easy to teach with documents students write and then trade.</p>
+          <ul class="detail">
+            <li><strong>Signature assignment:</strong> in round one, each team writes a three-page SOC 2-style summary for a fictional SaaS vendor: system description, scope and period, five control descriptions, two exceptions with management responses, three CUECs, and one carved-out subservice organization. In round two, teams swap summaries and act as the customer&rsquo;s risk practitioner. They tier the vendor, evaluate each exception and CUEC against the customer&rsquo;s risk, recommend a response (with contract clauses), and write a one-page memo to the vendor relationship owner.</li>
+            <li><strong>Rubric criteria:</strong> (1) the vendor tier is justified by criticality and data sensitivity; (2) each exception is evaluated for impact on the customer&rsquo;s own risk, not just restated; (3) the recommended response is cost-justified, keeps accountability with the customer, and names specific contract clauses; (4) CUECs and fourth parties are identified and assigned to an owner on the customer side.</li>
+            <li><strong>Lab idea:</strong> students rebuild the Decision Console in a spreadsheet using synthetic figures for a fictional college&rsquo;s learning platform vendor, then add a sixth column for a combined response (mitigate plus insure) and show whether it beats every single option. They finish by drafting a time-boxed exception request, with compensating controls and an expiry date, for one control the vendor cannot meet this term.</li>
+            <li><strong>Course fit:</strong> an IT risk management, GRC, or IT audit course, or a supply chain security elective. Supports the CAE-CD Supply Chain Security (SCS), Cybersecurity Planning and Management (CPM), and Policy, Legal, Ethics, and Compliance (PLE) Knowledge Units.</li>
+          </ul>
+          <div class="tip"><span class="tip-label">&#127891; Teaching note</span>Give each pair a one-page decision worksheet (as a file or printed handout) with a row for each of the five responses and columns for residual ALE, response cost, total cost of risk, within appetite, and approver. Pairs fill it from the console with the default settings, then again after changing one assumption you assign (a higher reputational loss, a larger deductible, a lower appetite). Debrief by asking which assumption changed the best answer and why.</div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="emates">
+    <p class="eyebrow">Explore with eMates</p>
+    <h2 class="h2">Interactive refreshers for this lesson</h2>
+    <div class="rule"></div>
+    <p class="lead">Short, self-paced eMates from the myEMATES library. Each opens in a new tab. Concept refreshers support your own exam study. Student-ready modules also work as warm-ups in your own courses.</p>
+    <div class="em-grid">
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 4</span></div><h3>Cybersecurity Controls</h3><p>Control categories and functions, the building blocks of every mitigation response in the Decision Console.</p><div class="em-foot"><span class="em-level">Concept refresher</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/controls/cybersecurity_controls.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Cybersecurity Controls (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 5</span></div><h3>Heart-bleed Bug</h3><p>A shared library flaw that reached thousands of vendors: a case study for SBOMs and supplier monitoring.</p><div class="em-foot"><span class="em-level student">Student-ready</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/heartbleed/heartbleed.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Heart-bleed Bug (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 4</span></div><h3>Risk Management</h3><p>The full risk cycle, showing where response sits after analysis and before monitoring.</p><div class="em-foot"><span class="em-level">Concept refresher</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/risk_management/risk_management.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Risk Management (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 3</span></div><h3>Ransomware</h3><p>Walk through a ransomware attack and weigh which responses (controls, insurance, recovery) change its outcome.</p><div class="em-foot"><span class="em-level student">Student-ready</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/ransomware/RansomwareAttack.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Ransomware (opens in a new tab)">Open &#8599;</a></div></article>
+    </div>
+  </section>
+
+  <section class="block" id="practice-this-lesson">
+    <p class="eyebrow">Practice</p>
+    <h2 class="h2">Practice this lesson</h2>
+    <div class="rule"></div>
+    <p class="lead">Self-checking practice for this lesson, ready to use with your own students. Each item ends with a report you can print or save as a PDF. See all items in the <a href="practices.html">CRISC Practices</a> and the <a href="labs.html">CRISC Risk Lab</a>.</p>
+    <div class="pl-grid">
+      <article class="pl-card"><div class="pl-top"><span class="pl-type">CRISC Practices &middot; A6</span><span class="pl-time">&#9201; 40 min</span></div><h3><a href="activity06.html">Respond, Own, and Manage Third Parties</a></h3><p>Choose responses, run the cost-benefit math, tell exceptions from exemptions, and work the third-party lifecycle and a SOC 2 exception.</p><div class="pl-foot"><span class="pl-level">Intermediate</span><a class="pl-open" href="activity06.html" aria-label="Open activity A6: Respond, Own, and Manage Third Parties">Open &#8594;</a></div></article>
+      <article class="pl-card pl-lab"><div class="pl-top"><span class="pl-type">CRISC Risk Lab &middot; B4</span><span class="pl-time">&#9201; 60 min</span></div><h3><a href="lab04.html">Third-Party Risk Review</a></h3><p>Tier a vendor and work its SOC 2 report, questionnaire, contract, and fourth parties to find gaps and choose a response.</p><div class="pl-foot"><span class="pl-level">Intermediate</span><a class="pl-open" href="lab04.html" aria-label="Open lab B4: Third-Party Risk Review">Open &#8594;</a></div></article>
+    </div>
+  </section>
+
+  <section class="block" id="knowledge-check">
+    <p class="eyebrow">Scored Knowledge Check</p>
+    <h2 class="h2">Test your understanding</h2>
+    <div class="rule"></div>
+    <p class="lead" style="margin-bottom:1.5rem">Select the best answer for each question, then submit for your score and the rationale for every item. Like the exam, several options may be true; choose the best one.</p>
+    <div class="quiz-card">
+      <form id="quiz">
+
+        <div class="q" data-answer="C">
+          <p class="q-stem"><span class="qn">Q1.</span>A risk exceeds appetite. Every mitigation option analyzed costs more than the loss it would prevent, and the risk owner proposes to accept the risk. What should the risk practitioner do NEXT?</p>
+          <fieldset class="options">
+            <legend>Question 1 options</legend>
+            <label class="opt"><input type="radio" name="q1" value="A"><span><span class="opt-letter">A.</span> Implement the least expensive mitigation option anyway</span></label>
+            <label class="opt"><input type="radio" name="q1" value="B"><span><span class="opt-letter">B.</span> Report the risk owner to internal audit</span></label>
+            <label class="opt"><input type="radio" name="q1" value="C"><span><span class="opt-letter">C.</span> Ensure the acceptance is escalated to the level of authority required for risk above appetite and documented with a review date</span></label>
+            <label class="opt"><input type="radio" name="q1" value="D"><span><span class="opt-letter">D.</span> Record the acceptance in the register as the owner requested</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: C.</b> Accepting risk above appetite is possible but requires approval above the risk owner&rsquo;s normal authority and proper documentation. Implementing an uneconomic control ignores the analysis, reporting to audit is not the escalation path, and recording the acceptance as requested skips the required approval.</div>
+        </div>
+
+        <div class="q" data-answer="A">
+          <p class="q-stem"><span class="qn">Q2.</span>Corveth buys a cyber insurance policy that covers breach response and notification costs for incidents at its telematics vendor. What remains with Corveth?</p>
+          <fieldset class="options">
+            <legend>Question 2 options</legend>
+            <label class="opt"><input type="radio" name="q2" value="A"><span><span class="opt-letter">A.</span> Accountability for the risk and the reputational impact of a breach</span></label>
+            <label class="opt"><input type="radio" name="q2" value="B"><span><span class="opt-letter">B.</span> Only the deductible on each claim</span></label>
+            <label class="opt"><input type="radio" name="q2" value="C"><span><span class="opt-letter">C.</span> Nothing, because the insurer now owns the risk</span></label>
+            <label class="opt"><input type="radio" name="q2" value="D"><span><span class="opt-letter">D.</span> Responsibility for the vendor&rsquo;s controls, which shifts to the insurer</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: A.</b> Insurance transfers part of the financial impact. Accountability to customers and regulators, and reputational harm, stay with the enterprise. The deductible is retained too, but it is only part of what remains. The insurer never owns the risk or the vendor&rsquo;s controls.</div>
+        </div>
+
+        <div class="q" data-answer="D">
+          <p class="q-stem"><span class="qn">Q3.</span>Which is the PRIMARY criterion for selecting a risk response?</p>
+          <fieldset class="options">
+            <legend>Question 3 options</legend>
+            <label class="opt"><input type="radio" name="q3" value="A"><span><span class="opt-letter">A.</span> The response with the lowest implementation cost</span></label>
+            <label class="opt"><input type="radio" name="q3" value="B"><span><span class="opt-letter">B.</span> The response that implements the most controls from NIST SP 800-53 Rev. 5</span></label>
+            <label class="opt"><input type="radio" name="q3" value="C"><span><span class="opt-letter">C.</span> The response used by most peer organizations</span></label>
+            <label class="opt"><input type="radio" name="q3" value="D"><span><span class="opt-letter">D.</span> The response that brings residual risk within appetite at a cost justified by the benefit</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: D.</b> A response must bring residual risk within appetite and be cost-justified. The cheapest response may not reach appetite, more controls are not automatically better, and peer practice does not reflect this enterprise&rsquo;s objectives or appetite.</div>
+        </div>
+
+        <div class="q" data-answer="B">
+          <p class="q-stem"><span class="qn">Q4.</span>A critical vendor&rsquo;s SOC 2 Type II report contains an exception: production access reviews were not performed for half of the period. What should the risk practitioner do FIRST?</p>
+          <fieldset class="options">
+            <legend>Question 4 options</legend>
+            <label class="opt"><input type="radio" name="q4" value="A"><span><span class="opt-letter">A.</span> Recommend terminating the contract</span></label>
+            <label class="opt"><input type="radio" name="q4" value="B"><span><span class="opt-letter">B.</span> Evaluate the exception&rsquo;s impact on the enterprise&rsquo;s risk, including related complementary user entity controls and the vendor&rsquo;s response</span></label>
+            <label class="opt"><input type="radio" name="q4" value="C"><span><span class="opt-letter">C.</span> Accept the report, since a Type II report was issued by an independent auditor</span></label>
+            <label class="opt"><input type="radio" name="q4" value="D"><span><span class="opt-letter">D.</span> Request a SOC 1 report instead</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: B.</b> The practitioner first determines what the exception means for the enterprise&rsquo;s own risk, considering CUECs, compensating controls, and the vendor&rsquo;s remediation. Termination is premature, an independent report can still contain significant exceptions, and a SOC 1 covers controls relevant to financial reporting, not this security concern.</div>
+        </div>
+
+        <div class="q" data-answer="D">
+          <p class="q-stem"><span class="qn">Q5.</span>A plant system cannot receive a required security patch for 90 days because the equipment vendor has not certified it. What is the BEST way to handle the deviation from the patching standard?</p>
+          <fieldset class="options">
+            <legend>Question 5 options</legend>
+            <label class="opt"><input type="radio" name="q5" value="A"><span><span class="opt-letter">A.</span> Grant a permanent exemption for the system</span></label>
+            <label class="opt"><input type="radio" name="q5" value="B"><span><span class="opt-letter">B.</span> Revise the patching standard to allow 120 days for all systems</span></label>
+            <label class="opt"><input type="radio" name="q5" value="C"><span><span class="opt-letter">C.</span> Record an audit finding against the plant manager</span></label>
+            <label class="opt"><input type="radio" name="q5" value="D"><span><span class="opt-letter">D.</span> Approve a time-boxed exception with compensating controls and an expiry date</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: D.</b> A temporary inability to comply calls for a formal exception: assessed, approved, supported by compensating controls such as network isolation, and set to expire. An exemption is for longer-term exclusions, weakening the standard for everyone overreacts to one case, and a finding is an assessment result, not a way to manage an approved deviation.</div>
+        </div>
+
+        <div class="q" data-answer="A">
+          <p class="q-stem"><span class="qn">Q6.</span>The risk owner has chosen to mitigate the telematics vendor risk with phishing-resistant MFA on the vendor portal. Who is accountable for ensuring that this control operates effectively day to day?</p>
+          <fieldset class="options">
+            <legend>Question 6 options</legend>
+            <label class="opt"><input type="radio" name="q6" value="A"><span><span class="opt-letter">A.</span> The control owner designated for the MFA control</span></label>
+            <label class="opt"><input type="radio" name="q6" value="B"><span><span class="opt-letter">B.</span> The risk practitioner who recommended it</span></label>
+            <label class="opt"><input type="radio" name="q6" value="C"><span><span class="opt-letter">C.</span> Internal audit</span></label>
+            <label class="opt"><input type="radio" name="q6" value="D"><span><span class="opt-letter">D.</span> The telematics vendor</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: A.</b> The control owner is accountable for a control&rsquo;s design and operation. The practitioner advises and monitors, internal audit provides independent assurance, and even when a vendor performs part of the work, accountability for the control stays with a named owner at Corveth.</div>
+        </div>
+
+        <div class="q" data-answer="C">
+          <p class="q-stem"><span class="qn">Q7.</span>Corveth is negotiating a contract with a new critical vendor. Which clause MOST directly supports ongoing monitoring of the vendor&rsquo;s security?</p>
+          <fieldset class="options">
+            <legend>Question 7 options</legend>
+            <label class="opt"><input type="radio" name="q7" value="A"><span><span class="opt-letter">A.</span> Termination for convenience</span></label>
+            <label class="opt"><input type="radio" name="q7" value="B"><span><span class="opt-letter">B.</span> A price escalation cap</span></label>
+            <label class="opt"><input type="radio" name="q7" value="C"><span><span class="opt-letter">C.</span> Right to audit, with required delivery of current assurance reports and breach notification within a set time</span></label>
+            <label class="opt"><input type="radio" name="q7" value="D"><span><span class="opt-letter">D.</span> A mutual non-solicitation clause</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: C.</b> Right to audit, assurance reports, and timely breach notification give the enterprise continuing visibility into the vendor&rsquo;s controls. Termination for convenience supports exit, not monitoring, and the other two clauses are commercial terms.</div>
+        </div>
+
+        <div class="q" data-answer="B">
+          <p class="q-stem"><span class="qn">Q8.</span>Which situation is BEST handled as an exemption rather than an exception?</p>
+          <fieldset class="options">
+            <legend>Question 8 options</legend>
+            <label class="opt"><input type="radio" name="q8" value="A"><span><span class="opt-letter">A.</span> A server that will miss the patching deadline by 30 days during a system migration</span></label>
+            <label class="opt"><input type="radio" name="q8" value="B"><span><span class="opt-letter">B.</span> Unstaffed field depots that cannot meet a staffed-visitor-desk standard for the foreseeable future and use camera monitoring instead</span></label>
+            <label class="opt"><input type="radio" name="q8" value="C"><span><span class="opt-letter">C.</span> An internal audit report that found incomplete access reviews</span></label>
+            <label class="opt"><input type="radio" name="q8" value="D"><span><span class="opt-letter">D.</span> A help desk ticket reporting that a backup job failed last night</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: B.</b> An exemption is a formally approved, longer-term exclusion from a requirement that does not fit the situation, reviewed periodically. The patching delay is a time-boxed exception, the audit result is a finding, and the failed backup is an issue to resolve.</div>
+        </div>
+
+        <div class="quiz-actions">
+          <button type="button" class="btn" onclick="gradeQuiz()">Submit Answers</button>
+          <button type="button" class="btn secondary" onclick="resetQuiz()">Reset</button>
+          <span class="score" id="score" aria-live="polite"></span>
+        </div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<nav class="pager" aria-label="Lesson navigation">
+  <div class="pager-inner">
+    <a href="lesson04.html" class="prev"><span class="pager-dir">&#8592; Previous</span><span class="pager-name">Lesson 4: Risk Analysis</span></a>
+    <a href="lesson06.html" class="next"><span class="pager-dir">Next &#8594;</span><span class="pager-name">Lesson 6: Control Design and Implementation</span></a>
+  </div>
+</nav>
+
+<footer>
+  <div class="footer-logo">CRISC 5-DAY FACULTY WORKSHOP</div>
+  <p class="footer-disclaimer">This workshop is an independent educational resource. It is not affiliated with, endorsed by, or sponsored by ISACA. CRISC&#174; is a registered mark of ISACA. All lesson text, questions, and scenarios are original and do not reproduce the ISACA CRISC Review Manual or question database. eMates are provided by the myEMATES library and open in a new tab. Always verify the current exam content outline at isaca.org before registering.</p>
+</footer>
+
+<script src="crisc-lesson.js"></script>
+</body>
+</html>

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>B6 KRI Dashboard and Board Report | CRISC 5-Day Faculty Workshop</title>
+<link rel="stylesheet" href="crisc-lesson.css">
+<link rel="stylesheet" href="practice.css">
+<style>
+/* B6: metric catalog, appetite and policy, live RAG dashboard with canvas sparklines, board report builder (light only) */
+.b6-note { font: .84rem/1.55 Arial, sans-serif; color: var(--text-secondary); margin: 0 0 .8rem; }
+.b6-tbl table.data { font-size: .78rem; }
+.b6-tbl table.data td, .b6-tbl table.data th { padding: .4rem .45rem; vertical-align: top; }
+.b6-tbl td.n { text-align: right; font-family: 'Courier New', monospace; white-space: nowrap; }
+.b6-cards { display: flex; flex-wrap: wrap; gap: .9rem; }
+.b6-card { flex: 1 1 320px; min-width: 0; border: 1px solid var(--border); border-top: 4px solid var(--navy); border-radius: 4px; background: #fff; padding: .7rem .85rem .8rem; }
+.b6-card h4 { font: 700 .92rem Georgia, serif; color: var(--text-primary); margin: 0 0 .25rem; }
+.b6-card h4 code { font: 700 .78rem 'Courier New', monospace; color: var(--gold); margin-right: .3rem; }
+.b6-card p { font: .8rem/1.5 Arial, sans-serif; color: var(--text-secondary); margin: 0 0 .35rem; }
+.b6-card p b { color: var(--text-primary); }
+.b6-ctl { display: flex; flex-wrap: wrap; gap: .45rem .8rem; align-items: flex-end; margin-top: .5rem; padding-top: .5rem; border-top: 1px dashed var(--border); }
+.b6-ctl .f { display: flex; flex-direction: column; gap: .2rem; }
+.b6-ctl label { font: 700 .66rem Arial, sans-serif; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); }
+.b6-ctl select, .b6-ctl input, .b6-board select, .b6-board textarea { font: .84rem Arial, sans-serif; padding: .32rem .4rem; border: 1px solid var(--border); border-radius: 4px; background: #fff; color: var(--text-primary); max-width: 100%; }
+.b6-ctl input[type=number] { width: 5.6rem; }
+.b6-rag { display: inline-flex; align-items: center; gap: .3rem; font: 700 .72rem Arial, sans-serif; letter-spacing: .04em; padding: .16rem .5rem; border-radius: 3px; border: 1px solid; white-space: nowrap; }
+.b6-rag::before { content: ''; width: .62rem; height: .62rem; border-radius: 50%; background: currentColor; }
+.b6-rag.g { color: var(--correct); background: var(--correct-bg); }
+.b6-rag.a { color: var(--jade-dark); background: var(--jade-pale); border-color: var(--jade-border); }
+.b6-rag.r { color: var(--wrong); background: var(--wrong-bg); }
+.b6-rag.n { color: var(--text-muted); background: var(--section-alt); border-color: var(--border); }
+.b6-dash { display: flex; flex-wrap: wrap; gap: 1rem; }
+.b6-grp { flex: 1 1 100%; min-width: 0; }
+.b6-grp h4 { font: 700 .74rem Arial, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); margin: .4rem 0 .5rem; }
+.b6-tiles { display: flex; flex-wrap: wrap; gap: .7rem; }
+.b6-tile { flex: 1 1 250px; min-width: 0; max-width: 100%; border: 1px solid var(--border); border-left: 5px solid var(--border); border-radius: 4px; background: #fff; padding: .6rem .75rem; }
+.b6-tile.g { border-left-color: var(--correct); }
+.b6-tile.a { border-left-color: var(--amber); }
+.b6-tile.r { border-left-color: var(--wrong); }
+.b6-tile .t { font: 700 .8rem/1.35 Arial, sans-serif; color: var(--text-primary); margin: 0 0 .3rem; }
+.b6-tile .row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .3rem .6rem; }
+.b6-val { font: 700 1.25rem Georgia, serif; color: var(--text-primary); }
+.b6-val small { font: .74rem Arial, sans-serif; color: var(--text-muted); margin-left: .2rem; }
+.b6-trend { font: .74rem Arial, sans-serif; color: var(--text-secondary); }
+.b6-th { font: .72rem Arial, sans-serif; color: var(--text-muted); margin: .25rem 0 0; }
+canvas.b6-spark { display: block; width: 220px; height: 52px; max-width: 100%; margin-top: .35rem; }
+.b6-sum { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0 0 .9rem; }
+.b6-sum span { font: .8rem Arial, sans-serif; background: var(--blue-pale); border: 1px solid var(--blue-pale-border); border-radius: 3px; padding: .25rem .55rem; color: var(--text-secondary); }
+.b6-sum b { color: var(--text-primary); }
+.b6-board { display: flex; flex-wrap: wrap; gap: 1.2rem; align-items: flex-start; }
+.b6-board > .b6-col { flex: 1 1 300px; min-width: 0; }
+.b6-board > .b6-col.wide { flex: 1.5 1 380px; }
+.b6-risk { display: flex; gap: .55rem; align-items: flex-start; padding: .5rem 0; border-bottom: 1px solid var(--border); font: .82rem/1.45 Arial, sans-serif; color: var(--text-secondary); }
+.b6-risk input { margin-top: .2rem; width: 1.05rem; height: 1.05rem; accent-color: var(--gold); }
+.b6-risk b { color: var(--text-primary); }
+.b6-board label.lbl { display: block; font: 700 .7rem Arial, sans-serif; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); margin: .9rem 0 .3rem; }
+.b6-board textarea { width: 100%; min-height: 5.5rem; box-sizing: border-box; }
+.b6-page { border: 1px solid var(--border); border-top: 5px solid var(--navy); border-radius: 4px; background: #fff; padding: 1rem 1.1rem; }
+.b6-page h4 { font: 700 1.05rem Georgia, serif; color: var(--text-primary); margin: 0 0 .15rem; }
+.b6-page .sub { font: .76rem Arial, sans-serif; color: var(--text-muted); margin: 0 0 .7rem; }
+.b6-page h5 { font: 700 .7rem Arial, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); margin: .9rem 0 .35rem; }
+.b6-page p { font: .84rem/1.55 Arial, sans-serif; color: var(--text-secondary); margin: 0 0 .4rem; }
+.b6-prow { display: flex; flex-wrap: wrap; gap: .4rem .8rem; align-items: center; padding: .5rem 0; border-bottom: 1px solid var(--border); font: .8rem/1.4 Arial, sans-serif; color: var(--text-secondary); }
+.b6-prow .nm { flex: 1 1 200px; min-width: 0; }
+.b6-prow .nm b { color: var(--text-primary); }
+.b6-warn { font: .8rem/1.45 Arial, sans-serif; color: var(--wrong); margin: .4rem 0 0; }
+.b6-msg { font: .84rem Arial, sans-serif; margin: .5rem 0 0; min-height: 1.2em; color: var(--text-primary); }
+</style>
+</head>
+<body>
+<div id="app"><noscript><p style="padding:2rem;font-family:Arial">This lab needs JavaScript enabled.</p></noscript></div>
+
+<script>
+/* ===================== Saltreach Energy metric data (fictional, fixed) =====================
+   Twelve months, November 2025 to October 2026. Checklist answers are computed from these arrays. */
+window.B6DATA = (function () {
+  var MONTHS = ['Nov 2025', 'Dec 2025', 'Jan 2026', 'Feb 2026', 'Mar 2026', 'Apr 2026', 'May 2026', 'Jun 2026', 'Jul 2026', 'Aug 2026', 'Sep 2026', 'Oct 2026'];
+  // dir: 'up' means higher is worse (amber/red at or above); 'down' means lower is worse (amber/red below).
+  var M = [
+    { id: 'M1', name: 'Known exploited vulnerabilities open more than 14 days on internet-facing systems', unit: 'open', dir: 'up', owner: 'Dmitri Halvorsen, CIO',
+      q: 'How close are we to an intrusion through a flaw attackers are already exploiting?', src: 'Vulnerability scanner matched to the CISA KEV catalog, month-end snapshot',
+      data: [1, 1, 2, 1, 2, 3, 3, 4, 5, 6, 7, 9], cur: [5, 10], cls: 'KRI', lead: 'Leading', risk: 'R-01' },
+    { id: 'M2', name: 'Vendor remote sessions into OT outside approved maintenance windows', unit: 'per month', dir: 'up', owner: 'Annika Mbatha, VP Grid Operations',
+      q: 'Is the chance of an unauthorized change to grid control systems growing?', src: 'OT remote access gateway logs compared with the maintenance calendar',
+      data: [2, 3, 2, 3, 3, 4, 3, 4, 5, 5, 6, 6], cur: [5, 8], cls: 'KRI', lead: 'Leading', risk: 'R-02' },
+    { id: 'M3', name: 'Customer outages caused by cyber events', unit: 'per month', dir: 'up', owner: 'Rafael Quintero, COO',
+      q: 'Have cyber events already disrupted service to customers?', src: 'Outage management system, root cause coded as cyber',
+      data: [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0], cur: [1, 2], cls: 'KRI', lead: 'Lagging', risk: 'R-03' },
+    { id: 'M4', name: 'Remote access accounts enrolled in phishing-resistant MFA', unit: '%', dir: 'down', owner: 'Noor Abernathy, CISO',
+      q: 'Is the MFA control working as intended across remote access accounts?', src: 'Identity provider enrollment report',
+      data: [92.1, 93.0, 94.2, 95.0, 95.8, 96.5, 97.1, 97.6, 98.1, 97.4, 96.9, 96.4], cur: [98, 95], cls: 'KCI', risk: 'R-04' },
+    { id: 'M5', name: 'Backup restore tests passed', unit: '%', dir: 'down', owner: 'Noor Abernathy, CISO',
+      q: 'Do our backups actually restore when tested?', src: 'Monthly restore test log, 20 systems',
+      data: [100, 100, 95, 100, 100, 100, 90, 100, 100, 100, 100, 100], cur: [95, 90], cls: 'KCI', risk: 'R-01' },
+    { id: 'M6', name: 'Staff completing security awareness training on time', unit: '%', dir: 'down', owner: 'Helena Brask, VP People',
+      q: 'Is the awareness program meeting its completion goal?', src: 'Learning management system',
+      data: [81, 83, 84, 86, 87, 88, 89, 90, 91, 92, 93, 94], cur: [90, 80], cls: 'KPI' },
+    { id: 'M7', name: 'Security roadmap milestones delivered on schedule', unit: '%', dir: 'down', owner: 'Noor Abernathy, CISO',
+      q: 'Is the security improvement program delivering on its plan?', src: 'Project portfolio tool',
+      data: [85, 83, 80, 78, 75, 74, 72, 70, 68, 66, 64, 61], cur: [80, 70], cls: 'KPI', risk: 'R-05' },
+    { id: 'M8', name: 'Password reset tickets resolved within 4 hours', unit: '%', dir: 'down', owner: 'Dmitri Halvorsen, CIO',
+      q: 'Is the service desk meeting its service level for resets?', src: 'IT service management tool',
+      data: [88, 89, 91, 90, 92, 91, 93, 92, 94, 93, 93, 94], cur: [90, 85], cls: 'KPI' }
+  ];
+  // Board-approved appetite and tolerance (September 2026) for the KRIs.
+  var APPROVED = { M1: [3, 6], M2: [4, 7], M3: [1, 2] };
+  var RISKS = [
+    ['R-01', 'Ransomware through internet-facing systems disrupts billing and customer service', 'Dmitri Halvorsen, CIO', 'M1'],
+    ['R-02', 'Unauthorized change to grid control through vendor remote access', 'Annika Mbatha, VP Grid Operations', 'M2'],
+    ['R-03', 'A cyber event causes a customer outage', 'Rafael Quintero, COO', 'M3'],
+    ['R-04', 'Credential theft through phishing exposes customer account data', 'Lydia Fenwick, VP Customer Operations', 'M4'],
+    ['R-05', 'Security improvement program slips and leaves known gaps open longer', 'Noor Abernathy, CISO', 'M7']
+  ];
+  function rag(m, v, th) {
+    if (!th || th[0] === '' || th[1] === '' || th[0] == null || th[1] == null || isNaN(+th[0]) || isNaN(+th[1])) return 'n';
+    var a = +th[0], r = +th[1];
+    if (m.dir === 'up') return v >= r ? 'r' : v >= a ? 'a' : 'g';
+    return v < r ? 'r' : v < a ? 'a' : 'g';
+  }
+  var byId = {}; M.forEach(function (m) { byId[m.id] = m; });
+  var key = {
+    kris: function () { return M.filter(function (m) { return m.cls === 'KRI'; }).map(function (m) { return m.id; }); },
+    kcis: function () { return M.filter(function (m) { return m.cls === 'KCI'; }).map(function (m) { return m.id; }); },
+    leading: function () { return M.filter(function (m) { return m.lead === 'Leading'; }).map(function (m) { return m.id; }); },
+    redKri: function () { return key.kris().filter(function (id) { var m = byId[id]; return rag(m, m.data[11], APPROVED[id]) === 'r'; }); },
+    m1RedMonths: function () { var m = byId.M1; return m.data.filter(function (v) { return rag(m, v, APPROVED.M1) === 'r'; }).length; },
+    board: function () { return RISKS.filter(function (r) { var m = byId[r[3]]; return m.cls === 'KRI' && rag(m, m.data[11], APPROVED[m.id]) !== 'g'; }).map(function (r) { return r[0]; }); }
+  };
+  return { MONTHS: MONTHS, M: M, byId: byId, APPROVED: APPROVED, RISKS: RISKS, rag: rag, key: key };
+})();
+</script>
+<script>
+(function () {
+var D = window.B6DATA, K = D.key;
+var M1 = D.byId.M1, firstRed = D.MONTHS[M1.data.findIndex(function (v) { return v >= D.APPROVED.M1[1]; })];
+
+window.LAB = {
+  id: 'B6',
+  title: 'KRI Dashboard and Board Report',
+  accent: 'Board Report',
+  domain: 'Domain 3 (32%)',
+  time: '70 min',
+  level: 'Intermediate',
+  lessonHref: 'lesson07.html#s3',
+  lessonLabel: 'Lesson 7, Metrics: KRIs, KCIs, and KPIs',
+  kus: ['Cybersecurity Planning and Management (CPM)', 'IA Compliance (IAC)'],
+  lede: 'Saltreach Energy’s cyber dashboard was built before the board approved a new risk appetite. Sort eight metrics into KRIs, KCIs, and KPIs, recalibrate the thresholds to appetite and tolerance, read the live RAG dashboard and its trends, and assemble the one-page report the Board Risk Committee needs.',
+  workbenchTitle: 'Metrics workbench',
+  ticket: {
+    number: 'SRE-ERM-1142',
+    priority: 'High priority',
+    from: 'Celia Marchetti-Owusu, Chief Risk Officer, Saltreach Energy',
+    to: 'Risk practitioner (you)',
+    subject: 'Rebuild the cyber dashboard and draft the December board risk page',
+    due: 'Draft to me by Monday, November 23, 2026; Board Risk Committee meets December 3',
+    body: '<p>Saltreach Energy delivers electricity and gas to about 410,000 customers. In September the board approved a revised cyber risk appetite, with appetite and tolerance levels for three key risks. Our dashboard still uses the thresholds IT set last year, and everything on it is amber or green. I do not trust that picture.</p>' +
+      '<p>The metrics workbench holds twelve months of data for eight metrics the teams currently report. Please:</p>' +
+      '<ul><li>Decide which are true <b>KRIs</b>, which are <b>KCIs</b>, and which are <b>KPIs</b>, and which KRIs give early warning.</li>' +
+      '<li>Set every KRI threshold to the board-approved appetite and tolerance. KCI and KPI thresholds can stay as they are.</li>' +
+      '<li>Tell me what the dashboard shows once it is calibrated, and what the escalation policy requires.</li>' +
+      '<li>Build the one-page board report: the risks the board must see, their trend, and the decision we need from the committee.</li></ul>' +
+      '<p>The board decides; we give it a clear, honest picture and a clear ask.</p>'
+  },
+  howTo: 'Step 2 opens a workbench with four tabs. <b>Metrics</b> shows each metric’s purpose, data, and sparkline; classify it and set its amber and red thresholds there. <b>Appetite and policy</b> holds the board-approved appetite statement, the targets for control and performance metrics, and the escalation policy. <b>Dashboard</b> is the live RAG view, grouped by your classification, with trend sparklines and threshold lines. <b>Board report</b> assembles the one-page report from the risks you select. Your work saves in this browser.',
+  workIntro: 'All Saltreach data are fictional. Values are month-end figures from November 2025 to October 2026. The thresholds start as last year’s dashboard settings.',
+  checklist: [
+    { id: 'kris', type: 'set', points: 14, short: 'Which are KRIs', title: 'Identify the KRIs',
+      task: 'Read each metric’s purpose in the <b>Metrics</b> tab. Enter the IDs of every metric that is a <b>key risk indicator</b>.',
+      label: 'Metric IDs, separated by commas', placeholder: 'e.g., M1, M2',
+      answer: K.kris(),
+      hint: 'The test is the question the metric answers. A KRI tells you whether a risk is rising toward or beyond appetite. A KCI tells you whether a control works. A KPI tells you whether a process meets its goal.',
+      debrief: '<p><b>M1, M2, and M3</b> are KRIs: each measures exposure for a named risk in the register. M1 and M2 track conditions that make a loss more likely; M3 counts losses that already happened.</p><p>M4 (MFA enrollment) and M5 (restore tests) are <b>KCIs</b>: they say whether a control is working. M6, M7, and M8 are <b>KPIs</b>: they measure whether a program or service meets its goal. A falling KPI can drive a rising risk, as M7 does for R-01, but it is not itself a measure of exposure.</p>',
+      reviewNote: 'KRIs measure risk exposure; KCIs measure control effectiveness; KPIs measure process performance.' },
+    { id: 'kcis', type: 'set', points: 8, short: 'Which are KCIs', title: 'Identify the KCIs',
+      task: 'Enter the IDs of every metric that is a <b>key control indicator</b>.',
+      label: 'Metric IDs, separated by commas', placeholder: 'e.g., M4',
+      answer: K.kcis(),
+      hint: 'Look for metrics whose purpose is to show whether a specific control is in place and working.',
+      debrief: '<p><b>M4 and M5</b> are KCIs. M4 shows whether phishing-resistant MFA covers the accounts it should, and M5 shows whether backups restore. Training completion (M6) can look like a control measure, but its stated purpose is whether the awareness program meets its completion goal, which makes it a KPI. The same data can serve more than one family; the question it answers decides.</p>',
+      reviewNote: 'KCIs show whether a specific control is present and working.' },
+    { id: 'leading', type: 'set', points: 10, short: 'Leading KRIs', title: 'Find the leading indicators',
+      task: 'Which KRIs are <b>leading</b> indicators, moving before a loss occurs? Enter their IDs.',
+      label: 'Metric IDs, separated by commas', placeholder: 'e.g., M1',
+      answer: K.leading(),
+      hint: 'A leading indicator measures a condition that makes a loss more likely. A lagging indicator records a loss or event that already happened.',
+      debrief: '<p><b>M1 and M2</b> lead. Unpatched, actively exploited flaws and unscheduled vendor sessions into OT both raise the likelihood of an incident before one happens, which leaves time to act. <b>M3</b> lags: by the time an outage is counted, customers have already lost power. Lagging KRIs still matter, because they confirm whether the leading ones predict anything, but a board that sees only lagging KRIs learns about risk after the loss.</p>',
+      reviewNote: 'Leading KRIs move before the loss and give time to act; lagging KRIs confirm what happened.' },
+    { id: 'm1red', type: 'number', points: 10, short: 'M1 red threshold', title: 'Calibrate the M1 red threshold',
+      task: 'Using the board-approved appetite statement in the <b>Appetite and policy</b> tab, at what value should M1 turn <b>red</b>? M1 is red at or above this value. Set it in the Metrics tab.',
+      unit: 'vulnerabilities', tol: 0,
+      answer: D.APPROVED.M1[1],
+      hint: 'Red means outside tolerance. The tolerance is the most the board will bear. What is the first whole number beyond it?',
+      debrief: '<p>The board will tolerate no more than 5 such vulnerabilities, so M1 is red at <b>6</b> or more. Amber starts at 3, the first value beyond the appetite of 2. Last year’s settings (amber at 5, red at 10) were set by IT without reference to appetite and warned far too late.</p><p>Thresholds belong to whoever approved the appetite. The practitioner proposes calibration and documents it; nobody adjusts a threshold to change the color of a report.</p>',
+      reviewNote: 'Amber marks the edge of appetite and red marks the edge of tolerance.' },
+    { id: 'redkri', type: 'choice', points: 10, short: 'Red KRI', title: 'Read the calibrated dashboard',
+      task: 'With every KRI set to the board-approved thresholds, which KRI is red for October 2026?',
+      options: ['M1, known exploited vulnerabilities open more than 14 days', 'M2, vendor remote sessions into OT outside approved windows', 'M7, security roadmap milestones on schedule, which is also red', 'None; the old dashboard showed no red KRIs, so nothing has changed'],
+      answer: 0,
+      hint: 'Compare each KRI’s October value with its new red threshold. Only KRIs count here.',
+      debrief: '<p><b>M1</b> is red: 9 open KEV vulnerabilities against a red threshold of 6. M2 is amber at 6 (red starts at 7), but it has risen steadily all year, so its trend deserves a mention. M7 is red, but it is a KPI, not a KRI, and it belongs in the executive scorecard with its link to R-01 explained. The old dashboard showed M1 as amber only because its thresholds ignored the board’s tolerance.</p>',
+      reviewNote: 'Read status against board-approved thresholds, and keep KPIs out of the KRI view.' },
+    { id: 'months', type: 'number', points: 10, short: 'Months in breach', title: 'How long has M1 been outside tolerance',
+      task: 'Under the calibrated thresholds, for how many of the twelve months was M1 red?',
+      unit: 'months', tol: 0,
+      answer: K.m1RedMonths(),
+      hint: 'Use the M1 sparkline and the data table. Count the months at or above the red threshold.',
+      debrief: '<p>M1 has been red for <b>' + K.m1RedMonths() + ' months</b>, since ' + firstRed + ', and it crossed appetite (amber) back in April 2026. Under last year’s thresholds the dashboard never showed red, so a tolerance breach went unreported for a full quarter.</p><p>This is the cost of miscalibrated thresholds, and the board report should say so plainly: the breach is not new, only newly visible. Reporting that honestly is part of the practitioner’s duty.</p>',
+      reviewNote: 'Trend shows how long a breach has persisted; miscalibrated thresholds can hide it.' },
+    { id: 'board', type: 'set', points: 10, short: 'Risks for the board', title: 'Choose the risks for the board page',
+      task: 'Under Saltreach’s reporting rule, which register risks belong on the one-page board report? Enter the risk IDs.',
+      label: 'Risk IDs, separated by commas', placeholder: 'e.g., R-01',
+      answer: K.board(),
+      hint: 'Read the board reporting rule in the Appetite and policy tab. Which risks have a KRI that is amber or red against the approved thresholds?',
+      debrief: '<p><b>R-01</b> (M1 red) and <b>R-02</b> (M2 amber and rising) belong on the board page. R-03 is green. R-04 and R-05 are tracked by a KCI and a KPI; they go to the executive scorecard, and R-05’s slipping roadmap can be cited in the R-01 narrative as a cause of the breach.</p><p>A board page that lists every red cell on the dashboard buries the two decisions the committee actually needs to make.</p>',
+      reviewNote: 'Board reports show the top risks against appetite, not every operational metric.' },
+    { id: 'escalate', type: 'choice', points: 14, short: 'Escalation decision', title: 'Decide the escalation',
+      task: 'M1 is outside tolerance. What does the escalation policy require of you as the risk practitioner?',
+      options: ['Ask IT to raise the M1 red threshold to 10 for the rest of the year, since remediation is already underway', 'Notify the CIO as risk owner and the CRO now, obtain the CIO’s risk action plan with dates, and have the CRO report the tolerance breach to the Board Risk Committee with the decision required', 'Direct the infrastructure team to take the affected internet-facing systems offline until they are patched', 'Wait one more month to confirm the trend before escalating, to avoid alarming the board'],
+      answer: 1,
+      hint: 'Who owns the risk, who decides the response, and who reports to the board? What role does the practitioner play?',
+      debrief: '<p>The policy is explicit: a red KRI is a tolerance breach. The practitioner notifies the risk owner (the CIO) and the CRO within 2 business days, the CIO submits a dated risk action plan, and the CRO reports the breach to the Board Risk Committee with the decision it needs, such as approving funding to accelerate patching or accepting a time-bound exception.</p><p>Changing the threshold hides the breach. Ordering systems offline is the risk owner’s call, not the practitioner’s. Waiting another month ignores a leading indicator that has already been beyond tolerance for a quarter.</p>',
+      reviewNote: 'A tolerance breach goes to the risk owner and up to the board; the practitioner escalates and the owner decides.' },
+    { id: 'report', type: 'text', points: 14, short: 'Board report', title: 'Write the board risk page', reportTitle: 'Board Risk Committee one-page cyber risk report',
+      task: 'Draft the narrative for the board page in the <b>Board report</b> tab and record it here. Keep it to what the board needs: the risks against appetite, the trend, and the ask.',
+      fields: [
+        { key: 'top', label: 'Top risks against appetite', min: 60, placeholder: 'R-01: outside tolerance (M1 = 9, tolerance 5). R-02: ...' },
+        { key: 'trend', label: 'Trend and what changed', min: 50, placeholder: 'Direction of travel, how long, and why the old dashboard did not show it.' },
+        { key: 'ask', label: 'The decision required from the committee', min: 40, placeholder: 'What you need the board to approve or decide, and by when.' }
+      ],
+      hint: 'Use business language. State the data date, compare each risk with appetite, show direction of travel, and end with one clear decision.',
+      debrief: '<p><b>Model board page (data as of October 31, 2026).</b> <b>Top risks:</b> R-01, ransomware through internet-facing systems, is outside tolerance: 9 known exploited vulnerabilities have been open more than 14 days against a tolerance of 5. R-02, unauthorized change to grid control through vendor access, is within tolerance but outside appetite at 6 sessions a month, against an appetite of 3.</p><p><b>Trend:</b> both are rising. M1 has been outside tolerance since August and outside appetite since April; the previous dashboard thresholds hid this. The security roadmap is behind plan (61 percent of milestones on time), which explains much of the patching backlog. MFA coverage has slipped from 98.1 to 96.4 percent and is being addressed by management.</p><p><b>Ask:</b> approve funding for a 60-day accelerated remediation of internet-facing systems under the CIO’s action plan, with monthly reporting to the committee until M1 is back within appetite, and direct management to require approved maintenance windows in all OT vendor contracts.</p>',
+      reviewNote: 'A board risk page states top risks against appetite, the trend, and the decision required.' }
+  ],
+
+  /* ===================== Workbench ===================== */
+  workbench: function (root, api) {
+    var esc = api.esc;
+    var cls = api.note('cls') || {}, lead = api.note('lead') || {}, th = api.note('th') || {}, pick = api.note('pick') || {}, ask = api.note('ask') || '', narr = api.note('narr') || '';
+    D.M.forEach(function (m) { if (!th[m.id]) th[m.id] = [m.cur[0], m.cur[1]]; });
+    var css = getComputedStyle(document.documentElement);
+    function cv(n, f) { var v = css.getPropertyValue(n).trim(); return v || f; }
+    var COL = { line: cv('--navy', '#3b1838'), g: cv('--correct', '#3b1838'), a: cv('--amber', '#b45309'), r: cv('--wrong', '#86198f'), n: cv('--text-muted', '#6c5669'), grid: cv('--border', '#e3d2e1') };
+    var RAGT = { g: 'Green', a: 'Amber', r: 'Red', n: 'No thresholds' };
+    var ASKS = [
+      ['', 'Choose the decision you will ask for'],
+      ['fund', 'Approve funding for accelerated remediation under the CIO’s action plan, with monthly reporting until M1 is back within appetite'],
+      ['note', 'Note the report; no decision is needed this quarter'],
+      ['raise', 'Raise the M1 tolerance to 10 for the rest of the fiscal year'],
+      ['shut', 'Direct IT to take internet-facing billing systems offline until patched']
+    ];
+    function fmt(m, v) { return m.unit === '%' ? v.toFixed(1) + '%' : String(v); }
+    function unitTxt(m) { return m.unit === '%' ? '' : m.unit; }
+    function thLabel(m) { return m.dir === 'up' ? ['Amber at or above', 'Red at or above'] : ['Amber below', 'Red below']; }
+    function ragOf(m, v) { return D.rag(m, v, th[m.id]); }
+    function trend(m) {
+      var d = m.data, now = d[11], before = d[8], diff = now - before;
+      var worse = m.dir === 'up' ? diff > 0 : diff < 0;
+      if (Math.abs(diff) < (m.unit === '%' ? 0.5 : 1)) return { arrow: '&#8594;', txt: 'Flat over 3 months' };
+      return { arrow: diff > 0 ? '&#8599;' : '&#8600;', txt: (diff > 0 ? 'Up ' : 'Down ') + fmt(m, Math.abs(Math.round(diff * 10) / 10)).replace('%', ' pts') + ' in 3 months, ' + (worse ? 'worsening' : 'improving') };
+    }
+
+    root.innerHTML =
+      '<div class="lb-tool">' +
+      '<div class="lb-tabs" role="tablist" aria-label="Workbench tools">' +
+        '<button role="tab" id="tb-mt" aria-controls="pn-mt" aria-selected="true">Metrics</button>' +
+        '<button role="tab" id="tb-ap" aria-controls="pn-ap" aria-selected="false" tabindex="-1">Appetite and policy</button>' +
+        '<button role="tab" id="tb-db" aria-controls="pn-db" aria-selected="false" tabindex="-1">Dashboard</button>' +
+        '<button role="tab" id="tb-br" aria-controls="pn-br" aria-selected="false" tabindex="-1">Board report</button></div>' +
+      /* metrics */
+      '<div class="lb-panel" role="tabpanel" id="pn-mt" aria-labelledby="tb-mt">' +
+        '<p class="b6-note">Eight metrics the teams report today. Each card states the question its owner says it answers. Classify each one, mark KRIs as leading or lagging, and set the thresholds. Thresholds start at last year’s dashboard settings.</p>' +
+        '<div class="table-wrap b6-tbl" style="margin-bottom:1rem"><table class="data" style="min-width:900px"><caption class="b6-note" style="caption-side:top;text-align:left">Twelve months of data, month-end values</caption><thead><tr><th scope="col">Metric</th>' + D.MONTHS.map(function (mo) { return '<th scope="col">' + mo.replace(' 20', ' ’') + '</th>'; }).join('') + '</tr></thead><tbody>' +
+          D.M.map(function (m) { return '<tr><th scope="row">' + m.id + '</th>' + m.data.map(function (v) { return '<td class="n">' + fmt(m, v) + '</td>'; }).join('') + '</tr>'; }).join('') +
+        '</tbody></table></div>' +
+        '<div class="b6-cards" id="mt-cards"></div>' +
+      '</div>' +
+      /* appetite */
+      '<div class="lb-panel" role="tabpanel" id="pn-ap" aria-labelledby="tb-ap" hidden>' +
+        '<div class="lb-doc"><p class="eyebrow">Board-approved cyber risk appetite, September 17, 2026 (excerpt)</p><h4>Saltreach Energy Board of Directors</h4><ul>' +
+          '<li><b>R-01 Ransomware through internet-facing systems.</b> Saltreach has a low appetite for exposure to actively exploited vulnerabilities. Appetite: no more than 2 known exploited vulnerabilities open more than 14 days on internet-facing systems. Tolerance: no more than 5.</li>' +
+          '<li><b>R-02 Unauthorized change to grid control.</b> Saltreach has a very low appetite for uncontrolled access to operational technology. Appetite: no more than 3 vendor remote sessions into OT outside approved maintenance windows per month. Tolerance: no more than 6.</li>' +
+          '<li><b>R-03 Customer outage from a cyber event.</b> Appetite: zero customer outages caused by cyber events in a month. Tolerance: no more than 1.</li>' +
+          '<li><b>Calibration.</b> For each KRI, amber begins at the first value outside appetite and red at the first value outside tolerance. KRI thresholds change only with board approval.</li></ul></div>' +
+        '<div class="lb-doc"><p class="eyebrow">Management targets for KCIs and KPIs (unchanged)</p><ul>' +
+          '<li><b>M4</b> MFA coverage: green at 98% or more, red below 95%. <b>M5</b> restore tests: green at 95% or more, red below 90%.</li>' +
+          '<li><b>M6</b> training on time: green at 90% or more, red below 80%. <b>M7</b> roadmap on schedule: green at 80% or more, red below 70%. <b>M8</b> resets within 4 hours: green at 90% or more, red below 85%.</li></ul></div>' +
+        '<div class="lb-doc"><p class="eyebrow">Risk escalation policy ERM-07 (excerpt)</p><ul>' +
+          '<li><b>Green, within appetite.</b> Reported on the quarterly executive scorecard.</li>' +
+          '<li><b>Amber, outside appetite but within tolerance.</b> The risk owner reviews the risk action plan within 10 business days. Reported to the Executive Risk Committee.</li>' +
+          '<li><b>Red, outside tolerance.</b> The risk practitioner notifies the risk owner and the CRO within 2 business days. The risk owner submits a dated risk action plan within 10 business days. The CRO reports the breach to the Board Risk Committee at its next meeting, with the decision required.</li>' +
+          '<li><b>Board reporting rule.</b> The one-page board report lists each register risk whose KRI is amber or red against board-approved thresholds, with its trend and the decision required. KCIs and KPIs go to the executive scorecard.</li>' +
+          '<li><b>Integrity.</b> No one may change a threshold, a definition, or a data source to change a reported status.</li></ul></div>' +
+      '</div>' +
+      /* dashboard */
+      '<div class="lb-panel" role="tabpanel" id="pn-db" aria-labelledby="tb-db" hidden>' +
+        '<div class="b6-sum" id="db-sum" aria-live="polite"></div>' +
+        '<div class="b6-dash" id="db-body"></div>' +
+      '</div>' +
+      /* board report */
+      '<div class="lb-panel" role="tabpanel" id="pn-br" aria-labelledby="tb-br" hidden>' +
+        '<div class="b6-board"><div class="b6-col"><p class="eyebrow">Risk register, cyber risks</p>' +
+          '<fieldset style="border:0;padding:0;margin:0"><legend class="b6-note">Select the risks for the board page. Each shows the metric that tracks it.</legend>' +
+          D.RISKS.map(function (r) { return '<label class="b6-risk" for="br-' + r[0] + '"><input type="checkbox" id="br-' + r[0] + '" data-r="' + r[0] + '"' + (pick[r[0]] ? ' checked' : '') + '><span><b>' + r[0] + '</b> ' + esc(r[1]) + '<br>Owner: ' + esc(r[2]) + '. Tracked by ' + r[3] + '.</span></label>'; }).join('') +
+          '</fieldset>' +
+          '<label class="lbl" for="br-ask">The ask</label><select id="br-ask" style="width:100%">' + ASKS.map(function (a) { return '<option value="' + a[0] + '"' + (a[0] === ask ? ' selected' : '') + '>' + esc(a[1]) + '</option>'; }).join('') + '</select>' +
+          '<label class="lbl" for="br-narr">Narrative: trend and what changed</label><textarea id="br-narr" placeholder="Two or three sentences in business language.">' + esc(narr) + '</textarea>' +
+          '<p class="b6-msg" id="br-msg" role="status" aria-live="polite"></p>' +
+        '</div><div class="b6-col wide"><div class="b6-page" id="br-page" data-popout="Board report preview"></div></div></div>' +
+      '</div></div>';
+
+    /* tabs */
+    var tabs = [].slice.call(root.querySelectorAll('[role=tab]'));
+    function sel(t) { tabs.forEach(function (x) { var on = x === t; x.setAttribute('aria-selected', on); x.tabIndex = on ? 0 : -1; document.getElementById(x.getAttribute('aria-controls')).hidden = !on; }); api.note('tab', t.id); }
+    tabs.forEach(function (t, i) { t.addEventListener('click', function () { sel(t); }); t.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { var n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length]; sel(n); n.focus(); } }); });
+
+    /* sparkline: data line, dashed threshold lines, last point colored by status */
+    function spark(cnv, m) {
+      var dpr = window.devicePixelRatio || 1, W = 220, H = 52;
+      cnv.width = W * dpr; cnv.height = H * dpr;
+      var c = cnv.getContext('2d'); c.setTransform(dpr, 0, 0, dpr, 0, 0); c.clearRect(0, 0, W, H);
+      var t = th[m.id] || [], vals = m.data.slice();
+      [t[0], t[1]].forEach(function (x) { if (x !== '' && x != null && !isNaN(+x)) vals.push(+x); });
+      var lo = Math.min.apply(null, vals), hi = Math.max.apply(null, vals); if (hi === lo) { hi += 1; lo -= 1; }
+      var pad = 6, px = function (i) { return pad + i * (W - 2 * pad - 6) / 11; }, py = function (v) { return H - pad - (v - lo) * (H - 2 * pad) / (hi - lo); };
+      c.lineWidth = 1; c.setLineDash([3, 3]);
+      [['a', t[0]], ['r', t[1]]].forEach(function (p) { if (p[1] === '' || p[1] == null || isNaN(+p[1])) return; c.strokeStyle = COL[p[0]]; c.beginPath(); c.moveTo(pad, py(+p[1]) + .5); c.lineTo(W - pad, py(+p[1]) + .5); c.stroke(); });
+      c.setLineDash([]); c.strokeStyle = COL.line; c.lineWidth = 2; c.lineJoin = 'round'; c.beginPath();
+      m.data.forEach(function (v, i) { if (i) c.lineTo(px(i), py(v)); else c.moveTo(px(i), py(v)); }); c.stroke();
+      var last = ragOf(m, m.data[11]); c.fillStyle = COL[last]; c.beginPath(); c.arc(px(11), py(m.data[11]), 4, 0, 2 * Math.PI); c.fill();
+      cnv.setAttribute('aria-label', m.id + ' trend, ' + D.MONTHS[0] + ' to ' + D.MONTHS[11] + ': ' + m.data.map(function (v) { return fmt(m, v); }).join(', ') + '. Latest status ' + RAGT[last] + '.');
+    }
+    function drawSparks(scope) { scope.querySelectorAll('canvas[data-m]').forEach(function (cn) { spark(cn, D.byId[cn.dataset.m]); }); }
+
+    /* metric cards */
+    function drawCards() {
+      root.querySelector('#mt-cards').innerHTML = D.M.map(function (m) {
+        var L = thLabel(m), t = th[m.id], c = cls[m.id] || '';
+        return '<div class="b6-card"><h4><code>' + m.id + '</code>' + esc(m.name) + '</h4>' +
+          '<p><b>Purpose:</b> ' + esc(m.q) + '</p><p><b>Owner:</b> ' + esc(m.owner) + '. <b>Source:</b> ' + esc(m.src) + '.</p>' +
+          '<canvas class="b6-spark" data-m="' + m.id + '" role="img" width="220" height="52"></canvas>' +
+          '<div class="b6-ctl"><div class="f"><label for="cl-' + m.id + '">Type</label><select id="cl-' + m.id + '" data-cls="' + m.id + '"><option value="">Choose</option>' + ['KRI', 'KCI', 'KPI'].map(function (x) { return '<option' + (c === x ? ' selected' : '') + '>' + x + '</option>'; }).join('') + '</select></div>' +
+          '<div class="f"><label for="ld-' + m.id + '">Timing</label><select id="ld-' + m.id + '" data-lead="' + m.id + '"' + (c === 'KRI' ? '' : ' disabled') + '><option value="">' + (c === 'KRI' ? 'Choose' : 'KRIs only') + '</option>' + ['Leading', 'Lagging'].map(function (x) { return '<option' + (lead[m.id] === x && c === 'KRI' ? ' selected' : '') + '>' + x + '</option>'; }).join('') + '</select></div>' +
+          '<div class="f"><label for="ta-' + m.id + '">' + L[0] + '</label><input type="number" step="any" id="ta-' + m.id + '" data-th="' + m.id + '" data-k="0" value="' + esc(t[0]) + '"></div>' +
+          '<div class="f"><label for="tr-' + m.id + '">' + L[1] + '</label><input type="number" step="any" id="tr-' + m.id + '" data-th="' + m.id + '" data-k="1" value="' + esc(t[1]) + '"></div>' +
+          '<span class="b6-rag ' + ragOf(m, m.data[11]) + '" id="rg-' + m.id + '">' + RAGT[ragOf(m, m.data[11])] + '</span></div></div>';
+      }).join('');
+      drawSparks(root.querySelector('#mt-cards'));
+      root.querySelectorAll('[data-cls]').forEach(function (s) { s.addEventListener('change', function () { cls[s.dataset.cls] = s.value; api.note('cls', cls); var id = s.id; drawAll(); var f = document.getElementById(id); if (f) f.focus(); }); });
+      root.querySelectorAll('[data-lead]').forEach(function (s) { s.addEventListener('change', function () { lead[s.dataset.lead] = s.value; api.note('lead', lead); drawDash(); }); });
+      root.querySelectorAll('[data-th]').forEach(function (inp) { inp.addEventListener('input', function () {
+        var m = D.byId[inp.dataset.th]; th[m.id][+inp.dataset.k] = inp.value === '' ? '' : +inp.value; api.note('th', th);
+        var r = ragOf(m, m.data[11]), chip = document.getElementById('rg-' + m.id); chip.className = 'b6-rag ' + r; chip.textContent = RAGT[r];
+        spark(root.querySelector('#mt-cards canvas[data-m="' + m.id + '"]'), m); drawDash(); drawBoard();
+      }); });
+    }
+
+    /* dashboard */
+    function tile(m) {
+      var r = ragOf(m, m.data[11]), tr = trend(m), t = th[m.id], L = thLabel(m);
+      return '<div class="b6-tile ' + r + '"><p class="t">' + m.id + ' ' + esc(m.name) + (cls[m.id] === 'KRI' && lead[m.id] ? ' <span style="font-weight:400;color:var(--text-muted)">(' + lead[m.id].toLowerCase() + ')</span>' : '') + '</p>' +
+        '<div class="row"><span class="b6-val">' + fmt(m, m.data[11]) + '<small>' + esc(unitTxt(m)) + '</small></span><span class="b6-rag ' + r + '">' + RAGT[r] + '</span></div>' +
+        '<p class="b6-trend"><span aria-hidden="true">' + tr.arrow + '</span> ' + tr.txt + '</p>' +
+        '<canvas class="b6-spark" data-m="' + m.id + '" role="img" width="220" height="52"></canvas>' +
+        '<p class="b6-th">' + L[0] + ' ' + esc(t[0]) + ', ' + L[1].toLowerCase() + ' ' + esc(t[1]) + '. Latest: October 2026.</p></div>';
+    }
+    function drawDash() {
+      var groups = [['KRI', 'Key risk indicators'], ['KCI', 'Key control indicators'], ['KPI', 'Key performance indicators'], ['', 'Not yet classified']];
+      var body = root.querySelector('#db-body');
+      body.innerHTML = groups.map(function (g) {
+        var ms = D.M.filter(function (m) { return (cls[m.id] || '') === g[0]; });
+        if (!ms.length) return '';
+        return '<section class="b6-grp" aria-label="' + g[1] + '"><h4>' + g[1] + ' (' + ms.length + ')</h4><div class="b6-tiles">' + ms.map(tile).join('') + '</div></section>';
+      }).join('');
+      drawSparks(body);
+      var kri = D.M.filter(function (m) { return cls[m.id] === 'KRI'; }), n = { r: 0, a: 0, g: 0, n: 0 };
+      kri.forEach(function (m) { n[ragOf(m, m.data[11])]++; });
+      root.querySelector('#db-sum').innerHTML = '<span>KRIs classified: <b>' + kri.length + '</b></span><span>Red: <b>' + n.r + '</b></span><span>Amber: <b>' + n.a + '</b></span><span>Green: <b>' + n.g + '</b></span><span>Data as of <b>October 31, 2026</b></span>';
+    }
+
+    /* board report */
+    function drawBoard() {
+      var chosen = D.RISKS.filter(function (r) { return pick[r[0]]; });
+      var a = ASKS.filter(function (x) { return x[0] === ask; })[0];
+      var page = root.querySelector('#br-page');
+      page.innerHTML = '<h4>Cyber risk: report to the Board Risk Committee</h4><p class="sub">Saltreach Energy &middot; meeting of December 3, 2026 &middot; data as of October 31, 2026 &middot; prepared by Enterprise Risk Management</p>' +
+        '<h5>Top risks against appetite</h5>' +
+        (chosen.length ? chosen.map(function (r) {
+          var m = D.byId[r[3]], st = ragOf(m, m.data[11]), tr = trend(m);
+          return '<div class="b6-prow"><span class="nm"><b>' + r[0] + '</b> ' + esc(r[1]) + '<br>Owner: ' + esc(r[2]) + '. ' + m.id + ' = ' + fmt(m, m.data[11]) + ' ' + esc(unitTxt(m)) + '. <span aria-hidden="true">' + tr.arrow + '</span> ' + tr.txt + '.</span>' +
+            '<span class="b6-rag ' + st + '">' + RAGT[st] + '</span><canvas class="b6-spark" data-m="' + m.id + '" role="img" width="220" height="52"></canvas></div>';
+        }).join('') : '<p>No risks selected yet.</p>') +
+        '<h5>Trend and what changed</h5><p>' + (narr.trim() ? esc(narr).replace(/\n/g, '<br>') : '<i>Write the narrative on the left.</i>') + '</p>' +
+        '<h5>Decision required</h5><p>' + (a && a[0] ? esc(a[1]) : '<i>Choose the ask on the left.</i>') + '</p>' +
+        (ask === 'raise' ? '<p class="b6-warn">Raising tolerance to make a breach disappear changes the appetite, not the risk. If the board truly wants a different appetite, that is its decision to make on its own merits, not a reporting fix.</p>' : '') +
+        (ask === 'shut' ? '<p class="b6-warn">Taking systems offline is an operational response for the risk owner to weigh, not a board ask drafted by the practitioner.</p>' : '') +
+        (ask === 'note' ? '<p class="b6-warn">A KRI outside tolerance requires a decision under ERM-07. “No decision needed” understates the breach.</p>' : '');
+      drawSparks(page);
+      var kciPicked = chosen.filter(function (r) { return D.byId[r[3]] && cls[r[3]] && cls[r[3]] !== 'KRI'; });
+      root.querySelector('#br-msg').textContent = chosen.length > 3 ? 'A one-page board report works best with the few risks that need the board. Check the reporting rule.' : (kciPicked.length ? kciPicked.map(function (r) { return r[0]; }).join(', ') + ' is tracked by a metric you classified as ' + cls[kciPicked[0][3]] + '. Check the board reporting rule.' : '');
+    }
+    root.querySelectorAll('[data-r]').forEach(function (c) { c.addEventListener('change', function () { pick[c.dataset.r] = c.checked; api.note('pick', pick); drawBoard(); }); });
+    root.querySelector('#br-ask').addEventListener('change', function (e) { ask = e.target.value; api.note('ask', ask); drawBoard(); });
+    root.querySelector('#br-narr').addEventListener('input', function (e) { narr = e.target.value; api.note('narr', narr); drawBoard(); });
+
+    function drawAll() { drawCards(); drawDash(); drawBoard(); }
+    drawAll();
+    var saved = api.note('tab'); if (saved && document.getElementById(saved)) sel(document.getElementById(saved));
+    var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(function () { if (document.getElementById('mt-cards')) drawSparks(root); }, 150); });
+  }
+};
+})();
+</script>
+<script src="lab.js"></script>
+</body>
+</html>

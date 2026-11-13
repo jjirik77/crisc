@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>CRISC Practices | CRISC 5-Day Faculty Workshop</title>
+<link rel="stylesheet" href="crisc-lesson.css">
+<link rel="stylesheet" href="practice.css">
+<style>
+  .hub-intro { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+  .hub-intro div { background: var(--card-bg); border: 1px solid var(--border); border-top: 3px solid var(--gold); border-radius: 4px; padding: 1rem 1.1rem; }
+  .hub-intro b { display: block; font: 700 1rem Georgia, serif; color: var(--text-primary); margin-bottom: .3rem; }
+  .hub-intro p { font: .86rem/1.6 Arial, sans-serif; color: var(--text-secondary); margin: 0; }
+  .filter-bar { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0 0 1.6rem; }
+  .filter-bar button { font: 900 .72rem 'Arial Narrow', Arial, sans-serif; letter-spacing: .06em; text-transform: uppercase; color: var(--text-secondary); background: var(--card-bg); border: 1px solid var(--border); border-radius: 3px; padding: .45rem .85rem; cursor: pointer; }
+  .filter-bar button:hover { border-color: var(--gold); }
+  .filter-bar button[aria-pressed=true] { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .hub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.1rem; margin-bottom: 2.6rem; }
+  .hub-card { background: var(--card-bg); border: 1px solid var(--border); border-top: 3px solid var(--gold); border-radius: 4px; padding: 1.1rem 1.2rem 1rem; display: flex; flex-direction: column; }
+  .hub-card[hidden] { display: none; }
+  .hub-top { display: flex; justify-content: space-between; align-items: baseline; gap: .6rem; margin-bottom: .35rem; }
+  .hub-id { font: 900 .78rem 'Arial Narrow', Arial, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); }
+  .hub-prog { font: 700 .68rem Arial, sans-serif; letter-spacing: .04em; color: var(--text-muted); }
+  .hub-prog.on { color: var(--navy-light); } .hub-prog.done { color: var(--correct); }
+  .hub-card h3 { font: 700 1.05rem/1.3 Georgia, serif; color: var(--text-primary); margin: 0 0 .5rem; }
+  .hub-card p { font: .86rem/1.55 Arial, sans-serif; color: var(--text-secondary); margin: 0 0 .8rem; flex: 1; }
+  .hub-tags { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: .9rem; }
+  .tag { font: 700 .68rem 'Arial Narrow', Arial, sans-serif; letter-spacing: .04em; text-transform: uppercase; padding: .16rem .5rem; border-radius: 3px; }
+  .tag-dom { background: var(--navy); color: #fff; }
+  .tag-lvl { background: var(--blue-pale); color: var(--text-secondary); border: 1px solid var(--blue-pale-border); }
+  .tag-time { color: var(--text-muted); border: 1px solid var(--border); }
+  .hub-foot { display: flex; justify-content: space-between; align-items: center; gap: .6rem; border-top: 1px solid var(--border); padding-top: .75rem; }
+  .hub-foot a.lesson { font: .78rem Arial, sans-serif; color: var(--navy-light); }
+  .hub-foot .btn { padding: .5rem 1rem; font-size: .74rem; }
+  .hub-empty { font: .9rem Arial, sans-serif; color: var(--text-muted); }
+  .faculty { background: var(--blue-pale); border: 1px solid var(--blue-pale-border); border-left: 4px solid var(--navy); border-radius: 0 4px 4px 0; padding: 1.1rem 1.3rem; }
+  .faculty p, .faculty li { font: .88rem/1.65 Arial, sans-serif; color: var(--text-secondary); margin: 0 0 .5rem; }
+  .faculty b { color: var(--text-primary); }
+  .faculty ul { margin: 0; padding-left: 1.2rem; }
+  @media (max-width: 700px) { nav.topnav .nav-links { display: none; } }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="nav-brand"><div class="nav-seal">CRISC<br>PREP</div><span class="nav-title">5-Day Faculty Workshop</span></a>
+  <div class="nav-right"><ul class="nav-links"><li><a href="index.html">Home</a></li><li><a href="index.html#lessons">Lessons</a></li><li><a href="index.html#schedule">Schedule</a></li><li><a href="practices.html" aria-current="page">Practices</a></li><li><a href="labs.html">Risk Lab</a></li><li><a href="index.html#exam-prep">Exam Prep</a></li></ul></div>
+</nav>
+
+<header class="lesson-hero">
+  <div class="lesson-hero-inner">
+    <p class="breadcrumb"><a href="index.html">Workshop</a> &nbsp;&rsaquo;&nbsp; <a href="index.html#practice">Practice</a> &nbsp;&rsaquo;&nbsp; <span>CRISC Practices</span></p>
+    <span class="lesson-badge-lg">Concept Practice &middot; 9 Activities</span>
+    <h1>CRISC <span>Practices</span></h1>
+    <p class="lesson-lede">Nine self-checking activities that turn each lesson into the judgment the exam rewards. Sort, rank, calculate, and work through exam-style cases as a risk practitioner, watch your concept mastery build, and finish with a report you can print or save as a PDF.</p>
+    <div class="meta-chips"><span class="meta-chip">Activities: <strong>9</strong></span><span class="meta-chip">Each: <strong>35 to 40 min</strong></span><span class="meta-chip">Domains: <strong>All four</strong></span><span class="meta-chip">Format: <strong>Self-checking</strong></span><span class="meta-chip">Reports: <strong>Print or PDF</strong></span></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="block">
+    <p class="eyebrow">How practice works</p>
+    <h2 class="h2">Concept practice for every lesson</h2>
+    <div class="rule"></div>
+    <div class="hub-intro">
+      <div><b>Stations</b><p>Each activity has four or five scored stations and a reflection: sorts, rankings, calculations, and exam-style cases.</p></div>
+      <div><b>Self-checking</b><p>Every answer is checked on demand with the risk practitioner&rsquo;s reasoning. Retry any station as often as needed.</p></div>
+      <div><b>Concept mastery</b><p>A mastery meter tracks each concept as you work, and the report recommends what to review next.</p></div>
+      <div><b>Summary report</b><p>Print or save the report as a PDF to submit it, with scores, missed items, reflections, and a signature line.</p></div>
+    </div>
+
+    <div class="filter-bar" role="group" aria-label="Filter by domain">
+      <button type="button" data-f="all" aria-pressed="true">All</button>
+      <button type="button" data-f="1" aria-pressed="false">D1 &middot; Governance</button>
+      <button type="button" data-f="2" aria-pressed="false">D2 &middot; Risk Assessment</button>
+      <button type="button" data-f="3" aria-pressed="false">D3 &middot; Response &amp; Reporting</button>
+      <button type="button" data-f="4" aria-pressed="false">D4 &middot; Technology &amp; Security</button>
+    </div>
+  </section>
+
+  <section class="block" aria-labelledby="h-act">
+    <p class="eyebrow">Concept practice</p>
+    <h2 class="h2" id="h-act">The nine activities</h2>
+    <div class="rule"></div>
+    <div class="hub-grid" id="grid-act"></div>
+  </section>
+
+  <section class="block">
+    <div class="faculty" style="display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between"><div style="flex:1 1 420px"><p class="eyebrow" style="margin-bottom:.3rem">Next step</p><p style="font:700 1.15rem Georgia,serif;color:var(--text-primary);margin:0 0 .3rem">Ready to apply it? Open the CRISC Risk Lab</p><p style="margin:0">Eight hands-on labs in the risk practitioner&rsquo;s seat: write a governance charter, build a register, run a quantitative analysis, review a vendor, test controls, build a KRI dashboard, review an AI use case, and facilitate a ransomware tabletop.</p></div><a class="btn" href="labs.html">Open the Risk Lab &#8594;</a></div>
+  </section>
+
+  <section class="block" aria-labelledby="h-fac">
+    <p class="eyebrow">For faculty</p>
+    <h2 class="h2" id="h-fac">Using the practices in class</h2>
+    <div class="rule"></div>
+    <div class="faculty">
+      <ul>
+        <li><b>As submissions:</b> ask learners to print the summary report to PDF and upload it. Reports show scores by station, attempts, missed items with the correct reasoning, reflections, and time spent.</li>
+        <li><b>Placement:</b> assign each activity after the lesson reading it reinforces. Each card links to that lesson section.</li>
+        <li><b>In class:</b> run a station as a think-pair-share, then let pairs check answers and compare the practitioner&rsquo;s reasoning.</li>
+        <li><b>Team mode:</b> a pair or team can work one activity together and list every member on the report.</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-logo">CRISC 5-DAY FACULTY WORKSHOP</div>
+  <p class="footer-disclaimer">This workshop is an independent educational resource. It is not affiliated with, endorsed by, or sponsored by ISACA. CRISC&#174; is a registered mark of ISACA. Practice scenarios, companies, and people are fictional and illustrative. Lab Knowledge Unit mappings refer to the 2024 CAE Cyber Defense Knowledge Units.</p>
+</footer>
+
+<script>
+(function () {
+  var DOM = { 1: 'D1 Governance', 2: 'D2 Risk Assessment', 3: 'D3 Response & Reporting', 4: 'D4 Technology & Security' };
+  var ACT = [
+    ["A1", "activity01.html", 1, "Think Like a Risk Practitioner: Roles, Ethics, and the Best Answer", "Tell the practitioner's view from the owner's, the control owner's, and the auditor's, order the risk process, and resolve short ethics cases.", "Foundational", "35 min", "lesson00.html#s5", "Lesson 0", 5],
+    ["A2", "activity02.html", 1, "Governance, Strategy, and Policy", "Separate governance from management, sort the policy hierarchy, trace the goals cascade, and order BIA, BCP, and DRP work.", "Foundational", "35 min", "lesson01.html#s2", "Lesson 1", 6],
+    ["A3", "activity03.html", 1, "Appetite, Lines, and Frameworks", "Place activities on the three lines, tell appetite from tolerance and capacity, and match legal, regulatory, and contractual drivers.", "Foundational", "35 min", "lesson02.html#s4", "Lesson 2", 5],
+    ["A4", "activity04.html", 2, "Threats, Vulnerabilities, and Scenarios", "Sort threats, vulnerabilities, events, and impacts, prioritize with CVSS, EPSS, and KEV, apply STRIDE, and judge scenario quality.", "Intermediate", "35 min", "lesson03.html#s5", "Lesson 3", 5],
+    ["A5", "activity05.html", 2, "Analyze and Register Risk", "Calculate SLE, ALE, and control value, pick the right analysis method, and separate inherent, residual, and current risk.", "Intermediate", "40 min", "lesson04.html#s4", "Lesson 4", 6],
+    ["A6", "activity06.html", 3, "Respond, Own, and Manage Third Parties", "Choose responses, run the cost-benefit math, tell exceptions from exemptions, and work the third-party lifecycle and a SOC 2 exception.", "Intermediate", "40 min", "lesson05.html#s1", "Lesson 5", 6],
+    ["A7", "activity07.html", 3, "Design and Test Controls", "Sort controls by function and nature, rank test evidence, and separate design effectiveness from operating effectiveness.", "Intermediate", "35 min", "lesson06.html#s1", "Lesson 6", 6],
+    ["A8", "activity08.html", 3, "Metrics, Monitoring, and Reporting", "Sort KRIs, KCIs, and KPIs, leading and lagging, handle threshold breaches, and fit the report to the audience.", "Intermediate", "35 min", "lesson07.html#s3", "Lesson 7", 6],
+    ["A9", "activity09.html", 4, "Technology, Security, and Privacy", "Place risks in the SDLC, apply the NIST AI RMF and EU AI Act tiers, order a recovery, and apply CSF 2.0 and privacy principles.", "Intermediate", "40 min", "lesson08.html#s6", "Lessons 8 and 9", 6]
+  ];
+  var LABS = [
+    ["B1", "lab01.html", 1, "Risk Governance Charter", "Build a RACI for risk activities with live conflict checks, draft the appetite statement, and set tolerance thresholds for Larchmont Community Health.", "Intermediate", "60 min", "lesson02.html#s2", "Lesson 2", "CPM, PLE"],
+    ["B2", "lab02.html", 2, "Risk Scenario and Register Workshop", "Turn threat intel and a vulnerability scan into register entries with owners, score them on a live heat map, and set priorities.", "Intermediate", "60 min", "lesson03.html#s5", "Lesson 3", "CTH, VLA, CPM"],
+    ["B3", "lab03.html", 2, "Quantitative Risk Analysis", "Calibrate ranges from data, run a seeded Monte Carlo, read the loss exceedance curve, and value a proposed control.", "Advanced", "75 min", "lesson04.html#s4", "Lesson 4", "CPM, CTH, IAC"],
+    ["B4", "lab04.html", 3, "Third-Party Risk Review", "Tier a vendor and work its SOC 2 report, questionnaire, contract, and fourth parties to find gaps and choose a response.", "Intermediate", "60 min", "lesson05.html#s4", "Lesson 5", "SCS, CPM, PLE, PRI"],
+    ["B5", "lab05.html", 3, "Control Testing Workpapers", "Sample populations, inspect and reperform, record exceptions, and conclude on design and operating effectiveness.", "Intermediate", "60 min", "lesson06.html#s6", "Lesson 6", "IAC, CPM"],
+    ["B6", "lab06.html", 3, "KRI Dashboard and Board Report", "Classify metrics, set thresholds on a live RAG dashboard, and assemble a one-page board risk report.", "Intermediate", "60 min", "lesson07.html#s3", "Lesson 7", "CPM, IAC"],
+    ["B7", "lab07.html", 4, "AI Use-Case Risk Review", "Review a generative AI assistant against the NIST AI RMF and EU AI Act, rate its risks, choose controls, and write the decision memo.", "Advanced", "60 min", "lesson08.html#s6", "Lesson 8", "CPM, PLE, PRI, SCS, SAS"],
+    ["B8", "lab08.html", 3, "Ransomware Tabletop Facilitation", "Facilitate a timed ransomware tabletop, alone or in team mode, then turn the after-action report into register and KRI updates.", "Advanced", "75 min", "lesson09.html#s5", "Lesson 9", "BCD, CPM, PLE, SCS"]
+  ];
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function read(k) { try { var r = localStorage.getItem(k); return r ? JSON.parse(r) : null; } catch (e) { return null; } }
+  function progAct(r) {
+    var s = read('crisc-practice-' + r[0]); if (!s) return ['', 'Not started'];
+    var n = Object.keys(s.checked || {}).filter(function (k) { return s.checked[k]; }).length;
+    return n >= r[9] ? ['done', '✓ Completed'] : (n ? ['on', n + ' of ' + r[9] + ' stations'] : ['on', 'Started']);
+  }
+  function progLab(r) {
+    var s = read('crisc-lab-' + r[0]); if (!s) return ['', 'Not started'];
+    var n = Object.keys(s.st || {}).filter(function (k) { return s.st[k] === 'ok'; }).length;
+    return n ? ['on', n + ' items verified'] : ['on', 'Started'];
+  }
+  function card(r, kind) {
+    var p = kind === 'act' ? progAct(r) : progLab(r);
+    return '<article class="hub-card" data-d="' + r[2] + '"><div class="hub-top"><span class="hub-id">' + (kind === 'act' ? 'Activity ' : 'Lab ') + r[0] + '</span><span class="hub-prog ' + p[0] + '">' + p[1] + '</span></div>' +
+      '<h3>' + esc(r[3]) + '</h3><p>' + esc(r[4]) + '</p>' +
+      '<div class="hub-tags"><span class="tag tag-dom">' + DOM[r[2]] + '</span><span class="tag tag-lvl">' + esc(r[5]) + '</span><span class="tag tag-time">&#9201; ' + esc(r[6]) + '</span></div>' +
+      '<div class="hub-foot"><a class="lesson" href="' + r[7] + '">Review ' + esc(r[8]) + '</a><a class="btn" href="' + r[1] + '" aria-label="Open ' + (kind === 'act' ? 'activity ' : 'lab ') + r[0] + ': ' + esc(r[3]) + '">Open &#8594;</a></div></article>';
+  }
+  document.getElementById('grid-act').innerHTML = ACT.map(function (r) { return card(r, 'act'); }).join('');
+  var btns = [].slice.call(document.querySelectorAll('.filter-bar button'));
+  function apply(f) {
+    btns.forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.f === f); });
+    [].forEach.call(document.querySelectorAll('.hub-card'), function (c) { c.hidden = !(f === 'all' || c.dataset.d === f); });
+    try { localStorage.setItem('crisc-hub-filter', f); } catch (e) { }
+  }
+  btns.forEach(function (b) { b.addEventListener('click', function () { apply(b.dataset.f); }); });
+  var saved = null; try { saved = localStorage.getItem('crisc-hub-filter'); } catch (e) { }
+  apply(saved || 'all');
+})();
+</script>
+</body>
+</html>

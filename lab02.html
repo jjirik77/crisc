@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>B2 Risk Scenario and Register Workshop | CRISC 5-Day Faculty Workshop</title>
+<link rel="stylesheet" href="crisc-lesson.css">
+<link rel="stylesheet" href="practice.css">
+<style>
+.b2-row { display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-start; }
+.b2-col { flex: 1 1 280px; min-width: 0; }
+.b2-col.wide { flex: 1.7 1 420px; }
+.b2-box { border: 1px solid var(--border); border-radius: 6px; background: var(--white); padding: .9rem 1rem; min-width: 0; margin-bottom: 1rem; }
+.b2-box h4 { font: 700 .7rem Arial, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--navy); margin: 0 0 .6rem; }
+.b2-sum { font: .82rem/1.5 Arial, sans-serif; color: var(--text-secondary); margin: .5rem 0 0; }
+.b2-sum b { color: var(--text-primary); }
+.b2-key { font: .78rem/1.5 Arial, sans-serif; color: var(--text-secondary); margin: 0 0 .7rem; }
+.b2-key b { color: var(--text-primary); }
+.b2-tiles { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0 0 .8rem; }
+.b2-tile { flex: 1 1 120px; min-width: 0; background: var(--blue-pale); border: 1px solid var(--blue-pale-border); border-radius: 5px; padding: .55rem .65rem; }
+.b2-tile .k { font: 700 .6rem Arial, sans-serif; letter-spacing: .05em; text-transform: uppercase; color: var(--text-muted); }
+.b2-tile .v { font: 900 1.15rem Arial, sans-serif; color: var(--text-primary); margin-top: .15rem; }
+.b2-tools { display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: center; margin: 0 0 .7rem; font: .8rem Arial, sans-serif; color: var(--text-secondary); }
+.b2-tools select, .b2-scan select, .b2-ent select { font: .78rem Arial, sans-serif; padding: .25rem; border: 1px solid var(--border); border-radius: 3px; background: var(--white); color: var(--text-primary); }
+.b2-tools label { display: inline-flex; gap: .35rem; align-items: center; }
+.b2-tools input { accent-color: var(--gold); }
+/* scan export */
+.b2-scan { border-collapse: collapse; font: .78rem/1.35 Arial, sans-serif; width: 100%; min-width: 760px; }
+.b2-scan th, .b2-scan td { border: 1px solid var(--border); padding: .35rem .4rem; vertical-align: middle; text-align: left; }
+.b2-scan thead th { background: var(--navy); color: var(--white); font-size: .72rem; }
+.b2-scan td.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.b2-scan td.c { text-align: center; }
+.b2-scan .sub { display: block; color: var(--text-muted); font-size: .7rem; }
+.b2-kev { display: inline-block; font: 700 .66rem Arial, sans-serif; border-radius: 3px; padding: .1rem .35rem; background: var(--wrong-bg); color: var(--wrong); border: 1px solid var(--wrong); }
+.b2-crit { font-weight: 700; }
+.b2-crit.Critical { color: var(--gold); }
+.b2-scan tr.t1 td { background: var(--gold-pale); }
+/* register */
+.b2-ent { border: 1px solid var(--border); border-left: 4px solid var(--gold); border-radius: 0 6px 6px 0; background: var(--white); padding: .75rem .9rem; margin: 0 0 .9rem; }
+.b2-ent h5 { margin: 0 0 .2rem; font: 700 .9rem Arial, sans-serif; color: var(--text-primary); }
+.b2-ent h5 .id { display: inline-block; font: 700 .7rem Arial, sans-serif; background: var(--navy); color: var(--white); border-radius: 3px; padding: .05rem .35rem; margin-right: .35rem; }
+.b2-ev { font: .78rem/1.5 Arial, sans-serif; color: var(--text-secondary); margin: 0 0 .6rem; }
+.b2-grid { display: flex; flex-wrap: wrap; gap: .45rem .7rem; }
+.b2-grid .f { flex: 1 1 170px; min-width: 0; display: flex; flex-direction: column; gap: .15rem; font: 700 .66rem Arial, sans-serif; letter-spacing: .04em; text-transform: uppercase; color: var(--text-muted); }
+.b2-grid .f.s { flex: 0 1 90px; }
+.b2-grid select { width: 100%; }
+.b2-stmt { font: .86rem/1.5 Georgia, serif; color: var(--text-primary); background: var(--gold-pale); border-radius: 4px; padding: .5rem .7rem; margin: .6rem 0 .35rem; }
+.b2-stmt .gap { color: var(--text-muted); font-style: italic; }
+.b2-checks { font: .74rem Arial, sans-serif; color: var(--text-secondary); display: flex; flex-wrap: wrap; gap: .3rem .9rem; }
+.b2-ok { color: var(--correct); font-weight: 700; }
+.b2-no { color: var(--text-muted); }
+.b2-score { display: inline-block; font: 900 .9rem Arial, sans-serif; border-radius: 4px; padding: .1rem .5rem; margin-left: .3rem; border: 1px solid var(--border); }
+.b2-score.h { background: var(--wrong-bg); border-color: var(--wrong); color: var(--wrong); }
+.b2-score.m { background: var(--jade-pale); border-color: var(--jade); color: var(--jade-dark); }
+.b2-score.l { background: var(--correct-bg); border-color: var(--correct); color: var(--correct); }
+/* heat map */
+.b2-heat { border-collapse: separate; border-spacing: 3px; width: 100%; table-layout: fixed; font: .72rem Arial, sans-serif; }
+.b2-heat td { height: 3.4rem; border-radius: 4px; vertical-align: top; padding: .2rem; position: relative; }
+.b2-heat td.h { background: var(--wrong-bg); border: 1px solid var(--wrong); }
+.b2-heat td.m { background: var(--jade-pale); border: 1px solid var(--jade-border); }
+.b2-heat td.l { background: var(--correct-bg); border: 1px solid var(--correct); }
+.b2-heat td .sc { position: absolute; right: .25rem; bottom: .15rem; color: var(--text-muted); font-size: .62rem; }
+.b2-heat th { font: 700 .68rem Arial, sans-serif; color: var(--text-secondary); padding: .2rem; }
+.b2-heat th[scope=row] { width: 2.2rem; text-align: right; }
+.b2-chip { display: inline-block; border: 0; background: var(--navy); color: var(--white); font: 700 .68rem Arial, sans-serif; border-radius: 10px; padding: .12rem .4rem; margin: 0 .15rem .15rem 0; cursor: pointer; }
+.b2-chip:hover { background: var(--gold); }
+.b2-axis { font: 700 .66rem Arial, sans-serif; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); text-align: center; margin: .2rem 0 0; }
+.b2-rank { margin: .3rem 0 0 1.2rem; padding: 0; font: .8rem/1.5 Arial, sans-serif; color: var(--text-secondary); }
+.b2-rank b { color: var(--text-primary); }
+.b2-legend { display: flex; flex-wrap: wrap; gap: .3rem .8rem; font: .7rem Arial, sans-serif; color: var(--text-secondary); margin-top: .5rem; }
+.b2-legend i { display: inline-block; width: .8rem; height: .8rem; border-radius: 2px; vertical-align: -2px; margin-right: .25rem; }
+.b2-doc td, .b2-doc th { vertical-align: top; font-size: .8rem; }
+.b2-intel { border-left: 4px solid var(--jade); background: var(--section-alt); padding: .6rem .8rem; border-radius: 0 4px 4px 0; margin: 0 0 .8rem; font: .84rem/1.55 Arial, sans-serif; color: var(--text-secondary); }
+.b2-intel b.h { display: block; color: var(--text-primary); margin-bottom: .2rem; }
+.b2-intel .tag { display: inline-block; font: 700 .64rem Arial, sans-serif; color: var(--jade-dark); text-transform: uppercase; letter-spacing: .06em; margin-right: .4rem; }
+.b2-scan select:focus-visible, .b2-ent select:focus-visible, .b2-tools select:focus-visible, .b2-tools input:focus-visible, .b2-chip:focus-visible { outline: 3px solid var(--gold); outline-offset: 1px; }
+</style>
+</head>
+<body>
+<div id="app"><noscript><p style="padding:2rem;font-family:Arial">This lab needs JavaScript enabled.</p></noscript></div>
+
+<script>
+/* ===================== Model data (fixed) =====================
+   Brightwater Credit Union, quarterly scenario and register workshop.
+   Answers below are computed from these arrays and the written rules. */
+(function () {
+  var CRIT = { Critical: 4, High: 3, Medium: 2, Low: 1 };
+  var V = [
+    { id: 'V01', f: 'Authentication bypass in Edgegate SSL VPN 9.2', a: 'Remote access VPN appliance', c: 'Critical', net: true, cvss: 8.7, epss: 0.94, kev: true },
+    { id: 'V02', f: 'Privilege escalation in LedgerCore DB 19 listener', a: 'Core banking database server', c: 'Critical', net: false, cvss: 9.3, epss: 0.02, kev: false },
+    { id: 'V03', f: 'Remote code execution in Wikiloft 4.1 plug-in', a: 'Marketing intranet wiki', c: 'Low', net: false, cvss: 9.8, epss: 0.01, kev: false },
+    { id: 'V04', f: 'Server-side request forgery in the web front end framework', a: 'Online banking web front end (cloud tenant)', c: 'Critical', net: true, cvss: 7.5, epss: 0.31, kev: false },
+    { id: 'V05', f: 'Print spooler privilege escalation', a: 'Branch print server', c: 'Low', net: false, cvss: 7.8, epss: 0.62, kev: true },
+    { id: 'V06', f: 'Browser memory corruption, exploited in the wild', a: 'Wire-transfer workstations (6)', c: 'Critical', net: false, cvss: 8.8, epss: 0.41, kev: true },
+    { id: 'V07', f: 'Message filter bypass in MailHarbor gateway', a: 'Email security gateway', c: 'High', net: true, cvss: 6.1, epss: 0.27, kev: true },
+    { id: 'V08', f: 'PDF reader heap overflow', a: 'Staff laptops, back office', c: 'Medium', net: false, cvss: 7.8, epss: 0.05, kev: false },
+    { id: 'V09', f: 'Information leak in controller web console', a: 'ATM network controller', c: 'High', net: false, cvss: 5.3, epss: 0.004, kev: false },
+    { id: 'V10', f: 'Kernel privilege escalation', a: 'Teller workstations (40)', c: 'Medium', net: false, cvss: 8.1, epss: 0.18, kev: false }
+  ];
+  function tier(v) {
+    if (v.kev && (v.net || v.c === 'Critical')) return 1;
+    if (v.kev || v.epss >= 0.10 || (v.cvss >= 9.0 && CRIT[v.c] >= 3)) return 2;
+    if (v.cvss >= 7.0) return 3;
+    return 4;
+  }
+  V.forEach(function (v) { v.tier = tier(v); });
+  var vRank = V.slice().sort(function (a, b) { return a.tier - b.tier || CRIT[b.c] - CRIT[a.c] || b.epss - a.epss; });
+
+  var OWNERS = [
+    ['COO', 'Renee Castellano, Chief Operating Officer'],
+    ['VPP', 'Dmitri Hale, VP Payments Operations'],
+    ['CDO', 'Lena Ostrowski, Chief Digital Officer'],
+    ['VPM', 'Tomas Ibarra, VP Member Services'],
+    ['CIO', 'Walter Nguyen, Chief Information Officer'],
+    ['CISO', 'Keisha Barnwell, CISO'],
+    ['CFO', 'Graham Liu, Chief Financial Officer'],
+    ['RA', 'Risk analyst, ERM (you)']
+  ];
+  var OBJ = [
+    ['O1', 'Keep core member services available'],
+    ['O2', 'Protect member funds in payments and transfers'],
+    ['O3', 'Protect member data and meet GLBA safeguards'],
+    ['O4', 'Grow digital membership by 15% this year']
+  ];
+  var PICK = {
+    actor: ['Cybercriminal ransomware group', 'Organized fraud ring', 'External attacker using stolen credentials', 'External attacker exploiting a web flaw', 'Malicious insider (teller)', 'Staff member making an error'],
+    type: ['Malicious', 'Accidental', 'Failure', 'Natural', 'External requirement'],
+    event: ['Interruption', 'Disclosure', 'Modification', 'Theft', 'Destruction'],
+    asset: ['Core banking platform', 'Wire-transfer process', 'Online banking platform', 'Member data in the online banking tenant', 'Member data in branch teller systems'],
+    time: ['Lasts up to four days; detected within hours', 'Single event; detected after the funds leave', 'Over several weeks; detected late', 'One event; detected days later']
+  };
+  /* Scenario stubs from the workshop, with the keyed ratings from the scale. */
+  var S = [
+    { id: 'S1', t: 'Ransomware through the remote access VPN', src: 'TI-1, V01',
+      ev: 'Cinder Tide is exploiting the Edgegate VPN flaw (KEV listed) at credit unions this month. Brightwater runs the affected version on its internet-facing VPN (V01), not yet patched. At the two peers hit, the core banking platform was encrypted and recovery took three to five days.',
+      L: 5, I: 5, own: 'COO', obj: 'O1' },
+    { id: 'S2', t: 'Business email compromise of closing wires', src: 'TI-2, incident log',
+      ev: 'Two attempts in the last six months. In May, a $180,000 wire to a spoofed title company was sent and later recalled. The largest closing wire this quarter is $2.4 million. Wire operations are a business process; the email gateway is an IT control.',
+      L: 5, I: 4, own: 'VPP', obj: 'O2' },
+    { id: 'S3', t: 'Member data exposed through the online banking front end', src: 'V04, peer reports',
+      ev: 'V04 is an unpatched flaw on the internet-facing online banking front end (EPSS 0.31, not on KEV, no campaign reported). Peers reported two similar exposures in the last three years. The tenant holds records for 38,000 online banking members.',
+      L: 3, I: 4, own: 'CDO', obj: 'O3' },
+    { id: 'S4', t: 'Account takeover by credential stuffing', src: 'TI-3',
+      ev: 'An active credential-stuffing campaign targets credit union online banking. Brightwater has not seen a spike in failed sign-ins yet. Peers lost an average of $400,000 in fraudulent transfers per campaign, with no outage.',
+      L: 4, I: 3, own: 'CDO', obj: 'O2' },
+    { id: 'S5', t: 'Teller misuse of member data', src: 'Internal audit note',
+      ev: 'This needs a teller to abuse legitimate access. There has been no case at Brightwater in five years. A teller could view about 3,000 member profiles before the monthly access monitoring flagged it. No funds move.',
+      L: 2, I: 3, own: 'VPM', obj: 'O3' }
+  ];
+  function sc(x) { return x.L * x.I; }
+  var sRank = S.slice().sort(function (a, b) { return sc(b) - sc(a) || b.I - a.I || (a.id < b.id ? -1 : 1); });
+  window.B2DATA = {
+    V: V, S: S, OWNERS: OWNERS, OBJ: OBJ, PICK: PICK, CRIT: CRIT,
+    answers: {
+      tier1: V.filter(function (v) { return v.tier === 1; }).map(function (v) { return v.id; }),
+      top: vRank[0].id,
+      kev: V.filter(function (v) { return v.kev; }).length,
+      first: sRank[0].id,
+      high: S.filter(function (x) { return sc(x) >= 15; }).map(function (x) { return x.id; }),
+      order: sRank.map(function (x) { return x.id; }).join(', ')
+    }
+  };
+})();
+</script>
+
+<script>
+(function () {
+  var X = window.B2DATA, api0 = null;
+  function A(k) { return function () { return X.answers[k]; }; }
+  function scored() { var r = (api0 && api0.note('reg')) || {}; return X.S.every(function (s) { return r[s.id] && r[s.id].L && r[s.id].I; }); }
+  var LOCK = 'Rate likelihood and impact for all five entries in the Risk register tab first. The heat map and ranking then fill in.';
+  window.LAB = {
+    id: 'B2',
+    title: 'Risk Scenario and Register Workshop',
+    accent: 'Register Workshop',
+    domain: 'Domain 2 (22%)',
+    time: '70 min',
+    level: 'Intermediate',
+    lessonHref: 'lesson03.html#s5',
+    lessonLabel: 'Lesson 3, Risk Scenario Development',
+    lede: 'Scenarios turn threats and weaknesses into statements a business owner can own. Triage a vulnerability scan with CVSS, EPSS, and KEV, turn the intelligence into five register entries with owners and ratings, and watch the heat map show where Brightwater should act first.',
+    workbenchTitle: 'Register workbench',
+    kus: ['Cyber Threats (CTH)', 'Vulnerability Analysis (VLA)', 'Cybersecurity Planning and Management (CPM)'],
+    ticket: {
+      number: 'RSK-2026-0927',
+      priority: 'High priority',
+      from: 'Elena Marsh, Chief Risk Officer, Brightwater Credit Union',
+      to: 'Risk analyst, Enterprise Risk Management (you)',
+      subject: 'Quarterly scenario workshop: register entries and scan triage',
+      due: 'Before the risk committee on Thursday',
+      body: '<p>The quarterly scenario workshop produced five candidate scenarios, and this week&rsquo;s threat intelligence and vulnerability scan both landed on my desk. The risk committee meets Thursday.</p>' +
+        '<p>First, triage the scan using our vulnerability prioritization rule. IT wants to start with the highest CVSS score; I want the rule applied. Tell me which findings are Tier 1 and which one goes first, and how many are on the KEV catalog.</p>' +
+        '<p>Then build the five register entries: complete each scenario statement, link it to a business objective, name the risk owner using our ownership rule, and rate inherent likelihood and impact on our scale. I need the heat map, the priority order, and the scenarios above appetite. Please remember that you facilitate; the owners will validate.</p>'
+    },
+    howTo: 'Read the <b>Threat intel</b> and <b>Objectives and scales</b> tabs. In the <b>Scan export</b>, assign each finding a tier with the rule; you can sort and filter the export. In the <b>Risk register</b>, complete each entry from its menus. The statement, quality checks, inherent score, heat map, and ranking update live. Select a chip on the heat map to jump to its entry.',
+    workIntro: 'Inherent score is likelihood times impact on Brightwater&rsquo;s 1 to 5 scales. Ties rank by impact first.',
+    checklist: [
+      { id: 'tier1', type: 'set', points: 12, short: 'Tier 1 findings', title: 'Findings in Tier 1',
+        task: 'Apply Brightwater&rsquo;s prioritization rule to the scan export. Which findings are <b>Tier 1</b>? Enter the finding IDs.',
+        label: 'Finding IDs', placeholder: 'e.g., V02, V03',
+        answer: A('tier1'),
+        hint: 'Tier 1 needs two things at once: the finding is on the KEV catalog, and the asset is internet facing or Critical. Look past the CVSS column.',
+        debrief: '<p>Three findings are Tier 1: <b>V01</b> (VPN appliance, KEV, internet facing, Critical), <b>V06</b> (wire-transfer workstations, KEV, Critical), and <b>V07</b> (email gateway, KEV, internet facing). V07 has a CVSS of only 6.1, which is exactly why CVSS alone misleads: it is being exploited now on a system the internet can reach.</p><p>V05 is also on KEV but sits on a Low-criticality internal print server, so it falls to Tier 2. V03 has the highest CVSS in the export (9.8) but low EPSS on a Low asset, so it is Tier 3.</p>',
+        reviewNote: 'Prioritize by exploitation evidence and asset context, not CVSS alone.' },
+      { id: 'top', type: 'choice', points: 10, short: 'First fix', title: 'The finding that goes first',
+        task: 'Within a tier, Brightwater ranks by asset criticality, then by EPSS. Which finding should be remediated or isolated first?',
+        options: ['V03, the CVSS 9.8 flaw on the intranet wiki', 'V02, the CVSS 9.3 flaw on the core banking database', 'V01, the KEV-listed flaw on the internet-facing VPN appliance', 'V06, the KEV-listed browser flaw on the wire-transfer workstations'],
+        answer: 2,
+        hint: 'V01 and V06 are both Tier 1 and both Critical. Compare their EPSS, and read TI-1.',
+        debrief: '<p><b>V01 goes first.</b> It is Tier 1, Critical, and has the highest EPSS in the export (0.94). TI-1 confirms a ransomware group is using it against credit unions now. If a patch cannot be applied within the 72-hour target, isolate the appliance or move remote access to another path; that is still remediation in the rule&rsquo;s terms.</p><p>V03 is the trap. A 9.8 on an internal marketing wiki with a 1% chance of exploitation is not where an attacker is going. V06 is second.</p>',
+        reviewNote: 'Rank within a tier by asset criticality, then by likelihood of exploitation (EPSS).' },
+      { id: 'kev', type: 'number', points: 8, short: 'KEV count', title: 'Findings on the KEV catalog',
+        task: 'How many findings in the scan export are on the CISA KEV catalog?',
+        answer: A('kev'), tol: 0, unit: 'findings',
+        hint: 'Use the KEV-only filter in the scan export.',
+        debrief: '<p><b>Four</b> findings are KEV listed: V01, V05, V06, and V07. KEV means there is reliable evidence of active exploitation. It does not say how much the asset matters, which is why one of the four (V05) still lands in Tier 2.</p><p>The KEV count is also a useful KRI. A rising count of KEV-listed findings open past target is an early warning that remediation capacity is not keeping up.</p>',
+        reviewNote: 'KEV marks active exploitation; combine it with asset criticality.' },
+      { id: 'first', type: 'choice', points: 12, short: 'Highest score', title: 'The scenario with the highest inherent score',
+        task: 'After you rate all five entries, which scenario has the highest inherent score?',
+        options: ['S1, ransomware through the remote access VPN', 'S2, business email compromise of closing wires', 'S3, member data exposed through the online banking front end', 'S4, account takeover by credential stuffing'],
+        answer: 0,
+        locked: function () { return scored() ? false : LOCK; },
+        hint: 'Read the likelihood scale closely. An active campaign exploiting a flaw Brightwater has right now is the top likelihood level. A core outage longer than two days is the top impact level.',
+        debrief: '<p><b>S1 scores 25</b> (likelihood 5, impact 5). Likelihood is 5 because a campaign is exploiting a flaw Brightwater has on an internet-facing system today. Impact is 5 because peers lost the core platform for three to five days, beyond the two-day threshold.</p><p>S2 scores 20 (5 x 4): it has already happened here, and the largest exposure is $2.4 million, which is in the $1 million to $5 million band. These two scenarios drive the committee discussion.</p>',
+        reviewNote: 'Rate from the evidence against the written scale; the top level is reserved for current, specific evidence.' },
+      { id: 'high', type: 'set', points: 12, short: 'Above appetite', title: 'Scenarios rated High (15 or more)',
+        task: 'Brightwater&rsquo;s appetite says inherent scores of 15 or more are High and need a response plan reported to the risk committee. Which scenarios are High?',
+        label: 'Scenario IDs', placeholder: 'e.g., S3',
+        answer: A('high'),
+        locked: function () { return scored() ? false : LOCK; },
+        hint: 'Check S3 and S4 carefully. Each has one factor at 4, but what is the other?',
+        debrief: '<p><b>S1 (25) and S2 (20)</b> are High. S3 (3 x 4) and S4 (4 x 3) both score 12, which is Medium: they need owners and treatment plans, but not a committee escalation this quarter. S5 scores 6, Low.</p><p>S3 and S4 sit in different cells with the same score. That is the point of a heat map over a sorted list: it shows that S3 is a lower-likelihood, higher-impact risk, and S4 the reverse, which suggests different responses.</p>',
+        reviewNote: 'Apply the appetite threshold to inherent scores, then read the heat map for the shape of each risk.' },
+      { id: 'owner', type: 'choice', points: 12, short: 'Owner of S2', title: 'The risk owner for S2',
+        task: 'Using the ownership rule, who should own S2, business email compromise of closing wires?',
+        options: ['Keisha Barnwell, CISO, because the attack starts with email', 'Walter Nguyen, CIO, because he runs the email gateway', 'Dmitri Hale, VP Payments Operations, because he owns the wire-transfer process', 'You, the risk analyst, because you wrote the scenario'],
+        answer: 2,
+        hint: 'The ownership rule assigns the risk to the business owner of the process or system the scenario names, not to the owner of the control that might stop it.',
+        debrief: '<p><b>The VP Payments Operations</b> owns S2. The loss lands on the wire-transfer process he runs, he can change the process (call-back verification to a known number, dual approval above a threshold), and he must accept any residual risk. The CISO and CIO own controls that help, such as email filtering and banner warnings, so they are control owners and are consulted.</p><p>The risk analyst never owns a register entry. You facilitate the scenario and challenge the ratings; the owner validates and decides.</p>',
+        reviewNote: 'Risk owner: the business owner accountable for the process or objective; control owners support.' },
+      { id: 'order', type: 'choice', points: 10, short: 'Priority order', title: 'The priority order of the register',
+        task: 'Using inherent score with ties broken by impact, what is the priority order of the five entries?',
+        options: ['S1, S2, S4, S3, S5', 'S1, S2, S3, S4, S5', 'S2, S1, S3, S4, S5', 'S1, S3, S2, S4, S5'],
+        answer: 1,
+        locked: function () { return scored() ? false : LOCK; },
+        hint: 'S3 and S4 tie at 12. Which one has the higher impact?',
+        debrief: '<p>The order is <b>S1 (25), S2 (20), S3 (12, impact 4), S4 (12, impact 3), S5 (6)</b>. The tie rule favors S3 because Brightwater would rather prevent the larger single loss: 38,000 member records and a GLBA notification.</p><p>Inherent order sets the agenda for Lesson 4&rsquo;s analysis. Residual risk, after current controls, may reorder the list, and that is where the response conversation starts.</p>',
+        reviewNote: 'Rank by score, then by impact on ties.' },
+      { id: 'memo', type: 'text', points: 24, short: 'Committee note', title: 'Write the register note for the risk committee', reportTitle: 'Register note for the risk committee',
+        task: 'Write the note Elena will take to the risk committee. Use scenario and finding IDs.',
+        fields: [
+          { key: 'vuln', label: 'Scan triage and immediate actions', min: 50, placeholder: 'Tier 1 findings, the first fix, and the target time.' },
+          { key: 'top', label: 'Scenarios above appetite', min: 50, placeholder: 'IDs, scores, and one line on each.' },
+          { key: 'own', label: 'Owners and validation', min: 40, placeholder: 'Who owns each entry and how they will validate it.' },
+          { key: 'next', label: 'Next steps', min: 30, placeholder: 'What happens to the register next.' }
+        ],
+        hint: 'The committee wants three things: what to fix this week, which risks exceed appetite, and who owns them.',
+        debrief: '<p><b>Model note.</b> <b>Scan:</b> three Tier 1 findings, V01, V06, and V07; V01 (KEV, internet-facing VPN, EPSS 0.94, under active use by Cinder Tide) is remediated or isolated within 72 hours, then V06 and V07. Four findings are on KEV. V03&rsquo;s CVSS 9.8 does not change its Tier 3 position. <b>Above appetite:</b> S1 ransomware through the VPN (25) and S2 business email compromise of closing wires (20) each need a response plan for the committee. <b>Owners:</b> S1 the COO, S2 the VP Payments Operations, S3 and S4 the Chief Digital Officer, S5 the VP Member Services; each owner validates the statement and the rating in a short session this week, with the CISO and CIO as control owners consulted. <b>Next:</b> analyze S1 and S2 in more depth (quantitative analysis for the wire scenario), record current controls to derive residual risk, and track the KEV count and Tier 1 aging as KRIs.</p>',
+        reviewNote: 'A register note links findings to scenarios, names the owners, and states what exceeds appetite.' }
+    ],
+
+    workbench: function (root, api) {
+      api0 = api;
+      var esc = api.esc;
+      root.innerHTML = '<div class="lb-tool"><div class="lb-tabs" role="tablist" aria-label="Workbench tools">' +
+        '<button role="tab" id="tb-ti" aria-controls="pn-ti" aria-selected="true">Threat intel</button>' +
+        '<button role="tab" id="tb-ob" aria-controls="pn-ob" aria-selected="false" tabindex="-1">Objectives and scales</button>' +
+        '<button role="tab" id="tb-sx" aria-controls="pn-sx" aria-selected="false" tabindex="-1">Scan export</button>' +
+        '<button role="tab" id="tb-rg" aria-controls="pn-rg" aria-selected="false" tabindex="-1">Risk register</button></div>' +
+        '<div class="lb-panel" role="tabpanel" id="pn-ti" aria-labelledby="tb-ti">' + INTEL() + '</div>' +
+        '<div class="lb-panel" role="tabpanel" id="pn-ob" aria-labelledby="tb-ob" hidden>' + SCALES() + '</div>' +
+        '<div class="lb-panel" role="tabpanel" id="pn-sx" aria-labelledby="tb-sx" hidden></div>' +
+        '<div class="lb-panel" role="tabpanel" id="pn-rg" aria-labelledby="tb-rg" hidden></div></div>';
+      var tabs = [].slice.call(root.querySelectorAll('[role=tab]'));
+      function sel(t) { tabs.forEach(function (x) { var on = x === t; x.setAttribute('aria-selected', on); x.tabIndex = on ? 0 : -1; document.getElementById(x.getAttribute('aria-controls')).hidden = !on; }); api.note('tab', t.id); }
+      tabs.forEach(function (t, i) { t.addEventListener('click', function () { sel(t); }); t.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { var n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length]; sel(n); n.focus(); } }); });
+      if (api.note('tab')) { var tt = document.getElementById(api.note('tab')); if (tt) sel(tt); }
+      function refocus(id) { if (!id) return; var f = document.getElementById(id); if (f) f.focus(); }
+
+      /* ---------- Scan export ---------- */
+      function drawSX(focusId) {
+        var T = api.note('tier') || {}, sort = api.note('sort') || 'scan', kevOnly = !!api.note('kevOnly'), pn = document.getElementById('pn-sx');
+        var rows = X.V.slice();
+        if (kevOnly) rows = rows.filter(function (v) { return v.kev; });
+        if (sort === 'cvss') rows.sort(function (a, b) { return b.cvss - a.cvss; });
+        if (sort === 'epss') rows.sort(function (a, b) { return b.epss - a.epss; });
+        if (sort === 'tier') rows.sort(function (a, b) { return (+T[a.id] || 9) - (+T[b.id] || 9) || X.CRIT[b.c] - X.CRIT[a.c] || b.epss - a.epss; });
+        var cnt = [0, 0, 0, 0, 0]; X.V.forEach(function (v) { cnt[+T[v.id] || 0]++; });
+        var t1 = X.V.filter(function (v) { return T[v.id] === '1'; }).sort(function (a, b) { return X.CRIT[b.c] - X.CRIT[a.c] || b.epss - a.epss; });
+        pn.innerHTML = '<div class="b2-intel"><b class="h">Brightwater vulnerability prioritization rule (VM-04)</b>' +
+          '<b>Tier 1</b>, fix or isolate within 72 hours: on the KEV catalog <i>and</i> the asset is internet facing or Critical. ' +
+          '<b>Tier 2</b>, 14 days: any other KEV finding, or EPSS of 0.10 or more, or CVSS 9.0 or more on a Critical or High asset. ' +
+          '<b>Tier 3</b>, 30 days: CVSS 7.0 or more. <b>Tier 4</b>: next maintenance window, or accept with the asset owner&rsquo;s sign-off. ' +
+          'Within a tier, rank by asset criticality, then by EPSS. Apply the first tier that matches.</div>' +
+          '<div class="b2-tools"><label for="b2-sort">Sort</label><select id="b2-sort"><option value="scan"' + (sort === 'scan' ? ' selected' : '') + '>Scan order</option><option value="cvss"' + (sort === 'cvss' ? ' selected' : '') + '>CVSS, high to low</option><option value="epss"' + (sort === 'epss' ? ' selected' : '') + '>EPSS, high to low</option><option value="tier"' + (sort === 'tier' ? ' selected' : '') + '>Your tier, then the rule&rsquo;s order</option></select>' +
+          '<label><input type="checkbox" id="b2-kev"' + (kevOnly ? ' checked' : '') + '> Show KEV-listed findings only</label>' +
+          '<span>Showing <b>' + rows.length + '</b> of ' + X.V.length + ' findings' + (kevOnly ? ' (KEV only)' : '') + '</span></div>' +
+          '<div class="b2-tiles"><div class="b2-tile"><div class="k">Tier 1</div><div class="v">' + cnt[1] + '</div></div><div class="b2-tile"><div class="k">Tier 2</div><div class="v">' + cnt[2] + '</div></div><div class="b2-tile"><div class="k">Tier 3</div><div class="v">' + cnt[3] + '</div></div><div class="b2-tile"><div class="k">Tier 4</div><div class="v">' + cnt[4] + '</div></div><div class="b2-tile"><div class="k">Not tiered</div><div class="v">' + cnt[0] + '</div></div></div>' +
+          '<div class="table-wrap" data-popout="Scan export"><table class="b2-scan"><caption class="sr-only">Vulnerability scan export with tier assignment</caption><thead><tr><th scope="col">ID</th><th scope="col">Finding and asset</th><th scope="col">Asset criticality</th><th scope="col">Internet facing</th><th scope="col">CVSS v4</th><th scope="col">EPSS</th><th scope="col">KEV</th><th scope="col">Your tier</th></tr></thead><tbody>' +
+          rows.map(function (v) {
+            return '<tr class="' + (T[v.id] === '1' ? 't1' : '') + '"><th scope="row">' + v.id + '</th><td>' + esc(v.f) + '<span class="sub">' + esc(v.a) + '</span></td>' +
+              '<td><span class="b2-crit ' + v.c + '">' + v.c + '</span></td><td class="c">' + (v.net ? 'Yes' : 'No') + '</td><td class="n">' + v.cvss.toFixed(1) + '</td><td class="n">' + (v.epss < 0.01 ? v.epss.toFixed(3) : v.epss.toFixed(2)) + '</td>' +
+              '<td class="c">' + (v.kev ? '<span class="b2-kev">KEV</span>' : 'No') + '</td>' +
+              '<td><select id="b2-t-' + v.id + '" data-v="' + v.id + '" aria-label="' + v.id + ' tier"><option value="">&middot;</option>' + [1, 2, 3, 4].map(function (n) { return '<option value="' + n + '"' + (T[v.id] === String(n) ? ' selected' : '') + '>Tier ' + n + '</option>'; }).join('') + '</select></td></tr>';
+          }).join('') + '</tbody></table></div>' +
+          '<p class="b2-sum">Your Tier 1 queue, in the rule&rsquo;s order: <b>' + (t1.length ? t1.map(function (v) { return v.id; }).join(', ') : 'empty') + '</b></p>';
+        pn.querySelector('#b2-sort').addEventListener('change', function (e) { api.note('sort', e.target.value); drawSX('b2-sort'); });
+        pn.querySelector('#b2-kev').addEventListener('change', function (e) { api.note('kevOnly', e.target.checked); drawSX('b2-kev'); });
+        pn.querySelectorAll('select[data-v]').forEach(function (s) { s.addEventListener('change', function () { var o = Object.assign({}, api.note('tier') || {}); if (s.value) o[s.dataset.v] = s.value; else delete o[s.dataset.v]; api.note('tier', o); drawSX(s.id); }); });
+        refocus(focusId);
+      }
+      drawSX();
+
+      /* ---------- Register and heat map ---------- */
+      function reg() { return api.note('reg') || {}; }
+      function band(v) { return v >= 15 ? 'h' : v >= 8 ? 'm' : 'l'; }
+      var FIELDS = [['actor', 'Actor'], ['type', 'Threat type'], ['event', 'Event'], ['asset', 'Asset'], ['time', 'Time']];
+      function selHTML(sid, key, label, opts, cur, cls) {
+        return '<label class="f' + (cls ? ' ' + cls : '') + '" for="b2-' + key + '-' + sid + '">' + label + '<select id="b2-' + key + '-' + sid + '" data-s="' + sid + '" data-k="' + key + '"><option value="">Choose</option>' +
+          opts.map(function (o) { var v = Array.isArray(o) ? o[0] : o, t = Array.isArray(o) ? o[0] + ': ' + o[1] : o; return '<option value="' + esc(v) + '"' + (cur === v ? ' selected' : '') + '>' + esc(t) + '</option>'; }).join('') + '</select></label>';
+      }
+      function drawRG(focusId) {
+        var R = reg(), pn = document.getElementById('pn-rg');
+        var rated = X.S.filter(function (s) { var e = R[s.id] || {}; return e.L && e.I; });
+        var rk = rated.map(function (s) { var e = R[s.id]; return { id: s.id, t: s.t, L: +e.L, I: +e.I, sc: e.L * e.I, own: e.own }; }).sort(function (a, b) { return b.sc - a.sc || b.I - a.I || (a.id < b.id ? -1 : 1); });
+        var ents = X.S.map(function (s) {
+          var e = R[s.id] || {}, sc = e.L && e.I ? e.L * e.I : null;
+          var stmt = (e.actor ? esc(e.actor) : '<span class="gap">[actor]</span>') + ' (' + (e.type ? esc(e.type.toLowerCase()) : '<span class="gap">threat type</span>') + ') causes ' +
+            (e.event ? esc(e.event.toLowerCase()) : '<span class="gap">[event]</span>') + ' affecting the ' + (e.asset ? esc(e.asset.toLowerCase()) : '<span class="gap">[asset]</span>') + '. ' +
+            (e.time ? esc(e.time) + '.' : '<span class="gap">[time]</span>') + ' This threatens ' + (e.obj ? esc(X.OBJ.filter(function (o) { return o[0] === e.obj; })[0][1].toLowerCase()) : '<span class="gap">[objective]</span>') + '.';
+          var comp = FIELDS.every(function (f) { return e[f[0]]; });
+          var chk = [[comp, 'Five components'], [!!e.obj, 'Linked to an objective'], [!!e.own, 'Owner named'], [!!sc, 'Rated']];
+          return '<div class="b2-ent" id="b2-ent-' + s.id + '"><h5><span class="id">' + s.id + '</span>' + esc(s.t) + (sc ? '<span class="b2-score ' + band(sc) + '">' + sc + '</span>' : '') + '</h5>' +
+            '<p class="b2-ev"><b>Sources:</b> ' + esc(s.src) + '. ' + esc(s.ev) + '</p><div class="b2-grid">' +
+            FIELDS.map(function (f) { return selHTML(s.id, f[0], f[1], X.PICK[f[0]], e[f[0]]); }).join('') +
+            selHTML(s.id, 'obj', 'Objective', X.OBJ, e.obj) + selHTML(s.id, 'own', 'Risk owner', X.OWNERS, e.own) +
+            selHTML(s.id, 'L', 'Likelihood', ['1', '2', '3', '4', '5'], e.L ? String(e.L) : '', 's') + selHTML(s.id, 'I', 'Impact', ['1', '2', '3', '4', '5'], e.I ? String(e.I) : '', 's') +
+            '</div><p class="b2-stmt">' + stmt + '</p><div class="b2-checks">' + chk.map(function (c) { return c[0] ? '<span class="b2-ok">&#10003; ' + c[1] + '</span>' : '<span class="b2-no">&#9675; ' + c[1] + '</span>'; }).join('') + '</div></div>';
+        }).join('');
+        var heat = '<table class="b2-heat"><caption class="sr-only">Inherent risk heat map, impact rows by likelihood columns</caption><tbody>';
+        for (var i = 5; i >= 1; i--) {
+          heat += '<tr><th scope="row">I' + i + '</th>';
+          for (var l = 1; l <= 5; l++) {
+            var here = rk.filter(function (r) { return r.L === l && r.I === i; });
+            heat += '<td class="' + band(l * i) + '">' + here.map(function (r) { return '<button type="button" class="b2-chip" data-jump="' + r.id + '" aria-label="' + r.id + ', likelihood ' + l + ', impact ' + i + ', score ' + r.sc + '. Go to entry">' + r.id + '</button>'; }).join('') + '<span class="sc" aria-hidden="true">' + l * i + '</span></td>';
+          }
+          heat += '</tr>';
+        }
+        heat += '<tr><th></th>' + [1, 2, 3, 4, 5].map(function (l) { return '<th scope="col">L' + l + '</th>'; }).join('') + '</tr></tbody></table><p class="b2-axis">Likelihood &rarr; &nbsp; (impact &uarr;)</p>' +
+          '<div class="b2-legend"><span><i style="background:var(--wrong-bg);border:1px solid var(--wrong)"></i>High, 15 to 25</span><span><i style="background:var(--jade-pale);border:1px solid var(--jade-border)"></i>Medium, 8 to 14</span><span><i style="background:var(--correct-bg);border:1px solid var(--correct)"></i>Low, 1 to 7</span></div>';
+        var ownName = function (k) { var o = X.OWNERS.filter(function (x) { return x[0] === k; })[0]; return o ? o[1].split(',')[0] : 'no owner'; };
+        pn.innerHTML = '<div class="b2-tiles"><div class="b2-tile"><div class="k">Entries rated</div><div class="v">' + rated.length + ' of 5</div></div>' +
+          '<div class="b2-tile"><div class="k">High (15+)</div><div class="v">' + (rated.length === 5 ? rk.filter(function (r) { return r.sc >= 15; }).length : '&middot;') + '</div></div>' +
+          '<div class="b2-tile"><div class="k">Top scenario</div><div class="v">' + (rated.length === 5 ? rk[0].id + ' (' + rk[0].sc + ')' : '&middot;') + '</div></div></div>' +
+          '<div class="b2-row"><div class="b2-col wide">' + ents + '</div>' +
+          '<div class="b2-col"><div class="b2-box" data-popout="Heat map and ranking"><h4>Inherent risk heat map</h4>' + heat +
+          '<h4 style="margin-top:1rem">Priority order</h4>' + (rk.length ? '<ol class="b2-rank">' + rk.map(function (r) { return '<li><b>' + r.id + '</b> ' + r.sc + ' (L' + r.L + ' x I' + r.I + '), ' + esc(ownName(r.own)) + '</li>'; }).join('') + '</ol>' : '<p class="b2-sum">Rate an entry to start the ranking.</p>') +
+          (rated.length < 5 ? '<p class="b2-sum">' + (5 - rated.length) + ' entr' + (5 - rated.length === 1 ? 'y' : 'ies') + ' still to rate.</p>' : '') + '</div></div></div>';
+        pn.querySelectorAll('select[data-s]').forEach(function (s) { s.addEventListener('change', function () {
+          var o = JSON.parse(JSON.stringify(reg())), e = o[s.dataset.s] || {};
+          var k = s.dataset.k; e[k] = (k === 'L' || k === 'I') ? (s.value ? +s.value : null) : s.value; o[s.dataset.s] = e; api.note('reg', o); drawRG(s.id);
+          if (k === 'L' || k === 'I') api.refresh();
+        }); });
+        pn.querySelectorAll('[data-jump]').forEach(function (b) { b.addEventListener('click', function () { var t = document.getElementById('b2-ent-' + b.dataset.jump); if (t) { t.scrollIntoView({ block: 'start' }); var f = t.querySelector('select'); if (f) f.focus({ preventScroll: true }); } }); });
+        refocus(focusId);
+      }
+      drawRG();
+    },
+    onReset: function () { }
+  };
+
+  function INTEL() {
+    return '<div class="lb-doc"><h4>Threat intelligence this week (regional financial sharing group and vendor feeds)</h4>' +
+      '<div class="b2-intel"><b class="h"><span class="tag">TI-1</span>Cinder Tide ransomware exploiting Edgegate VPN</b>A ransomware group tracked as Cinder Tide is exploiting the Edgegate SSL VPN 9.x authentication bypass, now on the CISA KEV catalog. Two credit unions in the region were hit this month. In both, the attackers reached the core banking platform within a day and encrypted it; recovery took three to five days.</div>' +
+      '<div class="b2-intel"><b class="h"><span class="tag">TI-2</span>Business email compromise targeting real estate closings</b>Fraud rings are impersonating title companies with look-alike domains and sending changed wire instructions days before a closing. Losses at members of the sharing group range from $90,000 to $2.1 million per wire.</div>' +
+      '<div class="b2-intel"><b class="h"><span class="tag">TI-3</span>Credential stuffing against credit union online banking</b>An active campaign is testing leaked password lists against credit union online banking sites. Peers report an average of $400,000 in fraudulent transfers per campaign before controls caught up.</div>' +
+      '<div class="b2-intel"><b class="h"><span class="tag">TI-4</span>Mail gateway filter bypass</b>The MailHarbor filter bypass is on KEV. Attackers use it to deliver phishing that skips attachment scanning.</div></div>' +
+      '<div class="lb-doc"><h4>Brightwater incident log, last 12 months (extract)</h4><ul>' +
+      '<li><b>March:</b> a closing wire request from a spoofed title company domain was caught by a teller call-back. No loss.</li>' +
+      '<li><b>May:</b> a $180,000 closing wire was sent to a fraudulent account and recalled two days later with the receiving bank&rsquo;s help.</li>' +
+      '<li>No ransomware, data breach, or insider cases in the last five years.</li></ul></div>';
+  }
+  function SCALES() {
+    var X = window.B2DATA;
+    return '<div class="lb-doc"><h4>Business objectives and ownership</h4><div class="table-wrap"><table class="data b2-doc"><thead><tr><th scope="col">ID</th><th scope="col">Objective</th><th scope="col">Objective owner</th></tr></thead><tbody>' +
+      '<tr><th scope="row">O1</th><td>Keep core member services available</td><td>COO</td></tr><tr><th scope="row">O2</th><td>Protect member funds in payments and transfers</td><td>VP Payments Operations</td></tr>' +
+      '<tr><th scope="row">O3</th><td>Protect member data and meet GLBA safeguards</td><td>Shared; each channel owner for its own data</td></tr><tr><th scope="row">O4</th><td>Grow digital membership by 15% this year</td><td>Chief Digital Officer</td></tr></tbody></table></div>' +
+      '<p class="lead-p" style="font-size:.88rem;margin-top:.6rem"><b>Ownership rule (ERM policy 2.4):</b> the risk owner is the business owner of the process or system named in the scenario. IT and security leaders own the controls that support it and are consulted; they do not own business risks. The risk analyst facilitates and never owns an entry.</p>' +
+      '<div class="table-wrap"><table class="data b2-doc"><thead><tr><th scope="col">Process or system</th><th scope="col">Business owner</th><th scope="col">Runs or protects it</th></tr></thead><tbody>' +
+      '<tr><th scope="row">Core banking platform</th><td>Renee Castellano, COO</td><td>CIO (infrastructure), CISO (security controls)</td></tr>' +
+      '<tr><th scope="row">Wire-transfer process</th><td>Dmitri Hale, VP Payments Operations</td><td>CIO (workstations, email), CISO</td></tr>' +
+      '<tr><th scope="row">Online banking platform and its member data</th><td>Lena Ostrowski, Chief Digital Officer</td><td>CIO (cloud tenant), CISO</td></tr>' +
+      '<tr><th scope="row">Branch teller systems and member data in branches</th><td>Tomas Ibarra, VP Member Services</td><td>CIO, CISO</td></tr></tbody></table></div></div>' +
+      '<div class="lb-doc"><h4>Inherent likelihood scale (annual)</h4><div class="table-wrap"><table class="data b2-doc"><tbody>' +
+      '<tr><th scope="row">5 Almost certain</th><td>Occurred at Brightwater in the last 12 months, or an active campaign is exploiting an exposure Brightwater has right now (for example, a KEV-listed flaw on an internet-facing system).</td></tr>' +
+      '<tr><th scope="row">4 Likely</th><td>An active campaign targets credit unions and Brightwater has the kind of exposure it uses, but there is no attempt or exploitable flaw at Brightwater yet.</td></tr>' +
+      '<tr><th scope="row">3 Possible</th><td>Seen at peer institutions in the last three years; no current campaign. Exploitation would use a known flaw that is not under active exploitation.</td></tr>' +
+      '<tr><th scope="row">2 Unlikely</th><td>Needs a privileged insider or several independent failures; no occurrence at Brightwater in five years.</td></tr>' +
+      '<tr><th scope="row">1 Rare</th><td>No known occurrence in the sector.</td></tr></tbody></table></div></div>' +
+      '<div class="lb-doc"><h4>Impact scale (rate at the highest level any criterion reaches)</h4><div class="table-wrap"><table class="data b2-doc"><tbody>' +
+      '<tr><th scope="row">5 Severe</th><td>Loss above $5 million, or core member services down more than 2 days, or more than 50,000 member records exposed.</td></tr>' +
+      '<tr><th scope="row">4 Major</th><td>$1 million to $5 million, or services down 8 hours to 2 days, or 5,000 to 50,000 records.</td></tr>' +
+      '<tr><th scope="row">3 Moderate</th><td>$250,000 to $1 million, or down 2 to 8 hours, or 500 to 5,000 records.</td></tr>' +
+      '<tr><th scope="row">2 Minor</th><td>$50,000 to $250,000, or down under 2 hours, or under 500 records.</td></tr>' +
+      '<tr><th scope="row">1 Negligible</th><td>Under $50,000 and no service or data effect.</td></tr></tbody></table></div>' +
+      '<p class="lead-p" style="font-size:.88rem;margin-top:.6rem"><b>Appetite bands:</b> inherent score 15 to 25 is High and needs a response plan reported to the risk committee; 8 to 14 is Medium and needs an owner&rsquo;s treatment plan; 1 to 7 is Low and is monitored.</p></div>';
+  }
+})();
+</script>
+<script src="evidence.js"></script>
+<script src="lab.js"></script>
+</body>
+</html>

@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 9: Information Security Principles and Capstone | CRISC Workshop</title>
+<link rel="stylesheet" href="crisc-lesson.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-seal">CRISC<br>PREP</div>
+    <span class="nav-title">5-Day Faculty Workshop</span>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#lessons">Lessons</a></li>
+      <li><a href="index.html#practice">Practice</a></li>
+      <li><a href="index.html#schedule">Schedule</a></li>
+      <li><a href="index.html#domains">Domains</a></li>
+      <li><a href="index.html#exam-prep">Exam Prep</a></li>
+      <li><a href="index.html#faculty-tools">Faculty Tools</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="lesson-hero">
+  <div class="lesson-hero-inner">
+    <p class="breadcrumb"><a href="index.html">Workshop</a> &nbsp;&rsaquo;&nbsp; <a href="index.html#lessons">Lessons</a> &nbsp;&rsaquo;&nbsp; <span>Lesson 9</span></p>
+    <span class="lesson-badge-lg">Day 5, Afternoon &bull; Domain 4B + Capstone</span>
+    <h1>Information Security Principles and <span>Capstone</span></h1>
+    <p class="lesson-lede">The last lesson closes Domain 4 with the security principles, frameworks, awareness programs, and privacy rules that every risk practitioner relies on. Then it pulls the whole workshop together: a capstone case that crosses all four domains, a tabletop exercise you can facilitate, an exam strategy for the final weeks, and a map from the CRISC outline to the courses you teach.</p>
+    <div class="meta-chips">
+      <span class="meta-chip">Session: <strong>Day 5, 1:00 to 4:30</strong></span>
+      <span class="meta-chip">Duration: <strong>~3.5 hrs</strong></span>
+      <span class="meta-chip">Exam Weight: <strong>20%</strong></span>
+      <span class="meta-chip">Knowledge Check: <strong>8 Questions</strong></span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="block">
+    <p class="eyebrow">Overview</p>
+    <h2 class="h2">Principles first, then put it all together</h2>
+    <div class="rule"></div>
+    <p class="lead">Domain 4B is short on the outline but long on reach. Security concepts such as least privilege and zero trust shape control design in Domain 3. Frameworks such as ISO/IEC 27001 and NIST CSF 2.0 give risk programs a common language. Awareness training is the control that touches every employee. Privacy principles decide what an organization may do with personal data at all, before any question of how to protect it.</p>
+    <p class="lead">The second half of the lesson is integration. The capstone case asks you to work one organization through governance, assessment, response, and technology in a single sitting, then run a tabletop exercise on it, which is Task 24 in the CRISC outline. The lesson ends with a study plan built from your own readiness and a curriculum map for your program.</p>
+    <div class="mindset"><span class="tip-label">&#9878;&#65039; Think like a risk practitioner</span>Principles and frameworks are tools for a business decision, not ends in themselves. When a question asks which framework or principle to adopt, the best answer starts from the organization&rsquo;s objectives, obligations, and risk appetite. When it asks about a tabletop, the best answer starts from the objectives of the exercise, not the scenario script.</div>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Learning Objectives</p>
+    <h2 class="h2">By the end of this lesson you will be able to&hellip;</h2>
+    <div class="rule"></div>
+    <ul class="objectives">
+      <li><span><strong>Explain</strong> core security concepts (CIA, authenticity, non-repudiation, least privilege, defense in depth, and zero trust) and how they guide control choices. <em class="bloom-tag">Bloom: Understand</em></span></li>
+      <li><span><strong>Compare</strong> ISO/IEC 27001:2022, NIST CSF 2.0, and the CIS Controls, and select the right one for a stated business need. <em class="bloom-tag">Bloom: Analyze</em></span></li>
+      <li><span><strong>Evaluate</strong> a security awareness program with behavior-based measures rather than completion counts. <em class="bloom-tag">Bloom: Evaluate</em></span></li>
+      <li><span><strong>Apply</strong> privacy principles to a processing activity and decide when a data protection impact assessment is required. <em class="bloom-tag">Bloom: Apply</em></span></li>
+      <li><span><strong>Plan</strong> a tabletop exercise with objectives, injects, roles, and an after-action report, and build a personal exam study plan. <em class="bloom-tag">Bloom: Create</em></span></li>
+      <li><span><strong>Design</strong> a curriculum map that places CRISC domains in your program&rsquo;s courses, with a tabletop activity for one of them. <em class="bloom-tag">Bloom: Create</em></span></li>
+    </ul>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Key Terms</p>
+    <h2 class="h2">Vocabulary flashcards</h2>
+    <div class="rule"></div>
+    <p class="flip-hint-top">&#128072; Read the term, recall the definition, then click or press Enter to check yourself.</p>
+    <div class="vocab-grid">
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Non-Repudiation</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">Assurance that a party cannot credibly deny an action it took, such as approving a payment, usually provided by digital signatures and protected logs.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Zero Trust</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">A security model with no implicit trust based on network location. Every request is authenticated and authorized using identity, device, and context (NIST SP 800-207).</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Defense in Depth</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">Layering independent controls of different types so that the failure of one does not expose the asset.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">ISMS</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">Information security management system: the policies, roles, risk processes, and improvement cycle that ISO/IEC 27001 requires and certifies.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Statement of Applicability</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">The ISO/IEC 27001 document that lists each Annex A control, whether it is included or excluded, the justification, and its implementation status.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Risk-Aware Culture</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">A culture in which people understand the risks in their work, raise concerns without fear, and make decisions within appetite as a matter of habit.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Privacy by Design</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">Building privacy into systems and processes from the start, with privacy-protective settings as the default. GDPR Article 25 makes it a legal duty.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">DPIA</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">Data protection impact assessment: a documented analysis of a processing activity likely to pose high risk to individuals, done before processing starts.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Tabletop Exercise</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">A discussion-based exercise in which participants talk through their roles and decisions in a scenario, prompted by injects, without touching live systems.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">After-Action Report</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">The record of an exercise or incident: what was expected, what happened, the gaps, and corrective actions with owners and due dates.</div></div>
+        </div>
+      </button>
+
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Lesson Content</p>
+    <h2 class="h2">Study the material</h2>
+    <div class="rule"></div>
+    <div class="lesson-content">
+      <nav class="toc" aria-label="On this page">
+        <div class="toc-title">On this page</div>
+        <ul>
+          <li><a href="#s1">1. Security Concepts</a></li>
+          <li><a href="#s2">2. Frameworks and Standards</a></li>
+          <li><a href="#s3">3. Awareness and Training</a></li>
+          <li><a href="#s4">4. Privacy and Data Protection</a></li>
+          <li><a href="#s5">5. Capstone Case and Tabletop</a></li>
+          <li><a href="#s6">6. Exam Strategy</a></li>
+          <li><a href="#s7">7. Interactive: Readiness and Study Planner</a></li>
+          <li><a href="#s8">8. Faculty: Curriculum Map and Next Steps</a></li>
+        </ul>
+      </nav>
+      <div class="content-main">
+
+        <article class="content-section" id="s1">
+          <div class="cs-head"><span class="cs-num">1</span><h3>Security Concepts</h3></div>
+          <p>Security concepts are the shared vocabulary between the risk function and the security team. A risk scenario names which property is harmed. A control is chosen because it protects that property. When a risk practitioner says &ldquo;this is an integrity risk,&rdquo; the conversation narrows to the right controls straight away.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Property</th><th>Meaning</th><th>Example of harm</th><th>Typical controls</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Confidentiality</td><td>Only authorized parties can read the information</td><td>Customer list leaked to a competitor</td><td>Access control, encryption, classification, DLP</td></tr>
+              <tr><td class="term">Integrity</td><td>Information and systems are accurate and unaltered without authorization</td><td>Supplier bank details changed to divert payments</td><td>Change control, hashing, segregation of duties, input validation</td></tr>
+              <tr><td class="term">Availability</td><td>Authorized users can use the information when needed</td><td>Ordering system down for two days</td><td>Redundancy, backups, DR, capacity management</td></tr>
+              <tr><td class="term">Authenticity</td><td>A party or message is genuinely who or what it claims to be</td><td>Fake invoice from a spoofed supplier domain</td><td>Strong authentication, email authentication, certificates</td></tr>
+              <tr><td class="term">Non-repudiation</td><td>A party cannot credibly deny an action</td><td>Manager denies approving a large transfer</td><td>Digital signatures, protected audit logs</td></tr>
+            </tbody>
+          </table></div>
+          <h4>Design principles</h4>
+          <ul class="detail">
+            <li><strong>Least privilege and need to know:</strong> give each person and process only the access the task requires, and only to the specific information it requires. Least privilege limits the damage a compromised account can do.</li>
+            <li><strong>Segregation of duties:</strong> split critical tasks so that no single person can both commit and conceal an error or fraud. Where staff numbers make this impossible, compensate with review and monitoring.</li>
+            <li><strong>Defense in depth:</strong> layer controls of different kinds (administrative, technical, physical; preventive, detective, corrective) so that one failure does not expose the asset.</li>
+            <li><strong>Zero trust:</strong> NIST SP 800-207 (2020) describes an architecture in which network location grants no trust. Each request to a resource is authenticated and authorized using identity, device health, and context, and access is granted per session. Zero trust is a strategy carried out over years, not a product.</li>
+            <li><strong>Fail secure and simplicity:</strong> systems should fail to a safe state, and simpler designs are easier to secure and test.</li>
+          </ul>
+          <div class="resource-link">
+            <span class="rl-icon" aria-hidden="true">&#129482;</span>
+            <div class="rl-body"><span class="rl-label">Explore with an eMate</span><span class="rl-text"><strong>The Cube</strong>: the McCumber Cube relates security properties, information states, and safeguards in one model.</span></div>
+            <div class="rl-actions"><a class="btn secondary" href="https://d2hie3dpn9wvbb.cloudfront.net/cube/cube.html" target="_blank" rel="noopener noreferrer">The Cube <span class="ext">&#8599;</span></a></div>
+          </div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a question describes a remote access design that trusts any device once it is on the network, the risk is lateral movement, and the principle that addresses it is zero trust or least privilege. When it describes one person who can create and approve the same transaction, the answer is segregation of duties or, if that is impossible, a compensating review.</div>
+        </article>
+
+        <article class="content-section" id="s2">
+          <div class="cs-head"><span class="cs-num">2</span><h3>Security Frameworks and Standards</h3></div>
+          <p>Frameworks give a security program its structure and give stakeholders a way to compare it with others. They are not interchangeable. Some are certifiable management systems, some are outcome taxonomies, and some are prioritized control lists. The risk practitioner&rsquo;s job is to recommend the one that fits the organization&rsquo;s obligations and maturity, and to make sure the program is driven by risk rather than by checklist.</p>
+          <h4>ISO/IEC 27001:2022</h4>
+          <ul class="detail">
+            <li><strong>What it is:</strong> the international standard for an information security management system (ISMS). An organization can be certified against it by an accredited body.</li>
+            <li><strong>Clauses 4 to 10:</strong> the management system requirements: context, leadership, planning (including risk assessment and treatment), support, operation, performance evaluation, and improvement.</li>
+            <li><strong>Annex A:</strong> 93 controls in four themes: organizational, people, physical, and technological. ISO/IEC 27002:2022 gives implementation guidance for each.</li>
+            <li><strong>Statement of Applicability (SoA):</strong> lists every Annex A control, whether it is included or excluded and why, and its status. Controls are selected by the risk treatment process, not adopted wholesale.</li>
+            <li><strong>Risk link:</strong> ISO/IEC 27005:2022 gives guidance on the information security risk management that the ISMS requires.</li>
+          </ul>
+          <h4>NIST Cybersecurity Framework 2.0 (February 2024)</h4>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Function</th><th>Outcome focus</th><th>Risk practitioner connection</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Govern</td><td>Strategy, expectations, policy, roles, oversight, and supply chain risk management</td><td>Appetite, ownership, and accountability (Domain 1)</td></tr>
+              <tr><td class="term">Identify</td><td>Assets, risk assessment, and improvement</td><td>Asset inventory and risk assessment (Domain 2)</td></tr>
+              <tr><td class="term">Protect</td><td>Safeguards: identity, awareness, data security, platform security, resilience</td><td>Control design (Domain 3B)</td></tr>
+              <tr><td class="term">Detect</td><td>Finding and analyzing possible attacks and compromises</td><td>Monitoring and KRIs (Domain 3C)</td></tr>
+              <tr><td class="term">Respond</td><td>Actions on a detected incident</td><td>Incident response and escalation</td></tr>
+              <tr><td class="term">Recover</td><td>Restoring assets and operations</td><td>Resilience and DR (Domain 4A)</td></tr>
+            </tbody>
+          </table></div>
+          <p>CSF 2.0 added the Govern function and broadened its audience from critical infrastructure to organizations of any size or sector. Organizations use Profiles (current and target) to describe where they are and where they want to be, and Tiers to describe the rigor of their risk governance and management practices.</p>
+          <h4>CIS Critical Security Controls v8.1</h4>
+          <p>Eighteen prioritized controls, from enterprise asset inventory to penetration testing, with safeguards grouped into three Implementation Groups. IG1 is often described as essential cyber hygiene for smaller organizations; IG2 and IG3 add safeguards for more complex environments and more capable attackers. The CIS Controls suit organizations that need a practical starting point more than a certifiable system.</p>
+          <div class="compare-2col">
+            <div><b>Choose by need</b>Customers demand a certificate: ISO/IEC 27001. The board wants a common outcome language and a target profile: NIST CSF 2.0. A small IT team needs a prioritized to-do list: CIS Controls IG1. Federal systems: NIST SP 800-53 Rev. 5 under the RMF.</div>
+            <div><b>Use them together</b>Many organizations run an ISO/IEC 27001 ISMS, report to the board in CSF 2.0 terms, and use the CIS Controls or SP 800-53 as the control catalog. Published mappings between them make this practical.</div>
+          </div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a question asks which framework an organization should adopt, the BEST answer is the one that meets its business and regulatory requirements, not the most comprehensive one. When it asks what decides which ISO/IEC 27001 Annex A controls apply, the answer is the risk assessment and treatment, recorded in the Statement of Applicability.</div>
+        </article>
+
+        <article class="content-section" id="s3">
+          <div class="cs-head"><span class="cs-num">3</span><h3>Security and Risk Awareness and Training</h3></div>
+          <p>Awareness is the only control that every employee operates. It works when it changes what people do, not when it produces completion certificates. A risk-aware culture goes further: people recognize risk in their own decisions, report problems early, and know that raising a concern will be welcomed rather than punished.</p>
+          <h4>Role-based training</h4>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Audience</th><th>What they need</th><th>Format that works</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Board and executives</td><td>Risk appetite, top risk scenarios, their oversight duties, disclosure obligations</td><td>Short briefings with business scenarios; tabletop exercises</td></tr>
+              <tr><td class="term">Managers and risk owners</td><td>How to own, accept, and escalate risk; exception handling</td><td>Case discussions using the organization&rsquo;s own register</td></tr>
+              <tr><td class="term">Developers and engineers</td><td>Secure coding, threat modeling, pipeline controls</td><td>Hands-on labs on their own languages and tools</td></tr>
+              <tr><td class="term">Privileged administrators</td><td>Privileged access rules, change control, logging</td><td>Procedure walkthroughs with attestation</td></tr>
+              <tr><td class="term">All staff</td><td>Phishing and social engineering, data handling, reporting</td><td>Short, frequent modules and realistic simulations</td></tr>
+            </tbody>
+          </table></div>
+          <h4>Measuring behavior change</h4>
+          <ul class="detail">
+            <li><strong>Activity measures</strong> (completion rates, hours delivered) show that training happened. They say nothing about risk.</li>
+            <li><strong>Behavior measures</strong> show whether people act differently: the rate at which staff report suspicious messages, time from receipt to report, repeat clickers, policy exceptions requested, and data-handling errors found in reviews.</li>
+            <li><strong>Outcome measures</strong> connect to risk: incidents caused by human error, losses from fraud attempts, and audit findings on handling. These move slowly, so pair them with behavior measures as leading indicators.</li>
+            <li><strong>Reference:</strong> NIST SP 800-50 Rev. 1, Building a Cybersecurity and Privacy Learning Program (2024), covers program design, role-based training, and evaluation.</li>
+          </ul>
+          <div class="resource-link">
+            <span class="rl-icon" aria-hidden="true">&#127917;</span>
+            <div class="rl-body"><span class="rl-label">Explore with an eMate</span><span class="rl-text"><strong>Social Engineering Tactics</strong>: pretexting, baiting, tailgating, and the other techniques awareness training must prepare people for.</span></div>
+            <div class="rl-actions"><a class="btn secondary" href="https://d2hie3dpn9wvbb.cloudfront.net/SocialEngineeringTactics/SocialEngineeringTactics.html" target="_blank" rel="noopener noreferrer">Social Engineering Tactics <span class="ext">&#8599;</span></a></div>
+          </div>
+          <div class="in-practice"><span class="ip-label">&#128270; In practice</span><p>Halloway Foods reported 98 percent training completion for two years while invoice fraud attempts kept succeeding. The risk function replaced the completion KPI with two KRIs: the share of simulated fraud emails reported within an hour, and the number of supplier bank-detail changes made without a call-back check. The first quarter&rsquo;s numbers were uncomfortable, and they were the first numbers that pointed to a fix.</p></div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a question asks for the BEST indicator that awareness training is effective, choose a behavior measure (such as reporting rates or reduced incidents caused by staff) over completion rates or test scores. When it asks for the MOST effective way to build a risk-aware culture, look for visible tone from leadership and safe channels for reporting.</div>
+        </article>
+
+        <article class="content-section" id="s4">
+          <div class="cs-head"><span class="cs-num">4</span><h3>Data Privacy and Data Protection Principles</h3></div>
+          <p>Security asks whether data is protected. Privacy asks whether the organization should be collecting and using it at all, and on what terms. A system can be perfectly secure and still violate privacy law, for example by keeping personal data longer than its purpose requires. The risk practitioner treats privacy obligations as legal and regulatory requirements in the risk profile and makes sure privacy risk to individuals is assessed, not only risk to the organization.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>GDPR Article 5 principle</th><th>In plain terms</th><th>Typical control</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Lawfulness, fairness, transparency</td><td>Have a legal basis, do not mislead, and tell people what you do</td><td>Privacy notices; records of processing</td></tr>
+              <tr><td class="term">Purpose limitation</td><td>Use data only for the purposes stated when it was collected</td><td>Purpose register; review of new uses</td></tr>
+              <tr><td class="term">Data minimization</td><td>Collect only what the purpose needs</td><td>Form and field reviews; privacy by default</td></tr>
+              <tr><td class="term">Accuracy</td><td>Keep data correct and up to date</td><td>Correction processes; data quality checks</td></tr>
+              <tr><td class="term">Storage limitation</td><td>Keep identifiable data no longer than needed</td><td>Retention schedule; automated deletion</td></tr>
+              <tr><td class="term">Integrity and confidentiality</td><td>Protect data with appropriate security</td><td>Access control; encryption; monitoring</td></tr>
+              <tr><td class="term">Accountability</td><td>Be able to demonstrate compliance with all of the above</td><td>Policies, DPIAs, training, audit evidence</td></tr>
+            </tbody>
+          </table></div>
+          <ul class="detail">
+            <li><strong>OECD Privacy Guidelines:</strong> eight principles first adopted in 1980 and revised in 2013 (collection limitation, data quality, purpose specification, use limitation, security safeguards, openness, individual participation, and accountability). Many national laws trace back to them.</li>
+            <li><strong>Privacy by design and by default:</strong> privacy built into requirements and architecture, with the most protective settings as the default. GDPR Article 25 makes this a legal requirement.</li>
+            <li><strong>DPIA:</strong> GDPR Article 35 requires a data protection impact assessment before processing that is likely to result in high risk to individuals, such as large-scale profiling, systematic monitoring, or large-scale processing of sensitive data. The DPIA describes the processing, assesses necessity and proportionality, assesses risks to individuals, and sets mitigating measures.</li>
+            <li><strong>Data subject rights:</strong> access, rectification, erasure, restriction, portability, objection, and rights related to automated decision-making. Each needs a process, a deadline, and an owner.</li>
+            <li><strong>Breach notification:</strong> under GDPR, the controller notifies the supervisory authority without undue delay and, where feasible, within 72 hours of becoming aware of a reportable breach. Other laws set their own clocks, so the incident plan must list them.</li>
+          </ul>
+          <div class="tip jade"><span class="tip-label">&#128278; Note</span>For U.S. teaching contexts, pair GDPR with a sector example such as HIPAA for health data or FERPA for student records, and with the NIST Privacy Framework 1.0 as a voluntary structure. The principles carry over even where the legal details differ.</div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a new project will process personal data in a high-risk way, the FIRST step is a privacy or data protection impact assessment, before design is final. When a question contrasts privacy and security, remember that encryption protects confidentiality but does nothing for purpose limitation, minimization, or retention.</div>
+        </article>
+
+        <article class="content-section" id="s5">
+          <div class="cs-head"><span class="cs-num">5</span><h3>Capstone Case and Tabletop Facilitation</h3></div>
+          <p>The capstone pulls the four domains into one case. Work it in teams of four, each person leading one domain, and then run the tabletop exercise that follows. The case is fictional and continues the Halloway Foods story from Lesson 8.</p>
+          <div class="in-practice"><span class="ip-label">&#128270; Capstone case: Halloway Foods, eighteen months later</span><p>Halloway Foods has moved finance and order processing to a SaaS ERP and launched its generative AI customer assistant. Grocery chains now place 70 percent of orders through the ERP&rsquo;s customer portal. On a Monday morning, the ERP provider announces that a managed-services partner it uses was hit by ransomware and that customer portals are offline &ldquo;for an undetermined period.&rdquo; At the same time, the AI assistant, which pulls order status from the ERP, starts telling customers their orders have shipped when they have not. The risk register lists ERP concentration risk as accepted by the CFO a year ago, with a KRI on provider uptime that was never connected to a data source.</p></div>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Domain</th><th>Capstone question</th><th>Evidence of a strong answer</th></tr></thead>
+            <tbody>
+              <tr><td class="term">1 Governance</td><td>Who owns the decisions today, and was the original risk acceptance within appetite?</td><td>Names the CFO as risk owner, the IT director as control owner, and the board&rsquo;s role; checks the acceptance against the stated appetite for order-processing outages</td></tr>
+              <tr><td class="term">2 Risk Assessment</td><td>What scenarios are now in play, and how big are they?</td><td>Separate scenarios for the outage (availability), the fourth-party breach (confidentiality of customer data), and the assistant&rsquo;s wrong answers (integrity); impact from the BIA&rsquo;s 8-hour MTD</td></tr>
+              <tr><td class="term">3 Response and Reporting</td><td>What responses are needed now and later, and how should this be reported?</td><td>Immediate manual order process; switch the assistant off for order status; contract review; a working KRI with thresholds; a short board report with decisions requested</td></tr>
+              <tr><td class="term">4 Technology and Security</td><td>What technology and security gaps allowed this?</td><td>No tested exit or fallback plan; AI assistant without output validation or a kill switch tied to source health; third-party assurance that did not cover fourth parties</td></tr>
+            </tbody>
+          </table></div>
+
+          <h4>Facilitating the tabletop (Task 24)</h4>
+          <p>A tabletop exercise tests plans and decisions through discussion, not live systems. It is cheap, safe, and revealing. The quality of a tabletop depends on preparation: clear objectives, realistic injects, the right people in the room, and a written after-action report that leads to change.</p>
+          <ul class="detail">
+            <li><strong>Objectives (set first):</strong> (1) confirm that the order-processing fallback can be activated within the 8-hour MTD; (2) test the escalation path from the risk owner to the board; (3) validate the decision to suspend the AI assistant and who may make it; (4) check that customer and regulatory notification duties are identified within the required time frames.</li>
+            <li><strong>Ground rules:</strong> no-fault discussion; use the plans as written, not as remembered; decisions are made by the role that owns them; the facilitator may pause to ask &ldquo;who decides?&rdquo; at any point.</li>
+            <li><strong>Scope and length:</strong> 90 minutes, five injects, one scenario. Keep it small enough to finish and discuss.</li>
+          </ul>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Role</th><th>Played by</th><th>Responsibility in the exercise</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Facilitator</td><td>Risk practitioner</td><td>Delivers injects, keeps time, asks probing questions, does not make decisions</td></tr>
+              <tr><td class="term">Risk owner</td><td>CFO</td><td>Decides on fallback activation, spending, and risk acceptance</td></tr>
+              <tr><td class="term">Control owners</td><td>IT director, customer service manager</td><td>Explain what controls and procedures exist and can be activated</td></tr>
+              <tr><td class="term">Legal and privacy</td><td>General counsel or privacy lead</td><td>Identifies contractual and notification obligations</td></tr>
+              <tr><td class="term">Communications</td><td>Communications lead</td><td>Drafts customer and staff messages</td></tr>
+              <tr><td class="term">Scribe</td><td>Second risk analyst</td><td>Records decisions, times, and open questions</td></tr>
+              <tr><td class="term">Evaluator</td><td>Internal audit observer</td><td>Measures performance against the objectives, without participating</td></tr>
+            </tbody>
+          </table></div>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Time</th><th>Inject</th><th>Decision the inject tests</th></tr></thead>
+            <tbody>
+              <tr><td class="term">0:00</td><td>The provider&rsquo;s status page reports the portal outage. Three grocery chains call to ask about Tuesday deliveries.</td><td>Who declares an incident, and is the manual order fallback activated?</td></tr>
+              <tr><td class="term">0:20</td><td>Customer service reports the AI assistant is confirming shipments that have not left the plant.</td><td>Who has authority to switch off the assistant, and how fast can it be done?</td></tr>
+              <tr><td class="term">0:35</td><td>The provider states that customer contact data may have been accessed through its partner.</td><td>What notification duties apply, to whom, and by when? Who owns the clock?</td></tr>
+              <tr><td class="term">0:50</td><td>Hour 6: the manual process is handling only 40 percent of normal order volume.</td><td>Does the CFO escalate to the CEO and board? What appetite threshold has been crossed?</td></tr>
+              <tr><td class="term">1:05</td><td>The provider offers a restored portal by Thursday and a service credit.</td><td>Is the credit an adequate response? What changes to the contract, exit plan, and KRIs follow?</td></tr>
+            </tbody>
+          </table></div>
+          <h4>After-action report</h4>
+          <ul class="detail">
+            <li><strong>Hot wash (immediately after):</strong> 15 minutes in the room. What went well, what was unclear, what surprised people.</li>
+            <li><strong>Report sections:</strong> exercise objectives; summary of the scenario; for each objective, what was expected, what happened, and whether it was met; gaps found; corrective actions, each with an owner and a due date; and updates required to the risk register, plans, and KRIs.</li>
+            <li><strong>Follow-through:</strong> corrective actions enter the risk action plan and are monitored like any other. An after-action report with no owners is a record, not a response.</li>
+          </ul>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a question asks what to define FIRST when planning a tabletop, the answer is the exercise objectives. When it asks for the MOST important output, it is the after-action report with corrective actions and owners. The facilitator guides; the participants who own the decisions make them.</div>
+        </article>
+
+        <article class="content-section" id="s6">
+          <div class="cs-head"><span class="cs-num">6</span><h3>Exam Strategy</h3></div>
+          <p>The CRISC exam has 150 multiple-choice questions in four hours, scored on a scale of 200 to 800 with 450 to pass. That is 1.6 minutes per question. Most candidates who know the material and fail do so because they answer as technicians or auditors instead of as risk practitioners. Confirm all logistics in the current ISACA Exam Candidate Guide before you book.</p>
+          <h4>Question tactics</h4>
+          <ul class="detail">
+            <li><strong>Read the last sentence first.</strong> Find the qualifier (FIRST, BEST, MOST, PRIMARY, GREATEST concern) and the role (risk practitioner, risk owner, management) before reading the scenario.</li>
+            <li><strong>Find the process step.</strong> If the scenario has not yet identified or assessed the risk, an answer that responds to it is premature. If it has, an answer that assesses again may be too slow.</li>
+            <li><strong>Prefer business over technology.</strong> Answers tied to business objectives, ownership, and appetite usually beat answers that name a specific tool or configuration.</li>
+            <li><strong>Respect ownership.</strong> The practitioner advises, recommends, facilitates, and reports. The risk owner accepts or decides. The board sets appetite. Answers that put the practitioner in the owner&rsquo;s chair are usually wrong.</li>
+            <li><strong>Eliminate the extremes.</strong> &ldquo;Immediately shut down,&rdquo; &ldquo;ignore,&rdquo; and &ldquo;replace the entire system&rdquo; are rarely the best answer.</li>
+            <li><strong>Pace with checkpoints.</strong> About 50 questions by 1:20, 100 by 2:40, and all 150 by 4:00, with a few minutes to spare. Flag and move on rather than stall on one item.</li>
+          </ul>
+          <h4>The final week</h4>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>When</th><th>Focus</th></tr></thead>
+            <tbody>
+              <tr><td class="term">7 days out</td><td>Full timed practice set across all domains; list the domains and task types you miss most</td></tr>
+              <tr><td class="term">6 to 4 days out</td><td>Targeted review of the two weakest areas; practice questions with full rationale review, including the ones you got right</td></tr>
+              <tr><td class="term">3 to 2 days out</td><td>Mixed sets of 50 questions; re-read your own notes on ownership, process order, and appetite versus tolerance</td></tr>
+              <tr><td class="term">1 day out</td><td>Light review only; confirm ID, appointment time, location or remote setup; sleep</td></tr>
+              <tr><td class="term">Exam day</td><td>Arrive early or complete the remote check-in early; pace by checkpoints; trust your first reasoned answer unless you find a clear reason to change it</td></tr>
+            </tbody>
+          </table></div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>Practice-question scores are the best evidence of readiness you have. Use them to set the readiness sliders in the planner below rather than relying on how confident you feel about a domain.</div>
+        </article>
+
+        <article class="content-section" id="s7">
+          <div class="cs-head"><span class="cs-num">7</span><h3>Interactive: Readiness and Study Planner</h3></div>
+          <p>Rate your readiness in each CRISC domain from 0 to 100, ideally using your most recent practice-question score for that domain. Then set the study hours you can commit and the weeks until your exam. The planner weights each domain by its share of the exam (D1 26%, D2 22%, D3 32%, D4 20%) to compute a weighted readiness score. It allocates study hours in proportion to <em>weight &times; (100 &minus; readiness)</em>, so a large gap in a heavily weighted domain gets the most time. The final week is held back for a full timed practice exam and review. The chart draws each domain as a bar whose thickness reflects its exam weight, with the gap to a readiness target of 75 marked in copper.</p>
+
+          <style>
+            .rsp-cols{display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start;}
+            .rsp-in{flex:1 1 260px;min-width:0;}
+            .rsp-out{flex:1.4 1 320px;min-width:0;}
+            .rsp-f{margin-bottom:.35rem;}
+            .rsp-f label{display:flex;justify-content:space-between;gap:.5rem;font-size:.76rem;font-weight:700;color:var(--text-secondary);}
+            .rsp-f output{font-family:'Arial Narrow',Arial,sans-serif;font-weight:900;color:var(--gold);white-space:nowrap;}
+            .rsp-f input[type="range"]{margin:0;height:1.1rem;}
+            .rsp-sep{border:none;border-top:1px solid var(--border);margin:.5rem 0;}
+            .rsp-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem;margin-bottom:.5rem;}
+            .rsp-tile{background:var(--section-alt);border:1px solid var(--border);border-radius:5px;padding:.35rem .6rem;min-width:0;}
+            .rsp-tile .k{display:block;font-family:Arial,sans-serif;font-size:.64rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);}
+            .rsp-tile .v{display:block;font-family:Georgia,serif;font-size:1rem;font-weight:700;color:var(--text-primary);line-height:1.25;overflow-wrap:anywhere;}
+            .rsp-plan{width:100%;border-collapse:collapse;font-family:Arial,sans-serif;font-size:.74rem;color:var(--text-secondary);margin-top:.4rem;}
+            .rsp-plan th{text-align:left;font-size:.64rem;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);border-bottom:1px solid var(--border);padding:.25rem .35rem;}
+            .rsp-plan td{border-bottom:1px solid var(--border);padding:.25rem .35rem;vertical-align:top;line-height:1.35;}
+            .rsp-plan td:first-child{white-space:nowrap;font-weight:700;color:var(--text-primary);}
+            .rsp-plan tr.final td{background:var(--jade-pale);}
+            .rsp-acts{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.4rem;}
+          </style>
+
+          <div class="iw" id="rsp-root">
+            <div class="iw-card">
+              <div class="iw-topbar">
+                <span class="iw-eyebrow">Interactive &middot; weight the gaps, plan the weeks</span>
+                <button type="button" class="iw-expand" aria-expanded="false" title="Open a larger view">&#10530; Expand</button>
+              </div>
+              <div class="rsp-cols">
+                <div class="iw-panel rsp-in">
+                  <h5 class="iw-h5">Self-rated readiness by domain</h5>
+                  <div id="rsp-sliders"></div>
+                  <hr class="rsp-sep">
+                  <div class="rsp-f"><label for="rsp-hrs"><span>Total study hours available</span><output id="rsp-hrs-o" for="rsp-hrs">60 h</output></label><input type="range" id="rsp-hrs" min="10" max="200" step="5" value="60"></div>
+                  <div class="rsp-f"><label for="rsp-wks"><span>Weeks until the exam</span><output id="rsp-wks-o" for="rsp-wks">6</output></label><input type="range" id="rsp-wks" min="2" max="12" step="1" value="6"></div>
+                  <div class="rsp-acts"><button type="button" class="iw-btn" id="rsp-reset">Reset to sample</button></div>
+                  <div aria-live="polite">
+                    <div class="iw-verdict" id="rsp-verdict"><span class="iw-pill" id="rsp-pill">Ready</span><span id="rsp-coach"></span></div>
+                  </div>
+                </div>
+                <div class="iw-panel rsp-out">
+                  <div class="rsp-tiles">
+                    <div class="rsp-tile"><span class="k">Weighted readiness</span><span class="v" id="rsp-t1">0</span></div>
+                    <div class="rsp-tile"><span class="k">Weakest high-weight domain</span><span class="v" id="rsp-t2">-</span></div>
+                    <div class="rsp-tile"><span class="k">Hours per week</span><span class="v" id="rsp-t3">0</span></div>
+                    <div class="rsp-tile"><span class="k">Plan verdict</span><span class="v" id="rsp-t4">-</span></div>
+                  </div>
+                  <div><canvas id="rsp-cv" role="img" aria-label="Bar chart of readiness by domain against a target of 75, with bar thickness showing exam weight and allocated study hours"></canvas></div>
+                  <table class="rsp-plan" id="rsp-plan">
+                    <caption class="iw-h5" style="text-align:left;caption-side:top;margin-bottom:.1rem">Week-by-week plan</caption>
+                    <thead><tr><th scope="col">Week</th><th scope="col">Study blocks</th><th scope="col">Milestone</th></tr></thead>
+                    <tbody id="rsp-body"></tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <script>
+          (function(){
+            var root=document.getElementById('rsp-root'); if(!root) return;
+            var $=function(id){return root.querySelector('#'+id);};
+            var D=[
+              {c:'D1',n:'Governance',s:'Governance',w:26,d:70},
+              {c:'D2',n:'Risk Assessment',s:'Assessment',w:22,d:60},
+              {c:'D3',n:'Risk Response and Reporting',s:'Response',w:32,d:55},
+              {c:'D4',n:'Technology and Security',s:'Technology',w:20,d:65}
+            ];
+            var TARGET=75, r=D.map(function(x){return x.d;});
+            var box=$('rsp-sliders');
+            D.forEach(function(x,k){
+              var d=document.createElement('div'); d.className='rsp-f';
+              d.innerHTML='<label for="rsp-s'+k+'"><span>'+x.c+' '+x.n+' ('+x.w+'%)</span><output id="rsp-o'+k+'" for="rsp-s'+k+'">'+x.d+'</output></label><input type="range" id="rsp-s'+k+'" min="0" max="100" step="5" value="'+x.d+'">';
+              box.appendChild(d);
+              d.querySelector('input').addEventListener('input',function(e){r[k]=+e.target.value;render();});
+            });
+            function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()||'#86198f';}
+            function rgba(hex,a){hex=hex.replace('#','');if(hex.length===3)hex=hex.split('').map(function(c){return c+c;}).join('');var n=parseInt(hex,16);return 'rgba('+(n>>16&255)+','+(n>>8&255)+','+(n&255)+','+a+')';}
+            function fmt(h){var v=Math.round(h*2)/2;return (v%1?v.toFixed(1):v.toFixed(0))+' h';}
+            var last=null;
+            function compute(){
+              var hrs=+$('rsp-hrs').value, wks=+$('rsp-wks').value, hpw=hrs/wks;
+              var weighted=D.reduce(function(a,x,k){return a+x.w*r[k]/100;},0);
+              var g=D.map(function(x,k){return x.w*(100-r[k]);}), G=g.reduce(function(a,b){return a+b;},0);
+              var study=hrs-hpw, alloc=D.map(function(x,k){return G>0?study*g[k]/G:study*x.w/100;});
+              var order=D.map(function(x,k){return k;}).sort(function(a,b){return g[b]-g[a]||D[b].w-D[a].w;});
+              var minR=Math.min.apply(null,r), minK=r.indexOf(minR);
+              var verdict,cls;
+              if(weighted>=75&&minR>=60){verdict='Ready';cls='good';}
+              else if(weighted>=60){verdict='Close';cls='warn';}
+              else {verdict='Build foundations';cls='bad';}
+              return {hrs:hrs,wks:wks,hpw:hpw,weighted:weighted,g:g,alloc:alloc,order:order,minR:minR,minK:minK,verdict:verdict,cls:cls,study:study};
+            }
+            function plan(s){
+              var S=s.wks-1, cap=s.hpw, weeks=[], qi=0, left=s.order.map(function(k){return s.alloc[k];});
+              for(var w=0;w<S;w++){
+                var room=cap, segs=[], done=[];
+                while(room>1e-6&&qi<s.order.length){
+                  var take=Math.min(room,left[qi]);
+                  if(take>1e-6) segs.push([s.order[qi],take]);
+                  left[qi]-=take; room-=take;
+                  if(left[qi]<=1e-6){done.push(s.order[qi]);qi++;}
+                }
+                weeks.push({segs:segs,done:done});
+              }
+              var rows=[], step=S>6?2:1;
+              for(var i=0;i<S;i+=step){
+                var grp=weeks.slice(i,i+step), segs={}, done=[];
+                grp.forEach(function(wk){wk.segs.forEach(function(sg){segs[sg[0]]=(segs[sg[0]]||0)+sg[1];});done=done.concat(wk.done);});
+                var label=step===1||i+1>=S?'Week '+(i+1):'Weeks '+(i+1)+' and '+(i+2);
+                var blocks=Object.keys(segs).filter(function(k){return segs[k]>=0.25;}).sort(function(a,b){return segs[b]-segs[a];}).map(function(k){return '<b>'+D[k].c+'</b> '+fmt(segs[k]);}).join(', ')||'Review';
+                var ms=done.length?'Finish '+done.map(function(k){return D[k].c;}).join(' and ')+': timed set of 50 questions':'Practice questions after each topic';
+                if(i>0) ms+='; plus 20 mixed questions from earlier weeks';
+                rows.push('<tr><td>'+label+'</td><td>'+blocks+'</td><td>'+ms+'</td></tr>');
+              }
+              rows.push('<tr class="final"><td>Week '+s.wks+'</td><td>Mixed review, '+fmt(s.hpw)+'</td><td>Full 150-question practice exam in 4 hours; review every miss</td></tr>');
+              $('rsp-body').innerHTML=rows.join('');
+            }
+            function draw(){
+              var s=last; if(!s) return;
+              var cv=$('rsp-cv'), w=Math.max(260,cv.parentNode.clientWidth), h;
+              if(root.classList.contains('is-expanded')){
+                var top=cv.getBoundingClientRect().top, below=$('rsp-plan').getBoundingClientRect().height;
+                h=Math.max(190,Math.min(w*0.45,window.innerHeight-top-below-90));
+              } else h=Math.min(250,Math.max(210,w*0.5));
+              var dpr=window.devicePixelRatio||1;
+              cv.width=Math.round(w*dpr); cv.height=Math.round(h*dpr); cv.style.height=h+'px';
+              var g=cv.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,w,h);
+              var gold=css('--gold'), jade=css('--jade'), border=css('--border'), muted=css('--text-muted'), txt=css('--text-primary'), navy=css('--navy');
+              var L=Math.min(118,w*0.3), Rm=52, top0=24, bot=34, x0=L, x1=w-Rm, pw=x1-x0, ph=h-top0-bot;
+              function X(v){return x0+pw*v/100;}
+              // legend
+              g.font='11px Arial';g.textBaseline='middle';g.textAlign='left';
+              g.fillStyle=gold;g.fillRect(x0,8,12,8);g.fillStyle=txt;g.fillText('Readiness',x0+16,12);
+              var lx=x0+16+g.measureText('Readiness').width+14;
+              g.fillStyle=rgba(jade,0.35);g.fillRect(lx,8,12,8);g.strokeStyle=jade;g.strokeRect(lx,8,12,8);g.fillStyle=txt;g.fillText('Gap to 75',lx+16,12);
+              var lx2=lx+16+g.measureText('Gap to 75').width+14;
+              if(lx2+150<w){g.fillStyle=muted;g.fillText('Thickness = exam weight',lx2,12);}
+              // grid
+              g.strokeStyle=border;g.lineWidth=1;g.fillStyle=muted;g.textAlign='center';g.textBaseline='top';
+              [0,25,50,75,100].forEach(function(v){g.beginPath();g.moveTo(X(v),top0);g.lineTo(X(v),top0+ph);g.stroke();g.fillText(v,X(v),top0+ph+3);});
+              g.fillText('Self-rated readiness (0 to 100)',x0+pw/2,top0+ph+17);
+              // rows
+              var slot=ph/4, maxW=32;
+              D.forEach(function(x,k){
+                var cy=top0+slot*(k+0.5), bh=Math.max(6,Math.min(slot*0.82,slot*0.82*x.w/maxW));
+                g.fillStyle=rgba(border.length?border:'#e3d2e1',0.6);g.fillRect(X(0),cy-bh/2,pw,bh);
+                g.fillStyle=gold;g.fillRect(X(0),cy-bh/2,X(r[k])-X(0),bh);
+                if(r[k]<TARGET){g.fillStyle=rgba(jade,0.35);g.fillRect(X(r[k]),cy-bh/2,X(TARGET)-X(r[k]),bh);g.strokeStyle=jade;g.lineWidth=1.5;g.strokeRect(X(r[k]),cy-bh/2,X(TARGET)-X(r[k]),bh);}
+                g.textAlign='right';g.textBaseline='middle';g.fillStyle=txt;g.font='bold 12px Arial';
+                g.fillText(x.c+(w>420?' '+x.s:''),x0-8,cy-7);
+                g.font='11px Arial';g.fillStyle=muted;g.fillText(x.w+'% weight',x0-8,cy+8);
+                g.textAlign='left';g.fillStyle=txt;g.font='bold 11px Arial';g.fillText(fmt(s.alloc[k]),x1+6,cy);
+              });
+              // target line
+              g.strokeStyle=navy;g.lineWidth=2;g.setLineDash([5,4]);g.beginPath();g.moveTo(X(TARGET),top0-2);g.lineTo(X(TARGET),top0+ph);g.stroke();g.setLineDash([]);
+              g.font='10px Arial';g.fillStyle=muted;g.textAlign='right';g.textBaseline='bottom';g.fillText('Hours',w-2,top0-1);
+            }
+            function render(){
+              D.forEach(function(x,k){$('rsp-o'+k).textContent=r[k];$('rsp-s'+k).value=r[k];});
+              var s=compute(); last=s;
+              $('rsp-hrs-o').textContent=s.hrs+' h'; $('rsp-wks-o').textContent=s.wks;
+              var top=s.order[0];
+              $('rsp-t1').textContent=s.weighted.toFixed(1)+' / 100';
+              $('rsp-t2').textContent=D[top].c+' '+D[top].n;
+              $('rsp-t3').textContent=s.hpw.toFixed(1)+' h';
+              $('rsp-t4').textContent=s.verdict;
+              var p=$('rsp-pill');p.className='iw-pill '+s.cls;p.textContent=s.verdict;$('rsp-verdict').className='iw-verdict '+s.cls;
+              var worth=(D[top].w/10).toFixed(1), msg;
+              if(s.cls==='good') msg='Weighted readiness is '+s.weighted.toFixed(1)+' and no domain is below 60. Keep practicing with timed mixed sets so that pacing does not decide the result.';
+              else if(s.cls==='warn') msg=(s.weighted>=75?'Weighted readiness is '+s.weighted.toFixed(1)+', but '+D[s.minK].c+' is at '+s.minR+'. A weak domain can sink a strong average, so close it before the exam.':'Weighted readiness is '+s.weighted.toFixed(1)+', within reach of the 75 target. Focused work on the largest weighted gaps should close it.');
+              else msg='Weighted readiness is '+s.weighted.toFixed(1)+'. Build the foundations with the review manual and lesson material before relying on practice questions, and consider whether the exam date gives you enough weeks.';
+              msg+=' '+D[top].c+' gets the most hours because its weighted gap is largest: every 10 points gained there adds '+worth+' points of weighted readiness.';
+              if(s.hpw>15) msg+=' At '+s.hpw.toFixed(1)+' hours a week, the load is hard to sustain alongside teaching; a later exam date may be the better plan.';
+              else if(s.hpw<3) msg+=' Under 3 hours a week makes it hard to keep momentum; add hours or move the date.';
+              $('rsp-coach').textContent=msg;
+              plan(s); draw();
+            }
+            $('rsp-hrs').addEventListener('input',render);
+            $('rsp-wks').addEventListener('input',render);
+            $('rsp-reset').addEventListener('click',function(){r=D.map(function(x){return x.d;});$('rsp-hrs').value=60;$('rsp-wks').value=6;render();});
+            window.addEventListener('resize',draw);
+            render();
+          })();
+          </script>
+
+          <div class="tip"><span class="tip-label">&#128161; Exam lesson</span>The planner applies the same logic the exam rewards: prioritize by impact, not by comfort. A 10-point gap in Domain 3 costs more than the same gap in Domain 4 because Domain 3 carries 32 percent of the exam. In the same way, a risk practitioner spends response effort where weighted exposure is greatest, not where the work is most familiar.</div>
+        </article>
+
+        <article class="content-section" id="s8">
+          <div class="cs-head"><span class="cs-num">8</span><h3>Faculty Teaching Segment: Curriculum Map and Next Steps</h3></div>
+          <p>The last faculty segment turns the workshop into program decisions. Start by mapping where each part of the CRISC outline already lives in your courses, then pick one place to add a tabletop. The map below is a starting template. The letter I marks where a topic is introduced, R where it is reinforced, and M where students demonstrate mastery.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>CRISC outline</th><th>Intro to Cybersecurity</th><th>Security Policy and Compliance</th><th>IT Risk Management</th><th>Systems and Network Security</th><th>GRC Capstone</th><th>CAE-CD KUs</th></tr></thead>
+            <tbody>
+              <tr><td class="term">1A Organizational Governance</td><td>I</td><td>R</td><td>R</td><td></td><td>M</td><td>CPM, PLE</td></tr>
+              <tr><td class="term">1B Risk Governance</td><td>I</td><td>R</td><td>M</td><td></td><td>M</td><td>CPM, PLE, IAC</td></tr>
+              <tr><td class="term">2A Risk Identification</td><td>I</td><td></td><td>R</td><td>R</td><td>M</td><td>CTH, VLA</td></tr>
+              <tr><td class="term">2B Risk Analysis</td><td></td><td></td><td>M</td><td></td><td>M</td><td>CPM</td></tr>
+              <tr><td class="term">3A Risk Response</td><td></td><td>I</td><td>R</td><td></td><td>M</td><td>CPM, SCS</td></tr>
+              <tr><td class="term">3B Control Design and Implementation</td><td>I</td><td>R</td><td>R</td><td>R</td><td>M</td><td>CSP, IAC</td></tr>
+              <tr><td class="term">3C Risk Monitoring and Reporting</td><td></td><td></td><td>R</td><td>I</td><td>M</td><td>CPM, IAC</td></tr>
+              <tr><td class="term">4A Technology and Security</td><td>I</td><td></td><td>R</td><td>R</td><td>M</td><td>BCD, SAS, SCS</td></tr>
+              <tr><td class="term">4B Information Security Principles</td><td>I</td><td>R</td><td></td><td>R</td><td>M</td><td>CSP, PRI, PLE</td></tr>
+            </tbody>
+          </table></div>
+          <h4>Running a tabletop in class</h4>
+          <ul class="detail">
+            <li><strong>Prepare (one week before):</strong> write two or three objectives, a one-page scenario, five inject cards, and a role card for each seat. Print them, or share them as files, so every student holds the material.</li>
+            <li><strong>Run (50 minutes):</strong> 5 minutes for roles and ground rules, 30 minutes for injects at 6-minute intervals, 15 minutes for the hot wash. One student per team is scribe and one is evaluator with the objectives checklist.</li>
+            <li><strong>Close (homework):</strong> each team submits an after-action report from a template with objective-by-objective findings and three corrective actions with owners and dates.</li>
+          </ul>
+          <ul class="detail">
+            <li><strong>Signature assignment:</strong> teams design and run a tabletop exercise for a fictional organization from this workshop (Larchmont Community Health, Brightwater Credit Union, Corveth Logistics, Penmore Technical College, or Halloway Foods). The package includes objectives, a scenario, at least five injects, role cards, an evaluator checklist, and the after-action report from their own run.</li>
+            <li><strong>Rubric criteria:</strong> (1) objectives are specific and testable; (2) injects escalate realistically and each tests a named decision; (3) roles separate decision owners from advisors and the facilitator; (4) the after-action report links each gap to a corrective action with an owner, a due date, and a risk register update.</li>
+            <li><strong>Lab idea:</strong> build a simple exercise tracker in a spreadsheet: inject times, decisions logged by the scribe, time taken per decision, and objective status. Students run a second team&rsquo;s exercise and compare decision times against the MTD in the scenario. Use only synthetic scenario data.</li>
+            <li><strong>Course fit:</strong> a GRC or IT risk capstone, or the final module of a security management course. It supports the CAE-CD Knowledge Units Cybersecurity Planning and Management (CPM); Business Continuity and Disaster Recovery (BCD); Policy, Legal, Ethics, and Compliance (PLE); and IA Compliance (IAC).</li>
+          </ul>
+          <div class="tip"><span class="tip-label">&#127891; Teaching note</span>Use the study planner twice in class. First, have students set sliders from a short diagnostic quiz and save the week-by-week plan as a PDF from the browser&rsquo;s print dialog. Second, three weeks later, have them repeat it and compare the two plans. The change in weighted readiness, and the reasons for it, make a strong reflective writing prompt.</div>
+          <div class="in-practice"><span class="ip-label">&#128270; Next steps after the workshop</span><p>Book the exam date that your planner says is realistic. Choose one course from the curriculum map and add one artifact from this week: a signature assignment, a lab, or a tabletop. Keep the knowledge checks from all ten lessons as your review set, and return to the Practice section as the CRISC Practices and Risk Lab items are released.</p></div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="emates">
+    <p class="eyebrow">Explore with eMates</p>
+    <h2 class="h2">Interactive refreshers for this lesson</h2>
+    <div class="rule"></div>
+    <p class="lead">Short, self-paced eMates from the myEMATES library. Each opens in a new tab. Concept refreshers support your own exam study. Student-ready modules also work as warm-ups in your own courses.</p>
+    <div class="em-grid">
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 5</span></div><h3>The Cube</h3><p>Security properties, information states, and safeguards in one model, a quick review of Domain 4B concepts.</p><div class="em-foot"><span class="em-level">Concept refresher</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/cube/cube.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: The Cube (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 7</span></div><h3>Five Pillars of Information Security</h3><p>Confidentiality, integrity, availability, authenticity, and non-repudiation, the properties every risk scenario names.</p><div class="em-foot"><span class="em-level">Concept refresher</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/FivePillars/FivePillars.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Five Pillars of Information Security (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 3</span></div><h3>Privacy Tenets</h3><p>The privacy principles behind minimization, purpose limitation, and data subject rights.</p><div class="em-foot"><span class="em-level student">Student-ready</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/privacy/privacy.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Privacy Tenets (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 5</span></div><h3>Social Engineering Tactics</h3><p>The techniques awareness training must prepare people for, useful when designing behavior-based measures.</p><div class="em-foot"><span class="em-level student">Student-ready</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/SocialEngineeringTactics/SocialEngineeringTactics.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Social Engineering Tactics (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 3</span></div><h3>Phishing Mystery</h3><p>A short investigation that works well as the opening scenario for an awareness or tabletop session.</p><div class="em-foot"><span class="em-level student">Student-ready</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/phishing/phishing.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Phishing Mystery (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 1</span></div><h3>Career Exploration</h3><p>Cyber career pathways, a way to show students where risk and GRC roles fit after your courses.</p><div class="em-foot"><span class="em-level student">Student-ready</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/NSA+Ring+Project/index.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Career Exploration (opens in a new tab)">Open &#8599;</a></div></article>
+    </div>
+  </section>
+
+  <section class="block" id="practice-this-lesson">
+    <p class="eyebrow">Practice</p>
+    <h2 class="h2">Practice this lesson</h2>
+    <div class="rule"></div>
+    <p class="lead">Self-checking practice for this lesson, ready to use with your own students. Each item ends with a report you can print or save as a PDF. See all items in the <a href="practices.html">CRISC Practices</a> and the <a href="labs.html">CRISC Risk Lab</a>.</p>
+    <div class="pl-grid">
+      <article class="pl-card"><div class="pl-top"><span class="pl-type">CRISC Practices &middot; A9</span><span class="pl-time">&#9201; 40 min</span></div><h3><a href="activity09.html">Technology, Security, and Privacy</a></h3><p>Place risks in the SDLC, apply the NIST AI RMF and EU AI Act tiers, order a recovery, and apply CSF 2.0 and privacy principles.</p><div class="pl-foot"><span class="pl-level">Intermediate</span><a class="pl-open" href="activity09.html" aria-label="Open activity A9: Technology, Security, and Privacy">Open &#8594;</a></div></article>
+      <article class="pl-card pl-lab"><div class="pl-top"><span class="pl-type">CRISC Risk Lab &middot; B8</span><span class="pl-time">&#9201; 75 min</span></div><h3><a href="lab08.html">Ransomware Tabletop Facilitation</a></h3><p>Facilitate a timed ransomware tabletop, alone or in team mode, then turn the after-action report into register and KRI updates.</p><div class="pl-foot"><span class="pl-level">Advanced</span><a class="pl-open" href="lab08.html" aria-label="Open lab B8: Ransomware Tabletop Facilitation">Open &#8594;</a></div></article>
+      <article class="pl-card pl-lab"><div class="pl-top"><span class="pl-type">Exam Prep &middot; Practice Exam</span><span class="pl-time">&#9201; up to 4 hrs</span></div><h3><a href="gen-test.html">CRISC Practice Exam</a></h3><p>A timed, domain-weighted rehearsal with a question navigator, flags, a domain-by-domain score report, and a full review with rationale.</p><div class="pl-foot"><span class="pl-level">Advanced</span><a class="pl-open" href="gen-test.html" aria-label="Open the CRISC Practice Exam">Open &#8594;</a></div></article>
+    </div>
+  </section>
+
+  <section class="block" id="knowledge-check">
+    <p class="eyebrow">Scored Knowledge Check</p>
+    <h2 class="h2">Test your understanding</h2>
+    <div class="rule"></div>
+    <p class="lead" style="margin-bottom:1.5rem">Select the best answer for each question, then submit for your score and the rationale for every item. Like the exam, several options may be true; choose the best one.</p>
+    <div class="quiz-card">
+      <form id="quiz">
+
+        <div class="q" data-answer="B">
+          <p class="q-stem"><span class="qn">Q1.</span>A distributor wants to make sure that managers who approve large supplier payments cannot later deny having approved them. Which control BEST meets this need?</p>
+          <fieldset class="options">
+            <legend>Question 1 options</legend>
+            <label class="opt"><input type="radio" name="q1" value="A"><span><span class="opt-letter">A.</span> Encrypting the payment file in transit to the bank</span></label>
+            <label class="opt"><input type="radio" name="q1" value="B"><span><span class="opt-letter">B.</span> Digital signatures created with a private key held only by each approver</span></label>
+            <label class="opt"><input type="radio" name="q1" value="C"><span><span class="opt-letter">C.</span> A shared approval account used by the finance team</span></label>
+            <label class="opt"><input type="radio" name="q1" value="D"><span><span class="opt-letter">D.</span> A hash of the payment file stored with the file</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: B.</b> Non-repudiation needs proof tied to one individual, which a digital signature with a private key under that person&rsquo;s sole control provides. Encryption protects confidentiality, a shared account destroys individual accountability, and a hash shows integrity but not who approved.</div>
+        </div>
+
+        <div class="q" data-answer="D">
+          <p class="q-stem"><span class="qn">Q2.</span>An organization implementing ISO/IEC 27001:2022 has decided which Annex A controls apply to its ISMS and which do not. Where should these decisions and their justifications be recorded?</p>
+          <fieldset class="options">
+            <legend>Question 2 options</legend>
+            <label class="opt"><input type="radio" name="q2" value="A"><span><span class="opt-letter">A.</span> The ISMS scope statement</span></label>
+            <label class="opt"><input type="radio" name="q2" value="B"><span><span class="opt-letter">B.</span> The enterprise risk register</span></label>
+            <label class="opt"><input type="radio" name="q2" value="C"><span><span class="opt-letter">C.</span> The information security policy</span></label>
+            <label class="opt"><input type="radio" name="q2" value="D"><span><span class="opt-letter">D.</span> The Statement of Applicability</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: D.</b> The Statement of Applicability lists each Annex A control, whether it is included, the justification, and its status. The scope statement defines the boundaries of the ISMS, the risk register records risks rather than control applicability, and the policy sets direction.</div>
+        </div>
+
+        <div class="q" data-answer="A">
+          <p class="q-stem"><span class="qn">Q3.</span>Leadership asks for evidence that the security awareness program is reducing social engineering risk. Which measure provides the BEST evidence?</p>
+          <fieldset class="options">
+            <legend>Question 3 options</legend>
+            <label class="opt"><input type="radio" name="q3" value="A"><span><span class="opt-letter">A.</span> The trend in the share of staff who report simulated phishing messages</span></label>
+            <label class="opt"><input type="radio" name="q3" value="B"><span><span class="opt-letter">B.</span> The percentage of staff who completed the annual training module</span></label>
+            <label class="opt"><input type="radio" name="q3" value="C"><span><span class="opt-letter">C.</span> Average scores on the end-of-module quiz</span></label>
+            <label class="opt"><input type="radio" name="q3" value="D"><span><span class="opt-letter">D.</span> The number of awareness sessions delivered this year</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: A.</b> Reporting rates measure a change in behavior, which is what reduces risk. Completion counts and sessions delivered show activity, and quiz scores show short-term knowledge, but none of them show that people act differently.</div>
+        </div>
+
+        <div class="q" data-answer="C">
+          <p class="q-stem"><span class="qn">Q4.</span>A retailer plans a new analytics program that will profile customers&rsquo; purchasing behavior on a large scale to personalize offers. What should the risk practitioner recommend FIRST?</p>
+          <fieldset class="options">
+            <legend>Question 4 options</legend>
+            <label class="opt"><input type="radio" name="q4" value="A"><span><span class="opt-letter">A.</span> Encrypt the analytics data warehouse</span></label>
+            <label class="opt"><input type="radio" name="q4" value="B"><span><span class="opt-letter">B.</span> Update the privacy notice on the website</span></label>
+            <label class="opt"><input type="radio" name="q4" value="C"><span><span class="opt-letter">C.</span> Conduct a data protection impact assessment</span></label>
+            <label class="opt"><input type="radio" name="q4" value="D"><span><span class="opt-letter">D.</span> Obtain a cyber insurance policy covering privacy claims</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: C.</b> Large-scale profiling is the kind of high-risk processing that calls for a DPIA before processing begins. The DPIA will determine what notice, security, and other measures are needed. Encryption, notice updates, and insurance are responses chosen before the risk is assessed.</div>
+        </div>
+
+        <div class="q" data-answer="D">
+          <p class="q-stem"><span class="qn">Q5.</span>A tabletop exercise revealed that no one knew who could authorize switching off a customer-facing AI assistant. What is the MOST important output of the exercise?</p>
+          <fieldset class="options">
+            <legend>Question 5 options</legend>
+            <label class="opt"><input type="radio" name="q5" value="A"><span><span class="opt-letter">A.</span> A recording of the session for training new staff</span></label>
+            <label class="opt"><input type="radio" name="q5" value="B"><span><span class="opt-letter">B.</span> A performance score for each participant</span></label>
+            <label class="opt"><input type="radio" name="q5" value="C"><span><span class="opt-letter">C.</span> A more difficult scenario for the next exercise</span></label>
+            <label class="opt"><input type="radio" name="q5" value="D"><span><span class="opt-letter">D.</span> An after-action report with corrective actions, owners, and due dates</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: D.</b> The value of a tabletop is the gaps it finds and the changes that follow. An after-action report assigns each corrective action to an owner with a date. Recordings and harder scenarios are secondary, and scoring individuals discourages the open discussion that exercises depend on.</div>
+        </div>
+
+        <div class="q" data-answer="B">
+          <p class="q-stem"><span class="qn">Q6.</span>A board asks which NIST CSF 2.0 function covers the organization&rsquo;s cybersecurity risk management strategy, roles, policy, and oversight. Which function should the risk practitioner point to?</p>
+          <fieldset class="options">
+            <legend>Question 6 options</legend>
+            <label class="opt"><input type="radio" name="q6" value="A"><span><span class="opt-letter">A.</span> Identify</span></label>
+            <label class="opt"><input type="radio" name="q6" value="B"><span><span class="opt-letter">B.</span> Govern</span></label>
+            <label class="opt"><input type="radio" name="q6" value="C"><span><span class="opt-letter">C.</span> Protect</span></label>
+            <label class="opt"><input type="radio" name="q6" value="D"><span><span class="opt-letter">D.</span> Respond</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: B.</b> Govern, added in CSF 2.0, covers strategy, expectations, policy, roles, oversight, and supply chain risk management. Identify covers assets and risk assessment, Protect covers safeguards, and Respond covers actions on detected incidents.</div>
+        </div>
+
+        <div class="q" data-answer="C">
+          <p class="q-stem"><span class="qn">Q7.</span>Remote staff connect through a VPN that gives full network access once a user logs in. A risk assessment flags lateral movement after account compromise as a high risk. Which approach BEST addresses it?</p>
+          <fieldset class="options">
+            <legend>Question 7 options</legend>
+            <label class="opt"><input type="radio" name="q7" value="A"><span><span class="opt-letter">A.</span> Upgrade the VPN to a stronger encryption algorithm</span></label>
+            <label class="opt"><input type="radio" name="q7" value="B"><span><span class="opt-letter">B.</span> Require longer passwords for VPN accounts</span></label>
+            <label class="opt"><input type="radio" name="q7" value="C"><span><span class="opt-letter">C.</span> Authorize each request to each application based on identity, device health, and context</span></label>
+            <label class="opt"><input type="radio" name="q7" value="D"><span><span class="opt-letter">D.</span> Add an intrusion detection sensor at the VPN concentrator</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: C.</b> Per-request authorization to specific applications is the zero trust approach and directly removes the broad network access that enables lateral movement. Stronger encryption protects the tunnel, longer passwords make compromise somewhat harder but do not limit what a compromised account can reach, and an IDS detects rather than prevents.</div>
+        </div>
+
+        <div class="q" data-answer="A">
+          <p class="q-stem"><span class="qn">Q8.</span>A risk practitioner has been asked to facilitate a tabletop exercise on a third-party outage. What should the practitioner do FIRST?</p>
+          <fieldset class="options">
+            <legend>Question 8 options</legend>
+            <label class="opt"><input type="radio" name="q8" value="A"><span><span class="opt-letter">A.</span> Agree on the exercise objectives with the sponsor</span></label>
+            <label class="opt"><input type="radio" name="q8" value="B"><span><span class="opt-letter">B.</span> Write the scenario injects</span></label>
+            <label class="opt"><input type="radio" name="q8" value="C"><span><span class="opt-letter">C.</span> Send invitations to all department heads</span></label>
+            <label class="opt"><input type="radio" name="q8" value="D"><span><span class="opt-letter">D.</span> Draft the after-action report template</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: A.</b> Objectives decide everything else: which injects to write, who must attend, and what the after-action report will measure. Writing injects or inviting people first risks an exercise that tests nothing in particular.</div>
+        </div>
+
+        <div class="quiz-actions">
+          <button type="button" class="btn" onclick="gradeQuiz()">Submit Answers</button>
+          <button type="button" class="btn secondary" onclick="resetQuiz()">Reset</button>
+          <span class="score" id="score" aria-live="polite"></span>
+        </div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<nav class="pager" aria-label="Lesson navigation">
+  <div class="pager-inner">
+    <a href="lesson08.html" class="prev"><span class="pager-dir">&#8592; Previous</span><span class="pager-name">Lesson 8: Technology and Security</span></a>
+    <a href="index.html#lessons" class="next"><span class="pager-dir">Finish &#8594;</span><span class="pager-name">Back to Workshop Home</span></a>
+  </div>
+</nav>
+
+<footer>
+  <div class="footer-logo">CRISC 5-DAY FACULTY WORKSHOP</div>
+  <p class="footer-disclaimer">This workshop is an independent educational resource. It is not affiliated with, endorsed by, or sponsored by ISACA. CRISC&#174; is a registered mark of ISACA. All lesson text, questions, and scenarios are original and do not reproduce the ISACA CRISC Review Manual or question database. eMates are provided by the myEMATES library and open in a new tab. Always verify the current exam content outline at isaca.org before registering.</p>
+</footer>
+
+<script src="crisc-lesson.js"></script>
+</body>
+</html>

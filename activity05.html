@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>A5 Analyze and Register Risk | CRISC 5-Day Faculty Workshop</title>
+<link rel="stylesheet" href="crisc-lesson.css">
+<link rel="stylesheet" href="practice.css">
+</head>
+<body>
+<div id="app"><noscript><p style="padding:2rem;font-family:Arial">This activity needs JavaScript enabled.</p></noscript></div>
+
+<script>
+window.ACTIVITY = {
+  id: 'A5',
+  title: 'Analyze and Register Risk',
+  accent: 'Register Risk',
+  domain: 'Domain 2B, Risk Assessment (22%)',
+  time: '40 min',
+  level: 'Intermediate',
+  lessonHref: 'lesson04.html#s4',
+  lessonLabel: 'Lesson 4, Risk Analysis',
+  lede: 'From “it could happen” to “how much, how often.” Quillfield Bank is a community bank with a card program, a wire desk, and a growing mortgage business. Practice the SLE and ALE math behind a control decision, choosing a method that fits the decision, keeping inherent, current, and residual risk apart, sequencing the BIA, and fixing a weak register entry.',
+  concepts: [
+    { key: 'quant', name: 'SLE, ALE, and control value', review: 'Lesson 4, Risk Analysis Methodologies (SLE and ALE)' },
+    { key: 'method', name: 'Choosing an analysis method', review: 'Lesson 4, Risk Analysis Methodologies' },
+    { key: 'ratings', name: 'Inherent, current, and residual risk', review: 'Lesson 4, Inherent, Residual, and Current Risk' },
+    { key: 'bia', name: 'The BIA sequence', review: 'Lesson 4, Business Impact Analysis' },
+    { key: 'register', name: 'Risk register quality', review: 'Lesson 4, The Risk Register' }
+  ],
+  stations: [
+    {
+      type: 'calc', short: 'SLE and ALE', title: 'Is the control worth its cost?', concept: 'quant',
+      instr: 'Quillfield’s card processing platform faces a fraud and outage scenario. Use the data below to calculate each value. Enter whole dollars without commas; a negative value is allowed.',
+      hint: 'SLE = asset value × exposure factor. ARO = events per year (once every 4 years is 0.25). ALE = SLE × ARO. The value of a control = ALE before − ALE after − annual cost of the control. A negative value means the control costs more than the risk it removes.',
+      review: { href: 'lesson04.html#s4', label: 'Lesson 4, Risk Analysis Methodologies' },
+      table: {
+        caption: 'Quillfield Bank: card platform scenario',
+        head: ['Input', 'Value'],
+        rows: [
+          ['Asset value of the card processing platform and the business it supports', '$4,000,000'],
+          ['Exposure factor for one event today', '30%'],
+          ['Expected frequency today', 'Once every 4 years'],
+          ['Control A: real-time fraud scoring', 'Reduces frequency to once every 20 years; exposure factor unchanged; costs $95,000 a year'],
+          ['Control B: faster recovery service', 'Reduces exposure factor to 10%; frequency unchanged; costs $230,000 a year']
+        ]
+      },
+      items: [
+        { label: 'Single loss expectancy (SLE) today', answer: 1200000, unit: 'dollars', tol: 1, why: '$4,000,000 × 0.30 = $1,200,000 per event.' },
+        { label: 'Annualized rate of occurrence (ARO) today', answer: 0.25, unit: 'events per year', tol: 0.001, why: 'Once every 4 years is 1 ÷ 4 = 0.25 events per year.' },
+        { label: 'Annualized loss expectancy (ALE) today', answer: 300000, unit: 'dollars per year', tol: 1, why: '$1,200,000 × 0.25 = $300,000 per year.' },
+        { label: 'ALE after Control A', answer: 60000, unit: 'dollars per year', tol: 1, why: 'SLE stays $1,200,000. ARO falls to 1 ÷ 20 = 0.05. $1,200,000 × 0.05 = $60,000 per year.' },
+        { label: 'Annual value of Control A (ALE before − ALE after − cost)', answer: 145000, unit: 'dollars per year', tol: 1, why: '$300,000 − $60,000 − $95,000 = $145,000. The control removes more loss than it costs, so it is cost-justified.' },
+        { label: 'Annual value of Control B (ALE before − ALE after − cost)', answer: -30000, unit: 'dollars per year', tol: 1, why: 'New SLE is $4,000,000 × 0.10 = $400,000, and ALE after is $400,000 × 0.25 = $100,000. $300,000 − $100,000 − $230,000 = −$30,000. Control B costs more than the loss it removes.' }
+      ]
+    },
+    {
+      type: 'scenario', short: 'Pick a method', title: 'Qualitative, semi-quantitative, or quantitative?', concept: 'method',
+      instr: 'Quillfield’s risk team gets several requests in one week. Choose the <b>BEST</b> method or response for each. No method is better in the abstract; the one that fits the decision, the data, and the audience is best.',
+      hint: 'Qualitative is fast and inclusive and good for screening. Semi-quantitative ranks risks, but its numbers are ordinal labels. Quantitative supports cost-benefit, insurance, and capital decisions, and Monte Carlo gives percentiles and exceedance probabilities. Effort should match the decision.',
+      review: { href: 'lesson04.html#s4', label: 'Lesson 4, Risk Analysis Methodologies' },
+      items: [
+        {
+          title: 'Request 1: The long list', text: 'A workshop produced 85 candidate scenarios. The risk committee wants a first ranking in two weeks, and loss data exist for only a handful of them.',
+          parts: [
+            { q: 'Which method fits BEST?', options: ['Quantitative, with a Monte Carlo model for each scenario', 'Qualitative ratings to screen the list, then deeper analysis of the top few', 'Wait until loss data exist for all 85', 'Rank them by the CVSS scores of related vulnerabilities'], answer: 1, why: 'Qualitative analysis is fast and good for screening many risks with limited data. The few that matter most can then be analyzed in depth.' }
+          ]
+        },
+        {
+          title: 'Request 2: The CFO’s question', text: 'The CFO must decide whether to spend $1.8 million over three years on a fraud analytics platform. She asks how much loss it would avoid each year.',
+          parts: [
+            { q: 'Which method BEST supports this decision?', options: ['Qualitative', 'Semi-quantitative', 'Quantitative, in dollars per year', 'A peer survey'], answer: 2, why: 'A cost-benefit decision needs money on both sides of the comparison. Only quantitative analysis gives the avoided loss in dollars.' }
+          ]
+        },
+        {
+          title: 'Request 3: Twice as bad?', text: 'Quillfield’s register uses 1 to 5 likelihood times 1 to 5 impact. A manager argues that a risk scored 20 is exactly twice as bad as one scored 10, so it deserves twice the budget.',
+          parts: [
+            { q: 'What is the flaw in the argument?', options: ['The scores are ordinal labels, so multiplying them does not produce a true ratio', 'The scale should run from 1 to 10', 'Impact should be weighted twice as heavily as likelihood', 'There is no flaw; the arithmetic is correct'], answer: 0, why: 'Semi-quantitative numbers rank risks but are labels, not measurements. A 20 is not twice a 10 in loss terms.' }
+          ]
+        },
+        {
+          title: 'Request 4: The board’s tail question', text: 'The board asks for the probability that wire fraud losses exceed $5 million in any one year.',
+          parts: [
+            { q: 'Which approach answers this BEST?', options: ['A heat map rating', 'A single-point ALE', 'A quantitative model with Monte Carlo simulation and a loss exceedance curve', 'A survey of other banks'], answer: 2, why: 'A single ALE hides uncertainty. Simulation produces a distribution, from which you read the probability of exceeding any amount.' }
+          ]
+        },
+        {
+          title: 'Request 5: Before the numbers', text: 'A new analyst is eager to start rating Quillfield’s mortgage platform risks today.',
+          parts: [
+            { q: 'What should the analyst confirm FIRST?', options: ['Which software will run the simulation', 'The business context and the agreed criteria: appetite, tolerance, and impact scales', 'The CVSS score of every server', 'The audit committee’s calendar'], answer: 1, why: 'Analysis without agreed criteria cannot be evaluated. Context and criteria come first.' }
+          ]
+        }
+      ]
+    },
+    {
+      type: 'sort', short: 'Three ratings', title: 'Inherent, current, or residual risk?', concept: 'ratings',
+      instr: 'Each statement describes a rating on Quillfield’s register. Decide whether it describes <b>inherent risk</b> (no controls or responses), <b>current risk</b> (today, given how controls actually perform), or <b>residual risk</b> (after the selected responses are fully in place and working).',
+      hint: 'Inherent: as if nothing were in place. Current: what is true today, including failed tests and unfinished projects. Residual: the planned end state that the owner accepts and compares with appetite.',
+      buckets: ['Inherent risk', 'Current risk', 'Residual risk'],
+      review: { href: 'lesson04.html#s5', label: 'Lesson 4, Inherent, Residual, and Current Risk' },
+      items: [
+        { text: 'With no transaction limits and no fraud monitoring, wire fraud would rate 20.', answer: 0, why: 'A rating with no controls in place is inherent risk.' },
+        { text: 'The callback control failed 4 of 25 samples in its last test, so today the wire fraud rating is 16.', answer: 1, why: 'Actual control performance, including failed tests, sets current risk.' },
+        { text: 'Once dual approval and anomaly detection are live and working, wire fraud should rate 6.', answer: 2, why: 'The expected level after planned responses are in place is residual risk.' },
+        { text: 'The level the risk owner formally accepts and compares with the board’s appetite.', answer: 2, why: 'Residual risk is the level accepted by the owner and compared with appetite and tolerance.' },
+        { text: 'The patching program is 40% complete, so today’s exposure is closer to the uncontrolled level than to the target.', answer: 1, why: 'Unfinished controls mean current risk sits above the planned residual level.' },
+        { text: 'The backup success KCI dropped to 82% this month, so the rating was raised for this month’s report.', answer: 1, why: 'A failing key control indicator changes how controls perform now. That updates current risk.' },
+        { text: 'The target level after the migration to immutable backups finishes next quarter.', answer: 2, why: 'A target after a planned response is residual risk.' },
+        { text: 'An untreated rating used to decide which controls deserve independent testing.', answer: 0, why: 'The gap between inherent and residual shows how much the bank depends on its controls, which sets the priority for assurance.' },
+        { text: 'Before any controls, the core banking outage scenario would rate 25.', answer: 0, why: 'Before controls is the definition of inherent risk.' }
+      ]
+    },
+    {
+      type: 'order', short: 'BIA steps', title: 'Run the BIA, then rank the processes', concept: 'bia',
+      instr: 'In the first list, order the steps of Quillfield’s business impact analysis. In the second, use the BIA results to order the processes by recovery priority, from the shortest recovery time objective to the longest.',
+      hint: 'Start from objectives and critical processes, then impact over time. The business owner sets the MTD, and the RTO fits inside it. Dependencies come next, and senior management approves the priorities last. Shorter RTOs recover first.',
+      topLabel: 'First',
+      bottomLabel: 'Last',
+      review: { href: 'lesson04.html#s2', label: 'Lesson 4, Business Impact Analysis' },
+      groups: [
+        {
+          title: 'The BIA sequence',
+          items: [
+            { text: 'Map dependencies: applications, infrastructure, data, people, facilities, and third parties', rank: 3, why: 'A process is only as recoverable as its slowest dependency. The map follows the objectives it must meet.' },
+            { text: 'Identify critical processes from Quillfield’s business objectives', rank: 0, why: 'The BIA starts from objectives. Treating every process as critical makes none a priority.' },
+            { text: 'Senior management validates and approves the recovery priorities', rank: 4, why: 'Recovery capacity is funded from these priorities, so leadership confirms them.' },
+            { text: 'Assess financial, operational, legal, and reputational impact at intervals over time', rank: 1, why: 'Impact usually grows nonlinearly. Estimating it at intervals shows how long the process can be down.' },
+            { text: 'The process owner sets the MTD, and the RTO and RPO follow from it', rank: 2, why: 'Recovery objectives are a business decision based on impact over time. IT recommends how to meet them.' }
+          ]
+        },
+        {
+          title: 'Recovery priority, shortest RTO first',
+          table: {
+            caption: 'Quillfield Bank: BIA results',
+            head: ['Process', 'MTD', 'RTO', 'RPO'],
+            rows: [
+              ['Mortgage origination', '5 days', '3 days', '24 hours'],
+              ['Outbound wire transfers', '6 hours', '3 hours', '15 minutes'],
+              ['Marketing campaigns', '3 weeks', '10 days', '1 week'],
+              ['ATM and debit authorization', '12 hours', '6 hours', '5 minutes'],
+              ['Online and mobile banking', '24 hours', '12 hours', '1 hour']
+            ]
+          },
+          items: [
+            { text: 'Mortgage origination (RTO 3 days)', rank: 3, why: 'A three-day RTO places mortgages after the real-time services.' },
+            { text: 'Marketing campaigns (RTO 10 days)', rank: 4, why: 'The longest RTO. Marketing can wait while customer services recover.' },
+            { text: 'Online and mobile banking (RTO 12 hours)', rank: 2, why: 'Twelve hours follows the ATM network.' },
+            { text: 'Outbound wire transfers (RTO 3 hours)', rank: 0, why: 'The shortest RTO and MTD. Wires missed at the daily cutoff cause direct loss and customer harm.' },
+            { text: 'ATM and debit authorization (RTO 6 hours)', rank: 1, why: 'A six-hour RTO puts card authorization second.' }
+          ]
+        }
+      ]
+    },
+    {
+      type: 'scenario', short: 'Register entry', title: 'Fix the register entry', concept: 'register',
+      instr: 'You are reviewing entry R-17 on Quillfield’s IT risk register before the quarterly risk report. Answer as the risk practitioner.',
+      hint: 'A useful entry names a person as owner, states the scenario in business terms, links to an objective, and carries an action plan with tasks, owners, dates, and status. Duplicates, stale ratings, and “IT” as owner are the three most common defects.',
+      review: { href: 'lesson04.html#s3', label: 'Lesson 4, The Risk Register' },
+      items: [
+        {
+          title: 'Entry R-17 as written', text: 'Quillfield’s register entry R-17 is shown below.',
+          table: {
+            caption: 'Quillfield Bank: register entry R-17',
+            head: ['Field', 'Entry'],
+            rows: [
+              ['Title', 'Ransomware'],
+              ['Scenario', 'Ransomware hits the bank.'],
+              ['Business objective', '(blank)'],
+              ['Risk owner', 'IT'],
+              ['Inherent rating', 'High'],
+              ['Existing controls', 'EDR, backups'],
+              ['Current / residual rating', 'Low / Low'],
+              ['Response and action plan', 'Mitigate: improve security'],
+              ['KRIs', '(none)'],
+              ['Last reviewed', '19 months ago']
+            ]
+          },
+          parts: [
+            { q: 'Which defect is the GREATEST concern?', options: ['The title is only one word', 'The owner is “IT” rather than a named person with authority over the affected process', 'No KRIs are listed', 'The inherent rating is qualitative'], answer: 1, why: 'Without a named owner, no one can choose a response or accept residual risk. Every other defect needs an owner to fix it.' },
+            { q: 'Which rewrite of the scenario is BEST?', options: ['Ransomware is a major threat to banks.', 'A criminal group encrypts the core banking platform and its backups during month-end close, stopping member transactions for up to three days before detection and recovery, and threatening the objective of continuous customer service.', 'Hackers deploy ransomware.', 'EDR may fail to stop ransomware on some endpoints.'], answer: 1, why: 'The rewrite names the actor, event, asset, timing, duration, and the objective at stake. It can be owned, analyzed, and tested against controls.' },
+            { q: 'What is wrong with the action plan “Mitigate: improve security”?', options: ['Mitigation is never an acceptable response to ransomware', 'It lacks specific tasks, a task owner, a due date, and status', 'It should name a vendor', 'It should be written by internal audit'], answer: 1, why: 'An action plan needs tasks, owners, dates, and status so it can be tracked. A slogan cannot be monitored.' },
+            { q: 'The current rating shows Low, but the entry has not been reviewed in 19 months and the backups were never restore-tested. What is the BEST action?', concept: 'ratings', options: ['Keep Low, since nothing has gone wrong', 'Reassess the current rating against actual control performance and report the true level', 'Change the inherent rating to Low as well', 'Remove the entry until the next audit'], answer: 1, why: 'Reporting planned or assumed residual risk as current risk is a common mistake. If controls are untested, current risk may sit closer to inherent.' }
+          ]
+        },
+        {
+          title: 'Three small risks', text: 'The card, mortgage, and wire teams each recorded a low-rated risk that depends on the same single identity provider for sign-in.',
+          parts: [
+            { q: 'What is the BEST next step?', options: ['Accept each risk separately, since each is low', 'Aggregate them and reassess the shared cause at the enterprise level', 'Delete two of them as duplicates', 'Ask each team to buy its own identity provider'], answer: 1, why: 'Risks with a common cause can occur together, so their losses are correlated. Aggregation shows an exposure that no single entry does.' },
+            { q: 'What is the PRIMARY benefit of a well-maintained risk register?', options: ['It satisfies external auditors', 'It puts owners, responses, and status in one place, supporting accountability and informed decisions', 'It reduces insurance premiums', 'It replaces the need for KRIs'], answer: 1, why: 'The register is the working record of the risk program. Satisfying auditors is a side benefit, not the purpose.' }
+          ]
+        }
+      ]
+    },
+    {
+      type: 'reflect', short: 'Reflect', title: 'Reflect on your readiness',
+      instr: 'Rate your confidence on each concept, then answer the prompts. Your responses appear in the summary report.',
+      prompts: [
+        { key: 'method', label: 'Name one decision at your institution that a heat map could not support. What data would you need to analyze it quantitatively?' },
+        { key: 'next', label: 'Which concept from this activity will you review before the next lesson, and how?' }
+      ]
+    }
+  ]
+};
+</script>
+<script src="practice.js"></script>
+</body>
+</html>

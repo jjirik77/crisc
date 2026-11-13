@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>B3 Quantitative Risk Analysis | CRISC 5-Day Faculty Workshop</title>
+<link rel="stylesheet" href="crisc-lesson.css">
+<link rel="stylesheet" href="practice.css">
+<style>
+/* B3: FAIR-style Monte Carlo workbench (light only, CSS variables only) */
+.b3-note { font: .84rem/1.55 Arial, sans-serif; color: var(--text-secondary); margin: 0 0 .8rem; }
+.b3-doc table.data td, .b3-doc table.data th { font-size: .8rem; }
+.b3-doc table.data td.num, .b3-doc table.data th.num { text-align: right; white-space: nowrap; font-family: 'Courier New', monospace; }
+.b3-doc table.data tr.b3-sum td { font-weight: 700; background: var(--section-alt); color: var(--text-primary); }
+.b3-doc ol { margin: 0; padding-left: 1.3rem; font: .88rem/1.6 Arial, sans-serif; color: var(--text-secondary); }
+.b3-doc ol li { margin-bottom: .3rem; }
+.b3-row { display: flex; flex-wrap: wrap; gap: 1.1rem; align-items: flex-start; }
+.b3-col { flex: 1 1 300px; min-width: 0; }
+.b3-fs { border: 1px solid var(--border); border-left: 4px solid var(--navy); border-radius: 0 4px 4px 0; background: var(--card-bg); padding: .3rem .9rem .8rem; margin: 0 0 .9rem; }
+.b3-fs.prop { border-left-color: var(--jade); }
+.b3-fs legend { font: 700 .7rem Arial, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--navy); padding: 0 .3rem; }
+.b3-fs.prop legend { color: var(--jade-dark); }
+.b3-tri { margin-top: .55rem; }
+.b3-tri-h { font: 700 .82rem Arial, sans-serif; color: var(--text-primary); margin: 0 0 .25rem; }
+.b3-tri-h span { font-weight: 400; color: var(--text-muted); }
+.b3-tri-in { display: flex; gap: .45rem; }
+.b3-tri-in > div { flex: 1 1 0; min-width: 0; }
+.b3-tri-in label, .b3-one label { display: block; font: .72rem Arial, sans-serif; color: var(--text-muted); margin-bottom: .15rem; }
+.b3-fs input { width: 100%; border: 1px solid var(--border); border-radius: 4px; padding: .42rem .5rem; font: .86rem 'Courier New', monospace; color: var(--text-primary); background: #fff; }
+.b3-fs input:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 0 3px var(--gold-pale); }
+.b3-fs input.b3-off { border-color: var(--wrong); background: var(--wrong-bg); }
+.b3-one { margin-top: .55rem; max-width: 15rem; }
+.b3-btns { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin: .2rem 0 .6rem; }
+.b3-btns .btn { padding: .55rem 1rem; font-size: .74rem; }
+.b3-msg { font: .84rem/1.55 Arial, sans-serif; color: var(--text-primary); border: 1px solid var(--border); border-left: 4px solid var(--text-muted); border-radius: 0 4px 4px 0; padding: .6rem .8rem; margin: .4rem 0 .8rem; background: #fff; }
+.b3-msg:empty { display: none; }
+.b3-msg.ok { border-left-color: var(--correct); }
+.b3-msg.bad { border-left-color: var(--wrong); }
+.b3-msg ul { margin: .3rem 0 0; padding-left: 1.2rem; }
+.b3-run { font: .76rem Arial, sans-serif; color: var(--text-muted); margin: 0 0 .5rem; }
+.b3-res table.data { min-width: 0; }
+.b3-res table.data td, .b3-res table.data th { font-size: .8rem; padding: .42rem .6rem; }
+.b3-res table.data td.num, .b3-res table.data th.num { text-align: right; white-space: nowrap; font-family: 'Courier New', monospace; }
+.b3-res table.data th { font-family: Arial, sans-serif; font-size: .7rem; letter-spacing: .04em; }
+.b3-res table.data th[scope=row] { background: var(--blue-pale); color: var(--text-primary); text-transform: none; letter-spacing: 0; font-size: .8rem; font-weight: 700; white-space: normal; }
+.b3-res table.data td.num { font-size: .78rem; }
+.b3-flag { font: 900 .68rem Arial, sans-serif; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; }
+.b3-flag.bad { color: var(--wrong); } .b3-flag.ok { color: var(--correct); }
+.b3-val { display: flex; flex-wrap: wrap; gap: .6rem; margin: .8rem 0; }
+.b3-tile { flex: 1 1 130px; min-width: 0; border: 1px solid var(--border); border-top: 3px solid var(--gold); border-radius: 4px; padding: .5rem .7rem; background: var(--blue-pale); }
+.b3-tile.net { border-top-color: var(--jade); background: var(--jade-pale); }
+.b3-tile .k { font: 700 .66rem Arial, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); }
+.b3-tile .v { font: 700 1.05rem 'Courier New', monospace; color: var(--text-primary); margin-top: .15rem; word-break: break-all; }
+.b3-chart { border: 1px solid var(--border); border-radius: 4px; background: #fff; padding: .4rem; margin-top: .4rem; }
+.b3-chart canvas { display: block; width: 100%; }
+.b3-cap { font: .78rem/1.5 Arial, sans-serif; color: var(--text-muted); margin: .4rem 0 0; }
+.b3-empty { font: .86rem/1.55 Arial, sans-serif; color: var(--text-muted); border: 1px dashed var(--border); border-radius: 4px; padding: 1rem; background: var(--blue-pale); }
+.b3-sp { font: .82rem/1.55 Arial, sans-serif; color: var(--text-secondary); background: var(--gold-pale); border-left: 4px solid var(--gold); border-radius: 0 4px 4px 0; padding: .55rem .8rem; margin: .7rem 0 0; }
+</style>
+</head>
+<body>
+<div id="app"><noscript><p style="padding:2rem;font-family:Arial">This lab needs JavaScript enabled.</p></noscript></div>
+
+<script>
+/* ===================== B3 model: FAIR-style Monte Carlo =====================
+   Brightwater Credit Union, outbound wire fraud. Math reused from lesson04.html (Loss Exceedance Simulator):
+   mulberry32 seeded RNG; PERT(a,m,b) sampled as a scaled Beta(alpha, beta) with alpha = 1 + 4(m-a)/(b-a),
+   beta = 1 + 4(b-m)/(b-a), and Beta = X/(X+Y) where X, Y are Gamma draws (Marsaglia-Tsang, valid for shape >= 1).
+   Each simulated year: draw threat event frequency (TEF) and vulnerability (V) from PERT, draw the number of
+   loss events from Poisson(TEF x V), draw a PERT net loss for each event, and sum. 10,000 years, fixed seed. */
+(function () {
+  var N = 10000, SEED = 20261112;
+  function rng(a) { return function () { a |= 0; a = a + 0x6D2B79F5 | 0; var t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  function normal(r) { var u = 0; while (u === 0) u = r(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * r()); }
+  function gamma(r, k) { var d = k - 1 / 3, c = 1 / Math.sqrt(9 * d); for (;;) { var x, v; do { x = normal(r); v = 1 + c * x; } while (v <= 0); v = v * v * v; var u = r(); if (u < 1 - 0.0331 * x * x * x * x) return d * v; if (Math.log(u) < 0.5 * x * x + d * (1 - v + Math.log(v))) return d * v; } }
+  function pert(r, a, m, b) { if (b <= a) return a; var al = 1 + 4 * (m - a) / (b - a), be = 1 + 4 * (b - m) / (b - a); var x = gamma(r, al), y = gamma(r, be); return a + (b - a) * x / (x + y); }
+  function poisson(r, l) { if (l <= 0) return 0; if (l > 30) { var n = Math.round(l + Math.sqrt(l) * normal(r)); return n < 0 ? 0 : n; } var L = Math.exp(-l), k = 0, p = 1; do { k++; p *= r(); } while (p > L); return k - 1; }
+  function simulate(T, V, M, seed) {
+    var r = rng(seed), a = new Float64Array(N);
+    for (var i = 0; i < N; i++) {
+      var tef = pert(r, T[0], T[1], T[2]), v = pert(r, V[0], V[1], V[2]), n = poisson(r, tef * v), s = 0;
+      for (var j = 0; j < n; j++) s += pert(r, M[0], M[1], M[2]);
+      a[i] = s;
+    }
+    a.sort();
+    return a;
+  }
+  function mean(a) { var s = 0; for (var i = 0; i < a.length; i++) s += a[i]; return s / a.length; }
+  function pct(a, p) { return a[Math.min(a.length - 1, Math.floor(p * a.length))]; }
+  function exceed(a, x) { var lo = 0, hi = a.length; while (lo < hi) { var mid = (lo + hi) >> 1; if (a[mid] <= x) lo = mid + 1; else hi = mid; } return (a.length - lo) / a.length; }
+  function summarize(a) { return { a: a, ale: mean(a), p50: pct(a, 0.5), p90: pct(a, 0.9), p99: pct(a, 0.99), over: exceed(a, 1e6) }; }
+  function analyze(inp, seed) {
+    var cur = summarize(simulate(inp.tef, inp.vc, inp.lm, seed)), pro = summarize(simulate(inp.tef, inp.vp, inp.lm, seed));
+    return { inp: inp, seed: seed, cur: cur, pro: pro, reduction: cur.ale - pro.ale, net: cur.ale - pro.ale - inp.cost };
+  }
+  // Calibrated inputs under Standard RA-04 (the answer key). Vulnerability as a fraction.
+  var KEY = { tef: [12, 25, 45], vc: [0.05, 0.12, 0.25], vp: [0.02, 0.04, 0.12], lm: [15000, 110000, 700000], cost: 150000 };
+  // Draft values from the prior analyst (four fields break RA-04)
+  var DRAFT = { tef: [12, 22.6, 45], vc: [0.05, 0.115, 0.25], vp: [0.02, 0.04, 0.12], lm: [15000, 198000, 700000], cost: 96000 };
+  var K = analyze(KEY, SEED);
+  window.B3 = { N: N, SEED: SEED, KEY: KEY, DRAFT: DRAFT, analyze: analyze, exceed: exceed, pct: pct,
+    answers: { ale: Math.round(K.cur.ale), p90: Math.round(K.cur.p90), over: Math.round(K.cur.over * 1000) / 10, net: Math.round(K.net), proOver: Math.round(K.pro.over * 1000) / 10, proAle: Math.round(K.pro.ale) } };
+})();
+</script>
+
+<script>
+(function () {
+  var B = window.B3;
+  function A(k) { return function () { return B.answers[k]; }; }
+  function money(v) { return (v < 0 ? '-$' : '$') + Math.round(Math.abs(v)).toLocaleString('en-US'); }
+  window.LAB = {
+    id: 'B3',
+    title: 'Quantitative Risk Analysis',
+    accent: 'Risk Analysis',
+    domain: 'Domain 2',
+    time: '70 min',
+    level: 'Intermediate to Advanced',
+    lessonHref: 'lesson04.html#s4',
+    lessonLabel: 'Lesson 4, Risk Analysis Methodologies',
+    lede: 'A heat map says wire fraud is “High.” The board wants to know how much it costs in a typical year, how bad a bad year gets, and whether a new control is worth its price. Calibrate a FAIR-style model from the evidence, simulate ten thousand years, and give the risk owner a number she can decide on.',
+    workbenchTitle: 'Risk model workbench',
+    ticket: {
+      number: 'ERM-2026-0418',
+      priority: 'High priority',
+      from: 'Owen Castellanos, Chief Risk Officer',
+      to: 'Risk analyst, ERM (you)',
+      subject: 'Wire fraud: quantify current exposure and value the proposed callback control',
+      due: 'Before the Risk Committee meets on December 3',
+      body: '<p>Brightwater’s outbound wire volume grew again this year, and so did the fraud attempts against it: spoofed vendor invoices, executive impersonation, diverted real-estate closings, and member account takeovers. The register rates the scenario “High,” which does not help the Risk Committee decide anything.</p>' +
+        '<p>Priya Raman, VP of Payments and Treasury Operations, owns this risk. Treasury has proposed an <b>independent callback to the number on file, performed by a separate verification team, plus a payee-change analytics service</b>. Priya needs to know whether it is worth the money and whether it brings us inside the board’s tolerance.</p>' +
+        '<p>Last year’s analyst left a draft model. Do not trust it until you have checked every input against <b>Risk Analysis Standard RA-04</b>. Use our loss history, the peer consortium ranges, and Treasury’s control data, all in the Data sources tab.</p>' +
+        '<p>I need four numbers for the current state (expected annual loss, the 1-in-10-year loss, and the chance of breaching tolerance), the control’s annual value net of its cost, and your recommendation to Priya. Remember whose decision it is.</p>'
+    },
+    howTo: 'The <b>Data sources</b> tab holds Brightwater’s fraud history, the peer ranges, Treasury’s control data, the calibration standard, and the board’s tolerance. The <b>Model</b> tab is a FAIR-style Monte Carlo simulator: it opens with last year’s draft inputs. Correct them against Standard RA-04 (the <b>Check calibration</b> button tells you which fields break a rule, not the right values), run 10,000 simulated years for the current controls and the proposed control, and read the results and the loss exceedance curve. The simulation is seeded, so the same inputs always give the same results. Enter dollar answers as plain numbers with no commas or dollar sign. After your first check on an item you can reveal the practitioner’s debrief, but a revealed item earns no points.',
+    workIntro: 'Brightwater Credit Union data is fictional. All amounts are US dollars of net loss to Brightwater, after recovery. Results are calculated in your browser.',
+    checklist: [
+      { id: 'tef', type: 'number', points: 8, short: 'TEF most likely', title: 'Calibrate threat event frequency',
+        task: 'Under Standard RA-04, what is the <b>most likely</b> threat event frequency: fraudulent wire requests per year?',
+        answer: 25, tol: 0.3, unit: 'attempts per year',
+        hint: 'RA-04 rule 2 uses Brightwater’s own average over the most recent three full years, not the five-year average. The trend is rising, so older years understate today’s rate.',
+        debrief: '<p>Brightwater logged 22, 25, and 28 fraudulent wire requests in 2023, 2024, and 2025, an average of <b>25 a year</b>. The draft used the five-year average of 22.6, which blends in the quieter years before the attack volume grew. The range comes from the peers (12 to 45), so the model still allows for a much busier year than any Brightwater has seen.</p><p>Calibration is where quantitative analysis earns or loses its credibility. A documented rule, applied the same way to every scenario, makes results comparable and lets a reviewer challenge the inputs rather than the arithmetic.</p>',
+        reviewNote: 'Most likely frequency = Brightwater’s average over the last three full years (RA-04 rule 2).' },
+      { id: 'lm', type: 'number', points: 8, short: 'Loss most likely', title: 'Calibrate loss magnitude',
+        task: 'Under Standard RA-04, what is the <b>most likely</b> loss per successful fraud? Enter whole dollars.',
+        answer: 110000, tol: 1000, unit: 'US dollars per event',
+        hint: 'RA-04 rule 3 asks for the median of Brightwater’s own <b>net</b> losses over five years. Sort the Net loss column of the incident history and take the middle value of the 13 incidents.',
+        debrief: '<p>Sorted, the 13 net losses run from $18,000 to $640,000, and the seventh (middle) value is <b>$110,000</b>. The draft used the median <b>gross</b> wire amount, $198,000, which ignores the funds Brightwater recovered through recall requests and the receiving bank. Loss magnitude in FAIR is what the organization actually loses.</p><p>The median, not the mean, is the right “most likely” anchor here. Two large business email compromise losses pull the mean up to about $175,000; the PERT range from $15,000 to $700,000 is what carries that tail into the model.</p>',
+        reviewNote: 'Most likely loss = median of Brightwater’s net losses (after recovery), RA-04 rule 3.' },
+      { id: 'ale', type: 'number', points: 14, short: 'ALE, current', title: 'Annualized loss expectancy with current controls',
+        task: 'With the calibrated inputs, what is the simulated <b>ALE</b> (mean annual loss) under the current controls? Enter whole dollars.',
+        answer: A('ale'), tol: Math.round(B.answers.ale * 0.1), unit: 'US dollars per year',
+        hint: 'Fix all four draft fields until Check calibration passes, keep seed 20261112, run the simulation, and read the mean annual loss in the Current controls column.',
+        debrief: '<p>The simulated ALE is about <b>' + money(B.answers.ale) + '</b> a year. Compare it with the single-point estimate (25 attempts × 12% × $110,000 = $330,000). The simulation is roughly double, because the inputs are skewed to the right: some years bring more attempts, a higher success rate, and a larger loss at the same time, and those years pull the mean up. A single point hides exactly the years a tolerance statement is written about.</p><p>Brightwater actually lost about $456,000 a year on average over the last five years. The model is higher because the attempt rate is rising and because five years is too short to have seen the tail. That gap is worth stating in the memo, not hiding.</p>',
+        reviewNote: 'ALE is the mean of the simulated annual losses, not most likely × most likely.' },
+      { id: 'p90', type: 'number', points: 12, short: 'P90, current', title: 'The 1-in-10-year loss (P90)',
+        task: 'What is the <b>90th percentile</b> of annual loss under the current controls: the amount exceeded in about one year in ten? Enter whole dollars.',
+        answer: A('p90'), tol: Math.round(B.answers.p90 * 0.1), unit: 'US dollars per year',
+        hint: 'Read P90 in the results table, or find where the current-controls curve crosses 10% on the loss exceedance chart.',
+        debrief: '<p>P90 is about <b>' + money(B.answers.p90) + '</b>. In one simulated year in ten, wire fraud costs Brightwater more than that. P90 is a planning number: it sizes reserves, insurance limits, and the conversation about how bad a bad year can be.</p><p>Notice that P90 is already above the board’s $1,000,000 threshold. That alone tells you the tolerance (no more than a 10% chance of exceeding $1,000,000) is breached before you read the exceedance probability.</p>',
+        reviewNote: 'P90 is the annual loss exceeded in 10% of simulated years.' },
+      { id: 'over', type: 'number', points: 12, short: 'P(loss > $1M)', title: 'Probability of breaching tolerance',
+        task: 'Under the current controls, what is the probability that annual net wire-fraud loss <b>exceeds $1,000,000</b>? Enter a percentage.',
+        answer: A('over'), tol: 3, unit: '% of simulated years',
+        hint: 'The results table shows P(annual loss > $1M). Compare it with the board’s 10% limit.',
+        debrief: '<p>About <b>' + B.answers.over + '%</b> of simulated years exceed $1,000,000, roughly double the board’s 10% limit. The current risk is outside tolerance. The practitioner reports that gap to the risk owner and the Risk Committee; the practitioner does not quietly widen the tolerance or round the number down.</p><p>The ALE alone would have hidden this. An ALE of about ' + money(B.answers.ale) + ' sits well under $1,000,000, yet one year in five is worse than the threshold.</p>',
+        reviewNote: 'Read the probability of exceeding the tolerance amount, not the ALE, when testing a tolerance statement.' },
+      { id: 'net', type: 'number', points: 16, short: 'Net control value', title: 'Annual value of the proposed control, net of cost',
+        task: 'What is the proposed control’s annual value <b>net of its annual cost</b>: ALE with current controls, minus ALE with the proposed control, minus the control’s annual cost under RA-04? Enter whole dollars.',
+        answer: A('net'), tol: 40000, unit: 'US dollars per year',
+        hint: 'RA-04 rule 5: annual cost includes the license, the verification analyst, and the one-time integration spread over the three-year contract. The draft counted only the license.',
+        debrief: '<p>The proposed control cuts the ALE from about ' + money(B.answers.ale) + ' to about ' + money(B.answers.proAle) + '. Its annual cost is $150,000: the $96,000 license, $44,000 for half of a verification analyst, and $10,000 a year for the $30,000 integration spread over three years. The net value is about <b>' + money(B.answers.net) + '</b> a year.</p><p>Two cautions belong with that number. The control effect (4% most likely success rate) comes from peer data, not Brightwater’s own experience, so a key control indicator should confirm it in the first year. And cost-benefit is one input to the decision, not the decision: the tolerance result matters as much.</p>',
+        reviewNote: 'Net value = ALE before − ALE after − annualized control cost.' },
+      { id: 'rec', type: 'choice', points: 16, short: 'Recommendation', title: 'Recommend a response',
+        task: 'What should you, as the risk analyst, put in front of the Risk Committee?',
+        options: [
+          'Approve the control and start procurement now, because its value exceeds its cost and the analysis is complete',
+          'Recommend the control to Priya Raman as risk owner: it brings the chance of a year over $1,000,000 from about ' + Math.round(B.answers.over) + '% to about ' + Math.max(1, Math.round(B.answers.proOver)) + '%, inside the 10% tolerance, at a positive net value. She decides, and she accepts the residual risk',
+          'Recommend accepting the current risk, because the ALE is below the $1,000,000 tolerance amount',
+          'Recommend crime insurance with a $1,000,000 limit instead, because transferring the risk is cheaper than mitigating it'
+        ],
+        answer: 1,
+        hint: 'Who owns the decision? And which result tests the tolerance statement: the mean, or the probability of exceeding $1,000,000?',
+        debrief: '<p>The practitioner analyzes, recommends, and documents; the <b>risk owner</b> decides and formally accepts what remains. With the proposed control, the probability of a year over $1,000,000 falls to about ' + B.answers.proOver + '%, inside tolerance, and the control returns more than it costs. That is a strong recommendation, presented with its assumptions.</p><p>Approving the purchase yourself takes a decision that is not yours. Accepting on the basis of the ALE confuses the average year with the tail the tolerance is written about. Insurance can complement the control for the residual tail, but it does not reduce how often fraud succeeds, and the analysis did not price a policy.</p>',
+        reviewNote: 'The practitioner recommends; the risk owner decides. Test tolerance with the exceedance probability.' },
+      { id: 'memo', type: 'text', points: 14, short: 'Committee memo', title: 'Write the memo to the Risk Committee', reportTitle: 'Memo to the Risk Committee',
+        task: 'Summarize the analysis for the Risk Committee and the risk owner. Use your numbers.',
+        fields: [
+          { key: 'result', label: 'Current exposure: ALE, P90, and the tolerance result', min: 50, placeholder: 'State the expected annual loss, the 1-in-10-year loss, and the probability of exceeding $1,000,000 against the 10% limit.' },
+          { key: 'rec', label: 'Recommendation, decision owner, and the value of the control', min: 50, placeholder: 'Name the response, who decides and accepts the residual risk, and the net annual value.' },
+          { key: 'limits', label: 'Key assumptions and how you will validate them', min: 40, placeholder: 'Which inputs are least certain, and what indicator would confirm the control works?' }
+        ],
+        hint: 'A good memo gives the number, the comparison with tolerance, the decision being asked for, who makes it, and the assumptions that could change it.',
+        debrief: '<p><b>Model memo.</b> <b>Current exposure:</b> calibrated under RA-04 and simulated over 10,000 years (seed 20261112), outbound wire fraud has an expected loss of about ' + money(B.answers.ale) + ' a year and a 1-in-10-year loss of about ' + money(B.answers.p90) + '. The chance of a year over $1,000,000 is about ' + B.answers.over + '%, against a board limit of 10%: the risk is outside tolerance. <b>Recommendation:</b> implement the independent callback and payee-change analytics control. It lowers the chance of a year over $1,000,000 to about ' + B.answers.proOver + '% and returns about ' + money(B.answers.net) + ' a year net of its $150,000 annual cost. Priya Raman, as risk owner, decides and formally accepts the residual risk. <b>Assumptions:</b> the control effect comes from peer data; we will track a KCI (share of wires verified on the number of record) and a KRI (fraud attempts reaching approval) and re-run the model after two quarters. The tail of the loss range rests on peer data because five years of our own history cannot show a rare large loss.</p>',
+        reviewNote: 'State the number, the tolerance comparison, the decision owner, and the assumptions.' }
+    ],
+    kus: ['Cybersecurity Planning and Management (CPM)', 'Cyber Threats (CTH)', 'IA Compliance (IAC)'],
+
+    workbench: function (root, api) {
+      var esc = api.esc;
+      root.innerHTML = '<div class="lb-tool"><div class="lb-tabs" role="tablist" aria-label="Workbench tools">' +
+        '<button role="tab" id="b3-tb-data" aria-controls="b3-pn-data" aria-selected="true">Data sources</button>' +
+        '<button role="tab" id="b3-tb-model" aria-controls="b3-pn-model" aria-selected="false" tabindex="-1">Model</button></div>' +
+        '<div class="lb-panel b3-doc" role="tabpanel" id="b3-pn-data" aria-labelledby="b3-tb-data">' + DATA() + '</div>' +
+        '<div class="lb-panel" role="tabpanel" id="b3-pn-model" aria-labelledby="b3-tb-model" hidden>' + MODEL() + '</div></div>';
+      var tabs = [].slice.call(root.querySelectorAll('[role=tab]'));
+      function sel(t) { tabs.forEach(function (x) { var on = x === t; x.setAttribute('aria-selected', on); x.tabIndex = on ? 0 : -1; document.getElementById(x.getAttribute('aria-controls')).hidden = !on; }); api.note('tab', t.id); if (t.id === 'b3-tb-model') draw(); }
+      tabs.forEach(function (t, i) { t.addEventListener('click', function () { sel(t); }); t.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { var n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length]; sel(n); n.focus(); } }); });
+
+      /* ---------- Inputs ---------- */
+      var F = ['tef0', 'tef1', 'tef2', 'vc0', 'vc1', 'vc2', 'vp0', 'vp1', 'vp2', 'lm0', 'lm1', 'lm2', 'cost', 'seed'];
+      function fromModel(m, seed) {
+        return { tef0: m.tef[0], tef1: m.tef[1], tef2: m.tef[2], vc0: +(m.vc[0] * 100).toFixed(2), vc1: +(m.vc[1] * 100).toFixed(2), vc2: +(m.vc[2] * 100).toFixed(2),
+          vp0: +(m.vp[0] * 100).toFixed(2), vp1: +(m.vp[1] * 100).toFixed(2), vp2: +(m.vp[2] * 100).toFixed(2), lm0: m.lm[0], lm1: m.lm[1], lm2: m.lm[2], cost: m.cost, seed: seed };
+      }
+      var saved = api.note('in') || fromModel(B.DRAFT, B.SEED);
+      function $(id) { return document.getElementById('b3-' + id); }
+      function put(v) { F.forEach(function (k) { $(k).value = v[k]; }); }
+      function readAll() { var v = {}; F.forEach(function (k) { v[k] = $(k).value; }); return v; }
+      put(saved);
+      F.forEach(function (k) { $(k).addEventListener('input', function () { $(k).classList.remove('b3-off'); api.note('in', readAll()); }); });
+
+      function tri(v, a, b, c, scale) {
+        var x = [parseFloat(v[a]), parseFloat(v[b]), parseFloat(v[c])];
+        if (x.some(function (n) { return !isFinite(n) || n < 0; })) return null;
+        x = x.map(function (n) { return n * scale; });
+        return { v: x, ok: x[0] <= x[1] && x[1] <= x[2] };
+      }
+      function parse() {
+        var v = readAll(), errs = [];
+        var T = tri(v, 'tef0', 'tef1', 'tef2', 1), VC = tri(v, 'vc0', 'vc1', 'vc2', 0.01), VP = tri(v, 'vp0', 'vp1', 'vp2', 0.01), M = tri(v, 'lm0', 'lm1', 'lm2', 1);
+        [[T, 'Threat event frequency'], [VC, 'Vulnerability (current)'], [VP, 'Vulnerability (proposed)'], [M, 'Loss magnitude']].forEach(function (p) {
+          if (!p[0]) errs.push(p[1] + ': enter a number of zero or more in every field.');
+          else if (!p[0].ok) errs.push(p[1] + ': minimum must not exceed most likely, and most likely must not exceed maximum.');
+        });
+        if (VC && VC.v[2] > 1 || VP && VP.v[2] > 1) errs.push('Vulnerability is a percentage of attempts, so it cannot exceed 100.');
+        if (T && T.v[2] > 500) errs.push('Threat event frequency above 500 a year is outside this model’s range.');
+        var cost = parseFloat(v.cost), seed = parseInt(v.seed, 10);
+        if (!isFinite(cost) || cost < 0) errs.push('Enter the control’s annual cost as a number of zero or more.');
+        if (!isFinite(seed) || seed < 1) errs.push('Enter a whole-number seed of 1 or more.');
+        if (errs.length) return { errs: errs };
+        return { inp: { tef: T.v, vc: VC.v, vp: VP.v, lm: M.v, cost: cost }, seed: seed };
+      }
+
+      /* ---------- Calibration check (second-line review against RA-04) ---------- */
+      function near(a, b) { return Math.abs(a - b) <= Math.max(1e-9, Math.abs(b) * 0.005); }
+      $('check').addEventListener('click', function () {
+        var v = readAll(), K = fromModel(B.KEY, B.SEED), bad = [];
+        var rules = { tef0: 'rule 1 (peer 5th percentile)', tef2: 'rule 1 (peer 95th percentile)', vc0: 'rule 1', vc2: 'rule 1', vp0: 'rule 1', vp2: 'rule 1', lm0: 'rule 1', lm2: 'rule 1',
+          tef1: 'rule 2 (most recent three full years)', vc1: 'rule 2 (most recent three full years)', vp1: 'rule 4 (no Brightwater history)', lm1: 'rule 3 (median of net losses)', cost: 'rule 5 (annualized total cost)' };
+        var names = { tef0: 'TEF minimum', tef1: 'TEF most likely', tef2: 'TEF maximum', vc0: 'Current vulnerability minimum', vc1: 'Current vulnerability most likely', vc2: 'Current vulnerability maximum', vp0: 'Proposed vulnerability minimum', vp1: 'Proposed vulnerability most likely', vp2: 'Proposed vulnerability maximum', lm0: 'Loss minimum', lm1: 'Loss most likely', lm2: 'Loss maximum', cost: 'Annual control cost' };
+        Object.keys(rules).forEach(function (k) { var x = parseFloat(v[k]); var off = !isFinite(x) || !near(x, K[k]); $(k).classList.toggle('b3-off', off); if (off) bad.push('<li><b>' + names[k] + '</b> does not follow RA-04 ' + rules[k] + '.</li>'); });
+        var m = $('msg');
+        if (bad.length) { m.className = 'b3-msg bad'; m.innerHTML = '<b>' + bad.length + ' input' + (bad.length > 1 ? 's do' : ' does') + ' not follow Standard RA-04.</b> Fields are outlined in red.<ul>' + bad.join('') + '</ul>'; }
+        else { m.className = 'b3-msg ok'; m.innerHTML = '<b>Calibration passes.</b> Every input follows Standard RA-04. ' + (+v.seed === B.SEED ? 'The seed matches the recorded seed.' : 'Note: the seed differs from the recorded seed ' + B.SEED + ', so results will vary slightly.'); }
+      });
+      $('draft').addEventListener('click', function () { put(fromModel(B.DRAFT, B.SEED)); F.forEach(function (k) { $(k).classList.remove('b3-off'); }); api.note('in', readAll()); $('msg').className = 'b3-msg'; $('msg').textContent = 'Draft values restored.'; });
+      $('reseed').addEventListener('click', function () { $('seed').value = B.SEED; api.note('in', readAll()); });
+      $('newseed').addEventListener('click', function () { $('seed').value = 1 + Math.floor(Math.random() * 99999999); api.note('in', readAll()); });
+
+      /* ---------- Run and results ---------- */
+      var last = null;
+      function run() {
+        var p = parse(), m = $('msg');
+        if (p.errs) { m.className = 'b3-msg bad'; m.innerHTML = '<b>Cannot run yet.</b><ul>' + p.errs.map(function (e) { return '<li>' + esc(e) + '</li>'; }).join('') + '</ul>'; return; }
+        var t0 = performance.now(); last = B.analyze(p.inp, p.seed); var ms = performance.now() - t0;
+        api.note('ran', true);
+        $('runinfo').textContent = 'Seed ' + p.seed + ' · ' + B.N.toLocaleString('en-US') + ' simulated years per scenario · ' + ms.toFixed(0) + ' ms';
+        showResults(); draw();
+      }
+      $('run').addEventListener('click', run);
+      function pctTxt(x) { return (x * 100).toFixed(1) + '%'; }
+      function showResults() {
+        var R = last, c = R.cur, q = R.pro, I = R.inp;
+        function row(label, f, help) { return '<tr><th scope="row">' + label + (help ? '<br><span style="font-weight:400;color:var(--text-muted);font-size:.74rem">' + help + '</span>' : '') + '</th><td class="num">' + f(c) + '</td><td class="num">' + f(q) + '</td></tr>'; }
+        var tolFlag = function (s) { var bad = s.over > 0.10; return pctTxt(s.over) + '<br><span class="b3-flag ' + (bad ? 'bad' : 'ok') + '">' + (bad ? '&#10007; Exceeds 10% limit' : '&#10003; Within 10% limit') + '</span>'; };
+        var single = I.tef[1] * I.vc[1] * I.lm[1];
+        $('res').innerHTML = '<div class="table-wrap"><table class="data"><caption class="sr-only">Simulation results</caption><thead><tr><th scope="col">Annual net loss</th><th scope="col" class="num">Current controls</th><th scope="col" class="num">With proposed control</th></tr></thead><tbody>' +
+          row('ALE (mean)', function (s) { return money(s.ale); }) +
+          row('P50 (median year)', function (s) { return money(s.p50); }) +
+          row('P90 (1 year in 10)', function (s) { return money(s.p90); }) +
+          row('P99 (1 year in 100)', function (s) { return money(s.p99); }) +
+          row('P(annual loss &gt; $1M)', tolFlag, 'Board limit: 10%') +
+          '</tbody></table></div>' +
+          '<div class="b3-val" role="group" aria-label="Control value">' +
+            '<div class="b3-tile"><div class="k">ALE reduction</div><div class="v">' + money(R.reduction) + '</div></div>' +
+            '<div class="b3-tile"><div class="k">Annual control cost</div><div class="v">' + money(I.cost) + '</div></div>' +
+            '<div class="b3-tile net"><div class="k">Net annual value</div><div class="v">' + money(R.net) + '</div></div>' +
+            '<div class="b3-tile"><div class="k">Return on cost</div><div class="v">' + (I.cost > 0 ? (R.net / I.cost * 100).toFixed(0) + '%' : 'n/a') + '</div></div></div>' +
+          '<p class="b3-sp"><b>Single-point check.</b> Most likely TEF × most likely vulnerability × most likely loss = ' + money(single) + ' a year. The simulated ALE is ' + (single > 0 ? (c.ale / single).toFixed(1) + '×' : 'far above') + ' that, because right-skewed inputs produce occasional severe years that pull the mean up.</p>';
+      }
+      function css(n, d) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim() || d; }
+      function axisMoney(v) { if (v >= 1e6) return '$' + (v / 1e6) + 'M'; if (v >= 1e3) return '$' + (v / 1e3) + 'k'; return '$' + v; }
+      function draw() {
+        var cv = $('cv'), box = $('chart');
+        if (!last) { box.hidden = true; $('empty').hidden = false; return; }
+        box.hidden = false; $('empty').hidden = true;
+        var w = cv.parentNode.clientWidth - 2; if (w <= 0) return;
+        var h = Math.max(240, Math.min(w * 0.5, 320)), dpr = window.devicePixelRatio || 1;
+        cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); cv.style.height = h + 'px';
+        var g = cv.getContext('2d'); g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, w, h);
+        var cGold = css('--gold', '#86198f'), cJade = css('--jade', '#b45309'), cMuted = css('--text-muted', '#6c5669'), cBorder = css('--border', '#e3d2e1'), cWrong = css('--wrong', '#b91c1c'), cText = css('--text-primary', '#2a1328');
+        var L = 52, Rr = 14, T = 12, Bm = 40, pw = w - L - Rr, ph = h - T - Bm;
+        var x0 = 4, x1 = Math.max(7, Math.ceil(Math.log10(Math.max(B.pct(last.cur.a, 0.998), 2e6))));
+        var ymax = 0.6;
+        function X(v) { return L + (Math.log10(v) - x0) / (x1 - x0) * pw; }
+        function Y(p) { return T + ph - (Math.min(p, ymax) / ymax) * ph; }
+        g.font = '11px Arial, sans-serif'; g.lineWidth = 1;
+        var zx = X(1e6), zy = Y(0.10);
+        g.fillStyle = 'rgba(185,28,28,0.08)'; g.fillRect(zx, T, L + pw - zx, zy - T);
+        g.strokeStyle = cBorder; g.fillStyle = cMuted; g.textAlign = 'right'; g.textBaseline = 'middle';
+        for (var p = 0; p <= ymax + 1e-9; p += 0.1) { var yy = Y(p); g.beginPath(); g.moveTo(L, yy); g.lineTo(L + pw, yy); g.stroke(); g.fillText(Math.round(p * 100) + '%', L - 6, yy); }
+        g.textAlign = 'center'; g.textBaseline = 'top';
+        for (var e = x0; e <= x1; e++) { [1, 2, 5].forEach(function (k) { var v = k * Math.pow(10, e), lv = Math.log10(v); if (lv > x1 + 1e-9) return; var xx = X(v); g.strokeStyle = k === 1 ? cBorder : 'rgba(0,0,0,0.05)'; g.beginPath(); g.moveTo(xx, T); g.lineTo(xx, T + ph); g.stroke(); if (k === 1 || pw > 460) { g.fillStyle = cMuted; g.fillText(axisMoney(v), xx, T + ph + 5); } }); }
+        g.strokeStyle = cMuted; g.beginPath(); g.moveTo(L, T); g.lineTo(L, T + ph); g.lineTo(L + pw, T + ph); g.stroke();
+        g.fillStyle = cText; g.font = 'bold 11px Arial, sans-serif'; g.fillText('Annual net loss (log scale)', L + pw / 2, T + ph + 22);
+        g.save(); g.translate(12, T + ph / 2); g.rotate(-Math.PI / 2); g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('P(annual loss > x)', 0, 0); g.restore();
+        g.strokeStyle = cWrong; g.lineWidth = 1.5; g.setLineDash([5, 4]); g.beginPath(); g.moveTo(zx, T + ph); g.lineTo(zx, zy); g.lineTo(L + pw, zy); g.stroke(); g.setLineDash([]);
+        function curve(a, color, dash, lw) {
+          g.strokeStyle = color; g.lineWidth = lw; g.setLineDash(dash); g.beginPath();
+          var steps = Math.max(100, Math.round(pw / 3));
+          for (var i = 0; i <= steps; i++) { var lv = x0 + (x1 - x0) * i / steps, pp = B.exceed(a, Math.pow(10, lv)), xx = L + pw * i / steps, yy = Y(pp); if (i === 0) g.moveTo(xx, yy); else g.lineTo(xx, yy); }
+          g.stroke(); g.setLineDash([]);
+        }
+        curve(last.cur.a, cGold, [], 2.6);
+        curve(last.pro.a, cJade, [7, 4], 2.4);
+        [[last.cur.over, cGold], [last.pro.over, cJade]].forEach(function (m) { g.fillStyle = m[1]; g.strokeStyle = '#fff'; g.lineWidth = 1.5; g.beginPath(); g.arc(zx, Y(m[0]), 5, 0, Math.PI * 2); g.fill(); g.stroke(); });
+        g.font = 'bold 11px Arial, sans-serif'; g.textBaseline = 'bottom'; g.textAlign = 'left'; g.fillStyle = cText;
+        g.fillText('Current ' + pctTxt(last.cur.over), zx + 8, Y(last.cur.over) - 4);
+        g.textAlign = 'right'; g.fillText('Proposed ' + pctTxt(last.pro.over), zx - 8, Y(last.pro.over) - 4);
+        var lx = L + pw - 196, ly = T + 8; g.fillStyle = 'rgba(255,255,255,0.92)'; g.fillRect(lx - 6, ly - 6, 200, 56);
+        g.font = '11px Arial, sans-serif'; g.textAlign = 'left'; g.textBaseline = 'middle';
+        g.strokeStyle = cGold; g.lineWidth = 2.6; g.beginPath(); g.moveTo(lx, ly + 4); g.lineTo(lx + 22, ly + 4); g.stroke(); g.fillStyle = cText; g.fillText('Current controls', lx + 28, ly + 4);
+        g.strokeStyle = cJade; g.lineWidth = 2.4; g.setLineDash([7, 4]); g.beginPath(); g.moveTo(lx, ly + 20); g.lineTo(lx + 22, ly + 20); g.stroke(); g.setLineDash([]); g.fillText('With proposed control', lx + 28, ly + 20);
+        g.fillStyle = 'rgba(185,28,28,0.18)'; g.fillRect(lx, ly + 31, 22, 10); g.fillStyle = cText; g.fillText('Beyond tolerance ($1M, 10%)', lx + 28, ly + 36);
+        cv.setAttribute('aria-label', 'Loss exceedance curves. Probability of annual loss above $1,000,000: current controls ' + pctTxt(last.cur.over) + ', with proposed control ' + pctTxt(last.pro.over) + '. Board limit 10%.');
+      }
+      var rt = null; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(draw, 60); });
+      if (api.note('tab')) { var tt = document.getElementById(api.note('tab')); if (tt) sel(tt); }
+      if (api.note('ran')) run();
+
+      function MODEL() {
+        function triHTML(key, title, unit, step) {
+          return '<div class="b3-tri"><p class="b3-tri-h" id="b3-h-' + key + '">' + title + ' <span>(' + unit + ')</span></p><div class="b3-tri-in" role="group" aria-labelledby="b3-h-' + key + '">' +
+            ['Minimum', 'Most likely', 'Maximum'].map(function (n, i) { return '<div><label for="b3-' + key + i + '">' + n + '</label><input type="number" step="' + step + '" min="0" id="b3-' + key + i + '" inputmode="decimal"></div>'; }).join('') + '</div></div>';
+        }
+        return '<p class="b3-note">Scenario: an external fraudster induces Brightwater to send an outbound wire that is not authorized and is not fully recovered. Each simulated year draws a threat event frequency and a vulnerability from PERT ranges, draws the number of loss events from a Poisson distribution, and adds a PERT loss for each event.</p>' +
+          '<div class="b3-row"><div class="b3-col">' +
+            '<fieldset class="b3-fs"><legend>Shared by both scenarios</legend>' + triHTML('tef', 'Threat event frequency', 'fraudulent wire requests per year', 'any') + triHTML('lm', 'Loss magnitude', 'net loss per successful fraud, $', '1000') + '</fieldset>' +
+            '<fieldset class="b3-fs"><legend>Current controls</legend>' + triHTML('vc', 'Vulnerability', '% of attempts that succeed', 'any') + '</fieldset>' +
+            '<fieldset class="b3-fs prop"><legend>With proposed control</legend>' + triHTML('vp', 'Vulnerability', '% of attempts that succeed', 'any') +
+              '<div class="b3-one"><label for="b3-cost">Annual control cost ($)</label><input type="number" step="1000" min="0" id="b3-cost" inputmode="decimal"></div></fieldset>' +
+            '<div class="b3-btns"><button type="button" class="btn secondary" id="b3-check">Check calibration</button><button type="button" class="btn ghost" id="b3-draft">Restore draft values</button></div>' +
+            '<div class="b3-one" style="max-width:none"><label for="b3-seed">Random seed (recorded seed: ' + B.SEED + ')</label><div class="b3-btns"><input type="number" step="1" min="1" id="b3-seed" style="max-width:11rem;border:1px solid var(--border);border-radius:4px;padding:.42rem .5rem;font:.86rem \'Courier New\',monospace"><button type="button" class="btn ghost" id="b3-reseed">Use recorded seed</button><button type="button" class="btn ghost" id="b3-newseed">Try a new seed</button></div></div>' +
+          '</div><div class="b3-col">' +
+            '<div class="b3-btns"><button type="button" class="btn" id="b3-run">&#9654; Run 10,000 years</button></div>' +
+            '<div class="b3-msg" id="b3-msg" role="status" aria-live="polite"></div>' +
+            '<p class="b3-run" id="b3-runinfo"></p>' +
+            '<p class="b3-empty" id="b3-empty">Run the simulation to see the results for both scenarios, the value of the control, and the loss exceedance curve.</p><div class="b3-res" id="b3-res" aria-live="polite"></div>' +
+          '</div></div>' +
+          '<div class="b3-chart" id="b3-chart" hidden><canvas id="b3-cv" role="img" aria-label="Loss exceedance curves"></canvas>' +
+          '<p class="b3-cap">Each curve shows the probability that a year’s net wire-fraud loss exceeds the amount on the horizontal axis. The shaded corner is beyond the board’s tolerance: more than a 10% chance of a year over $1,000,000. A curve that passes above the corner point breaches tolerance. The vertical axis stops at 60% so the tail is easier to read.</p></div>';
+      }
+      function DATA() {
+        return '<div class="lb-doc"><p class="eyebrow">Source 1</p><h4>Brightwater wire-fraud attempts by year</h4>' +
+          '<p class="b3-note">Fraud operations log. An attempt is a wire request later confirmed as fraudulent, whether or not funds left Brightwater.</p>' +
+          '<div class="table-wrap"><table class="data"><thead><tr><th scope="col">Year</th><th scope="col" class="num">Fraudulent requests</th><th scope="col" class="num">Stopped before release</th><th scope="col" class="num">Succeeded</th></tr></thead><tbody>' +
+          [[2021, 18, 16, 2], [2022, 20, 18, 2], [2023, 22, 20, 2], [2024, 25, 22, 3], [2025, 28, 24, 4]].map(function (r) { return '<tr><td>' + r[0] + '</td><td class="num">' + r[1] + '</td><td class="num">' + r[2] + '</td><td class="num">' + r[3] + '</td></tr>'; }).join('') +
+          '<tr class="b3-sum"><td>Five-year total</td><td class="num">113</td><td class="num">100</td><td class="num">13</td></tr></tbody></table></div></div>' +
+          '<div class="lb-doc"><p class="eyebrow">Source 2</p><h4>Brightwater loss history: successful wire frauds, 2021 to 2025</h4>' +
+          '<p class="b3-note">Gross is the amount wired. Recovered is the amount returned through recall requests and the receiving bank. Net loss is what Brightwater absorbed.</p>' +
+          '<div class="table-wrap"><table class="data"><thead><tr><th scope="col">Incident</th><th scope="col">Date</th><th scope="col">Vector</th><th scope="col" class="num">Gross wired</th><th scope="col" class="num">Recovered</th><th scope="col" class="num">Net loss</th></tr></thead><tbody>' +
+          [['WF-21-01', '2021-03-18', 'Business email compromise: spoofed vendor invoice', 240000, 105000],
+           ['WF-21-02', '2021-10-05', 'Member account takeover', 74000, 0],
+           ['WF-22-01', '2022-02-22', 'Business email compromise: executive impersonation', 310000, 100000],
+           ['WF-22-02', '2022-08-11', 'Real-estate closing diversion', 185000, 139000],
+           ['WF-23-01', '2023-04-03', 'Member account takeover', 61000, 0],
+           ['WF-23-02', '2023-11-14', 'Business email compromise: spoofed vendor invoice', 455000, 35000],
+           ['WF-24-01', '2024-01-29', 'Real-estate closing diversion', 198000, 88000],
+           ['WF-24-02', '2024-06-17', 'Member account takeover (SIM swap)', 32000, 0],
+           ['WF-24-03', '2024-09-30', 'Business email compromise: executive impersonation', 760000, 120000],
+           ['WF-25-01', '2025-02-12', 'Social engineering of an elderly member', 88000, 0],
+           ['WF-25-02', '2025-05-06', 'Business email compromise: spoofed vendor invoice', 330000, 170000],
+           ['WF-25-03', '2025-08-21', 'Real-estate closing diversion', 412000, 127000],
+           ['WF-25-04', '2025-12-02', 'Member account takeover', 18000, 0]].map(function (r) { return '<tr><td>' + r[0] + '</td><td>' + r[1] + '</td><td>' + r[2] + '</td><td class="num">' + money(r[3]) + '</td><td class="num">' + money(r[4]) + '</td><td class="num">' + money(r[3] - r[4]) + '</td></tr>'; }).join('') +
+          '<tr class="b3-sum"><td colspan="3">Five-year total (13 incidents)</td><td class="num">$3,163,000</td><td class="num">$884,000</td><td class="num">$2,279,000</td></tr></tbody></table></div></div>' +
+          '<div class="lb-doc"><p class="eyebrow">Source 3</p><h4>Peer ranges: regional credit union fraud exchange, 2025 survey</h4>' +
+          '<p class="b3-note">38 credit unions with $1 billion to $3 billion in assets. Percentiles are across institutions, per year.</p>' +
+          '<div class="table-wrap"><table class="data"><thead><tr><th scope="col">Measure</th><th scope="col" class="num">5th percentile</th><th scope="col" class="num">Median</th><th scope="col" class="num">95th percentile</th></tr></thead><tbody>' +
+          '<tr><td>Fraudulent wire requests per year</td><td class="num">12</td><td class="num">24</td><td class="num">45</td></tr>' +
+          '<tr><td>Share of attempts that succeed: callback to the number in the request, plus dual control (Brightwater’s current design)</td><td class="num">5%</td><td class="num">13%</td><td class="num">25%</td></tr>' +
+          '<tr><td>Share of attempts that succeed: independent callback to the number on file, plus payee-change analytics</td><td class="num">2%</td><td class="num">4%</td><td class="num">12%</td></tr>' +
+          '<tr><td>Net loss per successful fraud, after recovery</td><td class="num">$15,000</td><td class="num">$95,000</td><td class="num">$700,000</td></tr>' +
+          '<tr><td>Gross amount wired per successful fraud</td><td class="num">$20,000</td><td class="num">$180,000</td><td class="num">$900,000</td></tr></tbody></table></div></div>' +
+          '<div class="lb-doc"><p class="eyebrow">Source 4</p><h4>Treasury control data</h4><div class="table-wrap"><table class="data"><thead><tr><th scope="col">Control</th><th scope="col">Status and evidence</th></tr></thead><tbody>' +
+          '<tr><td>Dual control on outbound wires over $10,000 (current)</td><td>Operating. 2025 test: 60 of 60 sampled wires had two approvers.</td></tr>' +
+          '<tr><td>Callback verification (current)</td><td>Operating as designed, but the design calls the phone number supplied with the request. In a business email compromise, the fraudster controls that number. Ten of the 13 losses passed callback.</td></tr>' +
+          '<tr><td>Fraud awareness training for wire staff (current)</td><td>96% completion in 2025.</td></tr>' +
+          '<tr><td><b>Proposed:</b> independent callback to the number on file, by a separate verification team, plus a payee-change analytics service</td><td>Analytics license <b>$96,000 a year</b> on a three-year contract. Half of a verification analyst, <b>$44,000 a year</b> fully loaded. One-time integration <b>$30,000</b>. Brightwater has no operating history with this control.</td></tr></tbody></table></div></div>' +
+          '<div class="lb-doc"><p class="eyebrow">Standard</p><h4>Risk Analysis Standard RA-04: calibrating quantitative inputs (excerpt)</h4><ol>' +
+          '<li><b>Ranges.</b> Set each minimum and maximum to the peer 5th and 95th percentiles.</li>' +
+          '<li><b>Most likely frequency and vulnerability.</b> Use Brightwater’s own average over the <b>most recent three full years</b>. Older years are excluded when the trend has changed.</li>' +
+          '<li><b>Most likely loss magnitude.</b> Use the <b>median of Brightwater’s own net losses</b> (after recovery) over the last five years. Do not use gross amounts.</li>' +
+          '<li><b>No history.</b> Where Brightwater has no operating history (for example, a proposed control), use the peer median as the most likely value.</li>' +
+          '<li><b>Control cost.</b> Use the full annual cost: recurring costs plus one-time costs spread evenly over the contract term.</li>' +
+          '<li><b>Reproducibility.</b> Run at least 10,000 simulated years and record the seed (20261112 for the 2026 cycle).</li></ol></div>' +
+          '<div class="lb-doc"><p class="eyebrow">Board</p><h4>Risk Appetite Statement 2026: wire fraud tolerance</h4><ul>' +
+          '<li>The probability that annual net loss from wire fraud exceeds <b>$1,000,000</b> must not exceed <b>10%</b>.</li>' +
+          '<li>Risks outside tolerance are reported to the Risk Committee with a response plan from the risk owner. Only the risk owner, within delegated authority, may accept residual risk.</li></ul></div>';
+      }
+    }
+  };
+})();
+</script>
+<script src="lab.js"></script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>A8 Metrics, Monitoring, and Reporting | CRISC 5-Day Faculty Workshop</title>
+<link rel="stylesheet" href="crisc-lesson.css">
+<link rel="stylesheet" href="practice.css">
+</head>
+<body>
+<div id="app"><noscript><p style="padding:2rem;font-family:Arial">This activity needs JavaScript enabled.</p></noscript></div>
+
+<script>
+window.ACTIVITY = {
+  id: 'A8',
+  title: 'Metrics, Monitoring, and Reporting',
+  accent: 'Reporting',
+  domain: 'Domain 3 (32%)',
+  time: '40 min',
+  level: 'Intermediate',
+  lessonHref: 'lesson07.html#s3',
+  lessonLabel: 'Lesson 7, Risk Monitoring and Reporting',
+  lede: 'Saltreach Energy runs a regional electric grid with 140 substations, a control center, and field crews in four counties. Its dashboards are full of numbers. Practice telling a risk indicator from a control or performance measure, choosing indicators that warn in time, escalating when a threshold trips, and giving each audience the report it can act on.',
+  concepts: [
+    { key: 'metric', name: 'KRI, KCI, or KPI', review: 'Lesson 7, Metrics: KRIs, KCIs, and KPIs' },
+    { key: 'leading', name: 'Leading and lagging indicators', review: 'Lesson 7, Leading and lagging' },
+    { key: 'threshold', name: 'Thresholds and escalation', review: 'Lesson 7, Good KRIs and their thresholds' },
+    { key: 'data', name: 'Data quality and validation', review: 'Lesson 7, Data Collection, Aggregation, Analysis, and Validation' },
+    { key: 'audience', name: 'Reporting by audience', review: 'Lesson 7, Reporting Techniques by Audience' },
+    { key: 'plan', name: 'Risk action plans', review: 'Lesson 7, Risk Action Plans' }
+  ],
+  stations: [
+    {
+      type: 'sort', short: 'KRI, KCI, or KPI', title: 'Which kind of metric is it?', concept: 'metric',
+      instr: 'Each metric appears on a Saltreach Energy dashboard. Classify it as a <b>KRI</b> (risk exposure and early warning), a <b>KCI</b> (whether a control works as intended), or a <b>KPI</b> (how well a process or goal performs).',
+      hint: 'Ask what question the metric answers. Is the risk rising toward appetite? KRI. Is this control working? KCI. Is this process efficient or on target? KPI. Who collects the number does not decide its family.',
+      buckets: ['KRI', 'KCI', 'KPI'],
+      review: { href: 'lesson07.html#s3', label: 'Lesson 7, Metrics: KRIs, KCIs, and KPIs' },
+      items: [
+        { text: 'Percentage of internet-facing remote access gateways with critical patches overdue more than 30 days', answer: 0, why: 'It measures exposure to a high-priority scenario and moves before a loss. It is a KRI.' },
+        { text: 'Percentage of SCADA engineering workstation accounts enrolled in MFA', answer: 1, why: 'It shows whether the MFA control covers the accounts it should. It is a KCI.' },
+        { text: 'Percentage of customer service calls answered within 60 seconds', answer: 2, why: 'It measures how a business process performs against its target. It is a KPI.' },
+        { text: 'Number of active exploit campaigns, reported by the sector information-sharing group, against the HMI software Saltreach runs', answer: 0, why: 'Rising external threat activity against a platform Saltreach depends on signals growing exposure. It is a KRI.' },
+        { text: 'Percentage of quarterly privileged access reviews completed on time with no missed leavers', answer: 1, why: 'It judges whether the access review control operates as intended. It is a KCI.' },
+        { text: 'Percentage of IT projects delivered on budget', answer: 2, why: 'Project delivery against budget is process performance. It is a KPI.' },
+        { text: 'Percentage of backup restore tests that met the recovery time objective', answer: 1, why: 'It shows whether the backup and restore control works. It is a KCI.' },
+        { text: 'Number of control system assets running an operating system past end of support', answer: 0, why: 'Unsupported systems are growing exposure that cannot be patched. It is a KRI.' },
+        { text: 'Average analyst hours spent per monthly patch cycle', answer: 2, why: 'Effort per cycle measures process efficiency, not risk or control effectiveness. It is a KPI.' },
+        { text: 'Percentage of firewall rule changes approved before implementation', answer: 1, why: 'It measures whether the change approval control operated. It is a KCI.' }
+      ]
+    },
+    {
+      type: 'sort', short: 'Leading or lagging', title: 'Does it warn before the loss?', concept: 'leading',
+      instr: 'Saltreach wants KRIs that give time to act. Classify each indicator as <b>leading</b> (moves before the loss) or <b>lagging</b> (records what already happened).',
+      hint: 'If the number can only go up after something bad has happened, it is lagging. If it describes conditions that make a loss more likely, it is leading.',
+      buckets: ['Leading', 'Lagging'],
+      review: { href: 'lesson07.html#s3', label: 'Lesson 7, Leading and lagging' },
+      items: [
+        { text: 'Ransomware incidents in the operational technology network last quarter', answer: 1, why: 'An incident count records events that already happened. It is lagging.' },
+        { text: 'Privileged accounts past their recertification date', answer: 0, why: 'Stale privileged access raises the chance of misuse before any loss. It is leading.' },
+        { text: 'Losses from fraudulent vendor payments this year', answer: 1, why: 'A loss figure is the outcome itself. It is lagging.' },
+        { text: 'Vulnerabilities on the CISA KEV list that remain unpatched on the OT perimeter', answer: 0, why: 'Known exploited, unpatched flaws signal rising likelihood before an attack. They are leading.' },
+        { text: 'Audit findings raised in the annual internal audit', answer: 1, why: 'Findings report what was already wrong at the time of the audit. They are lagging.' },
+        { text: 'Vendor remote access accounts with no expiry date', answer: 0, why: 'Open-ended vendor access is a condition that makes intrusion more likely. It is leading.' },
+        { text: 'Customer outage minutes caused by cyber incidents', answer: 1, why: 'Outage minutes measure impact after the event. They are lagging.' },
+        { text: 'Simulated phishing click rate among control center staff, trending upward', answer: 0, why: 'A rising click rate signals growing exposure before a real compromise. It is leading.' }
+      ]
+    },
+    {
+      type: 'scenario', short: 'Threshold breaches', title: 'When a threshold trips', concept: 'threshold',
+      instr: 'You are Saltreach’s risk practitioner. The KRI below tracks the share of critical patches overdue more than 30 days on the OT perimeter. The risk owner is the VP of Grid Operations. Choose the <b>BEST</b> answer for each case.',
+      hint: 'Validate surprising data before you report it. Red triggers the predefined action and escalation to the risk owner, who decides. Thresholds tie to appetite and change only with the owner, on the record. A late action plan is reported with its effect on residual risk.',
+      review: { href: 'lesson07.html#s3', label: 'Lesson 7, Good KRIs and their thresholds' },
+      table: {
+        caption: 'KRI: critical OT perimeter patches overdue more than 30 days',
+        head: ['Level', 'Threshold', 'Predefined action'],
+        rows: [
+          ['Green', 'Below 5%', 'Monitor monthly'],
+          ['Amber', '5% to 10%', 'Control owner submits a recovery plan within two weeks'],
+          ['Red', 'Above 10%', 'Escalate to the VP of Grid Operations within 48 hours']
+        ]
+      },
+      items: [
+        {
+          title: 'Case 1: The sudden jump', text: 'The KRI has been at about 4% for a year. This month the GRC tool shows 22%. The board pack is due in three days.',
+          parts: [
+            { q: 'What should you do FIRST?', concept: 'data', options: ['Report 22% to the board as a red KRI', 'Validate the data: reconcile the figure to the scanner and asset inventory, and confirm it with the data owner', 'Ask the patch team to work the weekend', 'Raise the red threshold to 25% until the cause is known'], answer: 1, why: 'A surprising value is validated before anyone relies on it. A wrong number can trigger the wrong decision and damage the risk function’s credibility.' },
+            { q: 'Validation shows 40 decommissioned devices were still in the scan scope. The corrected value is 12%. What now?', options: ['Nothing, since the jump was mostly a data error', 'Follow the red action: escalate to the VP of Grid Operations with the effect on residual risk and the options, and log the scan-scope fix', 'Patch the systems yourself to bring it back to green', 'Report it as amber, because it is close'], answer: 1, why: 'Twelve percent is red. The predefined action is escalation to the risk owner, who decides. The data-quality fix is recorded too.' }
+          ]
+        },
+        {
+          title: 'Case 2: Ten months of amber', text: 'A second KRI, unapproved vendor remote sessions, has shown amber every month for ten months. No one acts on it any more, and incidents have not followed.',
+          parts: [
+            { q: 'What is the BEST response?', options: ['Remove the KRI from the dashboard', 'Recalibrate the thresholds with the risk owner, linked to appetite, and document the change', 'Change the color scheme so amber is less prominent', 'Leave it, since amber is not red'], answer: 1, why: 'Thresholds set too low create alert fatigue. They are reviewed with the risk owner and tied to appetite, and the change is recorded.' }
+          ]
+        },
+        {
+          title: 'Case 3: The request before the board meeting', text: 'The OT operations manager asks you to raise the red threshold on the patch KRI from 10% to 15% this week so the board dashboard shows amber.',
+          parts: [
+            { q: 'What should you do?', options: ['Agree, because thresholds are a judgment call', 'Agree, but add a footnote', 'Decline. Thresholds are tied to appetite and change only through the risk owner with a documented rationale, and the board sees the current status', 'Remove the KRI from this quarter’s board report'], answer: 2, why: 'Moving a threshold to change a color hides the risk from the people who set appetite. Honest reporting is part of the practitioner’s integrity.' }
+          ]
+        },
+        {
+          title: 'Case 4: The slipping action plan', text: 'The action plan to replace vendor VPN access with a monitored jump host has missed its milestone twice. Status has stayed amber, and nobody has escalated it.',
+          parts: [
+            { q: 'What is the BEST action for the risk practitioner?', concept: 'plan', options: ['Move the due date back so the plan shows green', 'Report the delay and its effect on residual risk to the risk owner, and take repeated slippage to the risk committee', 'Accept the delay on the risk owner’s behalf', 'Close the plan and open a new one'], answer: 1, why: 'A late action keeps the risk above target longer than the owner agreed. The practitioner reports and escalates; the practitioner does not reset deadlines or accept the delay.' },
+            { q: 'The jump host is installed and the team has ticked every task. When can the plan close?', concept: 'plan', options: ['Now, because all tasks are complete', 'When evidence shows the target residual risk has been reached, such as no vendor sessions outside the jump host for a full period', 'When the vendor signs off', 'At the end of the fiscal year'], answer: 1, why: 'A plan closes when evidence shows the target residual risk was reached, not when the last task is ticked.' }
+          ]
+        }
+      ]
+    },
+    {
+      type: 'scenario', short: 'Report by audience', title: 'The right report for the right reader', concept: 'audience',
+      instr: 'The same risk data must serve four audiences at Saltreach. Choose the <b>BEST</b> report for each reader.',
+      hint: 'The board needs top risks against appetite, trends, and decisions. Executives need the profile by unit and plan status. Risk owners need their own risks with drill-down. Control owners need specific exceptions and tasks.',
+      review: { href: 'lesson07.html#s5', label: 'Lesson 7, Reporting Techniques by Audience' },
+      items: [
+        {
+          title: 'Case 1: The audit and risk committee', text: 'The board’s audit and risk committee meets quarterly for two hours and covers finance, safety, and cyber.',
+          parts: [
+            { q: 'Which report fits?', options: ['A list of every open vulnerability by CVE number', 'A one- or two-page summary of top risks against appetite, with trends, major incidents, and decisions required', 'A live dashboard with drill-down to individual devices', 'A daily exception list'], answer: 1, why: 'The board needs to know whether the enterprise is within appetite and what decisions it must make. Technical detail belongs in operational reports.' }
+          ]
+        },
+        {
+          title: 'Case 2: The executive team', text: 'Saltreach’s executive team meets monthly to steer the business units.',
+          parts: [
+            { q: 'Which report fits?', options: ['A scorecard with the risk profile by business unit, KRIs, action-plan status, and emerging risks', 'Raw firewall logs', 'The annual audit plan', 'A list of patch tickets assigned to each technician'], answer: 0, why: 'Executives manage across units. A monthly scorecard with KRIs and plan status supports that.' }
+          ]
+        },
+        {
+          title: 'Case 3: The substation maintenance lead', text: 'The maintenance lead for the northern substations runs a crew that patches field devices.',
+          parts: [
+            { q: 'Which report fits?', options: ['The quarterly board heat map', 'A weekly exception list of the specific unpatched devices at her sites, with ticket numbers and due dates', 'The enterprise risk appetite statement', 'An annual trend of cyber losses'], answer: 1, why: 'Control owners and operations need specific exceptions and tasks, often daily or weekly.' }
+          ]
+        },
+        {
+          title: 'Case 4: The draft board pack', text: 'A draft board report has 40 technical metrics, a heat map without trend arrows, and no stated decisions. The data date is missing.',
+          parts: [
+            { q: 'What is the BEST improvement?', options: ['Add more metrics so nothing is missed', 'Cut it to the top risks against appetite, add trend arrows and a short narrative, state the data date and limits, and end with the decisions needed', 'Replace the heat map with a larger heat map', 'Send the full metrics file as an appendix and leave the report as it is'], answer: 1, why: 'Good board reports use business language, show direction of travel, compare against appetite, and end with the decision or action needed.' },
+            { q: 'Why should the heat map be paired with trends and a narrative?', options: ['Heat maps are too slow to read', 'Heat maps can suggest false precision, hide uncertainty, and cannot show aggregation', 'Boards are not allowed to see heat maps', 'Heat maps only work for financial risk'], answer: 1, why: 'A heat map is fast to read but limited. Trend arrows and a short narrative supply what it cannot show.' }
+          ]
+        }
+      ]
+    },
+    {
+      type: 'order', short: 'Action plans and data', title: 'From decision to report', concept: 'plan',
+      instr: 'Put each list in order. First, the life of a risk action plan for Saltreach’s vendor remote access risk. Second, the path from raw indicator data to a report a reader can act on.',
+      hint: 'A plan starts from the register entry and its target, then becomes dated work with owners, then is tracked, escalated if late, and closed on evidence. Data is collected, then validated, then combined, then compared with thresholds, then reported.',
+      topLabel: 'First',
+      bottomLabel: 'Last',
+      review: { href: 'lesson07.html#s1', label: 'Lesson 7, Risk Action Plans' },
+      groups: [
+        {
+          title: 'The risk action plan',
+          items: [
+            { text: 'Track status monthly with evidence, not opinion', rank: 3, why: 'High risks are reviewed on a set cycle, often monthly, with evidence of progress.' },
+            { text: 'Link the plan to the register entry and risk scenario', rank: 0, why: 'The risk reference ties the work to the risk it is meant to change.' },
+            { text: 'Close the plan when evidence shows the target residual risk was reached', rank: 5, why: 'Closure depends on the result, not on ticking the last task.' },
+            { text: 'State the chosen response and the target residual risk', rank: 1, why: 'The plan carries out a decision, so it records the response and the target it aims for.' },
+            { text: 'Escalate missed milestones to the risk owner, and repeated slippage to the risk committee', rank: 4, why: 'Escalation follows tracking, when milestones slip.' },
+            { text: 'Break the work into dated actions with an owner and an approved budget', rank: 2, why: 'Dated, owned actions make the plan checkable.' }
+          ]
+        },
+        {
+          title: 'From data to report', concept: 'data',
+          items: [
+            { text: 'Aggregate across units and look for concentration on a shared vendor or platform', rank: 2, why: 'Aggregation comes after validation, so errors are not multiplied across the roll-up.' },
+            { text: 'Collect data from reliable sources on a consistent schedule', rank: 0, why: 'Everything starts with sound, consistently collected data.' },
+            { text: 'Report to each audience with the decision or action needed', rank: 4, why: 'The report is the last step, and it ends with what the reader must do.' },
+            { text: 'Validate: reconcile to the source, spot-check a sample, and confirm with the data owner', rank: 1, why: 'Data is validated before anyone relies on it.' },
+            { text: 'Compare the results with thresholds, appetite, and the previous period’s trend', rank: 3, why: 'Comparison against thresholds and trend turns numbers into a status.' }
+          ]
+        }
+      ]
+    },
+    {
+      type: 'reflect', short: 'Reflect', title: 'Reflect on your readiness',
+      instr: 'Rate your confidence on each concept, then answer the prompts. Your responses appear in the summary report.',
+      prompts: [
+        { key: 'shift', label: 'Pick one metric your own institution reports. Is it a KRI, a KCI, or a KPI, and is it leading or lagging? What would make it more useful?' },
+        { key: 'next', label: 'Which concept from this activity will you review before the next lesson, and how?' }
+      ]
+    }
+  ]
+};
+</script>
+<script src="practice.js"></script>
+</body>
+</html>

@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRISC 5-Day Faculty Workshop | IT Risk and Control Across Four Domains</title>
+<style>
+  :root {
+    /* CRISC palette: aubergine + plum + copper. Light only. */
+    --navy: #3b1838;
+    --navy-mid: #2a1028;
+    --navy-light: #6b2463;
+    --gold: #86198f;
+    --gold-light: #701a75;
+    --gold-pale: #f7ebf7;
+    --jade: #b45309;
+    --jade-dark: #92400e;
+    --jade-pale: #fdf2e4;
+    --amber: #b45309;
+    --cream: #faf7fb;
+    --text-primary: #2a1328;
+    --text-secondary: #4a2d47;
+    --text-muted: #6c5669;
+    --white: #ffffff;
+    --border: #e3d2e1;
+    --card-bg: #ffffff;
+    --body-bg: #faf7fb;
+    --section-alt: #f3e9f2;
+    --blue-pale: #f6edf5;
+    --blue-pale-border: #e5c9e3;
+    color-scheme: light;
+  }
+  
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: var(--body-bg);
+    color: var(--text-primary);
+    line-height: 1.65;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--card-bg);
+    border-bottom: 3px solid var(--jade);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem; height: 60px;
+  }
+  .nav-brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; }
+  .nav-seal {
+    width: 38px; height: 38px; border-radius: 50%; background: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Arial Narrow', Arial, sans-serif; font-weight: 900; font-size: 0.62rem;
+    color: var(--white); letter-spacing: 0.02em; text-align: center; line-height: 1.1; flex-shrink: 0;
+  }
+  .nav-title {
+    font-family: 'Arial Narrow', Arial, sans-serif; font-weight: 700; font-size: 1rem;
+    color: var(--text-primary); letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .nav-right { display: flex; align-items: center; gap: 1rem; }
+  .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+  .nav-links a {
+    color: var(--text-secondary); text-decoration: none; font-family: Arial, sans-serif;
+    font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  
+  
+
+  /* HERO */
+  .hero {
+    background: var(--blue-pale); position: relative; overflow: hidden;
+    padding: 5rem 2rem 4rem; text-align: center;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: repeating-linear-gradient(-55deg, transparent, transparent 40px, rgba(134,25,143,0.05) 40px, rgba(134,25,143,0.05) 41px);
+  }
+  .hero-eyebrow {
+    font-family: 'Courier New', monospace; font-size: 0.75rem; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 1.25rem; position: relative;
+  }
+  .hero h1 {
+    font-family: Georgia, serif; font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 700;
+    color: var(--text-primary); line-height: 1.15; max-width: 860px; margin: 0 auto 1rem; position: relative;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero-subtitle {
+    font-family: Arial, sans-serif; font-size: 1.05rem; color: var(--text-secondary);
+    max-width: 680px; margin: 0 auto 2rem; line-height: 1.7; position: relative;
+  }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: 0.5rem; background: var(--gold);
+    color: #ffffff; text-decoration: none; font-family: Arial, sans-serif; font-weight: 700;
+    font-size: 0.9rem; letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 0.85rem 2rem; border-radius: 2px; position: relative; transition: background 0.2s, transform 0.15s;
+  }
+  .hero-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  /* STATS BAR */
+  .stats-bar {
+    background: var(--blue-pale); border-bottom: 3px solid var(--gold);
+    padding: 1rem 2rem; display: flex; justify-content: center; gap: 0; flex-wrap: wrap;
+  }
+  .stat-item {
+    display: flex; align-items: center; gap: 0.5rem; padding: 0 2rem;
+    border-right: 2px solid rgba(134,25,143,0.3);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num { font-family: 'Arial Narrow', Arial, sans-serif; font-size: 1.6rem; font-weight: 900; color: var(--gold); line-height: 1; }
+  .stat-label { font-family: Arial, sans-serif; font-size: 0.7rem; font-weight: 700; color: var(--text-secondary); letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.2; }
+
+  /* SECTIONS */
+  .section { padding: 4rem 2rem; max-width: 1200px; margin: 0 auto; }
+  .section-alt { background: var(--section-alt); }
+  .section-alt > .section { max-width: 1200px; margin: 0 auto; }
+  .section-eyebrow { font-family: 'Courier New', monospace; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+  .section-title { font-family: Georgia, serif; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem; line-height: 1.2; }
+  .section-desc { font-family: Arial, sans-serif; font-size: 0.95rem; color: var(--text-secondary); max-width: 640px; margin-bottom: 2.5rem; line-height: 1.7; }
+  .rule { width: 48px; height: 3px; background: var(--gold); margin: 0.75rem 0 1.5rem; }
+
+  /* LESSON CARDS */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+  .lesson-card {
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px;
+    padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;
+    transition: box-shadow 0.2s, transform 0.15s; position: relative; overflow: hidden;
+  }
+  .lesson-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gold); }
+  .lesson-card:hover { box-shadow: 0 6px 24px rgba(59,24,56,0.12); transform: translateY(-2px); }
+  .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+  .lesson-badge {
+    background: var(--navy); color: var(--white); font-family: 'Arial Narrow', Arial, sans-serif;
+    font-weight: 900; font-size: 0.75rem; letter-spacing: 0.1em; padding: 0.25rem 0.6rem;
+    border-radius: 2px; white-space: nowrap; flex-shrink: 0;
+  }
+  .domain-weight { font-family: Arial, sans-serif; font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.05em; text-align: right; line-height: 1.3; }
+  .domain-weight strong { display: block; font-size: 1rem; color: var(--gold); font-family: 'Arial Narrow', Arial, sans-serif; font-weight: 900; }
+  .card-day-tag {
+    font-family: Arial, sans-serif; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text-muted); border: 1px solid var(--border); border-radius: 20px;
+    padding: 0.15rem 0.6rem; width: fit-content;
+  }
+  .card-title { font-family: Georgia, serif; font-size: 1.05rem; font-weight: 700; color: var(--text-primary); line-height: 1.3; }
+  .card-desc { font-family: Arial, sans-serif; font-size: 0.83rem; color: var(--text-secondary); line-height: 1.65; flex: 1; }
+  .card-footer { border-top: 1px solid var(--border); padding-top: 0.75rem; margin-top: auto; }
+  .launch-btn {
+    display: inline-flex; align-items: center; gap: 0.4rem; background: var(--gold);
+    color: var(--white); text-decoration: none; font-family: Arial, sans-serif; font-weight: 700;
+    font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 0.55rem 1.1rem; border-radius: 2px; transition: background 0.2s;
+  }
+  .launch-btn:hover { background: var(--gold-light); }
+  .launch-btn .arrow { font-size: 1rem; transition: transform 0.15s; }
+  .launch-btn:hover .arrow { transform: translateX(3px); }
+  .card-special .lesson-badge { background: var(--jade); color: #ffffff; }
+  .card-special::before { background: var(--jade); }
+
+  /* RESOURCE SECTION SUBHEADINGS */
+  .resource-section-heading {
+    display: flex; align-items: center; gap: 0.75rem;
+    margin-bottom: 1.25rem; padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--border);
+  }
+  .resource-section-heading .rsh-icon { font-size: 1.4rem; line-height: 1; }
+  .resource-section-heading h3 {
+    font-family: 'Arial Narrow', Arial, sans-serif; font-weight: 900; font-size: 1.1rem;
+    color: var(--text-primary); letter-spacing: 0.08em; text-transform: uppercase;
+  }
+
+  /* RESOURCE CARDS */
+  .resource-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem; margin-bottom: 3rem; }
+  .resource-card {
+    background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px;
+    padding: 1.35rem 1.4rem; display: flex; flex-direction: column; gap: 0.6rem;
+    transition: box-shadow 0.2s, transform 0.15s; position: relative; overflow: hidden;
+  }
+  .resource-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gold); }
+  .resource-card:hover { box-shadow: 0 6px 24px rgba(59,24,56,0.12); transform: translateY(-2px); }
+  .rc-type {
+    font-family: Arial, sans-serif; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--text-muted); border: 1px solid var(--border);
+    border-radius: 20px; padding: 0.15rem 0.6rem; width: fit-content;
+  }
+  .rc-icon-title { display: flex; align-items: center; gap: 0.5rem; }
+  .rc-icon { font-size: 1.3rem; line-height: 1; flex-shrink: 0; }
+  .rc-title { font-family: Georgia, serif; font-size: 1rem; font-weight: 700; color: var(--text-primary); line-height: 1.25; }
+  .rc-desc { font-family: Arial, sans-serif; font-size: 0.81rem; color: var(--text-secondary); line-height: 1.6; flex: 1; }
+  .rc-covers { font-family: Arial, sans-serif; font-size: 0.72rem; color: var(--text-muted); line-height: 1.5; }
+  .rc-covers strong { color: var(--gold); font-weight: 700; }
+  .resource-card .card-footer { border-top: 1px solid var(--border); padding-top: 0.65rem; margin-top: auto; }
+
+  /* SCHEDULE */
+  .schedule-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; grid-auto-rows: 1fr; }
+  .day-col { background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; }
+  .day-header { background: var(--navy); color: var(--white); font-family: 'Arial Narrow', Arial, sans-serif; font-weight: 900; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.65rem 1rem; text-align: center; }
+  .day-theme { font-family: Arial, sans-serif; font-size: 0.65rem; color: #fcd9b0; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.4rem 1rem; background: var(--navy-mid); text-align: center; }
+  .day-lessons { padding: 0.75rem; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
+  .day-lesson { display: flex; flex-direction: column; justify-content: center; gap: 0.15rem; padding: 0.6rem 0.7rem; background: var(--section-alt); border-left: 3px solid var(--gold); border-radius: 0 2px 2px 0; flex: 1; text-decoration: none; cursor: pointer; transition: background 0.15s, border-color 0.15s; }
+  .day-lesson:hover { background: var(--blue-pale); border-left-color: var(--navy-light); }
+  .day-lesson:hover .day-lesson-name { color: var(--gold); }
+  .day-lesson-num { font-family: Arial, sans-serif; font-size: 0.62rem; font-weight: 700; color: var(--text-muted); letter-spacing: 0.08em; text-transform: uppercase; }
+  .day-lesson-name { font-family: Arial, sans-serif; font-size: 0.8rem; font-weight: 700; color: var(--text-primary); line-height: 1.3; transition: color 0.15s; }
+  .day-lesson-time { font-family: Arial, sans-serif; font-size: 0.65rem; color: var(--text-muted); }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+  .about-text h3 { font-family: Georgia, serif; font-size: 1.2rem; margin-bottom: 0.75rem; color: var(--text-primary); }
+  .about-text p { font-family: Arial, sans-serif; font-size: 0.9rem; color: var(--text-secondary); line-height: 1.75; margin-bottom: 1rem; }
+  .exam-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .fact-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; padding: 1rem; text-align: center; }
+  .fact-val { font-family: 'Arial Narrow', Arial, sans-serif; font-size: 1.4rem; font-weight: 900; color: var(--gold); display: block; line-height: 1; margin-bottom: 0.25rem; }
+  .fact-key { font-family: Arial, sans-serif; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* CERT COMPARISON */
+  .compare-table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 4px; margin-top: 1.5rem; }
+  table.compare { width: 100%; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 0.83rem; background: var(--card-bg); min-width: 560px; }
+  table.compare th { background: var(--navy); color: var(--white); font-family: 'Arial Narrow', Arial, sans-serif; font-weight: 900; letter-spacing: 0.06em; text-transform: uppercase; font-size: 0.78rem; padding: 0.7rem 1rem; text-align: left; }
+  table.compare th:first-child { width: 26%; }
+  table.compare td { padding: 0.7rem 1rem; border-top: 1px solid var(--border); color: var(--text-secondary); line-height: 1.5; vertical-align: top; }
+  table.compare tbody tr:nth-child(even) { background: var(--blue-pale); }
+  table.compare td.rowlab { font-weight: 700; color: var(--text-primary); }
+  .compare-note { font-family: Arial, sans-serif; font-size: 0.78rem; color: var(--text-muted); margin-top: 0.75rem; line-height: 1.6; }
+
+  /* DOMAIN WEIGHTS */
+  .weights-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
+  .weight-row { display: flex; flex-direction: column; gap: 0.4rem; }
+  .weight-label { display: flex; justify-content: space-between; align-items: baseline; }
+  .weight-domain { font-family: Arial, sans-serif; font-size: 0.78rem; font-weight: 700; color: var(--text-primary); }
+  .weight-pct { font-family: 'Arial Narrow', Arial, sans-serif; font-weight: 900; font-size: 0.9rem; color: var(--gold); }
+  .weight-bar-bg { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .weight-bar-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-light)); border-radius: 3px; transition: width 1s ease; }
+
+  /* ETHICS BANNER */
+  .ethics-banner {
+    max-width: 1200px; margin: 0 auto; padding: 1.25rem 2rem;
+    display: flex; gap: 1rem; align-items: flex-start;
+  }
+  .ethics-inner {
+    background: var(--gold-pale); border: 1px solid var(--blue-pale-border); border-left: 4px solid var(--gold);
+    border-radius: 4px; padding: 1rem 1.25rem; width: 100%;
+    display: flex; gap: 0.85rem; align-items: flex-start;
+  }
+  .ethics-inner .eb-icon { font-size: 1.3rem; line-height: 1.3; flex-shrink: 0; }
+  .ethics-inner p { font-family: Arial, sans-serif; font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; }
+  .ethics-inner strong { color: var(--text-primary); }
+
+  /* FOOTER */
+  footer { background: var(--blue-pale); border-top: 3px solid var(--gold); padding: 2.5rem 2rem; text-align: center; }
+  .footer-logo { font-family: 'Arial Narrow', Arial, sans-serif; font-weight: 900; font-size: 1.2rem; color: var(--gold); letter-spacing: 0.12em; margin-bottom: 0.5rem; }
+  .footer-disclaimer { font-family: Arial, sans-serif; font-size: 0.75rem; color: var(--text-secondary); max-width: 640px; margin: 0 auto 1.25rem; line-height: 1.6; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .schedule-grid { grid-template-columns: repeat(3, 1fr); }
+    .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 600px) {
+    .schedule-grid { grid-template-columns: 1fr 1fr; }
+    .card-grid { grid-template-columns: 1fr; }
+    .resource-grid { grid-template-columns: 1fr; }
+    .stat-item { padding: 0.5rem 1rem; }
+    .hero { padding: 3rem 1.25rem 2.5rem; }
+    .section { padding: 2.5rem 1.25rem; }
+    .exam-facts { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 420px) { .schedule-grid { grid-template-columns: 1fr; } }
+
+  @media print {
+    body { background: white; color: #000; }
+    nav, .hero-cta, .launch-btn, 
+    .lesson-card { break-inside: avoid; border: 1px solid #ccc; }
+  }
+
+.day-outcomes{list-style:none;margin:0;padding:.5rem .85rem .6rem;font-size:.66rem;color:var(--text-secondary);background:var(--card-bg);border-bottom:1px solid var(--border);}
+.day-outcomes li{position:relative;padding-left:.9rem;margin:.28rem 0;line-height:1.35;}
+.day-outcomes li::before{content:"\2713";position:absolute;left:0;color:var(--gold);font-weight:700;}
+
+  .nav-seal { background: var(--jade); }
+  .ethics-inner { background: var(--card-bg); border-color: var(--blue-pale-border); border-left-color: var(--gold); }
+  .weight-pair { display: flex; flex-direction: column; gap: 0.25rem; }
+  .weight-bar-fill.w27 { background: linear-gradient(90deg, var(--jade), #d97706); }
+  .weight-key { display: flex; gap: 1.2rem; font-family: Arial, sans-serif; font-size: .78rem; color: var(--text-secondary); margin: -1.4rem 0 1.6rem; flex-wrap: wrap; }
+  .weight-key span { display: inline-flex; align-items: center; gap: .4rem; }
+  .weight-key i { width: 22px; height: 6px; border-radius: 3px; display: inline-block; }
+  .weight-sub { font-family: Arial, sans-serif; font-size: .68rem; color: var(--text-muted); display: flex; justify-content: space-between; }
+  .soon-btn { display: inline-flex; align-items: center; gap: .4rem; font-family: Arial, sans-serif; font-weight: 700; font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; padding: .55rem 1.1rem; border-radius: 2px; color: var(--text-muted); background: var(--section-alt); border: 1px dashed var(--border); }
+  .rc-status { font-family: Arial, sans-serif; font-size: .62rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--jade-dark); background: var(--jade-pale); border-radius: 20px; padding: .15rem .6rem; width: fit-content; }
+  .note-2027 { font-family: Arial, sans-serif; font-size: .82rem; color: var(--text-secondary); background: var(--jade-pale); border: 1px solid #f0c58f; border-left: 4px solid var(--jade); border-radius: 4px; padding: .9rem 1.1rem; max-width: 900px; line-height: 1.6; margin-top: 2rem; }
+  .note-2027 strong { color: var(--text-primary); }
+  footer .footer-links a { color: var(--gold); font-weight: 700; }
+  a:focus-visible { outline: 3px solid var(--jade); outline-offset: 2px; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-brand">
+    <div class="nav-seal">CRISC<br>PREP</div>
+    <span class="nav-title">5-Day Faculty Workshop</span>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#lessons">Lessons</a></li>
+      <li><a href="#practice">Practice</a></li>
+      <li><a href="#schedule">Schedule</a></li>
+      <li><a href="#domains">Domains</a></li>
+      <li><a href="#exam-prep">Exam Prep</a></li>
+      <li><a href="#faculty-tools">Faculty Tools</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" aria-label="Workshop introduction">
+  <p class="hero-eyebrow">ISACA CRISC &bull; Current Exam Content Outline &bull; Faculty Development</p>
+  <h1>Think Like a <span>Risk Practitioner</span> in Five Days</h1>
+  <p class="hero-subtitle">A hands-on workshop for faculty preparing for the CRISC exam and teaching IT risk management. Ten lessons cover governance, risk assessment, risk response and reporting, and technology and security. Each lesson has an interactive model, eMates, a faculty teaching segment, and a scored knowledge check.</p>
+  <a href="#lessons" class="hero-cta">Begin the Workshop &#9660;</a>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar" role="complementary" aria-label="Workshop statistics">
+  <div class="stat-item"><div><div class="stat-num">5</div><div class="stat-label">Days</div></div></div>
+  <div class="stat-item"><div><div class="stat-num">10</div><div class="stat-label">Lessons</div></div></div>
+  <div class="stat-item"><div><div class="stat-num">4</div><div class="stat-label">Domains</div></div></div>
+  <div class="stat-item"><div><div class="stat-num">150</div><div class="stat-label">Exam Questions</div></div></div>
+  <div class="stat-item"><div><div class="stat-num">450</div><div class="stat-label">Passing Score /800</div></div></div>
+</div>
+
+<!-- MINDSET BANNER -->
+<div class="ethics-banner">
+  <div class="ethics-inner">
+    <span class="eb-icon">&#9878;&#65039;</span>
+    <p><strong>Advise the owner; never take the owner&rsquo;s decision.</strong> CRISC rewards the answer a risk practitioner would give: start from business objectives, identify and assess before you respond, make sure every risk and control has an accountable owner, and report in terms the business can act on. Every lesson trains that judgment alongside the content.</p>
+  </div>
+</div>
+
+<!-- LESSON CARDS -->
+<section id="lessons" aria-labelledby="lessons-heading">
+  <div class="section">
+    <p class="section-eyebrow">Course Content</p>
+    <h2 class="section-title" id="lessons-heading">Ten Lessons. Four Domains.</h2>
+    <div class="rule"></div>
+    <p class="section-desc">Each lesson covers one part of the current CRISC Exam Content Outline. Every lesson has objectives, vocabulary flashcards, numbered content with exam tips, an interactive model, eMates, a faculty teaching segment, and a scored knowledge check. Begin with Lesson 0 for the exam and the mindset.</p>
+
+    <div class="card-grid">
+
+      <article class="lesson-card card-special">
+        <div class="card-header"><span class="lesson-badge">L 0</span><div class="domain-weight"><strong>All</strong> Domains</div></div>
+        <span class="card-day-tag">Day 1, Morning</span>
+        <div class="card-title">Orientation: The CRISC Exam and the Risk Practitioner Mindset</div>
+        <p class="card-desc">How the exam is built and scored, who qualifies, what CPE and fees require, the ISACA Code of Professional Ethics, the 24 supporting tasks, and the practitioner&rsquo;s lens: the owner decides, the practitioner advises.</p>
+        <div class="card-footer"><a href="lesson00.html" class="launch-btn">Launch Lesson <span class="arrow">&#8594;</span></a></div>
+      </article>
+
+      <article class="lesson-card">
+        <div class="card-header"><span class="lesson-badge">L 1</span><div class="domain-weight"><strong>26%</strong> Domain 1</div></div>
+        <span class="card-day-tag">Day 1, Late Morning and Afternoon</span>
+        <div class="card-title">Domain 1A: Organizational Governance</div>
+        <p class="card-desc">Governance versus management, strategy and the goals cascade, roles and RACI, culture and ethics, the policy hierarchy, business processes and resilience, and organizational asset management.</p>
+        <div class="card-footer"><a href="lesson01.html" class="launch-btn">Launch Lesson <span class="arrow">&#8594;</span></a></div>
+      </article>
+
+      <article class="lesson-card">
+        <div class="card-header"><span class="lesson-badge">L 2</span><div class="domain-weight"><strong>26%</strong> Domain 1</div></div>
+        <span class="card-day-tag">Day 2, Morning</span>
+        <div class="card-title">Domain 1B: Risk Governance</div>
+        <p class="card-desc">Enterprise risk management, the Three Lines Model, the risk profile, appetite, tolerance and capacity, risk frameworks, and the legal, regulatory, and contractual requirements that shape IT risk.</p>
+        <div class="card-footer"><a href="lesson02.html" class="launch-btn">Launch Lesson <span class="arrow">&#8594;</span></a></div>
+      </article>
+
+      <article class="lesson-card">
+        <div class="card-header"><span class="lesson-badge">L 3</span><div class="domain-weight"><strong>22%</strong> Domain 2</div></div>
+        <span class="card-day-tag">Day 2, Afternoon</span>
+        <div class="card-title">Domain 2A: Risk Identification</div>
+        <p class="card-desc">Risk events, threat actors and the threat landscape, threat modeling with STRIDE and ATT&amp;CK, vulnerability management with CVSS, EPSS, and KEV, and building and evaluating risk scenarios.</p>
+        <div class="card-footer"><a href="lesson03.html" class="launch-btn">Launch Lesson <span class="arrow">&#8594;</span></a></div>
+      </article>
+
+      <article class="lesson-card">
+        <div class="card-header"><span class="lesson-badge">L 4</span><div class="domain-weight"><strong>22%</strong> Domain 2</div></div>
+        <span class="card-day-tag">Day 3, Morning</span>
+        <div class="card-title">Domain 2B: Risk Analysis</div>
+        <p class="card-desc">Assessment standards, business impact analysis, the risk register, qualitative, semi-quantitative, and quantitative methods including FAIR and Monte Carlo, and inherent versus residual risk.</p>
+        <div class="card-footer"><a href="lesson04.html" class="launch-btn">Launch Lesson <span class="arrow">&#8594;</span></a></div>
+      </article>
+
+      <article class="lesson-card">
+        <div class="card-header"><span class="lesson-badge">L 5</span><div class="domain-weight"><strong>32%</strong> Domain 3</div></div>
+        <span class="card-day-tag">Day 3, Afternoon</span>
+        <div class="card-title">Domain 3A: Risk Response</div>
+        <p class="card-desc">Accept, mitigate, transfer, or avoid; cost-justified responses; risk and control ownership; vendor and supply chain risk; and managing issues, findings, exceptions, and exemptions.</p>
+        <div class="card-footer"><a href="lesson05.html" class="launch-btn">Launch Lesson <span class="arrow">&#8594;</span></a></div>
+      </article>
+
+      <article class="lesson-card">
+        <div class="card-header"><span class="lesson-badge">L 6</span><div class="domain-weight"><strong>32%</strong> Domain 3</div></div>
+        <span class="card-day-tag">Day 4, Morning</span>
+        <div class="card-title">Domain 3B: Control Design and Implementation</div>
+        <p class="card-desc">Control types and frameworks, design and selection, implementation, control analysis, and the testing methods that prove design and operating effectiveness.</p>
+        <div class="card-footer"><a href="lesson06.html" class="launch-btn">Launch Lesson <span class="arrow">&#8594;</span></a></div>
+      </article>
+
+      <article class="lesson-card">
+        <div class="card-header"><span class="lesson-badge">L 7</span><div class="domain-weight"><strong>32%</strong> Domain 3</div></div>
+        <span class="card-day-tag">Day 4, Afternoon</span>
+        <div class="card-title">Domain 3C: Risk Monitoring and Reporting</div>
+        <p class="card-desc">Risk action plans, data aggregation and validation, KRIs, KCIs, and KPIs with thresholds, monitoring techniques, heat maps, scorecards and dashboards, and emerging risks.</p>
+        <div class="card-footer"><a href="lesson07.html" class="launch-btn">Launch Lesson <span class="arrow">&#8594;</span></a></div>
+      </article>
+
+      <article class="lesson-card">
+        <div class="card-header"><span class="lesson-badge">L 8</span><div class="domain-weight"><strong>20%</strong> Domain 4</div></div>
+        <span class="card-day-tag">Day 5, Morning</span>
+        <div class="card-title">Domain 4A: Technology and Security</div>
+        <p class="card-desc">Enterprise architecture and roadmaps, operations management, the SDLC and Agile delivery, the data lifecycle, resilience and recovery, and the risks of emerging technology, including AI.</p>
+        <div class="card-footer"><a href="lesson08.html" class="launch-btn">Launch Lesson <span class="arrow">&#8594;</span></a></div>
+      </article>
+
+      <article class="lesson-card card-special">
+        <div class="card-header"><span class="lesson-badge">L 9</span><div class="domain-weight"><strong>D4B</strong> + All</div></div>
+        <span class="card-day-tag">Day 5, Afternoon</span>
+        <div class="card-title">Domain 4B and Capstone: Information Security Principles</div>
+        <p class="card-desc">Security concepts and frameworks, risk-aware culture and training, privacy principles, then a cross-domain capstone, tabletop facilitation, exam strategy, and a curriculum map for your courses.</p>
+        <div class="card-footer"><a href="lesson09.html" class="launch-btn">Launch Lesson <span class="arrow">&#8594;</span></a></div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- PRACTICE -->
+<div class="section-alt" id="practice">
+  <div class="section">
+    <p class="section-eyebrow">Practice</p>
+    <h2 class="section-title">Practice Every Lesson</h2>
+    <div class="rule"></div>
+    <p class="section-desc">Read a lesson, then practice it. The CRISC Practices build risk practitioner judgment with self-checking activities. The CRISC Risk Lab puts you in the practitioner&rsquo;s seat with browser-based tools. Every item ends with a report you can print or save as a PDF.</p>
+    <div class="resource-grid" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr))">
+      <article class="resource-card">
+        <span class="rc-type">Concept Practice</span>
+        <div class="rc-icon-title"><span class="rc-icon">&#127919;</span><div class="rc-title">CRISC Practices</div></div>
+        <p class="rc-desc">Nine self-checking activities, at least two for every domain. Separate the practitioner&rsquo;s role from the owner&rsquo;s, sort risks, controls, and metrics, calculate exposure and control value, order response and testing steps, and watch a mastery meter track each concept. Every activity ends with a summary report you can print or save as a PDF.</p>
+        <p class="rc-covers"><strong>Covers:</strong> All Four Domains &middot; Practitioner Judgment &middot; Concept Mastery &middot; PDF Reports</p>
+        <div class="card-footer"><a href="practices.html" class="launch-btn">Open Practices <span class="arrow">&#8594;</span></a></div>
+      </article>
+      <article class="resource-card">
+        <span class="rc-type">Hands-On Lab</span>
+        <div class="rc-icon-title"><span class="rc-icon">&#128300;</span><div class="rc-title">CRISC Risk Lab</div></div>
+        <p class="rc-desc">Eight browser-based labs in the risk practitioner&rsquo;s seat: a governance charter and RACI, a risk register with a live heat map, a Monte Carlo analysis, a third-party review, control testing workpapers, a KRI dashboard and board report, an AI use-case review, and a ransomware tabletop with team mode. Each lab is scored out of 100 with a printable report.</p>
+        <p class="rc-covers"><strong>Covers:</strong> CAE Knowledge Units &middot; Monte Carlo &middot; Team Mode &middot; Graded Lab Reports</p>
+        <div class="card-footer"><a href="labs.html" class="launch-btn">Open the Risk Lab <span class="arrow">&#8594;</span></a></div>
+      </article>
+    </div>
+  </div>
+</div>
+
+<!-- SCHEDULE -->
+<div id="schedule">
+  <div class="section">
+    <p class="section-eyebrow">Workshop Schedule</p>
+    <h2 class="section-title">Five Days to Exam-Ready and Teaching-Ready</h2>
+    <div class="rule"></div>
+    <p class="section-desc">Each day runs 9:00 to 5:00 with two lessons. Mornings build concepts and exam judgment. Afternoons apply them through interactives, practice, and faculty design discussions about how to teach and assess each domain.</p>
+    <div class="schedule-grid">
+      <div class="day-col">
+        <div class="day-header">Day 1</div>
+        <div class="day-theme">Mindset &amp; Governance</div>
+        <ul class="day-outcomes"><li>Know the exam and the <b>practitioner mindset</b></li><li>Align IT with enterprise goals</li></ul>
+        <div class="day-lessons">
+          <a class="day-lesson" href="lesson00.html"><span class="day-lesson-num">Lesson 0, 9:00</span><span class="day-lesson-name">Orientation</span><span class="day-lesson-time">&#128336; ~1.5 hrs</span></a>
+          <a class="day-lesson" href="lesson01.html"><span class="day-lesson-num">Lesson 1, 10:30</span><span class="day-lesson-name">Organizational Governance</span><span class="day-lesson-time">&#128336; ~5 hrs &bull; D1</span></a>
+        </div>
+      </div>
+      <div class="day-col">
+        <div class="day-header">Day 2</div>
+        <div class="day-theme">Risk Governance &amp; Identification</div>
+        <ul class="day-outcomes"><li>Set appetite and tolerance</li><li>Build realistic risk scenarios</li></ul>
+        <div class="day-lessons">
+          <a class="day-lesson" href="lesson02.html"><span class="day-lesson-num">Lesson 2, 9:00</span><span class="day-lesson-name">Risk Governance</span><span class="day-lesson-time">&#128336; ~3 hrs &bull; D1</span></a>
+          <a class="day-lesson" href="lesson03.html"><span class="day-lesson-num">Lesson 3, 1:00</span><span class="day-lesson-name">Risk Identification</span><span class="day-lesson-time">&#128336; ~3.5 hrs &bull; D2</span></a>
+        </div>
+      </div>
+      <div class="day-col">
+        <div class="day-header">Day 3</div>
+        <div class="day-theme">Analysis &amp; Response</div>
+        <ul class="day-outcomes"><li>Quantify risk with ranges</li><li>Choose cost-justified responses</li></ul>
+        <div class="day-lessons">
+          <a class="day-lesson" href="lesson04.html"><span class="day-lesson-num">Lesson 4, 9:00</span><span class="day-lesson-name">Risk Analysis</span><span class="day-lesson-time">&#128336; ~3.5 hrs &bull; D2</span></a>
+          <a class="day-lesson" href="lesson05.html"><span class="day-lesson-num">Lesson 5, 1:00</span><span class="day-lesson-name">Risk Response</span><span class="day-lesson-time">&#128336; ~3 hrs &bull; D3</span></a>
+        </div>
+      </div>
+      <div class="day-col">
+        <div class="day-header">Day 4</div>
+        <div class="day-theme">Controls &amp; Monitoring</div>
+        <ul class="day-outcomes"><li>Design and test controls</li><li>Set KRIs and report risk</li></ul>
+        <div class="day-lessons">
+          <a class="day-lesson" href="lesson06.html"><span class="day-lesson-num">Lesson 6, 9:00</span><span class="day-lesson-name">Control Design and Implementation</span><span class="day-lesson-time">&#128336; ~3.5 hrs &bull; D3</span></a>
+          <a class="day-lesson" href="lesson07.html"><span class="day-lesson-num">Lesson 7, 1:00</span><span class="day-lesson-name">Risk Monitoring and Reporting</span><span class="day-lesson-time">&#128336; ~3 hrs &bull; D3</span></a>
+        </div>
+      </div>
+      <div class="day-col">
+        <div class="day-header">Day 5</div>
+        <div class="day-theme">Technology &amp; Capstone</div>
+        <ul class="day-outcomes"><li>Assess emerging technology risk</li><li>Plan your exam and your course</li></ul>
+        <div class="day-lessons">
+          <a class="day-lesson" href="lesson08.html"><span class="day-lesson-num">Lesson 8, 9:00</span><span class="day-lesson-name">Technology and Security</span><span class="day-lesson-time">&#128336; ~3 hrs &bull; D4</span></a>
+          <a class="day-lesson" href="lesson09.html"><span class="day-lesson-num">Lesson 9, 1:00</span><span class="day-lesson-name">InfoSec Principles and Capstone</span><span class="day-lesson-time">&#128336; ~3.5 hrs &bull; D4</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DOMAIN WEIGHTS -->
+<section id="domains" class="section-alt" aria-labelledby="domains-heading">
+  <div class="section">
+    <p class="section-eyebrow">Exam Blueprint</p>
+    <h2 class="section-title" id="domains-heading">Domain Weights at a Glance</h2>
+    <div class="rule"></div>
+    <p class="section-desc">The exam draws 150 questions from four domains. Risk Response and Reporting carries almost a third of the exam, so three lessons cover it. Governance comes next, and it frames every other domain.</p>
+    <div class="weights-grid" id="weightsGrid">
+      <div class="weight-row"><div class="weight-label"><span class="weight-domain">D1: Governance</span><span class="weight-pct">26%</span></div><div class="weight-bar-bg"><div class="weight-bar-fill" style="width:0%" data-width="81.3%"></div></div><div class="weight-sub"><span>Lessons 1 and 2</span><span>~39 questions</span></div></div>
+      <div class="weight-row"><div class="weight-label"><span class="weight-domain">D2: Risk Assessment</span><span class="weight-pct">22%</span></div><div class="weight-bar-bg"><div class="weight-bar-fill" style="width:0%" data-width="68.8%"></div></div><div class="weight-sub"><span>Lessons 3 and 4</span><span>~33 questions</span></div></div>
+      <div class="weight-row"><div class="weight-label"><span class="weight-domain">D3: Risk Response and Reporting</span><span class="weight-pct">32%</span></div><div class="weight-bar-bg"><div class="weight-bar-fill" style="width:0%" data-width="100%"></div></div><div class="weight-sub"><span>Lessons 5, 6, and 7</span><span>~48 questions</span></div></div>
+      <div class="weight-row"><div class="weight-label"><span class="weight-domain">D4: Technology and Security</span><span class="weight-pct">20%</span></div><div class="weight-bar-bg"><div class="weight-bar-fill" style="width:0%" data-width="62.5%"></div></div><div class="weight-sub"><span>Lessons 8 and 9</span><span>~30 questions</span></div></div>
+    </div>
+    <p class="note-2027"><strong>What changed in the current outline.</strong> Two domains were renamed: IT Risk Assessment became Risk Assessment, and Information Technology and Security became Technology and Security. Two points of weight moved from Domain 4 (22% to 20%) to Domain 2 (20% to 22%). The outline also adds explicit topics such as threat modeling, exceptions and exemptions, emerging-risk reporting, and facilitating tabletop exercises, and ISACA points to AI risk throughout. Older study guides may show the previous weights.</p>
+  </div>
+</section>
+
+<!-- EXAM PREP -->
+<section id="exam-prep" aria-labelledby="exam-prep-heading">
+  <div class="section">
+    <p class="section-eyebrow">Exam Prep</p>
+    <h2 class="section-title" id="exam-prep-heading">Exam Resources</h2>
+    <div class="rule"></div>
+    <p class="section-desc">Timed practice weighted to the four domains, a printable exam-day review, and prompts for audio study files.</p>
+    <div class="resource-grid">
+      <article class="resource-card">
+        <span class="rc-type">Practice Exam</span>
+        <div class="rc-icon-title"><span class="rc-icon">&#128221;</span><div class="rc-title">CRISC Practice Exam</div></div>
+        <p class="rc-desc">Domain-weighted, scenario-based questions with a timer, a question navigator, a domain score breakdown, and a full review with rationale.</p>
+        <p class="rc-covers"><strong>Covers:</strong> All 4 Domains &middot; Timed &middot; Scored &middot; Rationale &middot; Review Mode</p>
+        <div class="card-footer"><a href="gen-test.html" class="launch-btn">Start Practice Exam <span class="arrow">&#8594;</span></a></div>
+      </article>
+      <article class="resource-card">
+        <span class="rc-type">Printable</span>
+        <div class="rc-icon-title"><span class="rc-icon">&#128424;&#65039;</span><div class="rc-title">Exam-Day One-Pager</div></div>
+        <p class="rc-desc">A one-page, printable review of the highest-yield material: the practitioner mindset filters, ownership rules, formulas, metric types, and common trap answers.</p>
+        <p class="rc-covers"><strong>Covers:</strong> Printable &middot; Mindset Filters &middot; Formulas &middot; Trap Patterns</p>
+        <div class="card-footer"><a href="onepager.html" class="launch-btn">Open One-Pager <span class="arrow">&#8594;</span></a></div>
+      </article>
+      <article class="resource-card">
+        <span class="rc-type">Prompt Builder</span>
+        <div class="rc-icon-title"><span class="rc-icon">&#127911;</span><div class="rc-title">Audio Study Files</div></div>
+        <p class="rc-desc">Build a prompt that turns a chosen domain or topic into a ten-minute audio study script, for review during a commute.</p>
+        <p class="rc-covers"><strong>Covers:</strong> Podcast &middot; 10 Minute Max &middot; By Domain or Topic</p>
+        <div class="card-footer"><a href="gen-podcast.html" class="launch-btn">Build Audio Prompt <span class="arrow">&#8594;</span></a></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- FACULTY TOOLS -->
+<div class="section-alt" id="faculty-tools">
+  <div class="section">
+    <p class="section-eyebrow">Faculty Tools</p>
+    <h2 class="section-title">Content Development Tools</h2>
+    <div class="rule"></div>
+    <p class="section-desc">AI-assisted prompt builders for faculty who teach IT risk: generate activities, graphics, lesson content, and case studies aligned to the CRISC domains. Lesson 9 shows how to map them to your curriculum.</p>
+    <div class="resource-grid">
+      <article class="resource-card"><span class="rc-type">Prompt Builder</span><div class="rc-icon-title"><span class="rc-icon">&#129513;</span><div class="rc-title">Activity Builder</div></div><p class="rc-desc">Pick a domain, an interaction, and a flow, and build a prompt that generates a self-contained interactive HTML activity.</p><div class="card-footer"><a href="gen-activity.html" class="launch-btn">Open Tool <span class="arrow">&#8594;</span></a></div></article>
+      <article class="resource-card"><span class="rc-type">Prompt Builder</span><div class="rc-icon-title"><span class="rc-icon">&#128444;&#65039;</span><div class="rc-title">Graphics Generation</div></div><p class="rc-desc">Prompts for instructional diagrams: heat maps, the Three Lines Model, bow-tie diagrams, and loss exceedance curves.</p><div class="card-footer"><a href="gen-graphics.html" class="launch-btn">Open Tool <span class="arrow">&#8594;</span></a></div></article>
+      <article class="resource-card"><span class="rc-type">Prompt Builder</span><div class="rc-icon-title"><span class="rc-icon">&#9997;&#65039;</span><div class="rc-title">Content Generation</div></div><p class="rc-desc">Prompts for lesson text, scenario questions in the CRISC style, and domain summaries.</p><div class="card-footer"><a href="gen-content.html" class="launch-btn">Open Tool <span class="arrow">&#8594;</span></a></div></article>
+      <article class="resource-card"><span class="rc-type">Prompt Builder</span><div class="rc-icon-title"><span class="rc-icon">&#128214;</span><div class="rc-title">Case Study Generation</div></div><p class="rc-desc">Prompts for classroom case studies with an organization profile, a risk register, KRIs, and discussion questions.</p><div class="card-footer"><a href="gen-case.html" class="launch-btn">Open Tool <span class="arrow">&#8594;</span></a></div></article>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div id="about">
+  <div class="section">
+    <p class="section-eyebrow">About This Workshop</p>
+    <h2 class="section-title">Built for Faculty and Program Leads</h2>
+    <div class="rule"></div>
+    <div class="about-grid">
+      <div class="about-text">
+        <h3>Who this is for</h3>
+        <p>This workshop is for faculty and program leads who are preparing for the CRISC exam and who want to bring IT risk management into their courses. It assumes working knowledge of security fundamentals and focuses on the judgment the exam rewards.</p>
+        <p>Each lesson pairs exam preparation with a faculty teaching segment: a signature assignment, rubric criteria, a lab idea, and where the topic fits in a program. eMates in every lesson give you short interactive refreshers, and many of them are ready to use with students.</p>
+        <h3>How to use this resource</h3>
+        <p>Work through the lessons in order. Lesson 0 explains the exam and the mindset. Lessons 1 to 8 follow the outline part by part. Lesson 9 finishes Domain 4 and brings everything together with a capstone, exam strategy, and a curriculum map. This site complements the official ISACA review materials and does not reproduce them.</p>
+      </div>
+      <div>
+        <p class="section-eyebrow" style="margin-bottom:1rem;">Exam Quick Facts</p>
+        <div class="exam-facts">
+          <div class="fact-card"><span class="fact-val">150</span><span class="fact-key">Questions</span></div>
+          <div class="fact-card"><span class="fact-val">4 hrs</span><span class="fact-key">Time Limit</span></div>
+          <div class="fact-card"><span class="fact-val">450</span><span class="fact-key">Passing Score /800</span></div>
+          <div class="fact-card"><span class="fact-val">3 yrs</span><span class="fact-key">Experience, 2+ Domains</span></div>
+          <div class="fact-card"><span class="fact-val">4</span><span class="fact-key">Domains</span></div>
+          <div class="fact-card"><span class="fact-val">20 / 120</span><span class="fact-key">CPE per Year / 3 yrs</span></div>
+        </div>
+        <p style="font-family:Arial,sans-serif;font-size:0.78rem;color:var(--text-muted);line-height:1.6;margin-top:1rem;">
+          <strong style="color:var(--gold);">Budgeting?</strong> The exam fee is about $575 for ISACA members and $760 for non-members, plus a $50 application fee. The annual maintenance fee is about $45 for members and $85 for non-members. You can sit the exam before you have the experience, then apply within five years. Figures are approximate; verify at isaca.org. <a href="lesson00.html" style="color:var(--gold);font-weight:700;text-decoration:none;">See Lesson&nbsp;0 for details &#8594;</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">CRISC 5-DAY FACULTY WORKSHOP</div>
+  <p class="footer-disclaimer">This workshop is an independent educational resource. It is not affiliated with, endorsed by, or sponsored by ISACA. CRISC&#174; is a registered mark of ISACA. Domain names and weights come from the publicly available ISACA CRISC Exam Content Outline. All lesson text, questions, and scenarios are original and do not reproduce the ISACA CRISC Review Manual or question database. eMates are provided by the myEMATES library. Always verify the current exam content outline at isaca.org before registering.</p>
+</footer>
+
+<script>
+  var bars = document.querySelectorAll('.weight-bar-fill');
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.style.width = e.target.dataset.width; observer.unobserve(e.target); }
+      });
+    }, { threshold: 0.2 });
+    bars.forEach(function (b) { observer.observe(b); });
+  } else { bars.forEach(function (b) { b.style.width = b.dataset.width; }); }
+</script>
+</body>
+</html>

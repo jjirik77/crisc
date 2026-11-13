@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>A7 Design and Test Controls | CRISC 5-Day Faculty Workshop</title>
+<link rel="stylesheet" href="crisc-lesson.css">
+<link rel="stylesheet" href="practice.css">
+</head>
+<body>
+<div id="app"><noscript><p style="padding:2rem;font-family:Arial">This activity needs JavaScript enabled.</p></noscript></div>
+
+<script>
+window.ACTIVITY = {
+  id: 'A7',
+  title: 'Design and Test Controls',
+  accent: 'Test Controls',
+  domain: 'Domain 3 (32%)',
+  time: '40 min',
+  level: 'Intermediate',
+  lessonHref: 'lesson06.html#s1',
+  lessonLabel: 'Lesson 6, Control Design and Implementation',
+  lede: 'Wrenwick County Schools runs 22 schools, a student information system, a bus fleet, and a payroll for 3,000 staff. Its controls look fine on paper. Practice the questions a risk practitioner asks before trusting them: what each control does, how it is delivered, whether it is designed to work, and what evidence shows it actually ran.',
+  concepts: [
+    { key: 'function', name: 'Control function', review: 'Lesson 6, Control Types and Functions' },
+    { key: 'nature', name: 'Control nature', review: 'Lesson 6, The nature of a control' },
+    { key: 'testing', name: 'Test methods and evidence', review: 'Lesson 6, Control Testing' },
+    { key: 'effect', name: 'Design and operating effectiveness', review: 'Lesson 6, Control Analysis' },
+    { key: 'sampling', name: 'Sampling and exception rates', review: 'Lesson 6, Sampling' }
+  ],
+  stations: [
+    {
+      type: 'sort', short: 'Control function', title: 'What does each control do?', concept: 'function',
+      instr: 'Each control is in place at Wrenwick County Schools. Choose its <b>main</b> function relative to the risk event: deter it, prevent it, detect it, correct it, recover from it, or compensate for a required control that cannot be implemented as written.',
+      hint: 'Ask when the control acts. Before the event: deter (discourages) or prevent (stops). During or after: detect (finds). After: correct (limits damage and removes the cause) or recover (restores operations and data). A compensating control stands in for a required control that is not feasible.',
+      buckets: ['Deter', 'Prevent', 'Detect', 'Correct', 'Recover', 'Compensate'],
+      review: { href: 'lesson06.html#s1', label: 'Lesson 6, Control Types and Functions' },
+      items: [
+        { text: 'A sign-in banner on the student information system states that access is monitored and misuse is disciplined.', answer: 0, why: 'A warning raises the perceived certainty of consequences. Its main job is to discourage, so it is a deterrent.' },
+        { text: 'Teachers must use MFA to sign in to the gradebook.', answer: 1, why: 'MFA stops a stolen password from being enough to sign in. It prevents the event.' },
+        { text: 'An alert fires when one account changes more than 50 grades in an hour.', answer: 2, why: 'The alert finds unusual activity while or after it happens. It is detective.' },
+        { text: 'An account-takeover playbook disables the session, resets credentials, and reverses unauthorized grade changes.', answer: 3, why: 'The playbook limits the damage and removes the cause. It is corrective.' },
+        { text: 'The bus routing database is restored from last night’s immutable backup after ransomware.', answer: 4, why: 'Restoring data and normal operations after the event is recovery.' },
+        { text: 'A legacy cafeteria payment module cannot enforce MFA, so a second person reviews every refund until the module is replaced.', answer: 5, why: 'The review meets the intent of the required control that cannot be implemented. It is compensating, and it should be documented with a review date.' },
+        { text: 'The web filter blocks known malicious sites on student laptops.', answer: 1, why: 'Blocking the site stops the event before it occurs. That is preventive.' },
+        { text: 'Each month, payroll compares changes to direct-deposit accounts with the HR roster and flags any it cannot match.', answer: 2, why: 'The comparison finds unauthorized changes after they happen. It is detective.' },
+        { text: 'A laptop found with malware is wiped and reimaged from the standard build.', answer: 3, why: 'Removing the cause and returning the device to a known good state is corrective.' },
+        { text: 'District email fails over to a secondary cloud tenant when the primary tenant is down.', answer: 4, why: 'Failover restores service after an outage. It is a recovery control.' },
+        { text: 'The special education records app cannot log who views each record, so it runs only on two workstations in a locked office with a sign-in sheet reviewed weekly.', answer: 5, why: 'The physical restriction and reviewed sign-in sheet substitute for the per-record logging the standard requires. It is compensating.' },
+        { text: 'Signs at the bus depot fuel island state that every fill-up is logged by vehicle and driver and audited monthly.', answer: 0, why: 'The sign discourages fuel theft by raising the expected consequences. Its main function is deterrence.' }
+      ]
+    },
+    {
+      type: 'sort', short: 'Control nature', title: 'How is each control delivered?', concept: 'nature',
+      instr: 'Classify each Wrenwick control by its nature: <b>administrative</b> (people, policies, and procedures), <b>technical</b> (enforced by hardware, software, or firmware), or <b>physical</b> (the physical environment).',
+      hint: 'Ask who or what makes the control happen. If a person must perform it or follow it, it is administrative. If a system enforces it once configured, it is technical. If it acts on buildings, rooms, or equipment, it is physical.',
+      buckets: ['Administrative', 'Technical', 'Physical'],
+      review: { href: 'lesson06.html#s1', label: 'Lesson 6, The nature of a control' },
+      items: [
+        { text: 'The acceptable use policy that staff sign each August', answer: 0, why: 'A policy sets expectations for people. It is administrative.' },
+        { text: 'Full-disk encryption on every staff laptop', answer: 1, why: 'Encryption is enforced by software once configured. It is technical.' },
+        { text: 'Badge readers on the doors of the district data center', answer: 2, why: 'Badge readers control entry to a physical space. They are physical, even though they use electronics.' },
+        { text: 'Background checks for all new bus drivers and aides', answer: 0, why: 'Screening people before hire is an administrative control.' },
+        { text: 'Automated account disablement when HR marks an employee as departed', answer: 1, why: 'The system disables the account without a person acting. It is technical.' },
+        { text: 'Quarterly review of who can approve payroll changes, signed by the payroll director', answer: 0, why: 'A review performed and signed by a person is administrative, even when it uses a system report.' },
+        { text: 'A locked cage around the network switches in each school', answer: 2, why: 'A cage protects equipment in the physical environment.' },
+        { text: 'A firewall rule that blocks student devices from reaching the staff payroll network', answer: 1, why: 'A firewall enforces the rule in software and hardware. It is technical.' },
+        { text: 'Temperature and water sensors in the server room', answer: 2, why: 'Environmental protection for a server room is a physical control.' }
+      ]
+    },
+    {
+      type: 'order', short: 'Testing order', title: 'Evidence strength and the testing sequence', concept: 'testing',
+      instr: 'Put each list in order. First, rank the four basic test methods from the <b>weakest</b> to the <b>strongest</b> assurance. Second, put the steps of a control test at Wrenwick in the order a tester should perform them.',
+      hint: 'Hearing about a control is weaker than watching it, which is weaker than examining its records, which is weaker than doing it yourself. For the sequence: design comes before operation, and a population must be complete before you sample from it.',
+      review: { href: 'lesson06.html#s6', label: 'Lesson 6, Control Testing' },
+      groups: [
+        {
+          title: 'Test methods by assurance', topLabel: 'Weakest assurance', bottomLabel: 'Strongest assurance',
+          items: [
+            { text: 'Inspection: examine signed reviews, logs, or configurations', rank: 2, why: 'Inspection shows evidence that the control ran. It is good assurance.' },
+            { text: 'Inquiry: ask the identity manager how MFA is enforced', rank: 0, why: 'Inquiry is the weakest method and is never sufficient on its own.' },
+            { text: 'Reperformance: trigger six failed sign-ins on a test account and confirm the lockout', rank: 3, why: 'Executing the control independently and comparing the result gives the strongest assurance.' },
+            { text: 'Observation: watch a help-desk analyst verify identity before a password reset', rank: 1, why: 'Observation is moderate, and it covers only the moment watched.' }
+          ]
+        },
+        {
+          title: 'Testing the leaver access control', concept: 'effect', topLabel: 'First step', bottomLabel: 'Last step',
+          items: [
+            { text: 'Walk one departure through the process to judge whether the design would meet the objective', rank: 1, why: 'Design effectiveness is assessed before operation. A walkthrough supports design.' },
+            { text: 'Draw a sample of departures from across the whole school year', rank: 3, why: 'The sample must span the period, because operating effectiveness is about the whole period.' },
+            { text: 'Read the control narrative and confirm the objective, the risk, and the control owner', rank: 0, why: 'The narrative is the basis for testing. Start by knowing what the control is supposed to do.' },
+            { text: 'Evaluate the exceptions and conclude, naming the deficiency type and a remediation owner', rank: 5, why: 'The conclusion follows from the evidence and leads to action.' },
+            { text: 'Obtain the population of departures from HR and confirm it is complete', rank: 2, why: 'A sample from an incomplete population proves nothing about the missing items.' },
+            { text: 'Inspect or reperform each sampled item and record every exception', rank: 4, why: 'Testing the sample produces the evidence of operating effectiveness.' }
+          ]
+        }
+      ]
+    },
+    {
+      type: 'scenario', short: 'Design or operation?', title: 'Design versus operating effectiveness', concept: 'effect',
+      instr: 'You are the risk practitioner reviewing Wrenwick’s control test results before they go to the risk owner. Choose the <b>BEST</b> answer for each case.',
+      hint: 'If the control ran every time and the risk still got through, suspect the design. If a sound control was skipped or done wrongly, it is an operating deficiency. Inquiry alone is never sufficient evidence.',
+      review: { href: 'lesson06.html#s5', label: 'Lesson 6, Control Analysis' },
+      items: [
+        {
+          title: 'Case 1: The signed reviews', text: 'Principals sign a quarterly access review for the student information system, and every quarter has a signed review on file. The reports they receive list only names, not roles or permissions. A clerk who moved from the front office to transportation kept her ability to edit attendance records for a year.',
+          parts: [
+            { q: 'What kind of deficiency is this?', options: ['Operating deficiency: the principals skipped the review', 'Design deficiency: the review ran as described but could not detect excess access', 'No deficiency, because every review was signed', 'A finding against the clerk'], answer: 1, why: 'The control was performed every time, and the risk still got through. Without roles and permissions on the report, the review cannot meet its objective. That is a design deficiency.' },
+            { q: 'What should happen before more operating-effectiveness testing of this review?', options: ['Test a larger sample of quarters', 'Redesign the review so the report shows roles and permissions, then test it', 'Ask the principals to sign faster', 'Report the control as effective with a note'], answer: 1, why: 'Testing the operation of a poorly designed control wastes effort. Fix the design first, then test operation.' }
+          ]
+        },
+        {
+          title: 'Case 2: Summer changes', text: 'The change approval process is well designed: every change to the payroll system needs approval from the change advisory board before deployment. The tester samples 25 changes from the year. Three, all in July, were deployed without approval because the board did not meet during the summer break.',
+          parts: [
+            { q: 'What kind of deficiency is this?', options: ['Design deficiency', 'Operating deficiency', 'A compensating control', 'An exemption'], answer: 1, why: 'A sound control was not performed in part of the period. That is an operating deficiency.' }
+          ]
+        },
+        {
+          title: 'Case 3: The lockout setting', text: 'The identity platform locks an account after five failed sign-ins. The tester confirms the setting in the configuration and reperforms the lockout once on a test account.',
+          parts: [
+            { q: 'What else must be true for that single test to support the whole year?', concept: 'testing', options: ['The help desk confirms the lockout has always worked', 'IT general controls over changes to that configuration were effective for the year', 'The test was repeated 25 times on the same day', 'The setting appears in the security policy'], answer: 1, why: 'An automated control can be tested once, provided change controls over its configuration were effective for the period. Otherwise someone could have changed it unnoticed.' },
+            { q: 'The identity manager says, “It has never been changed.” What kind of evidence is that?', concept: 'testing', options: ['Reperformance', 'Inspection', 'Inquiry, which is not sufficient on its own', 'Observation'], answer: 2, why: 'A statement from the control owner is inquiry. It must be supported by stronger evidence, such as inspecting the configuration change log.' }
+          ]
+        },
+        {
+          title: 'Case 4: The walkthrough', text: 'An auditor follows one new-hire ticket from HR approval to account creation and confirms each step matches the narrative.',
+          parts: [
+            { q: 'What does this walkthrough support?', options: ['Operating effectiveness for the whole year', 'Design effectiveness and implementation, but not operation over the period', 'Nothing, because only one ticket was checked', 'Reperformance of the provisioning control'], answer: 1, why: 'A walkthrough traces one transaction to confirm the design and that it was implemented. It is not, by itself, a test of operation over a period.' }
+          ]
+        }
+      ]
+    },
+    {
+      type: 'calc', short: 'Exception rates', title: 'Sample sizes and exception rates', concept: 'sampling',
+      instr: 'Use Wrenwick’s internal testing guide and the test results below. <b>Exception rate = exceptions ÷ items tested × 100.</b> A control passes when its exception rate is at or below the tolerable rate of <b>5%</b>. Enter numbers only.',
+      hint: 'For the leaver sample: 3 ÷ 40. For the largest number of exceptions a sample of 40 can have and still pass, find 5% of 40. The full-population test uses all 240 departures, not the sample. Sample sizes come straight from the guide by how often the control runs.',
+      review: { href: 'lesson06.html#s6', label: 'Lesson 6, Sampling' },
+      table: {
+        caption: 'Wrenwick County Schools internal testing guide: sample size by control frequency',
+        head: ['How often the control runs', 'Items to test'],
+        rows: [
+          ['Annually', '1'],
+          ['Quarterly', '2'],
+          ['Monthly', '2'],
+          ['Weekly', '5'],
+          ['Daily', '20'],
+          ['Many times a day', '25 to 40']
+        ]
+      },
+      items: [
+        { title: 'Leaver access control', text: 'HR recorded 240 departures in the school year. The tester sampled 40. In 3 of them, the account was still active more than one business day after the departure date.', label: 'Exception rate in the sample', answer: 7.5, tol: 0.05, unit: '%', why: '3 ÷ 40 = 0.075, or 7.5%. That is above the 5% tolerable rate, so the control is not operating effectively.' },
+        { title: 'Leaver access control', label: 'Most exceptions a sample of 40 could have and still pass at 5%', answer: 2, unit: 'exceptions', why: '5% of 40 is 2. Two exceptions is exactly 5%; three is 7.5%.' },
+        { title: 'Leaver access control', text: 'The tester then reperforms the control across the whole population, matching all 240 departures against active accounts. Nine accounts were still active more than one business day after departure.', label: 'Exception rate across the full population', answer: 3.75, tol: 0.05, unit: '%', why: '9 ÷ 240 = 0.0375, or 3.75%. A full reperformance gives the actual rate. The nine accounts still need to be disabled, and the risk owner needs to know.' },
+        { title: 'Payroll change approval', text: 'The tester sampled 25 payroll system changes and found 1 deployed without approval.', label: 'Exception rate for change approval', answer: 4, tol: 0.05, unit: '%', why: '1 ÷ 25 = 0.04, or 4%. That is within the 5% tolerable rate, but the exception itself should still be logged and explained.' },
+        { title: 'Cafeteria cash reconciliation', text: 'Each school reconciles its cafeteria cash every school day.', label: 'Sample size required by the guide', answer: 20, unit: 'items', why: 'A daily control needs a sample of 20 under Wrenwick’s guide. Frequency drives sample size.' }
+      ]
+    },
+    {
+      type: 'reflect', short: 'Reflect', title: 'Reflect on your readiness',
+      instr: 'Rate your confidence on each concept, then answer the prompts. Your responses appear in the summary report.',
+      prompts: [
+        { key: 'shift', label: 'Case 1 had a signed review every quarter, and the control still failed. How would you teach students to spot a design deficiency hidden behind good paperwork?' },
+        { key: 'next', label: 'Which concept from this activity will you review before the next lesson, and how?' }
+      ]
+    }
+  ]
+};
+</script>
+<script src="practice.js"></script>
+</body>
+</html>

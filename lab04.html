@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>B4 Third-Party Risk Review | CRISC 5-Day Faculty Workshop</title>
+<link rel="stylesheet" href="crisc-lesson.css">
+<link rel="stylesheet" href="practice.css">
+<style>
+/* B4: vendor file, evidence workbench, tiering worksheet (light only, CSS variables only) */
+.b4-note { font: .84rem/1.55 Arial, sans-serif; color: var(--text-secondary); margin: 0 0 .8rem; }
+.b4-doc table.data td, .b4-doc table.data th { font-size: .8rem; }
+.b4-doc table.data th[scope=row] { background: var(--blue-pale); color: var(--text-primary); text-transform: none; letter-spacing: 0; font-family: Arial, sans-serif; font-size: .8rem; font-weight: 700; width: 34%; }
+.b4-doc ol { margin: 0; padding-left: 1.3rem; font: .88rem/1.6 Arial, sans-serif; color: var(--text-secondary); }
+/* Keep evidence.js tables in the plum and copper palette */
+#lb-tool .ev td { border-top-color: var(--border); }
+#lb-tool .ev tbody tr:nth-child(even) td { background: var(--blue-pale); }
+#lb-tool .ev td.ev-addc { background: var(--jade-pale); }
+#lb-tool .ev tbody tr.ev-hit td { background: var(--wrong-bg); }
+#lb-tool .ev-tools { background: var(--blue-pale); }
+.b4-row { display: flex; flex-wrap: wrap; gap: 1.1rem; align-items: flex-start; }
+.b4-col { flex: 1 1 300px; min-width: 0; }
+.b4-q { border: 1px solid var(--border); border-left: 4px solid var(--navy); border-radius: 0 4px 4px 0; background: var(--card-bg); padding: .3rem .9rem .8rem; margin: 0 0 .8rem; }
+.b4-q legend { font: 700 .82rem Arial, sans-serif; color: var(--text-primary); padding: 0 .3rem; }
+.b4-q p { font: .8rem/1.5 Arial, sans-serif; color: var(--text-muted); margin: .2rem 0 .4rem; }
+.b4-q label { display: flex; gap: .45rem; align-items: flex-start; font: .84rem/1.45 Arial, sans-serif; color: var(--text-primary); margin: .3rem 0; cursor: pointer; }
+.b4-q input { margin-top: .2rem; accent-color: var(--gold); }
+.b4-out { border: 1px solid var(--border); border-top: 4px solid var(--gold); border-radius: 4px; background: var(--blue-pale); padding: .9rem 1rem; }
+.b4-out .k { font: 700 .68rem Arial, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); }
+.b4-out .v { font: 700 1.5rem Georgia, serif; color: var(--navy); margin: .2rem 0 .4rem; }
+.b4-out p, .b4-out li { font: .84rem/1.55 Arial, sans-serif; color: var(--text-secondary); }
+.b4-out ul { margin: .3rem 0 0; padding-left: 1.2rem; }
+.b4-out.t1 { border-top-color: var(--wrong); }
+.b4-out.t2 { border-top-color: var(--jade); }
+</style>
+</head>
+<body>
+<div id="app"><noscript><p style="padding:2rem;font-family:Arial">This lab needs JavaScript enabled.</p></noscript></div>
+
+<script src="evidence.js"></script>
+<script>
+/* ===================== Synthetic evidence (static, fictional) =====================
+   Corveth Logistics renewal review of Tracklane Systems, a fleet telematics vendor.
+   Planted: 3 SOC 2 exceptions (plus one "no occurrences" row that is not an exception),
+   1 CUEC with no Corveth control (CUEC-05), 1 required clause missing (TP-07),
+   1 deficient clause (TP-04, 10 business days), 2 undisclosed fourth parties with Corveth data (FP-04, FP-05),
+   and a carved-out hosting provider (Stratovault Cloud). */
+(function () {
+  var soc = [
+    ['CC1.4', 'Control environment', 'Background checks are completed for new hires before system access is granted.', 'Inspected records for 25 of 61 new hires.', 'No exceptions noted.'],
+    ['CC2.2', 'Communication', 'Security policies are reviewed annually and acknowledged by staff.', 'Inspected policy approvals and 25 acknowledgments.', 'No exceptions noted.'],
+    ['CC3.2', 'Risk assessment', 'An annual risk assessment is performed and approved by the CTO.', 'Inspected the 2026 risk assessment and approval.', 'No exceptions noted.'],
+    ['CC5.2', 'Control activities', 'Production configuration baselines are enforced by the deployment pipeline.', 'Inspected pipeline policy and 25 deployments.', 'No exceptions noted.'],
+    ['CC6.1', 'Logical access', 'Production and portal administrator access requires MFA.', 'Inspected identity provider configuration; observed login.', 'No exceptions noted.'],
+    ['CC6.2', 'Logical access', 'New access is approved by the system owner before provisioning.', 'Inspected 25 of 140 access requests.', 'No exceptions noted.'],
+    ['CC6.3', 'Logical access', 'Access for terminated employees is removed within one business day.', 'Inspected 25 of 38 terminations.', 'Exception noted. For 3 of 25 terminations, production access was removed 9 to 21 days after the termination date.'],
+    ['CC6.4', 'Logical access', 'Quarterly user access reviews are performed for production systems.', 'Inspected the four quarterly reviews.', 'No exceptions noted.'],
+    ['CC6.6', 'Logical access', 'Customer data is encrypted in transit (TLS 1.2 or higher) and at rest (AES-256).', 'Inspected configuration and certificate settings.', 'No exceptions noted.'],
+    ['CC6.7', 'Logical access', 'Data exports from the platform are logged and limited to authorized roles.', 'Inspected role configuration and 25 export log entries.', 'No exceptions noted.'],
+    ['CC7.1', 'System operations', 'Critical vulnerabilities are remediated within 30 days of detection.', 'Inspected 40 of 212 critical findings.', 'Exception noted. 2 of 40 critical findings were remediated 44 and 61 days after detection.'],
+    ['CC7.2', 'System operations', 'Security events are monitored by a 24x7 security operations team.', 'Inspected alert tickets and on-call rosters.', 'No exceptions noted.'],
+    ['CC7.3', 'System operations', 'Security events are triaged and escalated per the incident response plan.', 'Inspected 25 of 310 triaged events.', 'No exceptions noted.'],
+    ['CC7.4', 'System operations', 'Confirmed security incidents are reported to affected customers per contract.', 'Inquired of management; inspected the incident log.', 'Not tested for operating effectiveness: no security incidents occurred during the period.'],
+    ['CC7.5', 'System operations', 'Recovery procedures are tested annually.', 'Inspected the 2026 recovery test report.', 'No exceptions noted.'],
+    ['CC8.1', 'Change management', 'Production changes are approved before deployment.', 'Inspected 40 of 1,120 changes.', 'Exception noted. 2 of 40 changes had no documented approval before deployment.'],
+    ['CC8.2', 'Change management', 'Code changes are peer reviewed before merge.', 'Inspected 40 merge records.', 'No exceptions noted.'],
+    ['CC9.2', 'Vendor management', 'Subservice organizations are monitored annually by reviewing their SOC reports.', 'Inspected the review of the Stratovault Cloud SOC 2 report.', 'No exceptions noted.'],
+    ['A1.2', 'Availability', 'Backups are performed daily and replicated to a second region.', 'Inspected backup job logs for 25 days.', 'No exceptions noted.'],
+    ['A1.3', 'Availability', 'Platform availability is monitored against the 99.9% service commitment.', 'Inspected monthly availability reports.', 'No exceptions noted.'],
+    ['C1.1', 'Confidentiality', 'Confidential customer data is identified and classified.', 'Inspected the data inventory.', 'No exceptions noted.'],
+    ['C1.2', 'Confidentiality', 'Customer data is deleted within 30 days of contract termination.', 'Inspected 5 of 9 terminated customers.', 'No exceptions noted.']
+  ].map(function (r) { return { control: r[0], area: r[1], description: r[2], test: r[3], result: r[4] }; });
+
+  var cuec = [
+    ['CUEC-01', 'User entities are responsible for reviewing their users’ access to the Tracklane portal at least quarterly.', 'CC6.4'],
+    ['CUEC-02', 'User entities are responsible for removing portal access for their own departed users promptly.', 'CC6.3'],
+    ['CUEC-03', 'User entities are responsible for enforcing MFA for portal users through single sign-on with their identity provider.', 'CC6.1'],
+    ['CUEC-04', 'User entities are responsible for notifying Tracklane of suspected security incidents involving their accounts.', 'CC7.3'],
+    ['CUEC-05', 'User entities are responsible for securely storing and rotating, at least every 90 days, the API credentials used to integrate with the Tracklane platform.', 'CC6.1'],
+    ['CUEC-06', 'User entities are responsible for reviewing data export activity for their tenant.', 'CC6.7']
+  ].map(function (r) { return { cuec_id: r[0], responsibility: r[1], related_control: r[2] }; });
+
+  var corv = [
+    ['CTL-AC-09', 'Quarterly review of Tracklane portal users by the fleet systems manager', 'CUEC-01', 'Operating (Q3 2026 review on file)'],
+    ['CTL-AC-11', 'HR termination feed disables SSO accounts on the last working day', 'CUEC-02', 'Operating'],
+    ['CTL-AC-14', 'Tracklane portal federated to Corveth SSO with MFA enforced', 'CUEC-03', 'Operating'],
+    ['CTL-IR-03', 'Vendor incident notification procedure in the incident response plan', 'CUEC-04', 'Operating'],
+    ['CTL-MN-06', 'Monthly review of Tracklane export log by the data protection lead', 'CUEC-06', 'Operating'],
+    ['CTL-AC-02', 'Annual access recertification for the dispatch system', '', 'Operating'],
+    ['CTL-CM-04', 'Change approval for dispatch system releases', '', 'Operating'],
+    ['CTL-BK-01', 'Nightly backup of the dispatch database', '', 'Operating']
+  ].map(function (r) { return { control_id: r[0], control: r[1], cuec_ref: r[2], status: r[3] }; });
+
+  var sub = [
+    ['Stratovault Cloud', 'Infrastructure hosting (compute, storage, network) for the Tracklane platform', 'Carve-out', 'Controls at Stratovault, including physical security and infrastructure availability, are excluded from this report.']
+  ].map(function (r) { return { subservice_org: r[0], service: r[1], method: r[2], note: r[3] }; });
+
+  var quest = [
+    ['Q-01', 'Governance', 'Do you maintain an information security program approved by management?', 'Yes. Program owned by the CISO, approved annually by the CTO.', 'Policy index'],
+    ['Q-02', 'Governance', 'Do you hold a current SOC 2 Type II or ISO/IEC 27001 certificate?', 'Yes. SOC 2 Type II, October 1, 2025 to September 30, 2026.', 'SOC 2 report'],
+    ['Q-03', 'Access', 'Is MFA required for all administrative access?', 'Yes.', 'SOC 2 CC6.1'],
+    ['Q-04', 'Access', 'Do you perform user access reviews at least quarterly?', 'Yes.', 'SOC 2 CC6.4'],
+    ['Q-05', 'Access', 'Is access removed within one business day of termination?', 'Yes.', 'None'],
+    ['Q-06', 'Data', 'Where is customer data stored and processed?', 'United States only (Stratovault US-East and US-Central).', 'Data flow diagram'],
+    ['Q-07', 'Data', 'Is customer data encrypted at rest and in transit?', 'Yes. AES-256 at rest, TLS 1.2+ in transit.', 'SOC 2 CC6.6'],
+    ['Q-08', 'Data', 'Do any personnel outside the United States access customer data?', 'No.', 'None'],
+    ['Q-09', 'Third parties', 'List all subcontractors with access to customer data.', 'Stratovault Cloud (hosting); Relaypoint Messaging (SMS alerts to drivers).', 'None'],
+    ['Q-10', 'Third parties', 'How do you assess your subcontractors?', 'Annual SOC report review for hosting; questionnaire for others.', 'SOC 2 CC9.2'],
+    ['Q-11', 'Vulnerability', 'What is your remediation SLA for critical vulnerabilities?', '30 days.', 'SOC 2 CC7.1'],
+    ['Q-12', 'Incident', 'How quickly will you notify customers of a breach of their data?', 'Per contract.', 'None'],
+    ['Q-13', 'Resilience', 'What are your RTO and RPO for the telematics platform?', 'RTO 4 hours, RPO 15 minutes.', 'Recovery test report'],
+    ['Q-14', 'Software', 'Can you provide an SBOM for the in-cab device firmware?', 'On request, CycloneDX format.', 'None'],
+    ['Q-15', 'Insurance', 'Do you carry cyber liability insurance?', 'Yes, $5,000,000 aggregate.', 'Certificate of insurance']
+  ].map(function (r) { return { q_id: r[0], domain: r[1], question: r[2], response: r[3], evidence: r[4] }; });
+
+  var fourth = [
+    ['FP-01', 'Stratovault Cloud', 'Platform hosting', 'United States', 'Yes: all customer data at rest', '2021-02'],
+    ['FP-02', 'Relaypoint Messaging', 'SMS alerts to drivers', 'United States', 'Yes: driver names and mobile numbers', '2022-06'],
+    ['FP-03', 'Orbitel Wireless', 'Cellular connectivity for in-cab devices', 'United States', 'No: encrypted traffic in transit only', '2021-02'],
+    ['FP-04', 'Meridian Support Services', 'Tier 1 customer help desk', 'Philippines', 'Yes: read access to customer tenants, including driver records and trip history', '2026-07'],
+    ['FP-05', 'Geolytic Labs', 'Route analytics and model training', 'Canada', 'Yes: trip and GPS location data, pseudonymized', '2026-03'],
+    ['FP-06', 'Paystream HR', 'Payroll for Tracklane staff', 'United States', 'No: Tracklane employee data only', '2020-11'],
+    ['FP-07', 'Northlight Office Suite', 'Corporate email and documents', 'United States', 'No: no customer data by policy', '2020-11']
+  ].map(function (r) { return { fp_id: r[0], name: r[1], service: r[2], location: r[3], corveth_data_access: r[4], since: r[5] }; });
+
+  var req = [
+    ['TP-01', 'Information security requirements'], ['TP-02', 'Right to audit and assess'], ['TP-03', 'Annual SOC 2 Type II report delivery'],
+    ['TP-04', 'Breach notification within 72 hours'], ['TP-05', 'Data location and cross-border transfer restrictions'], ['TP-06', 'Return and certified destruction of data at exit'],
+    ['TP-07', 'Subcontractor approval and flow-down of obligations'], ['TP-08', 'Service levels and service credits'], ['TP-09', 'Cyber insurance minimum ($5,000,000)'],
+    ['TP-10', 'Termination assistance and transition']
+  ].map(function (r) { return { clause_code: r[0], required_clause: r[1] }; });
+
+  var contract = [
+    ['TP-01', '§ 9.1', 'Security program', 'Vendor maintains a written security program consistent with SOC 2 criteria and the security exhibit.'],
+    ['TP-02', '§ 9.4', 'Audit rights', 'Corveth may assess Vendor once a year on 30 days’ notice, or after a breach.'],
+    ['TP-03', '§ 9.5', 'Assurance reports', 'Vendor delivers its SOC 2 Type II report annually within 60 days of issue, with a bridge letter on request.'],
+    ['TP-04', '§ 9.7', 'Security incidents', 'Vendor notifies Corveth of a confirmed breach of Corveth data within 10 business days.'],
+    ['TP-05', '§ 10.2', 'Data location', 'Corveth data is stored and processed only in the United States. No access from outside the United States without Corveth’s written consent.'],
+    ['TP-06', '§ 10.6', 'Return of data', 'On termination, Vendor returns Corveth data in CSV format and certifies destruction within 30 days.'],
+    ['TP-08', 'Exhibit B', 'Service levels', '99.9% monthly availability; service credits of 5% to 25% of monthly fees.'],
+    ['TP-09', '§ 14.3', 'Insurance', 'Vendor maintains cyber liability insurance of at least $5,000,000.'],
+    ['TP-10', '§ 16.4', 'Transition', 'Vendor provides up to 90 days of transition assistance at contract rates.'],
+    ['GEN-02', '§ 18.1', 'Assignment', 'Neither party may assign this agreement without consent, except to a successor in a merger.']
+  ].map(function (r) { return { clause_code: r[0], section: r[1], title: r[2], text: r[3] }; });
+
+  window.B4DATA = { soc: soc, cuec: cuec, corv: corv, sub: sub, quest: quest, fourth: fourth, req: req, contract: contract,
+    answers: { exceptions: 3, cuec: ['CUEC-05'], clause: ['TP-07'], fourth: ['FP-04', 'FP-05'] } };
+})();
+</script>
+
+<script>
+(function () {
+  var X = window.B4DATA;
+  window.LAB = {
+    id: 'B4',
+    title: 'Third-Party Risk Review',
+    accent: 'Risk Review',
+    domain: 'Domain 3',
+    time: '70 min',
+    level: 'Intermediate to Advanced',
+    lessonHref: 'lesson05.html#s4',
+    lessonLabel: 'Lesson 5, Vendor and Supply Chain Risk',
+    lede: 'Outsourcing a service does not outsource the risk. Read a telematics vendor’s renewal file the way a risk practitioner does: tier the vendor, test the SOC 2 report against your own controls and contract, find the fourth parties nobody mentioned, and put a response in front of the person who owns the decision.',
+    workbenchTitle: 'Vendor review workbench',
+    ticket: {
+      number: 'TPRM-2026-0217',
+      priority: 'High priority',
+      from: 'Renata Osei, Director of Enterprise Risk',
+      to: 'Risk analyst, second line (you)',
+      subject: 'Tracklane Systems renewal: tier, gaps, and recommended response',
+      due: 'Before the contract renewal decision on December 15',
+      body: '<p>Corveth Logistics runs its fleet on <b>Tracklane Systems</b>. Tracklane’s in-cab devices stream GPS location, driver hours, and vehicle health to the Tracklane platform, and our dispatch system pulls routes and ETAs from it through an API. The three-year contract renews on January 31.</p>' +
+        '<p>Procurement pre-tagged Tracklane as <b>Tier 3</b> because annual spend is about $180,000, under the $250,000 line they use. I do not think that is right. Tier it properly under TPRM-01.</p>' +
+        '<p>Tracklane sent its renewal package: the new <b>SOC 2 Type II</b> report, a completed <b>security questionnaire</b>, and its <b>fourth-party list</b>. I added the <b>contract clause extract</b> from Legal, our <b>required clause list</b>, and our own <b>control inventory</b> so you can check the CUECs. Last year’s review found one SOC 2 exception and a CUEC we were not doing; both were closed.</p>' +
+        '<p>Dana Whitcombe, VP of Fleet Operations, owns this relationship and the risk. Give me the tier, the gaps, and a response she can act on.</p>'
+    },
+    howTo: 'The workbench has three tabs. <b>Vendor file</b> holds the intake profile, the SOC 2 report summary, and Corveth’s TPRM standard. <b>Evidence</b> shows two panes of tabular evidence at a time: filter and sort each pane, and use <b>Match</b> to test pane A against pane B (for example, CUECs against Corveth’s control inventory, or required clauses against the contract). <b>Tiering</b> is a worksheet that applies TPRM-01 as you answer. Check each checklist item as you go. After your first check you can reveal the practitioner’s debrief, but a revealed item earns no points.',
+    workIntro: 'Corveth Logistics, Tracklane Systems, and every subcontractor named here are fictional. Evidence is read-only. Record IDs in the checklist exactly as they appear in the evidence.',
+    checklist: [
+      { id: 'tier', type: 'choice', points: 12, short: 'Vendor tier', title: 'Tier the vendor',
+        task: 'Under Standard TPRM-01, which tier is Tracklane Systems?',
+        options: ['Tier 3 (Moderate): annual spend is under $250,000', 'Tier 2 (High): it holds Confidential data but has no critical dependency', 'Tier 1 (Critical): it processes Confidential data and supports a process with an MTD of 24 hours or less through a live production integration', 'Tier 1 (Critical) only if the SOC 2 report has a qualified opinion'],
+        answer: 2,
+        hint: 'Use the Tiering tab. TPRM-01 tiers on data and dependency. Spend is not a criterion.',
+        debrief: '<p>Tracklane processes driver identities and real-time GPS location, which Corveth classifies as <b>Confidential</b>. Dispatch depends on it through a live API, and dispatch has an MTD of 12 hours. Both conditions are met, so the vendor is <b>Tier 1</b>. That sets the depth of review: full annual reassessment, a SOC 2 Type II report, contract security clauses, and monitoring of fourth parties.</p><p>Spend measures what Corveth pays, not what Corveth stands to lose. A low-cost vendor holding sensitive data on a critical path is a common blind spot when procurement thresholds drive tiering. The audit opinion has nothing to do with tier; tier decides how hard you look, before you look.</p>',
+        reviewNote: 'Tier on data sensitivity and business criticality, not spend.' },
+      { id: 'exc', type: 'number', points: 10, short: 'SOC 2 exceptions', title: 'Count the SOC 2 exceptions',
+        task: 'How many controls in the SOC 2 Type II report have an <b>exception</b> noted in the test results?',
+        answer: 3, tol: 0, unit: 'exceptions',
+        hint: 'Put the SOC 2 control tests in pane A and filter on <code>"exception noted"</code> with the quotation marks, so it matches the phrase. Read every row that is not “No exceptions noted.” A control that was not tested is not an exception.',
+        debrief: '<p>Three controls have exceptions: <b>CC6.3</b> (terminated users kept production access for 9 to 21 days), <b>CC7.1</b> (two critical vulnerabilities fixed after 44 and 61 days), and <b>CC8.1</b> (two changes deployed without documented approval). CC7.4 was not tested because no incidents occurred. That is not an exception, but it is not assurance either: the report gives no evidence that incident notification works.</p><p>An unqualified opinion can still contain exceptions. For each one, the practitioner asks what it means for Corveth’s risk, whether a Corveth control complements it, and whether Tracklane has a credible remediation plan. CC6.3 matters most here: departed Tracklane staff kept access to the platform that holds Corveth’s driver data.</p>',
+        reviewNote: 'Read the result of every tested control; untested controls are a separate gap.' },
+      { id: 'cuec', type: 'set', points: 12, short: 'CUEC to own', title: 'The CUEC Corveth is not performing',
+        task: 'Which complementary user entity control has <b>no matching control</b> in Corveth’s control inventory? Enter the CUEC ID.',
+        label: 'CUEC ID(s) with no Corveth control', placeholder: 'e.g., CUEC-01',
+        answer: X.answers.cuec,
+        hint: 'In the Evidence tab, put the CUECs in pane A and Corveth’s control inventory in pane B. Match cuec_id in A to cuec_ref in B and flag rows with no match.',
+        debrief: '<p><b>CUEC-05</b> has no Corveth control: nobody at Corveth stores and rotates the API credentials that the dispatch system uses to call Tracklane. Tracklane’s controls assume Corveth does this. If a static key leaks, an attacker can pull route and location data through a legitimate integration, and Tracklane’s controls will not see anything wrong.</p><p>A CUEC is Corveth’s control, not the vendor’s. The fix belongs in Corveth’s register: a named control owner (the dispatch integration owner in IT), a vault for the key, 90-day rotation, and a KCI on key age.</p>',
+        reviewNote: 'Match the CUEC list to the control inventory; an unmatched CUEC is a Corveth control gap.' },
+      { id: 'clause', type: 'set', points: 12, short: 'Missing clause', title: 'The missing contract clause',
+        task: 'Which clause required by Standard TPRM-03 is <b>absent</b> from the contract? Enter the clause code.',
+        label: 'Required clause code(s) missing from the contract', placeholder: 'e.g., TP-01',
+        answer: X.answers.clause,
+        hint: 'Put the required clause list in pane A and the contract extract in pane B. Match clause_code to clause_code and flag A rows with no match. Then read the matched clauses that remain, too.',
+        debrief: '<p><b>TP-07, subcontractor approval and flow-down</b>, is missing. Tracklane can add a fourth party with access to Corveth data without asking, and nothing obliges that fourth party to meet Corveth’s security terms. That is exactly how two undisclosed fourth parties arrived this year.</p><p>The match also shows a clause that is present but deficient: <b>TP-04</b> gives Tracklane 10 business days to report a breach, against the 72 hours TPRM-03 requires. Both go on the renewal negotiation list.</p>',
+        reviewNote: 'Compare required clauses with the contract, then read the matches for weak terms.' },
+      { id: 'carve', type: 'choice', points: 12, short: 'Carve-out', title: 'What the carve-out means',
+        task: 'The SOC 2 report uses the <b>carve-out method</b> for Stratovault Cloud. What does that mean for Corveth?',
+        options: ['Stratovault’s controls are covered by Tracklane’s opinion, so no further work is needed', 'Stratovault’s controls are excluded from the report; Corveth needs separate assurance, such as Stratovault’s own SOC 2 report, and should confirm Tracklane monitors it', 'The carve-out means Stratovault failed its audit, so Corveth should require Tracklane to change hosting providers', 'Corveth must audit Stratovault directly under the right-to-audit clause before renewal'],
+        answer: 1,
+        hint: 'Read the subservice organization pane and the report summary. Carve-out and inclusive are the two methods. Which one tests the subservice organization’s controls?',
+        debrief: '<p>Under the carve-out method the auditor did <b>not</b> test Stratovault’s controls. Physical security, infrastructure availability, and storage at the hosting layer are outside the opinion. Corveth needs assurance from another source: Stratovault’s own SOC 2 Type II report (and its CUECs, which Tracklane must perform), plus Tracklane’s monitoring control CC9.2, which the report shows operating.</p><p>A carve-out is normal and is not a failure. Corveth has no contract with Stratovault, so auditing it directly is not realistic. The practitioner records the reliance and the evidence that covers it.</p>',
+        reviewNote: 'Carve-out excludes the subservice organization’s controls; obtain separate assurance.' },
+      { id: 'fourth', type: 'set', points: 12, short: 'Undisclosed fourth parties', title: 'Fourth parties the questionnaire did not disclose',
+        task: 'Which fourth parties have access to Corveth data but were <b>not disclosed</b> in Tracklane’s questionnaire answer to Q-09? Enter the fourth-party IDs.',
+        label: 'Fourth-party IDs', placeholder: 'e.g., FP-01, FP-02',
+        answer: X.answers.fourth,
+        hint: 'Filter the fourth-party list on “Yes” in corveth_data_access, then compare the names with the questionnaire response to Q-09. Check Q-06 and Q-08 against the locations, too.',
+        debrief: '<p><b>FP-04, Meridian Support Services</b> (Philippines, help desk with read access to driver records since July 2026) and <b>FP-05, Geolytic Labs</b> (Canada, GPS trip data for model training since March 2026) both hold Corveth data and neither appears in Q-09. Both also contradict Q-06 and Q-08 (“United States only,” “No” offshore access) and the contract’s data-location clause, TP-05.</p><p>This is the most serious finding in the file. It is a questionnaire inaccuracy, a likely contract breach, and a privacy question about pseudonymized location data used for model training. Pseudonymized GPS traces can often be re-identified. The practitioner escalates it to the risk owner rather than resolving it informally with the vendor.</p>',
+        reviewNote: 'Compare the fourth-party list with the questionnaire and the contract’s data-location clause.' },
+      { id: 'resp', type: 'choice', points: 16, short: 'Response and owner', title: 'Recommend the response and the owner',
+        task: 'What should the risk practitioner recommend, and to whom?',
+        options: ['Terminate the contract now, because the vendor gave inaccurate questionnaire answers', 'Accept the vendor as is, because the SOC 2 opinion is unqualified; the risk practitioner signs the acceptance', 'Recommend to Dana Whitcombe, as risk owner, a conditional renewal: Tier 1 treatment, contract amendments (TP-07 and 72-hour notice), a written explanation and remediation for FP-04 and FP-05 before signature, Stratovault assurance, remediation plans for the three exceptions, and CUEC-05 assigned to Corveth IT. She decides and accepts the residual risk', 'Transfer the risk by requiring Tracklane to raise its cyber insurance to $10,000,000, and renew without other changes'],
+        answer: 2,
+        hint: 'The practitioner recommends; who decides? Is there a response that addresses each gap without abandoning a critical service on short notice?',
+        debrief: '<p>A conditional renewal treats each gap with the right tool: contract terms for TP-07 and TP-04, a pre-signature condition for the undisclosed fourth parties, separate assurance for the carve-out, remediation plans for the exceptions, and a Corveth control for CUEC-05. <b>Dana Whitcombe</b> owns the relationship and the risk, so she decides, accepts what remains, and is named in the register. The practitioner tracks the actions and adds KRIs, such as new fourth parties without approval and open SOC 2 exceptions.</p><p>Terminating a Tier 1 vendor that dispatch depends on, with no exit plan, may create more risk than it removes; it stays an option if Tracklane will not fix the data-location breach. Accepting on the opinion alone ignores the findings. Insurance pays after a loss; it does not fix offshore access to driver data.</p>',
+        reviewNote: 'Match each gap to a response; the business owner decides and accepts.' },
+      { id: 'memo', type: 'text', points: 14, short: 'Review memo', title: 'Write the vendor review summary', reportTitle: 'Vendor review summary',
+        task: 'Write the summary for Renata Osei and Dana Whitcombe. Use specific IDs from the evidence.',
+        fields: [
+          { key: 'tier', label: 'Tier and why', min: 30, placeholder: 'State the tier and the TPRM-01 criteria that drive it.' },
+          { key: 'gaps', label: 'Key gaps, in order of severity', min: 60, placeholder: 'Fourth parties, contract clauses, SOC 2 exceptions, carve-out, CUEC.' },
+          { key: 'resp', label: 'Recommended response, conditions, and owner', min: 50, placeholder: 'What should happen before and after renewal, and who decides?' }
+        ],
+        hint: 'Lead with the most serious gap. Tie each gap to a specific action and an owner.',
+        debrief: '<p><b>Model summary.</b> <b>Tier:</b> Tier 1 (Critical). Tracklane processes Confidential driver and location data and supports dispatch (MTD 12 hours) through a live API; spend is not a tiering criterion. <b>Gaps:</b> (1) two fourth parties with Corveth data, FP-04 (Philippines help desk) and FP-05 (Canadian analytics), were not disclosed in Q-09 and conflict with Q-06, Q-08, and contract clause TP-05; (2) the contract lacks TP-07 subcontractor approval, and TP-04 allows 10 business days for breach notice instead of 72 hours; (3) the SOC 2 Type II report has three exceptions (CC6.3, CC7.1, CC8.1), and CC7.4 was not tested; (4) Stratovault Cloud is carved out, so we need its SOC 2 report; (5) Corveth performs no control for CUEC-05 (API credentials). <b>Response:</b> recommend a conditional renewal to Dana Whitcombe as risk owner: written explanation and remediation of FP-04 and FP-05 before signature, amendments for TP-07 and TP-04, Stratovault assurance, exception remediation plans with dates, and CUEC-05 assigned to the dispatch integration owner. Add KRIs for unapproved fourth parties and open exceptions. Escalate to the Risk Committee if Tracklane will not resolve the data-location breach.</p>',
+        reviewNote: 'Give the tier, the ranked gaps, the response, and the decision owner.' }
+    ],
+    kus: ['Supply Chain Security (SCS)', 'Cybersecurity Planning and Management (CPM)', 'Policy, Legal, Ethics, and Compliance (PLE)', 'Privacy (PRI)'],
+
+    workbench: function (root, api) {
+      root.innerHTML = '<div class="lb-tool"><div class="lb-tabs" role="tablist" aria-label="Workbench tools">' +
+        '<button role="tab" id="b4-tb-file" aria-controls="b4-pn-file" aria-selected="true">Vendor file</button>' +
+        '<button role="tab" id="b4-tb-ev" aria-controls="b4-pn-ev" aria-selected="false" tabindex="-1">Evidence</button>' +
+        '<button role="tab" id="b4-tb-tier" aria-controls="b4-pn-tier" aria-selected="false" tabindex="-1">Tiering</button></div>' +
+        '<div class="lb-panel b4-doc" role="tabpanel" id="b4-pn-file" aria-labelledby="b4-tb-file">' + FILE() + '</div>' +
+        '<div class="lb-panel" role="tabpanel" id="b4-pn-ev" aria-labelledby="b4-tb-ev" hidden></div>' +
+        '<div class="lb-panel" role="tabpanel" id="b4-pn-tier" aria-labelledby="b4-tb-tier" hidden>' + TIER() + '</div></div>';
+      var tabs = [].slice.call(root.querySelectorAll('[role=tab]'));
+      function sel(t) { tabs.forEach(function (x) { var on = x === t; x.setAttribute('aria-selected', on); x.tabIndex = on ? 0 : -1; document.getElementById(x.getAttribute('aria-controls')).hidden = !on; }); api.note('tab', t.id); }
+      tabs.forEach(function (t, i) { t.addEventListener('click', function () { sel(t); }); t.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { var n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length]; sel(n); n.focus(); } }); });
+      if (api.note('tab')) { var tt = document.getElementById(api.note('tab')); if (tt) sel(tt); }
+      function cols(list) { return list.map(function (c) { return typeof c === 'string' ? { k: c, h: c } : c; }); }
+      EV.create(document.getElementById('b4-pn-ev'), { id: 'b4ev', api: api, a: 'soc', b: 'cuec',
+        intro: 'Tracklane supplied the SOC 2 tables, the questionnaire, and the fourth-party list. Corveth Legal supplied the contract extract. The required clause list and the control inventory are Corveth’s own records.',
+        panes: [
+          { id: 'soc', title: 'SOC 2 control tests', source: 'Tracklane SOC 2 Type II report, Section 4: controls, tests of operating effectiveness, and results. Period October 1, 2025 to September 30, 2026.', rows: X.soc, cols: cols(['control', 'area', { k: 'description', h: 'description', wrap: true }, { k: 'test', h: 'test', wrap: true }, { k: 'result', h: 'result', wrap: true }]) },
+          { id: 'cuec', title: 'SOC 2 CUECs', source: 'Complementary user entity controls listed in the SOC 2 report. Tracklane’s controls assume Corveth performs these.', rows: X.cuec, cols: cols(['cuec_id', { k: 'responsibility', h: 'responsibility', wrap: true }, 'related_control']) },
+          { id: 'sub', title: 'SOC 2 subservice organizations', source: 'Subservice organizations listed in the SOC 2 report, Section 3.', rows: X.sub, cols: cols(['subservice_org', { k: 'service', h: 'service', wrap: true }, 'method', { k: 'note', h: 'note', wrap: true }]) },
+          { id: 'corv', title: 'Corveth control inventory', source: 'Corveth GRC system: controls related to the Tracklane relationship and the dispatch system. cuec_ref links a control to the CUEC it performs.', rows: X.corv, cols: cols(['control_id', { k: 'control', h: 'control', wrap: true }, { k: 'cuec_ref', h: 'cuec_ref', blank: '(none)' }, 'status']) },
+          { id: 'quest', title: 'Security questionnaire', source: 'Tracklane’s responses to Corveth’s vendor security questionnaire, signed by Tracklane’s CISO on October 20, 2026.', rows: X.quest, cols: cols(['q_id', 'domain', { k: 'question', h: 'question', wrap: true }, { k: 'response', h: 'response', wrap: true }, 'evidence']) },
+          { id: 'fourth', title: 'Fourth-party list', source: 'Tracklane’s list of its own vendors, supplied with the renewal package.', rows: X.fourth, cols: cols(['fp_id', 'name', { k: 'service', h: 'service', wrap: true }, 'location', { k: 'corveth_data_access', h: 'corveth_data_access', wrap: true }, 'since']) },
+          { id: 'req', title: 'Required clauses (TPRM-03)', source: 'Corveth Standard TPRM-03: clauses required in every Tier 1 and Tier 2 vendor contract.', rows: X.req, cols: cols(['clause_code', 'required_clause']) },
+          { id: 'contract', title: 'Contract clause extract', source: 'Corveth Legal: security-relevant clauses of the current Tracklane master services agreement, tagged with TPRM-03 codes.', rows: X.contract, cols: cols(['clause_code', 'section', 'title', { k: 'text', h: 'text', wrap: true }]) }
+        ] });
+
+      /* Tiering worksheet (TPRM-01) */
+      var T = api.note('tier') || {};
+      var box = document.getElementById('b4-pn-tier');
+      box.querySelectorAll('input[type=radio]').forEach(function (r) {
+        if (T[r.name] === r.value) r.checked = true;
+        r.addEventListener('change', function () { T[r.name] = r.value; api.note('tier', T); calc(); });
+      });
+      function calc() {
+        var out = document.getElementById('b4-tier-out');
+        var need = ['b4d', 'b4m', 'b4i', 'b4s'];
+        var miss = need.filter(function (k) { return !T[k]; });
+        if (miss.length) { out.className = 'b4-out'; out.innerHTML = '<div class="k">Computed tier</div><div class="v">Not yet rated</div><p>Answer all ' + need.length + ' questions. ' + miss.length + ' remaining.</p>'; return; }
+        var data = T.b4d === 'conf' || T.b4d === 'restr', crit = T.b4m === 'le24' || T.b4i === 'live';
+        var tier = data && crit ? 1 : (data || crit ? 2 : 3);
+        var why = [];
+        why.push(data ? 'It stores or processes Confidential or Restricted data.' : 'It does not hold Confidential or Restricted data.');
+        why.push(crit ? 'It supports a critical process (MTD of 24 hours or less) or has a live production integration.' : 'It has no critical dependency.');
+        if (T.b4s === 'low') why.push('Spend under $250,000 does not change the tier under TPRM-01.');
+        var req = { 1: 'Full annual reassessment; SOC 2 Type II or ISO/IEC 27001 with scope review; all TPRM-03 clauses; fourth-party monitoring; quarterly KRI review.', 2: 'Reassessment every two years; SOC 2 or questionnaire with evidence; all TPRM-03 clauses.', 3: 'Questionnaire at onboarding and renewal; standard terms.' }[tier];
+        out.className = 'b4-out t' + tier;
+        out.innerHTML = '<div class="k">Computed tier</div><div class="v">Tier ' + tier + ' (' + ['', 'Critical', 'High', 'Moderate'][tier] + ')</div><ul>' + why.map(function (w) { return '<li>' + w + '</li>'; }).join('') + '</ul><p><b>Required depth of review:</b> ' + req + '</p>';
+      }
+      calc();
+
+      function TIER() {
+        function q(name, title, help, opts) {
+          return '<fieldset class="b4-q"><legend>' + title + '</legend><p>' + help + '</p>' + opts.map(function (o) { return '<label><input type="radio" name="' + name + '" value="' + o[0] + '"><span>' + o[1] + '</span></label>'; }).join('') + '</fieldset>';
+        }
+        return '<p class="b4-note">Answer from the intake profile in the Vendor file tab. The worksheet applies Standard TPRM-01 as you go.</p><div class="b4-row"><div class="b4-col">' +
+          q('b4d', 'Highest classification of Corveth data the vendor handles', 'Use the Corveth data classification in the intake profile.', [['pub', 'Public'], ['int', 'Internal'], ['conf', 'Confidential'], ['restr', 'Restricted']]) +
+          q('b4m', 'Shortest MTD of a Corveth process that depends on the vendor', 'From the business impact analysis.', [['le24', '24 hours or less'], ['le72', 'More than 24 hours, up to 72 hours'], ['gt72', 'More than 72 hours, or no critical process']]) +
+          '</div><div class="b4-col">' +
+          q('b4i', 'Integration with Corveth production systems', 'Network or API connections, not just user logins.', [['live', 'Live API or network integration'], ['portal', 'Web portal logins only'], ['none', 'None']]) +
+          q('b4s', 'Annual spend', 'Recorded for completeness.', [['low', 'Under $250,000'], ['high', '$250,000 or more']]) +
+          '<div class="b4-out" id="b4-tier-out" role="status" aria-live="polite"></div></div></div>';
+      }
+      function FILE() {
+        return '<div class="lb-doc"><p class="eyebrow">Intake profile</p><h4>Tracklane Systems: vendor intake (updated for renewal)</h4><div class="table-wrap"><table class="data"><tbody>' +
+          '<tr><th scope="row">Service</th><td>Fleet telematics: in-cab devices, GPS tracking, driver hours of service, vehicle diagnostics, route ETAs.</td></tr>' +
+          '<tr><th scope="row">Corveth data handled</th><td>Driver names, employee IDs, mobile numbers, hours of service, and real-time GPS location of 640 trucks. Corveth’s data classification rates driver personal data and location history as <b>Confidential</b>.</td></tr>' +
+          '<tr><th scope="row">Business process supported</th><td>Dispatch and route planning. The BIA sets an <b>MTD of 12 hours</b> for dispatch; beyond that, missed delivery windows trigger customer penalties.</td></tr>' +
+          '<tr><th scope="row">Integration</th><td>Corveth’s dispatch system calls the Tracklane API every five minutes with a static API key. Fleet staff also use the Tracklane web portal through Corveth SSO.</td></tr>' +
+          '<tr><th scope="row">Annual spend</th><td>About $180,000. Procurement pre-tag: Tier 3.</td></tr>' +
+          '<tr><th scope="row">Relationship and risk owner</th><td>Dana Whitcombe, VP of Fleet Operations. Contract manager: Procurement. Second-line reviewer: Enterprise Risk.</td></tr></tbody></table></div></div>' +
+          '<div class="lb-doc"><p class="eyebrow">Assurance report</p><h4>SOC 2 Type II report summary</h4><ul>' +
+          '<li><b>Service auditor:</b> an independent CPA firm. <b>Type II</b>, period October 1, 2025 to September 30, 2026, issued October 28, 2026.</li>' +
+          '<li><b>Scope:</b> the Tracklane telematics platform and portal. Trust services criteria: Security, Availability, Confidentiality.</li>' +
+          '<li><b>Opinion:</b> unqualified. Exceptions are listed in Section 4 with management’s responses.</li>' +
+          '<li><b>Subservice organizations:</b> presented using the <b>carve-out method</b> (Section 3).</li>' +
+          '<li><b>CUECs:</b> six, listed in Section 3. Tracklane’s controls are designed assuming user entities perform them.</li>' +
+          '<li><b>Management responses:</b> CC6.3, HR feed to identity provider planned for Q1 2027; CC7.1, “resourcing constraints, resolved”; CC8.1, “emergency changes during an outage.”</li></ul></div>' +
+          '<div class="lb-doc"><p class="eyebrow">Standard</p><h4>Corveth Standard TPRM-01: vendor tiering (excerpt)</h4><ol>' +
+          '<li><b>Tier 1 (Critical):</b> the vendor stores or processes Confidential or Restricted data <b>and</b> supports a process with an MTD of 24 hours or less <b>or</b> has a live integration with a production system.</li>' +
+          '<li><b>Tier 2 (High):</b> one of those conditions, but not both.</li>' +
+          '<li><b>Tier 3 (Moderate):</b> neither condition.</li>' +
+          '<li>Spend, contract length, and vendor size do not determine tier.</li>' +
+          '<li>The relationship owner is the risk owner for the vendor relationship. Enterprise Risk performs the review and recommends; it does not accept risk on the owner’s behalf.</li></ol></div>' +
+          '<div class="lb-doc"><p class="eyebrow">Standard</p><h4>Corveth Standard TPRM-03: contract requirements (excerpt)</h4><ul>' +
+          '<li>Tier 1 and Tier 2 contracts must contain every clause in the required clause list (Evidence tab).</li>' +
+          '<li>Breach notification must be within <b>72 hours</b> of the vendor becoming aware of a breach of Corveth data.</li>' +
+          '<li>Subcontractors with access to Corveth data require Corveth’s prior written approval and must accept equivalent obligations.</li></ul></div>';
+      }
+    }
+  };
+})();
+</script>
+<script src="lab.js"></script>
+</body>
+</html>

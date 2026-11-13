@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 1: Organizational Governance | CRISC Workshop</title>
+<link rel="stylesheet" href="crisc-lesson.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-seal">CRISC<br>PREP</div>
+    <span class="nav-title">5-Day Faculty Workshop</span>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#lessons">Lessons</a></li>
+      <li><a href="index.html#practice">Practice</a></li>
+      <li><a href="index.html#schedule">Schedule</a></li>
+      <li><a href="index.html#domains">Domains</a></li>
+      <li><a href="index.html#exam-prep">Exam Prep</a></li>
+      <li><a href="index.html#faculty-tools">Faculty Tools</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="lesson-hero">
+  <div class="lesson-hero-inner">
+    <p class="breadcrumb"><a href="index.html">Workshop</a> &nbsp;&rsaquo;&nbsp; <a href="index.html#lessons">Lessons</a> &nbsp;&rsaquo;&nbsp; <span>Lesson 1</span></p>
+    <span class="lesson-badge-lg">Day 1, Late Morning and Afternoon &bull; Domain 1A</span>
+    <h1>Organizational <span>Governance</span></h1>
+    <p class="lesson-lede">Every IT risk is a risk to something the business is trying to achieve. Governance decides what that is, who is accountable for it, and how the organization will know it is on track. This lesson builds the context that the rest of CRISC depends on: strategy and goals, structure and roles, culture, policy, resilient processes, and the assets that support them.</p>
+    <div class="meta-chips">
+      <span class="meta-chip">Session: <strong>Day 1, 10:30 to 5:00</strong></span>
+      <span class="meta-chip">Duration: <strong>~5 hrs</strong></span>
+      <span class="meta-chip">Exam Weight: <strong>26% (Domain 1)</strong></span>
+      <span class="meta-chip">Knowledge Check: <strong>8 Questions</strong></span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="block">
+    <p class="eyebrow">Overview</p>
+    <h2 class="h2">Context before controls</h2>
+    <div class="rule"></div>
+    <p class="lead">A risk practitioner cannot rate a risk without knowing what it threatens. Organizational governance supplies that context. The board and senior management set direction and priorities. Structures and roles assign accountability. Culture and policy shape behavior. Business processes and the assets beneath them are where risk actually materializes. Domain 1A asks whether you can read that context and use it.</p>
+    <p class="lead">This lesson separates governance from management using COBIT 2019, follows the goals cascade from stakeholder needs to IT objectives, and covers organizational structure and RACI, segregation of duties, risk culture and ethics, the policy hierarchy and its exceptions, business processes and resilience, and organizational asset management. The interactive asks you to align a real-looking IT portfolio with enterprise goals and spot both unaligned spend and uncovered goals.</p>
+    <div class="mindset"><span class="tip-label">&#9878;&#65039; Think like a risk practitioner</span>Start from business objectives, not from technology. When an IT initiative cannot be traced to an enterprise goal, that is a governance finding to report, not a project for the practitioner to cancel. When an enterprise goal has nothing supporting it, that is a strategic risk to raise with the people who set the goals.</div>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Learning Objectives</p>
+    <h2 class="h2">By the end of this lesson you will be able to&hellip;</h2>
+    <div class="rule"></div>
+    <ul class="objectives">
+      <li><span><strong>Distinguish</strong> governance from management using the COBIT 2019 governance and management domains. <em class="bloom-tag">Bloom: Understand</em></span></li>
+      <li><span><strong>Trace</strong> IT initiatives to enterprise goals through the goals cascade and identify unaligned spend and coverage gaps. <em class="bloom-tag">Bloom: Analyze</em></span></li>
+      <li><span><strong>Apply</strong> RACI and segregation of duties to an organizational structure and recommend compensating controls where separation is not possible. <em class="bloom-tag">Bloom: Apply</em></span></li>
+      <li><span><strong>Evaluate</strong> risk culture, policy exceptions, and resilience arrangements for governance weaknesses. <em class="bloom-tag">Bloom: Evaluate</em></span></li>
+      <li><span><strong>Explain</strong> how asset inventory, ownership, classification, and valuation support risk assessment. <em class="bloom-tag">Bloom: Understand</em></span></li>
+      <li><span><strong>Design</strong> a board-brief assignment in which students translate an IT roadmap into enterprise-goal language. <em class="bloom-tag">Bloom: Create</em></span></li>
+    </ul>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Key Terms</p>
+    <h2 class="h2">Vocabulary flashcards</h2>
+    <div class="rule"></div>
+    <p class="flip-hint-top">&#128072; Read the term, recall the definition, then click or press Enter to check yourself.</p>
+    <div class="vocab-grid">
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Governance</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">Evaluating stakeholder needs, setting direction through priorities and decisions, and monitoring performance and compliance. Usually the board&rsquo;s job.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Management</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">Planning, building, running, and monitoring activities in line with the direction set by governance. Led by executives and their teams.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">EDM</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">Evaluate, Direct and Monitor: the COBIT 2019 governance domain. The other four domains (APO, BAI, DSS, MEA) are management.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Goals Cascade</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">The COBIT chain that translates stakeholder needs into enterprise goals, then alignment goals, then governance and management objectives.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Alignment Goal</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">A COBIT 2019 goal for information and technology that supports one or more enterprise goals. It is the link between business and IT.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">IT Steering Committee</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">A management-level group of business and IT leaders that prioritizes IT investments, approves projects, and tracks delivery against business goals.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">RACI Matrix</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">A chart that names who is Responsible, Accountable, Consulted, and Informed for each activity. Exactly one party is Accountable.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Segregation of Duties (SoD)</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">Splitting incompatible duties (authorize, record, hold custody, verify) so no one person can commit and conceal an error or fraud.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Policy Exception</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">A documented, time-limited, risk-owner-approved deviation from a policy or standard, usually with compensating controls.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Business Impact Analysis (BIA)</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">An analysis of how disruption to each process harms the organization over time. It sets recovery priorities and objectives such as RTO and RPO.</div></div>
+        </div>
+      </button>
+
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Lesson Content</p>
+    <h2 class="h2">Study the material</h2>
+    <div class="rule"></div>
+    <div class="lesson-content">
+      <nav class="toc" aria-label="On this page">
+        <div class="toc-title">On this page</div>
+        <ul>
+          <li><a href="#s1">1. Governance vs. Management</a></li>
+          <li><a href="#s2">2. Strategy, Goals, and the Cascade</a></li>
+          <li><a href="#s3">3. Structure, Roles, and RACI</a></li>
+          <li><a href="#s4">4. Culture and Ethics</a></li>
+          <li><a href="#s5">5. Policies and Standards</a></li>
+          <li><a href="#s6">6. Business Processes and Resilience</a></li>
+          <li><a href="#s7">7. Organizational Asset Management</a></li>
+          <li><a href="#s8">8. Interactive: Goals Cascade Aligner</a></li>
+          <li><a href="#s9">9. Faculty Teaching Segment</a></li>
+        </ul>
+      </nav>
+      <div class="content-main">
+
+        <article class="content-section" id="s1">
+          <div class="cs-head"><span class="cs-num">1</span><h3>Governance vs. Management</h3></div>
+          <p>Governance and management are easy to blur, and CRISC questions often test the line between them. Governance decides <em>what</em> the organization should achieve and <em>whether</em> it is achieving it. Management decides <em>how</em> and does the work. The board governs; executives manage.</p>
+          <p>COBIT 2019, ISACA&rsquo;s framework for the governance and management of enterprise information and technology, draws this line with five domains and 40 governance and management objectives.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>COBIT 2019 domain</th><th>Type</th><th>Focus</th><th>Risk example</th></tr></thead>
+            <tbody>
+              <tr><td class="term">EDM: Evaluate, Direct and Monitor</td><td>Governance</td><td>Evaluate options, set direction, monitor results</td><td>The board approves risk appetite and reviews the risk profile.</td></tr>
+              <tr><td class="term">APO: Align, Plan and Organize</td><td>Management</td><td>Strategy, architecture, budgets, people, risk, security</td><td>Management maintains the risk register and the risk management process.</td></tr>
+              <tr><td class="term">BAI: Build, Acquire and Implement</td><td>Management</td><td>Projects, requirements, solutions, change</td><td>A project team builds security requirements into a new system.</td></tr>
+              <tr><td class="term">DSS: Deliver, Service and Support</td><td>Management</td><td>Operations, service requests, incidents, continuity</td><td>Operations runs backups and handles incidents.</td></tr>
+              <tr><td class="term">MEA: Monitor, Evaluate and Assess</td><td>Management</td><td>Performance, internal control, compliance, assurance</td><td>Management monitors control performance and compliance.</td></tr>
+            </tbody>
+          </table></div>
+          <h4>Governance bodies</h4>
+          <ul class="detail">
+            <li><strong>Board of directors (or trustees):</strong> sets strategy and risk appetite, oversees management, and is ultimately accountable. Committees do much of the detailed work.</li>
+            <li><strong>Audit committee:</strong> oversees financial reporting, internal control, and internal and external audit. It protects audit independence.</li>
+            <li><strong>Risk committee:</strong> where present, oversees the enterprise risk profile and management&rsquo;s risk framework.</li>
+            <li><strong>IT strategy committee:</strong> a board-level group that advises the board on the strategic role of IT and major investments.</li>
+            <li><strong>IT steering committee:</strong> a management-level group of business and IT leaders that prioritizes and approves projects and monitors delivery. It manages; it does not govern.</li>
+          </ul>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a question asks who is ultimately accountable for IT risk or for governance of enterprise IT, the answer is the board and senior management, not the CIO, the CISO, or the risk function.</div>
+          <div class="in-practice"><span class="ip-label">&#128270; In practice</span><p>Larchmont Community Health, a regional clinic network moving to a cloud electronic health record (EHR), had its IT steering committee approving the risk appetite for patient data. The risk practitioner pointed out that appetite is a governance decision. The board&rsquo;s quality and risk committee now approves appetite, and the steering committee applies it to project decisions.</p></div>
+        </article>
+
+        <article class="content-section" id="s2">
+          <div class="cs-head"><span class="cs-num">2</span><h3>Strategy, Goals, Objectives, and the Goals Cascade</h3></div>
+          <p>Strategy states where the organization wants to go. Goals state what success looks like. Objectives are specific, measurable targets that move it toward the goals. Risk is defined against all three: the effect of uncertainty on objectives. That is why a risk practitioner begins with the business plan, not the network diagram.</p>
+          <h4>The COBIT 2019 goals cascade</h4>
+          <p>The goals cascade turns broad stakeholder needs into specific IT priorities. It runs in four steps.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Level</th><th>What it states</th><th>Larchmont example</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Stakeholder drivers and needs</td><td>Pressures and expectations from patients, regulators, funders, staff</td><td>Rural patients need care closer to home; regulators expect strong privacy.</td></tr>
+              <tr><td class="term">Enterprise goals</td><td>What the organization must achieve (COBIT offers 13 generic goals)</td><td>Improve patient safety; grow through telehealth.</td></tr>
+              <tr><td class="term">Alignment goals</td><td>What information and technology must deliver (13 generic goals)</td><td>Reliable, secure clinical applications; IT compliance with laws.</td></tr>
+              <tr><td class="term">Governance and management objectives</td><td>Which of the 40 objectives need priority</td><td>Managed risk, managed security, managed continuity.</td></tr>
+            </tbody>
+          </table></div>
+          <p>The cascade works in both directions. Top down, it tells IT what to prioritize. Bottom up, it lets anyone ask of a project, &ldquo;Which enterprise goal does this serve?&rdquo; An initiative with no answer is unaligned spend. A goal with no initiative is a strategic gap.</p>
+          <ul class="detail">
+            <li><strong>Business case:</strong> every significant investment should state the goal it serves, the benefits, the costs, and the risks, so the steering committee can compare initiatives on the same terms.</li>
+            <li><strong>Portfolio view:</strong> governance looks at the whole set of initiatives, because the right question is not only &ldquo;Is this project good?&rdquo; but also &ldquo;Is this the best use of limited money across our goals?&rdquo;</li>
+            <li><strong>Metrics:</strong> each goal needs measures. Without them, alignment claims cannot be checked.</li>
+          </ul>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a question asks for the PRIMARY reason to align IT with business strategy, choose the option about IT investments delivering value toward enterprise goals. Lower cost, better security, or faster delivery may follow, but they are not the primary purpose.</div>
+          <div class="tip jade"><span class="tip-label">&#129517; Practitioner&rsquo;s note</span>Unaligned spend is a finding, not a verdict. The practitioner reports it to the steering committee or sponsor and asks for a business case. Whether the project continues is a management decision.</div>
+        </article>
+
+        <article class="content-section" id="s3">
+          <div class="cs-head"><span class="cs-num">3</span><h3>Organizational Structure, Roles, and Responsibilities</h3></div>
+          <p>Accountability only works when it is written down. Structures (functional, divisional, matrix, or a mix) shape who reports to whom, and every structure needs clear answers about who decides, who does, and who checks.</p>
+          <h4>RACI in practice</h4>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Activity</th><th>Board</th><th>Risk owner (business)</th><th>Control owner</th><th>Risk practitioner</th><th>Internal audit</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Set risk appetite</td><td>A</td><td>C</td><td>I</td><td>R</td><td>I</td></tr>
+              <tr><td class="term">Select a risk response</td><td>I</td><td>A</td><td>C</td><td>R</td><td>I</td></tr>
+              <tr><td class="term">Operate a control</td><td>&nbsp;</td><td>I</td><td>A/R</td><td>I</td><td>&nbsp;</td></tr>
+              <tr><td class="term">Report the risk profile</td><td>I</td><td>C</td><td>C</td><td>A/R</td><td>I</td></tr>
+              <tr><td class="term">Independently test controls</td><td>I</td><td>I</td><td>C</td><td>I</td><td>A/R</td></tr>
+            </tbody>
+          </table></div>
+          <p>Here &ldquo;R&rdquo; for the practitioner on appetite means it drafts and facilitates; the board remains Accountable. Each row has exactly one A. Two As mean nobody is truly accountable.</p>
+          <h4>Key roles</h4>
+          <ul class="detail">
+            <li><strong>Chief risk officer (CRO):</strong> leads enterprise risk management and the second-line risk function; reports to the CEO and often to a board committee.</li>
+            <li><strong>CIO and CISO:</strong> manage technology and security. They often own controls, and sometimes own technology risks, but they do not set enterprise appetite.</li>
+            <li><strong>Business process owners:</strong> usually the risk owners for risks to their processes.</li>
+            <li><strong>Data and system owners:</strong> decide classification and access for the assets they are accountable for. Custodians operate the controls.</li>
+          </ul>
+          <h4>Segregation of duties</h4>
+          <p>Segregation of duties separates four incompatible functions: authorizing a transaction, recording it, holding custody of the asset, and verifying the result. In IT, common conflicts include a developer who can deploy to production, an administrator who can change audit logs, and a clerk who can create vendors and approve payments.</p>
+          <div class="compare-2col">
+            <div><b>Preferred</b>Separate the duties across people or teams, and enforce the separation in system roles.</div>
+            <div><b>When you cannot</b>In small units, use compensating controls: independent review of logs and change reports, dual approval, job rotation, or mandatory vacations.</div>
+          </div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>If a question says separation is not feasible because the team is small, the BEST answer is usually an independent review or monitoring control by someone outside the conflict, not accepting the risk without comment.</div>
+        </article>
+
+        <article class="content-section" id="s4">
+          <div class="cs-head"><span class="cs-num">4</span><h3>Organizational Culture and Ethics</h3></div>
+          <p>Policies describe intended behavior. Culture determines actual behavior. A risk-aware culture is one where people raise bad news early, follow controls when no one is watching, and see risk management as part of doing the job well.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Signal</th><th>Healthy risk culture</th><th>Weak risk culture</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Tone at the top</td><td>Leaders follow the same rules and talk about risk in decisions.</td><td>Leaders grant themselves informal exceptions.</td></tr>
+              <tr><td class="term">Bad news</td><td>Incidents and near misses are reported quickly, without blame.</td><td>Problems surface only through audits or outages.</td></tr>
+              <tr><td class="term">Incentives</td><td>Goals and bonuses reward sound risk-taking, not only speed.</td><td>Targets reward delivery even when controls are skipped.</td></tr>
+              <tr><td class="term">Exceptions</td><td>Exceptions are rare, documented, and expire.</td><td>Exceptions are routine and never reviewed.</td></tr>
+              <tr><td class="term">Training</td><td>Role-based and tied to real scenarios.</td><td>Annual click-through with no follow-up.</td></tr>
+            </tbody>
+          </table></div>
+          <h4>Ethics programs</h4>
+          <ul class="detail">
+            <li><strong>Code of conduct:</strong> states expected behavior and how conflicts of interest are disclosed.</li>
+            <li><strong>Reporting channels:</strong> confidential and anti-retaliation channels for concerns, often called whistleblower or ethics hotlines.</li>
+            <li><strong>Consequences:</strong> consistent, visible responses to violations at every level.</li>
+            <li><strong>Emerging issues:</strong> ethics now includes how the organization uses AI and data. ISACA highlights AI data governance and ethics as areas a CRISC holder should be ready to address.</li>
+          </ul>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When repeated control failures share a pattern across many teams, the MOST likely root cause is cultural or governance-level (tone at the top, incentives, unclear accountability), not one person&rsquo;s mistake. Choose the answer that addresses the cause.</div>
+          <div class="in-practice"><span class="ip-label">&#128270; In practice</span><p>At Larchmont, clinicians shared EHR logins to save time during busy shifts. Retraining alone did not stop it. The risk practitioner&rsquo;s analysis showed the root cause was slow log-in on shared workstations. Leadership funded tap-badge sign-on and publicly committed to it, and sharing dropped. The culture changed because leaders removed the incentive to break the rule.</p></div>
+        </article>
+
+        <article class="content-section" id="s5">
+          <div class="cs-head"><span class="cs-num">5</span><h3>Policies and Standards</h3></div>
+          <p>Policies translate governance decisions into rules. A clear hierarchy keeps them consistent and makes each document easy to change at the right level.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Document</th><th>Purpose</th><th>Mandatory?</th><th>Approved by</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Policy</td><td>High-level statement of intent and direction</td><td>Yes</td><td>Board or senior management</td></tr>
+              <tr><td class="term">Standard</td><td>Specific, measurable requirements that support a policy</td><td>Yes</td><td>Management (e.g., CIO, CISO)</td></tr>
+              <tr><td class="term">Procedure</td><td>Step-by-step instructions to meet a standard</td><td>Yes, for those performing it</td><td>Process or control owner</td></tr>
+              <tr><td class="term">Guideline</td><td>Recommended practice and advice</td><td>No</td><td>Subject-matter owner</td></tr>
+              <tr><td class="term">Baseline</td><td>Minimum secure configuration for a system type</td><td>Yes</td><td>Management, via the standard</td></tr>
+            </tbody>
+          </table></div>
+          <h4>Exceptions and exemptions</h4>
+          <p>No policy fits every case. A controlled exception process is a sign of mature governance, not weak governance.</p>
+          <ul class="detail">
+            <li><strong>Exception:</strong> a temporary, approved deviation. It needs a business reason, a risk assessment, compensating controls, an expiry date, and acceptance by the risk owner with the right authority.</li>
+            <li><strong>Exemption:</strong> a longer-term, formally approved release from a requirement, often because it does not apply or cannot be met. It is still documented and periodically re-reviewed.</li>
+            <li><strong>Tracking:</strong> the risk function keeps a register of exceptions and exemptions, reports their volume and age, and escalates expired ones.</li>
+            <li><strong>Review cycle:</strong> policies are reviewed on a set schedule and after major changes in strategy, law, or technology.</li>
+          </ul>
+          <div class="resource-link">
+            <span class="rl-icon" aria-hidden="true">&#128220;</span>
+            <div class="rl-body"><span class="rl-label">Explore with an eMate</span><span class="rl-text"><strong>Policies, Standards, Procedures, Guidelines</strong>: sort documents into the hierarchy and see what makes each one mandatory.</span></div>
+            <div class="rl-actions"><a class="btn secondary" href="https://d2hie3dpn9wvbb.cloudfront.net/PSPG/PSPG.html" target="_blank" rel="noopener noreferrer">PSPG <span class="ext">&#8599;</span></a></div>
+          </div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>A large number of open or expired exceptions is a KRI in itself. When a question describes many long-running exceptions to the same standard, the BEST response is often to review whether the standard is still realistic, not only to chase each exception.</div>
+        </article>
+
+        <article class="content-section" id="s6">
+          <div class="cs-head"><span class="cs-num">6</span><h3>Business Processes and Resilience</h3></div>
+          <p>Risk happens in processes. Before a practitioner can judge the impact of an outage or breach, the practitioner needs to know which processes matter most, what they depend on, and how long the organization can live without them.</p>
+          <h4>Process mapping</h4>
+          <ul class="detail">
+            <li><strong>Map the flow:</strong> inputs, steps, outputs, and the people and systems at each step. Swimlane diagrams show handoffs, which is where many controls and many failures sit.</li>
+            <li><strong>Find dependencies:</strong> applications, data, infrastructure, facilities, suppliers, and key people.</li>
+            <li><strong>Mark control points:</strong> where approvals, reconciliations, and checks happen.</li>
+          </ul>
+          <h4>The BIA and recovery objectives</h4>
+          <p>A business impact analysis (BIA) estimates how harm grows over time when a process stops. It sets priorities for continuity and recovery. Lesson 4 covers the BIA in depth; the key outputs are these.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Term</th><th>Meaning</th><th>Set by</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Maximum tolerable downtime (MTD)</td><td>The longest a process can be unavailable before harm becomes unacceptable</td><td>Business owner, from the BIA</td></tr>
+              <tr><td class="term">Recovery time objective (RTO)</td><td>The target time to restore a process or system; must be shorter than MTD</td><td>Business owner, with IT input</td></tr>
+              <tr><td class="term">Recovery point objective (RPO)</td><td>The maximum acceptable data loss, measured in time</td><td>Business owner; drives backup frequency</td></tr>
+            </tbody>
+          </table></div>
+          <h4>BCP, DRP, and crisis communications</h4>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Plan</th><th>Scope</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Business continuity plan (BCP)</td><td>Keeps critical business processes running during and after a disruption</td><td>Clinics switch to paper downtime forms and phone scheduling.</td></tr>
+              <tr><td class="term">Disaster recovery plan (DRP)</td><td>Restores technology (systems, data, infrastructure) to support the BCP</td><td>Fail the EHR over to a secondary cloud region within the RTO.</td></tr>
+              <tr><td class="term">Crisis communications plan</td><td>Who says what to whom, and when: staff, patients, regulators, media</td><td>Pre-approved patient notices and a single spokesperson.</td></tr>
+              <tr><td class="term">Incident response plan</td><td>Detects, contains, and recovers from security incidents</td><td>Isolate an infected clinic network segment.</td></tr>
+            </tbody>
+          </table></div>
+          <p>Recognized references include ISO 22301 for business continuity management systems and NIST SP 800-34 Rev. 1 for federal contingency planning. Plans that are never tested are assumptions. Tabletop exercises, which the CRISC outline names as a supporting task, are the cheapest way to find gaps.</p>
+          <div class="resource-link">
+            <span class="rl-icon" aria-hidden="true">&#128190;</span>
+            <div class="rl-body"><span class="rl-label">Explore with an eMate</span><span class="rl-text"><strong>Digital Media Handling: Backups</strong>: backup types, rotation, and handling, the practical side of meeting an RPO.</span></div>
+            <div class="rl-actions"><a class="btn secondary" href="https://d2hie3dpn9wvbb.cloudfront.net/backups/backups.html" target="_blank" rel="noopener noreferrer">Backups <span class="ext">&#8599;</span></a></div>
+          </div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When asked what should be done FIRST in continuity planning, choose the BIA. Strategies, plans, and tests all depend on knowing which processes are critical and how fast they must recover.</div>
+        </article>
+
+        <article class="content-section" id="s7">
+          <div class="cs-head"><span class="cs-num">7</span><h3>Organizational Asset Management</h3></div>
+          <p>Risk assessment needs a list of what can be harmed. Asset management provides it: an inventory of information and technology assets, each with an owner, a classification, and a value. Without it, risk ratings are guesses and controls protect whatever happens to be visible.</p>
+          <ul class="detail">
+            <li><strong>Inventory scope:</strong> hardware, software and licenses, data sets, cloud services and accounts, network connections, facilities, suppliers, and key people. Shadow IT and unmanaged cloud services are the usual blind spots.</li>
+            <li><strong>Ownership:</strong> every asset has a named owner who decides classification, access, and acceptable risk. An unowned asset has no one to accept its risk.</li>
+            <li><strong>Classification:</strong> sensitivity and criticality labels that drive handling and protection. A system takes the classification of the most sensitive data it holds.</li>
+            <li><strong>Configuration management database (CMDB):</strong> records configuration items and their relationships, so the impact of a failure or change can be traced to the services and processes that depend on it.</li>
+            <li><strong>Valuation:</strong> combine replacement cost, the revenue or service the asset supports, regulatory and contractual consequences of its loss, and reputational effect. Value drives impact ratings in Domain 2.</li>
+            <li><strong>Lifecycle:</strong> acquisition, deployment, maintenance, change, and disposal with sanitization. End-of-support assets need replacement or documented risk acceptance.</li>
+          </ul>
+          <p>Frameworks agree on this foundation. ISO/IEC 27001:2022 and ISO/IEC 27002:2022 include controls for an inventory of information and associated assets and for their ownership. NIST CSF 2.0 places asset management in its Identify function.</p>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>If a question asks what a risk practitioner needs FIRST to assess risk to a new business unit, look for the asset inventory and business process information. You cannot rate impact on assets you have not identified and valued.</div>
+          <div class="in-practice"><span class="ip-label">&#128270; In practice</span><p>Larchmont&rsquo;s EHR migration plan listed 140 servers. A discovery scan found 31 more, including a lab analyzer interface no one had assigned an owner. The practitioner added each to the CMDB with an owner and a classification before the migration risk assessment began, which changed two of the top five migration risks.</p></div>
+        </article>
+
+        <article class="content-section" id="s8">
+          <div class="cs-head"><span class="cs-num">8</span><h3>Interactive: Goals Cascade Aligner</h3></div>
+          <p>Larchmont Community Health has four enterprise goals for the next three years: improve patient safety, maintain regulatory compliance, improve cost efficiency, and grow through telehealth. The IT steering committee is reviewing seven proposed initiatives with a combined budget of $2.44 million. Link each initiative to the enterprise goal it primarily serves, or to &ldquo;None&rdquo; if it serves no goal. The panel loads IT&rsquo;s own first-draft mapping. Changing a row shows the sponsor&rsquo;s business case. The tiles and chart show how much of the budget is aligned, which goals have no initiative, and how much spend is unaligned. Press Show model answer to compare your mapping with the risk practitioner&rsquo;s.</p>
+
+          <style>
+            .gca-flex{display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start;}
+            .gca-in{flex:1.25 1 320px;min-width:0;}
+            .gca-out{flex:1 1 300px;min-width:0;}
+            .gca-row{display:flex;align-items:center;gap:.45rem;padding:.3rem .4rem;border:1px solid var(--border);border-left:4px solid var(--border);border-radius:4px;margin-bottom:.32rem;background:var(--card-bg);}
+            .gca-row.gca-none{border-left-color:var(--wrong);}
+            .gca-row.gca-match{background:var(--correct-bg);}
+            .gca-row.gca-miss{background:var(--wrong-bg);}
+            .gca-row label{flex:1 1 auto;min-width:0;font-size:.76rem;line-height:1.3;color:var(--text-primary);}
+            .gca-row label em{display:block;font-style:normal;font-size:.68rem;color:var(--text-muted);}
+            .gca-row select{flex:0 0 160px;width:160px;font-size:.74rem;padding:.22rem .3rem;}
+            .gca-info{flex:0 0 1.7rem;height:1.7rem;border:1px solid var(--border);border-radius:4px;background:var(--card-bg);font-weight:900;font-size:.78rem;cursor:pointer;color:var(--gold);padding:0;}
+            .gca-info:focus-visible{outline:2px solid var(--gold);outline-offset:1px;}
+            .gca-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem;margin-bottom:.4rem;}
+            .gca-tile{background:var(--blue-pale);border:1px solid var(--blue-pale-border);border-radius:5px;padding:.4rem .55rem;}
+            .gca-tile span{display:block;font-family:Arial,sans-serif;font-size:.64rem;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);}
+            .gca-tile strong{font-family:Georgia,serif;font-size:1.15rem;color:var(--navy);}
+            .gca-tile.bad strong{color:var(--wrong);}
+            .gca-case{font-family:Arial,sans-serif;font-size:.78rem;line-height:1.5;color:var(--text-secondary);background:var(--jade-pale);border:1px solid var(--jade-border);border-radius:5px;padding:.45rem .6rem;margin:.4rem 0 .55rem;min-height:2.6rem;}
+            .gca-case b{color:var(--jade-dark);}
+            .gca-actions{display:flex;gap:.45rem;flex-wrap:wrap;margin-top:.5rem;}
+            .gca-cv{width:100%;display:block;}
+            #gca-root .iw-lead{font-size:.78rem;margin:0 0 .6rem;}
+          </style>
+
+          <div class="iw" id="gca-root">
+            <div class="iw-card">
+              <div class="iw-topbar">
+                <span class="iw-eyebrow">Interactive &middot; align the IT portfolio with enterprise goals</span>
+                <button type="button" class="iw-expand" aria-expanded="false" title="Open a larger view">&#10530; Expand</button>
+              </div>
+              <div class="gca-flex">
+                <div class="iw-panel gca-in">
+                  <h5 class="iw-h5">Proposed initiatives (budget)</h5>
+                  <p class="iw-lead">Choose the enterprise goal each initiative primarily serves.</p>
+                  <div id="gca-rows"></div>
+                  <div class="gca-actions">
+                    <button type="button" class="iw-btn" id="gca-model" aria-pressed="false">Show model answer</button>
+                    <button type="button" class="iw-btn jade" id="gca-draft">Reload IT&rsquo;s draft</button>
+                    <button type="button" class="iw-btn jade" id="gca-clear">Set all to None</button>
+                  </div>
+                </div>
+                <div class="iw-panel gca-out">
+                  <div class="gca-tiles">
+                    <div class="gca-tile" id="gca-t1"><span>Budget aligned</span><strong id="gca-v1">0%</strong></div>
+                    <div class="gca-tile" id="gca-t2"><span>Goals with no initiative</span><strong id="gca-v2">0</strong></div>
+                    <div class="gca-tile" id="gca-t3"><span>Unaligned spend</span><strong id="gca-v3">$0K</strong></div>
+                    <div class="gca-tile" id="gca-t4"><span>Links matching model</span><strong id="gca-v4">0 / 7</strong></div>
+                  </div>
+                  <div aria-live="polite">
+                    <div class="iw-verdict" id="gca-verdict"><span class="iw-pill" id="gca-pill">Ready</span><span id="gca-coach">Link each initiative to a goal.</span></div>
+                    <div class="gca-case" id="gca-case"></div>
+                  </div>
+                  <canvas id="gca-cv" class="gca-cv" role="img" aria-label="Horizontal bar chart of budget by enterprise goal, with unaligned spend shown in red"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <script>
+          (function(){
+            var root=document.getElementById('gca-root'); if(!root) return;
+            var $=function(id){return root.querySelector('#'+id);};
+            var G=[['ps','Patient safety'],['rc','Regulatory compliance'],['ce','Cost efficiency'],['gt','Growth via telehealth']];
+            var GN={none:'None'}; G.forEach(function(g){GN[g[0]]=g[1];});
+            var I=[
+              {n:'Clinical decision support alerts in the EHR',b:480,m:'ps',c:'Sponsor: Chief Medical Officer. Flags drug interactions and allergies at order entry to cut adverse drug events.',w:'Patient safety. Better documentation helps compliance, but the business case is measured in avoided harm.'},
+              {n:'HIPAA security risk analysis and automated access reviews',b:180,m:'rc',c:'Sponsor: Compliance Officer. Closes findings from the last security risk analysis and automates quarterly access reviews.',w:'Regulatory compliance. It answers a specific legal obligation and open findings.'},
+              {n:'Retire two server rooms and move workloads to cloud',b:420,m:'ce',c:'Sponsor: CFO and CIO. Ends two facility leases and a hardware refresh; projected savings exceed cost within three years.',w:'Cost efficiency. The benefit is measured in avoided cost. Resilience may improve too, but that is secondary.'},
+              {n:'Telehealth video platform and patient portal scaling',b:650,m:'gt',c:'Sponsor: VP of Strategy. Supports the plan to add rural virtual-visit patients across two counties.',w:'Growth via telehealth. This is the direct enabler of the growth goal.'},
+              {n:'Barcode medication administration scanners',b:310,m:'ps',c:'Sponsor: Director of Nursing. Scans wristbands and medications at the bedside to prevent wrong-patient and wrong-dose errors.',w:'Patient safety. Clinical engineering may buy the scanners, but the outcome is safety. Leaving it unlinked hides the network&rsquo;s main safety investment.'},
+              {n:'Boardroom smart-display and AV upgrade',b:140,m:'none',c:'Sponsor: Executive office. New displays and conferencing gear for the boardroom. No measurable outcome stated.',w:'None. Claiming cost efficiency from &ldquo;fewer trips&rdquo; with no data is goal-washing. Report it as unaligned and ask for a business case.'},
+              {n:'Blockchain pilot for supply tracking',b:260,m:'none',c:'Sponsor: none named. Proposed by the infrastructure team after a vendor demo. No problem statement.',w:'None. Technology looking for a problem. With no sponsor and no goal, it is unaligned spend and a governance finding.'}
+            ];
+            var DRAFT=['rc','rc','ce','gt','none','ce','gt'];
+            var sel=DRAFT.slice(), showModel=false, lastRow=-1;
+            var TOTAL=I.reduce(function(s,x){return s+x.b;},0);
+            function money(k){return k>=1000?('$'+(k/1000).toFixed(2)+'M'):('$'+k+'K');}
+            function build(){
+              var box=$('gca-rows'); box.innerHTML='';
+              I.forEach(function(x,i){
+                var row=document.createElement('div'); row.className='gca-row';
+                var opts=G.map(function(g){return '<option value="'+g[0]+'">'+g[1]+'</option>';}).join('')+'<option value="none">None (unaligned)</option>';
+                row.innerHTML='<label for="gca-s'+i+'">'+x.n+'<em>'+money(x.b)+'</em></label><select id="gca-s'+i+'">'+opts+'</select><button type="button" class="gca-info" id="gca-k'+i+'" aria-label="Show business case for '+x.n.replace(/"/g,'')+'">i</button>';
+                box.appendChild(row);
+                var s=row.querySelector('select'); s.value=sel[i];
+                s.addEventListener('change',function(){sel[i]=s.value; lastRow=i; caseBox(i); update();});
+                row.querySelector('.gca-info').addEventListener('click',function(){lastRow=i; caseBox(i);});
+              });
+            }
+            function caseBox(i){var x=I[i]; var h='<b>'+x.n+' ('+money(x.b)+').</b> '+x.c; if(showModel) h+=' <b>Model:</b> '+x.w; $('gca-case').innerHTML=h;}
+            function stats(){
+              var s={by:{},un:0,al:0,gaps:[],match:0};
+              G.forEach(function(g){s.by[g[0]]=0;});
+              I.forEach(function(x,i){var v=sel[i]; if(v==='none') s.un+=x.b; else {s.by[v]+=x.b; s.al+=x.b;} if(v===x.m) s.match++;});
+              G.forEach(function(g){if(!s.by[g[0]]) s.gaps.push(g[1]);});
+              s.pct=Math.round(100*s.al/TOTAL); return s;
+            }
+            function verdict(cls,pill,msg){$('gca-verdict').className='iw-verdict '+cls;$('gca-pill').className='iw-pill '+cls;$('gca-pill').textContent=pill;$('gca-coach').innerHTML=msg;}
+            function update(){
+              var s=stats();
+              $('gca-v1').textContent=s.pct+'%'; $('gca-v2').textContent=s.gaps.length; $('gca-v3').textContent=money(s.un); $('gca-v4').textContent=s.match+' / 7';
+              $('gca-t2').classList.toggle('bad',s.gaps.length>0); $('gca-t3').classList.toggle('bad',s.un>0);
+              [].forEach.call($('gca-rows').children,function(row,i){row.classList.toggle('gca-none',sel[i]==='none'); row.classList.toggle('gca-match',showModel&&sel[i]===I[i].m); row.classList.toggle('gca-miss',showModel&&sel[i]!==I[i].m);});
+              var gapTxt=s.gaps.length?(' No initiative supports <b>'+s.gaps.join('</b> or <b>')+'</b>. An enterprise goal with no investment behind it is a strategic risk: the board may believe it is being pursued when it is not.'):'';
+              var unTxt=s.un?(' '+money(s.un)+' is unaligned. Unaligned spend is a governance finding: report it to the steering committee and ask the sponsors for a business case.'):'';
+              if(s.pct>=80 && s.gaps.length===0){verdict('good','Aligned',s.pct+'% of the budget traces to an enterprise goal and every goal has support.'+(unTxt||' Nothing is unaligned. Check that each claimed link would survive a request for metrics.'));}
+              else if(s.pct>=60 && s.gaps.length<=1){verdict('warn','Partial',s.pct+'% of the budget is aligned.'+gapTxt+unTxt);}
+              else {verdict('bad','Misaligned','Only '+s.pct+'% of the budget is aligned'+(s.gaps.length?' and '+s.gaps.length+' goal'+(s.gaps.length>1?'s have':' has')+' no initiative':'')+'.'+gapTxt+unTxt+' Start again from the goals: what does each one need from IT?');}
+              if(showModel && s.match===7) $('gca-coach').innerHTML+=' This mapping matches the practitioner&rsquo;s model.';
+              draw(s);
+            }
+            var cv=$('gca-cv'), ctx=cv.getContext('2d');
+            function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
+            function draw(s){
+              var w=cv.parentElement.clientWidth-2; if(w<220) w=220;
+              var h; if(root.classList.contains('is-expanded')){var top=cv.getBoundingClientRect().top; h=Math.max(210,Math.min(w*0.55,window.innerHeight-top-90));} else h=Math.min(280,Math.max(230,w*0.62));
+              var dpr=window.devicePixelRatio||1; cv.width=Math.round(w*dpr); cv.height=Math.round(h*dpr); cv.style.height=h+'px';
+              ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,w,h);
+              var COL={ps:css('--gold'),rc:css('--navy-light'),ce:css('--jade'),gt:'#0f766e',none:css('--wrong')};
+              var cTxt=css('--text-muted'), cPri=css('--text-primary'), cB=css('--border');
+              ctx.font='11px Arial'; ctx.textBaseline='middle';
+              var L=14+Math.max.apply(null,['Whole portfolio','Unaligned'].concat(G.map(function(g){return g[1];})).map(function(t){return ctx.measureText(t).width;})), R=46, T=10;
+              // stacked portfolio bar
+              var pw=w-L-R, sbH=Math.max(18,h*0.1), y0=T;
+              ctx.fillStyle=cPri; ctx.textAlign='right'; ctx.fillText('Whole portfolio',L-8,y0+sbH/2);
+              var x=L, keys=['ps','rc','ce','gt','none'];
+              keys.forEach(function(k){var v=k==='none'?s.un:s.by[k]; var ww=pw*v/TOTAL; if(ww>0){ctx.fillStyle=COL[k]; ctx.fillRect(x,y0,ww,sbH); ctx.strokeStyle='#fff'; ctx.lineWidth=1; ctx.strokeRect(x,y0,ww,sbH);} x+=ww;});
+              ctx.fillStyle=cTxt; ctx.textAlign='left'; ctx.fillText(money(TOTAL),L+pw+4,y0+sbH/2);
+              // per-goal bars
+              var top2=y0+sbH+16, B=34, ph=h-top2-B, rows=keys.length, rh=ph/rows, bh=Math.min(20,rh*0.62);
+              var maxV=0; keys.forEach(function(k){maxV=Math.max(maxV,k==='none'?s.un:s.by[k]);}); var step=250, axMax=Math.max(1000,Math.ceil(maxV/step)*step);
+              for(var t=0;t<=axMax;t+=(axMax>1000?500:250)){var gx=L+pw*t/axMax; ctx.strokeStyle=cB; ctx.beginPath(); ctx.moveTo(gx,top2-4); ctx.lineTo(gx,top2+ph); ctx.stroke(); ctx.fillStyle=cTxt; ctx.textAlign='center'; ctx.fillText(t,gx,top2+ph+10);}
+              ctx.fillStyle=cTxt; ctx.textAlign='center'; ctx.fillText('Budget ($K)',L+pw/2,h-8);
+              keys.forEach(function(k,r){
+                var v=k==='none'?s.un:s.by[k], yy=top2+r*rh+(rh-bh)/2, lab=k==='none'?'Unaligned':GN[k];
+                ctx.fillStyle=k==='none'?COL.none:cPri; ctx.textAlign='right'; ctx.fillText(lab,L-8,yy+bh/2);
+                var ww=pw*v/axMax; ctx.fillStyle=COL[k]; ctx.fillRect(L,yy,ww,bh);
+                ctx.textAlign='left';
+                if(v===0 && k!=='none'){ctx.fillStyle=COL.none; ctx.font='bold 11px Arial'; ctx.fillText('GAP: no initiative',L+6,yy+bh/2); ctx.font='11px Arial';}
+                else {ctx.fillStyle=cPri; ctx.fillText(v+'K',L+ww+5,yy+bh/2);}
+              });
+            }
+            $('gca-model').addEventListener('click',function(){showModel=true; sel=I.map(function(x){return x.m;}); $('gca-model').setAttribute('aria-pressed','true'); build(); update(); $('gca-case').innerHTML='<b>Model answer loaded.</b> Two initiatives serve patient safety and one each serves compliance, cost, and growth. The boardroom AV upgrade and the blockchain pilot serve no goal, so $400K is unaligned. Use the i buttons to read each rationale.';});
+            $('gca-draft').addEventListener('click',function(){sel=DRAFT.slice(); build(); update(); caseBox(4);});
+            $('gca-clear').addEventListener('click',function(){sel=I.map(function(){return 'none';}); build(); update(); $('gca-case').innerHTML='<b>All set to None.</b> Now link each initiative to the goal its business case actually supports.';});
+            var rt; window.addEventListener('resize',function(){clearTimeout(rt); rt=setTimeout(function(){draw(stats());},60);});
+            build(); update(); caseBox(4);
+          })();
+          </script>
+
+          <div class="in-practice"><span class="ip-label">&#128270; In practice</span><p>IT&rsquo;s draft looks reasonable at first glance: 87% of the budget appears aligned. But it filed the barcode scanners under no goal because clinical engineering would buy them, so patient safety, the network&rsquo;s first goal, shows no support at all. It also tagged the boardroom upgrade and the blockchain pilot with goals their sponsors never claimed. The practitioner&rsquo;s model lowers the aligned share to 84% but closes the coverage gap and makes the $400K of unaligned spend visible to the steering committee.</p></div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>Two findings come out of a goals cascade review: spend without a goal and goals without spend. The practitioner reports both to the people who govern the portfolio. When a question asks for the BEST action on an unaligned project, choose reporting it for a business-case review, not cancelling it yourself or retrofitting a goal.</div>
+        </article>
+
+        <article class="content-section" id="s9">
+          <div class="cs-head"><span class="cs-num">9</span><h3>Faculty Teaching Segment</h3></div>
+          <p>Students in technical programs often struggle to explain why a project matters to anyone outside IT. A board brief forces the translation from technology to enterprise goals, which is the core skill of this domain.</p>
+          <ul class="detail">
+            <li><strong>Signature assignment:</strong> give students a one-page IT roadmap for a fictional organization (eight initiatives with budgets) and a strategic plan with four enterprise goals. Students write a two-page board brief that maps each initiative to a goal, flags unaligned spend and uncovered goals, and recommends what the steering committee should ask the sponsors. They submit the mapping as a spreadsheet and the brief as a document.</li>
+            <li><strong>Rubric criteria:</strong> each initiative mapped to a goal with evidence from its business case; unaligned spend and coverage gaps identified and quantified; recommendations that keep decisions with the steering committee and sponsors rather than the analyst; and plain business language a board member could act on, with no unexplained technical terms.</li>
+            <li><strong>Lab idea:</strong> students build the mapping in a spreadsheet with a pivot table or chart that totals budget by goal, then change two assumptions (a cancelled project and a new regulation) and report how the alignment picture shifts. Use only the synthetic roadmap you supply.</li>
+            <li><strong>Course fit:</strong> a GRC, IT management, or security management course, or the governance unit of a capstone. It supports the CAE-CD Cybersecurity Planning and Management (CPM), Policy, Legal, Ethics, and Compliance (PLE), and Business Continuity and Disaster Recovery (BCD) Knowledge Units.</li>
+          </ul>
+          <div class="tip"><span class="tip-label">&#127891; Teaching note</span>Give pairs a printed handout of the seven initiatives and their business cases before they open the aligner. Each pair commits to a mapping on paper first, then enters it and compares with the model. Spend the debrief on the two disputed rows, the EHR alerts and the barcode scanners, and ask what evidence in a business case would settle the argument.</div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="emates">
+    <p class="eyebrow">Explore with eMates</p>
+    <h2 class="h2">Interactive refreshers for this lesson</h2>
+    <div class="rule"></div>
+    <p class="lead">Short, self-paced eMates from the myEMATES library. Each opens in a new tab. Concept refreshers support your own exam study. Student-ready modules also work as warm-ups in your own courses.</p>
+    <div class="em-grid">
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 3</span></div><h3>Policies, Standards, Procedures, Guidelines</h3><p>Sort documents into the policy hierarchy and see who approves each level, as in Section 5.</p><div class="em-foot"><span class="em-level student">Student-ready</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/PSPG/PSPG.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Policies, Standards, Procedures, Guidelines (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Networking</span><span class="em-sec">Section 4</span></div><h3>Digital Media Handling: Backups</h3><p>Backup types and rotation, the practical side of meeting the RPOs a BIA sets.</p><div class="em-foot"><span class="em-level student">Student-ready</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/backups/backups.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Digital Media Handling: Backups (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 3</span></div><h3>Data Roles</h3><p>Owners, custodians, and users: the ownership model behind asset management and RACI.</p><div class="em-foot"><span class="em-level">Concept refresher</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/DataRoles/dataroles.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Data Roles (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 4</span></div><h3>Configuration Management</h3><p>Baselines, change control, and configuration records, the foundation of a trustworthy CMDB.</p><div class="em-foot"><span class="em-level">Concept refresher</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/ConfigMgmt/ConfigMgmt.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Configuration Management (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 5</span></div><h3>Ethics Challenge</h3><p>Dilemmas about pressure, incentives, and disclosure that bring the risk-culture discussion in Section 4 to life.</p><div class="em-foot"><span class="em-level student">Student-ready</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/ethics_challenge/ethics_challenge.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Ethics Challenge (opens in a new tab)">Open &#8599;</a></div></article>
+    </div>
+  </section>
+
+  <section class="block" id="practice-this-lesson">
+    <p class="eyebrow">Practice</p>
+    <h2 class="h2">Practice this lesson</h2>
+    <div class="rule"></div>
+    <p class="lead">Self-checking practice for this lesson, ready to use with your own students. Each item ends with a report you can print or save as a PDF. See all items in the <a href="practices.html">CRISC Practices</a> and the <a href="labs.html">CRISC Risk Lab</a>.</p>
+    <div class="pl-grid">
+      <article class="pl-card"><div class="pl-top"><span class="pl-type">CRISC Practices &middot; A2</span><span class="pl-time">&#9201; 35 min</span></div><h3><a href="activity02.html">Governance, Strategy, and Policy</a></h3><p>Separate governance from management, sort the policy hierarchy, trace the goals cascade, and order BIA, BCP, and DRP work.</p><div class="pl-foot"><span class="pl-level">Foundational</span><a class="pl-open" href="activity02.html" aria-label="Open activity A2: Governance, Strategy, and Policy">Open &#8594;</a></div></article>
+      <article class="pl-card pl-lab"><div class="pl-top"><span class="pl-type">CRISC Risk Lab &middot; B1</span><span class="pl-time">&#9201; 60 min</span></div><h3><a href="lab01.html">Risk Governance Charter</a></h3><p>Build a RACI for risk activities with live conflict checks, draft the appetite statement, and set tolerance thresholds for Larchmont Community Health.</p><div class="pl-foot"><span class="pl-level">Intermediate</span><a class="pl-open" href="lab01.html" aria-label="Open lab B1: Risk Governance Charter">Open &#8594;</a></div></article>
+    </div>
+  </section>
+
+  <section class="block" id="knowledge-check">
+    <p class="eyebrow">Scored Knowledge Check</p>
+    <h2 class="h2">Test your understanding</h2>
+    <div class="rule"></div>
+    <p class="lead" style="margin-bottom:1.5rem">Select the best answer for each question, then submit for your score and the rationale for every item. Like the exam, several options may be true; choose the best one.</p>
+    <div class="quiz-card">
+      <form id="quiz">
+
+        <div class="q" data-answer="C">
+          <p class="q-stem"><span class="qn">Q1.</span>Which activity is the BEST example of governance rather than management of enterprise IT?</p>
+          <fieldset class="options">
+            <legend>Question 1 options</legend>
+            <label class="opt"><input type="radio" name="q1" value="A"><span><span class="opt-letter">A.</span> The operations team applies monthly security patches to servers</span></label>
+            <label class="opt"><input type="radio" name="q1" value="B"><span><span class="opt-letter">B.</span> A project manager tracks the EHR migration schedule</span></label>
+            <label class="opt"><input type="radio" name="q1" value="C"><span><span class="opt-letter">C.</span> The board evaluates strategic options and sets priorities for technology investment</span></label>
+            <label class="opt"><input type="radio" name="q1" value="D"><span><span class="opt-letter">D.</span> The CISO monitors the performance of security controls</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: C.</b> Evaluating, directing, and monitoring at the board level is governance (COBIT EDM). Patching (DSS), project tracking (BAI), and control performance monitoring by the CISO (MEA) are management activities, even though D sounds like oversight.</div>
+        </div>
+
+        <div class="q" data-answer="A">
+          <p class="q-stem"><span class="qn">Q2.</span>During a portfolio review, a risk practitioner finds a $260,000 technology pilot with no sponsor and no link to any enterprise goal. What is the BEST action?</p>
+          <fieldset class="options">
+            <legend>Question 2 options</legend>
+            <label class="opt"><input type="radio" name="q2" value="A"><span><span class="opt-letter">A.</span> Report it to the IT steering committee and recommend that a sponsor present a business case</span></label>
+            <label class="opt"><input type="radio" name="q2" value="B"><span><span class="opt-letter">B.</span> Stop the pilot until it is aligned</span></label>
+            <label class="opt"><input type="radio" name="q2" value="C"><span><span class="opt-letter">C.</span> Ask the infrastructure team to identify the closest enterprise goal and record it</span></label>
+            <label class="opt"><input type="radio" name="q2" value="D"><span><span class="opt-letter">D.</span> Add the pilot to the risk register as a high risk</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: A.</b> Unaligned spend is a governance finding for the body that prioritizes investments. The practitioner has no authority to stop the pilot (B). Retrofitting a goal (C) hides the problem. Registering it as a risk (D) may follow, but does not get the decision to the people who must make it.</div>
+        </div>
+
+        <div class="q" data-answer="D">
+          <p class="q-stem"><span class="qn">Q3.</span>What is the PRIMARY purpose of the COBIT 2019 goals cascade?</p>
+          <fieldset class="options">
+            <legend>Question 3 options</legend>
+            <label class="opt"><input type="radio" name="q3" value="A"><span><span class="opt-letter">A.</span> To rank IT projects by return on investment</span></label>
+            <label class="opt"><input type="radio" name="q3" value="B"><span><span class="opt-letter">B.</span> To define the control objectives an auditor will test</span></label>
+            <label class="opt"><input type="radio" name="q3" value="C"><span><span class="opt-letter">C.</span> To assign each IT risk to a risk owner</span></label>
+            <label class="opt"><input type="radio" name="q3" value="D"><span><span class="opt-letter">D.</span> To translate stakeholder needs into enterprise goals, alignment goals, and prioritized governance and management objectives</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: D.</b> The cascade links stakeholder needs to specific, actionable priorities for information and technology. Ranking by ROI (A), audit testing (B), and risk ownership (C) are related activities, but none is the cascade&rsquo;s purpose.</div>
+        </div>
+
+        <div class="q" data-answer="B">
+          <p class="q-stem"><span class="qn">Q4.</span>At a small clinic, one billing clerk can both add vendors to the payment system and approve vendor payments. Hiring another clerk is not possible. Which control BEST addresses the risk?</p>
+          <fieldset class="options">
+            <legend>Question 4 options</legend>
+            <label class="opt"><input type="radio" name="q4" value="A"><span><span class="opt-letter">A.</span> Annual fraud awareness training for the clerk</span></label>
+            <label class="opt"><input type="radio" name="q4" value="B"><span><span class="opt-letter">B.</span> A manager&rsquo;s independent review of vendor master changes and payment reports</span></label>
+            <label class="opt"><input type="radio" name="q4" value="C"><span><span class="opt-letter">C.</span> Accepting the risk because the clinic is small</span></label>
+            <label class="opt"><input type="radio" name="q4" value="D"><span><span class="opt-letter">D.</span> Requiring the clerk to use a stronger password</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: B.</b> When duties cannot be separated, an independent review by someone outside the conflict is the standard compensating control. Training (A) and stronger authentication (D) do not address the conflict. Acceptance (C) may be an option for the risk owner, but not before a feasible compensating control is considered.</div>
+        </div>
+
+        <div class="q" data-answer="D">
+          <p class="q-stem"><span class="qn">Q5.</span>Across several departments, staff routinely bypass the access-request process with informal approval from senior managers. What is the MOST likely root cause?</p>
+          <fieldset class="options">
+            <legend>Question 5 options</legend>
+            <label class="opt"><input type="radio" name="q5" value="A"><span><span class="opt-letter">A.</span> The access-request system is not user-friendly</span></label>
+            <label class="opt"><input type="radio" name="q5" value="B"><span><span class="opt-letter">B.</span> Staff have not completed security awareness training</span></label>
+            <label class="opt"><input type="radio" name="q5" value="C"><span><span class="opt-letter">C.</span> The access-control standard is out of date</span></label>
+            <label class="opt"><input type="radio" name="q5" value="D"><span><span class="opt-letter">D.</span> Leadership tolerates noncompliance, which weakens the risk culture</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: D.</b> The pattern spans departments and involves senior managers, which points to tone at the top. Usability (A) and training (B) may contribute, but they do not explain why managers approve the bypass. An outdated standard (C) would not cause managers to ignore it.</div>
+        </div>
+
+        <div class="q" data-answer="A">
+          <p class="q-stem"><span class="qn">Q6.</span>A department needs to keep using a legacy lab device that cannot meet the encryption standard for six more months. What is the BEST way to handle this?</p>
+          <fieldset class="options">
+            <legend>Question 6 options</legend>
+            <label class="opt"><input type="radio" name="q6" value="A"><span><span class="opt-letter">A.</span> Document an exception with compensating controls and an expiry date, accepted by the risk owner</span></label>
+            <label class="opt"><input type="radio" name="q6" value="B"><span><span class="opt-letter">B.</span> Revise the encryption standard so the device complies</span></label>
+            <label class="opt"><input type="radio" name="q6" value="C"><span><span class="opt-letter">C.</span> Disconnect the device immediately until it can be replaced</span></label>
+            <label class="opt"><input type="radio" name="q6" value="D"><span><span class="opt-letter">D.</span> Allow continued use, since the device will be replaced soon</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: A.</b> A time-limited, documented exception with compensating controls and owner acceptance is the governed path. Weakening the standard for one device (B) affects every system. Disconnecting (C) may halt a critical process without a risk decision. Informal tolerance (D) leaves the risk unowned.</div>
+        </div>
+
+        <div class="q" data-answer="B">
+          <p class="q-stem"><span class="qn">Q7.</span>A clinic network is starting continuity planning. Which should be completed FIRST?</p>
+          <fieldset class="options">
+            <legend>Question 7 options</legend>
+            <label class="opt"><input type="radio" name="q7" value="A"><span><span class="opt-letter">A.</span> The disaster recovery plan for the EHR</span></label>
+            <label class="opt"><input type="radio" name="q7" value="B"><span><span class="opt-letter">B.</span> A business impact analysis of clinical and business processes</span></label>
+            <label class="opt"><input type="radio" name="q7" value="C"><span><span class="opt-letter">C.</span> A tabletop exercise of a ransomware outage</span></label>
+            <label class="opt"><input type="radio" name="q7" value="D"><span><span class="opt-letter">D.</span> A contract for a secondary data center</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: B.</b> The BIA identifies critical processes and sets MTD, RTO, and RPO. The DRP (A), exercises (C), and recovery sites (D) all depend on those priorities and would otherwise be built on guesses.</div>
+        </div>
+
+        <div class="q" data-answer="C">
+          <p class="q-stem"><span class="qn">Q8.</span>A risk practitioner finds that the asset inventory lists systems and locations but has no owner field. What is the GREATEST concern?</p>
+          <fieldset class="options">
+            <legend>Question 8 options</legend>
+            <label class="opt"><input type="radio" name="q8" value="A"><span><span class="opt-letter">A.</span> License compliance cannot be verified</span></label>
+            <label class="opt"><input type="radio" name="q8" value="B"><span><span class="opt-letter">B.</span> The CMDB cannot show relationships between systems</span></label>
+            <label class="opt"><input type="radio" name="q8" value="C"><span><span class="opt-letter">C.</span> No one is accountable for classifying the assets, approving access, or accepting their risk</span></label>
+            <label class="opt"><input type="radio" name="q8" value="D"><span><span class="opt-letter">D.</span> Asset depreciation cannot be calculated</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: C.</b> Ownership is what connects an asset to risk decisions. Without owners, classification, access approval, and risk acceptance have no accountable party. Licensing (A), relationships (B), and depreciation (D) are real but narrower issues.</div>
+        </div>
+
+        <div class="quiz-actions">
+          <button type="button" class="btn" onclick="gradeQuiz()">Submit Answers</button>
+          <button type="button" class="btn secondary" onclick="resetQuiz()">Reset</button>
+          <span class="score" id="score" aria-live="polite"></span>
+        </div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<nav class="pager" aria-label="Lesson navigation">
+  <div class="pager-inner">
+    <a href="lesson00.html" class="prev"><span class="pager-dir">&#8592; Previous</span><span class="pager-name">Lesson 0: Orientation</span></a>
+    <a href="lesson02.html" class="next"><span class="pager-dir">Next &#8594;</span><span class="pager-name">Lesson 2: Risk Governance</span></a>
+  </div>
+</nav>
+
+<footer>
+  <div class="footer-logo">CRISC 5-DAY FACULTY WORKSHOP</div>
+  <p class="footer-disclaimer">This workshop is an independent educational resource. It is not affiliated with, endorsed by, or sponsored by ISACA. CRISC&#174; is a registered mark of ISACA. All lesson text, questions, and scenarios are original and do not reproduce the ISACA CRISC Review Manual or question database. eMates are provided by the myEMATES library and open in a new tab. Always verify the current exam content outline at isaca.org before registering.</p>
+</footer>
+
+<script src="crisc-lesson.js"></script>
+</body>
+</html>

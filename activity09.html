@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>A9 Technology, Security, and Privacy | CRISC 5-Day Faculty Workshop</title>
+<link rel="stylesheet" href="crisc-lesson.css">
+<link rel="stylesheet" href="practice.css">
+</head>
+<body>
+<div id="app"><noscript><p style="padding:2rem;font-family:Arial">This activity needs JavaScript enabled.</p></noscript></div>
+
+<script>
+window.ACTIVITY = {
+  id: 'A9',
+  title: 'Technology, Security, and Privacy',
+  accent: 'Privacy',
+  domain: 'Domain 4 (20%)',
+  time: '40 min',
+  level: 'Intermediate',
+  lessonHref: 'lesson08.html#s3',
+  lessonLabel: 'Lesson 8, Technology and Security',
+  lede: 'Merrow Valley Hospital is a 320-bed regional hospital that belongs to a health group with clinics in the United States and the EU. It is building a patient portal, piloting AI tools, and rehearsing its recovery plans. Practice placing risk where it is cheapest to treat, governing AI by assessed risk, recovering in the right order, and testing privacy as more than security.',
+  concepts: [
+    { key: 'sdlc', name: 'Risk in the SDLC', review: 'Lesson 8, The SDLC and Project and Portfolio Management' },
+    { key: 'ai', name: 'AI risk frameworks', review: 'Lesson 8, Emerging Technologies' },
+    { key: 'dr', name: 'Recovery order, RTO, and RPO', review: 'Lesson 8, Technology Resilience and Disaster Recovery' },
+    { key: 'csf', name: 'NIST CSF 2.0 functions', review: 'Lesson 9, Security Frameworks and Standards' },
+    { key: 'privacy', name: 'Privacy principles', review: 'Lesson 9, Data Privacy and Data Protection Principles' }
+  ],
+  stations: [
+    {
+      type: 'sort', short: 'SDLC phase', title: 'Where is each risk best addressed?', concept: 'sdlc',
+      instr: 'Each problem turned up in a Merrow Valley technology project. Choose the SDLC phase where the control or gate that addresses it <b>belongs</b>, the phase where it is cheapest and most natural to catch.',
+      hint: 'Missing link to an objective: initiation. Missing security or privacy needs: requirements. Excessive trust between components: design, through threat modeling. Leaked secrets and vulnerable libraries: development. Real patient data in tests: testing. Unapproved deployment: implementation. New flaws after go-live: operations. Data left on retired equipment: disposal.',
+      buckets: ['Initiation', 'Requirements', 'Design', 'Development', 'Testing', 'Implementation', 'Operations', 'Disposal'],
+      review: { href: 'lesson08.html#s3', label: 'Lesson 8, The SDLC and Project and Portfolio Management' },
+      items: [
+        { text: 'The patient portal business case does not say which hospital objective it supports or what risks it brings.', answer: 0, why: 'A business case with a risk section, approved through the portfolio, is the initiation gate.' },
+        { text: 'No one stated that the new telehealth app must keep an audit log of who views each patient record.', answer: 1, why: 'Security, privacy, and compliance needs belong in the requirements, before anyone designs or builds.' },
+        { text: 'The scheduling service accepts any request that comes from the internal network, without checking who sent it.', answer: 2, why: 'Excessive trust is an architectural flaw. Threat modeling and architecture review in design catch it.' },
+        { text: 'A developer commits the lab interface API key to the code repository.', answer: 3, why: 'Secrets scanning in the development pipeline catches leaked credentials before they spread.' },
+        { text: 'The billing module is tested with a full copy of real patient records.', answer: 4, why: 'Test data should be masked or synthetic. That control belongs to the testing phase.' },
+        { text: 'An engineer deploys a portal update straight to production without change approval.', answer: 5, why: 'Change approval, segregation of duties, and a back-out plan are implementation gates.' },
+        { text: 'Eight months after go-live, a library inside the portal gets a critical CVE.', answer: 6, why: 'New vulnerabilities after release are handled by vulnerability management and monitoring in operations.' },
+        { text: 'Retired imaging servers go to a recycler with their disks intact.', answer: 7, why: 'Sanitization, with a record, is the disposal control.' },
+        { text: 'A vulnerable open-source package is pulled into the portal build.', answer: 3, why: 'Software composition analysis in the development pipeline flags vulnerable components before release.' },
+        { text: 'The portal is about to go live, and no penetration test has been done.', answer: 4, why: 'Dynamic testing and penetration testing are part of the testing phase, before implementation.' }
+      ]
+    },
+    {
+      type: 'scenario', short: 'AI risk', title: 'Governing AI at Merrow Valley', concept: 'ai',
+      instr: 'Merrow Valley’s AI governance committee reviews every AI use. Because the health group has EU clinics, the committee classifies each use under the EU AI Act as well as using the NIST AI RMF 1.0. Choose the <b>BEST</b> answer for each question.',
+      hint: 'AI RMF: Govern sets policy and accountability, Map establishes context and risks, Measure assesses them, and Manage prioritizes and responds. EU AI Act: social scoring is prohibited, emergency patient triage is high-risk, a chatbot has transparency duties (limited risk), and a spam filter is minimal risk.',
+      review: { href: 'lesson08.html#s6', label: 'Lesson 8, Emerging Technologies' },
+      items: [
+        {
+          title: 'Case 1: The discharge-summary assistant', text: 'A generative AI assistant drafts discharge summaries for physicians to edit. The committee works through the AI RMF functions.',
+          parts: [
+            { q: 'The committee writes the AI acceptable use policy and names an accountable executive for AI risk. Which function is this?', options: ['Govern', 'Map', 'Measure', 'Manage'], answer: 0, why: 'Govern sets culture, policy, and accountability across the AI program.' },
+            { q: 'The team documents the intended use, the users, the data sources, and who could be harmed by a wrong summary. Which function is this?', options: ['Govern', 'Map', 'Measure', 'Manage'], answer: 1, why: 'Map establishes the context and identifies the risks of a specific AI system.' },
+            { q: 'The team tests 200 sample records and finds that 6% of summaries contain a confabulated medication. Which function is this?', options: ['Govern', 'Map', 'Measure', 'Manage'], answer: 2, why: 'Measure assesses and tracks the identified risks, here a confabulation rate.' },
+            { q: 'The team requires physician sign-off on every summary and adds a switch to turn the assistant off. Which function is this?', options: ['Govern', 'Map', 'Measure', 'Manage'], answer: 3, why: 'Manage prioritizes the risks and puts responses in place, such as human-in-the-loop review and a kill switch.' }
+          ]
+        },
+        {
+          title: 'Case 2: Four proposals, four tiers', text: 'The committee classifies four AI uses at the EU clinics under the EU AI Act.',
+          parts: [
+            { q: 'A model that ranks emergency department patients by urgency of care', options: ['Unacceptable (prohibited)', 'High-risk', 'Limited risk (transparency duties)', 'Minimal risk'], answer: 1, why: 'Emergency healthcare patient triage is listed as high-risk. It carries duties for risk management, data quality, human oversight, and documentation.' },
+            { q: 'A website chatbot that answers questions about visiting hours and parking', options: ['Unacceptable (prohibited)', 'High-risk', 'Limited risk (transparency duties)', 'Minimal risk'], answer: 2, why: 'People must be told they are talking to an AI system. That transparency duty is the limited-risk tier.' },
+            { q: 'A score that rates patients’ general trustworthiness from their social behavior and limits their access to services', options: ['Unacceptable (prohibited)', 'High-risk', 'Limited risk (transparency duties)', 'Minimal risk'], answer: 0, why: 'Social scoring that leads to unfavorable treatment is a prohibited practice.' },
+            { q: 'A spam filter on hospital email', options: ['Unacceptable (prohibited)', 'High-risk', 'Limited risk (transparency duties)', 'Minimal risk'], answer: 3, why: 'A spam filter carries minimal risk and no specific obligations under the Act.' }
+          ]
+        },
+        {
+          title: 'Case 3: Public tools on the wards', text: 'A survey finds that some clinicians paste patient notes into public generative AI tools to draft letters.',
+          parts: [
+            { q: 'What should Merrow Valley do FIRST?', options: ['Block every AI website at the firewall', 'Inventory current AI use and issue an acceptable use policy grounded in a risk assessment', 'Buy an enterprise AI license for every clinician', 'Ignore it until a breach occurs'], answer: 1, why: 'Know the use, assess it, then set rules. A blanket ban drives use underground; unrestricted use ignores the data risk.' }
+          ]
+        }
+      ]
+    },
+    {
+      type: 'order', short: 'Recovery order', title: 'Recovery order, RTO, and RPO', concept: 'dr',
+      instr: 'Merrow Valley’s BIA sets a maximum tolerable downtime of 8 hours for the electronic health record (EHR). Put each list in order. The first is the recovery sequence after ransomware takes down the EHR. The second ranks backup designs by how much data could be lost, which sets the achievable RPO. The third ranks recovery sites by how fast they can bring a system back, which sets the achievable RTO.',
+      hint: 'Keep care going and declare the disaster, then rebuild from the bottom up: infrastructure and identity, then data, then applications. Validate before you call it done. For RPO, the more often data is copied, the less is lost. For RTO, the more ready the site, the faster the recovery.',
+      review: { href: 'lesson08.html#s5', label: 'Lesson 8, Technology Resilience and Disaster Recovery' },
+      groups: [
+        {
+          title: 'EHR recovery after ransomware', topLabel: 'First step', bottomLabel: 'Last step',
+          items: [
+            { text: 'Restore the EHR database from the most recent clean, immutable backup', rank: 3, why: 'Data is restored once the infrastructure and identity services it depends on are clean.' },
+            { text: 'Declare the disaster under the DRP criteria and notify the recovery team and the EHR risk owner', rank: 0, accept: [0, 1], why: 'The declaration starts the plan and the escalation. It can happen alongside the switch to downtime procedures.' },
+            { text: 'Validate data integrity with clinical owners and enter the paper downtime records', rank: 5, why: 'The business owners confirm the data is right before normal operations resume.' },
+            { text: 'Rebuild core infrastructure in a clean environment: network and identity services', rank: 2, why: 'Applications and data depend on network and identity, so they come back first.' },
+            { text: 'Return to normal operations and hold the after-action review', rank: 6, why: 'The plan ends with normal operations and lessons learned, with owners for each action.' },
+            { text: 'Switch to BCP downtime procedures, such as paper orders, so patient care continues', rank: 1, accept: [0, 1], why: 'The BCP keeps the business running while the DRP restores technology. It starts at once, alongside the declaration.' },
+            { text: 'Restore applications and interfaces, such as lab and pharmacy, and reconnect users', rank: 4, why: 'Applications come back on top of restored data and infrastructure.' }
+          ]
+        },
+        {
+          title: 'Backup designs by data loss (RPO)', topLabel: 'Least data lost', bottomLabel: 'Most data lost',
+          items: [
+            { text: 'Nightly incremental backup', rank: 3, why: 'Up to a day of data can be lost.' },
+            { text: 'Synchronous replication to a second data center', rank: 0, why: 'Each write is committed in both places, so data loss is near zero.' },
+            { text: 'Weekly full backup to offline tape', rank: 4, why: 'Up to a week of data can be lost. It is a good immutable copy, but a poor RPO on its own.' },
+            { text: 'Asynchronous replication every 15 minutes', rank: 1, why: 'At most about 15 minutes of data is lost.' },
+            { text: 'Hourly storage snapshots', rank: 2, why: 'At most about an hour of data is lost.' }
+          ]
+        },
+        {
+          title: 'Recovery sites by speed (RTO)', topLabel: 'Fastest recovery', bottomLabel: 'Slowest recovery',
+          items: [
+            { text: 'Warm site', rank: 2, why: 'Hours to a day or two. Equipment is ready, but systems and data must be brought up.' },
+            { text: 'Hot site or active-active', rank: 0, why: 'Minutes to hours. Only this fits a very tight RTO.' },
+            { text: 'Cold site', rank: 3, why: 'Days to weeks. It cannot meet the EHR’s 8-hour MTD.' },
+            { text: 'Cloud recovery that is pre-built and tested', rank: 1, why: 'Hours, if the environment is pre-built and tested. Slower than a hot site, faster than a warm one.' }
+          ]
+        }
+      ]
+    },
+    {
+      type: 'sort', short: 'CSF 2.0 functions', title: 'Which CSF 2.0 function?', concept: 'csf',
+      instr: 'Merrow Valley reports to its board in NIST CSF 2.0 terms. Assign each activity to its function: Govern, Identify, Protect, Detect, Respond, or Recover.',
+      hint: 'Govern sets strategy, policy, roles, oversight, and supply chain risk management. Identify knows the assets and the risks. Protect applies safeguards. Detect finds possible attacks. Respond acts on a detected incident. Recover restores assets and operations.',
+      buckets: ['Govern', 'Identify', 'Protect', 'Detect', 'Respond', 'Recover'],
+      review: { href: 'lesson09.html#s2', label: 'Lesson 9, Security Frameworks and Standards' },
+      items: [
+        { text: 'The board approves the cybersecurity risk appetite and assigns roles for risk oversight.', answer: 0, why: 'Strategy, expectations, roles, and oversight are Govern, the function CSF 2.0 added.' },
+        { text: 'Security requirements are set for medical device suppliers before contracts are signed.', answer: 0, why: 'Cybersecurity supply chain risk management sits under Govern in CSF 2.0.' },
+        { text: 'An inventory is kept of every networked infusion pump and its software version.', answer: 1, why: 'Asset management is part of Identify.' },
+        { text: 'A risk assessment is done on the new imaging system before purchase.', answer: 1, why: 'Risk assessment is part of Identify.' },
+        { text: 'MFA is enforced for all remote clinician access.', answer: 2, why: 'Identity management and access control are Protect safeguards.' },
+        { text: 'Nursing staff complete role-based awareness training on phishing and patient data handling.', answer: 2, why: 'Awareness and training are part of Protect.' },
+        { text: 'EHR access logs are monitored for staff viewing records of patients they are not treating.', answer: 3, why: 'Monitoring to find possible misuse is Detect.' },
+        { text: 'Analysts review alerts from network sensors on the medical device network.', answer: 3, why: 'Analyzing adverse events to find possible attacks is Detect.' },
+        { text: 'An infected workstation is isolated, and the incident is reported to regulators as required.', answer: 4, why: 'Containment, analysis, and incident reporting are Respond.' },
+        { text: 'The radiology image archive is restored from backup and its integrity is verified.', answer: 5, why: 'Restoring assets and operations is Recover.' },
+        { text: 'After containment, clinicians are told when each restored system will return to service.', answer: 5, why: 'Communicating restoration progress is part of Recover.' }
+      ]
+    },
+    {
+      type: 'scenario', short: 'Privacy principles', title: 'Privacy at the EU clinics', concept: 'privacy',
+      instr: 'Merrow Valley’s EU clinics process personal data under the GDPR. Each case raises one Article 5 principle or a related duty. Choose the <b>BEST</b> answer.',
+      hint: 'Collect only what you need (minimization). Use it only for the stated purpose (purpose limitation). Keep it no longer than needed (storage limitation). Keep it correct (accuracy). Be able to prove all of it (accountability). Security protects confidentiality, but it does not settle the other principles.',
+      review: { href: 'lesson09.html#s4', label: 'Lesson 9, Data Privacy and Data Protection Principles' },
+      items: [
+        {
+          title: 'Case 1: The flu clinic form', text: 'The intake form for a walk-in flu vaccine clinic asks for marital status, religion, and employer. None is needed to give the vaccine.',
+          parts: [
+            { q: 'Which principle does the form breach?', options: ['Accuracy', 'Data minimization', 'Storage limitation', 'Integrity and confidentiality'], answer: 1, why: 'Collecting data the purpose does not need breaches data minimization.' }
+          ]
+        },
+        {
+          title: 'Case 2: The wellness campaign', text: 'Marketing wants to use treatment records to target patients with a paid wellness program. Patients were told the data was collected for their care.',
+          parts: [
+            { q: 'Which principle is at stake?', options: ['Purpose limitation', 'Accuracy', 'Availability', 'Data minimization'], answer: 0, why: 'Data collected for care cannot simply be reused for an unrelated purpose. That is purpose limitation.' }
+          ]
+        },
+        {
+          title: 'Case 3: The analytics extract', text: 'An analytics extract holds identifiable records of every patient since 2012, with no retention rule. The IT director says, “It is encrypted, so privacy is covered.”',
+          parts: [
+            { q: 'Which principle does the extract breach?', options: ['Storage limitation', 'Lawfulness', 'Integrity and confidentiality', 'Accuracy'], answer: 0, why: 'Identifiable data kept longer than the purpose requires breaches storage limitation.' },
+            { q: 'What is the BEST response to the IT director?', options: ['Agree, since encryption is the main privacy control', 'Explain that encryption protects confidentiality but does not address retention, purpose, or minimization, and recommend a retention rule with automated deletion', 'Recommend stronger encryption', 'Move the extract to a different server'], answer: 1, why: 'A system can be perfectly secure and still breach privacy law. Retention needs its own control.' }
+          ]
+        },
+        {
+          title: 'Case 4: The readmission model', text: 'The data science team plans a model that profiles every patient at large scale to predict readmission and adjust follow-up care. Design is not yet final.',
+          parts: [
+            { q: 'What should happen FIRST?', options: ['Build the model and review it after launch', 'Conduct a data protection impact assessment before design is final', 'Encrypt the training data', 'Ask patients to opt out if they object'], answer: 1, why: 'Large-scale profiling is likely to result in high risk to individuals, so GDPR Article 35 requires a DPIA before the processing. Doing it before design is final lets its findings shape the design.' }
+          ]
+        },
+        {
+          title: 'Case 5: The misdirected export', text: 'On Monday at 09:00, the clinic confirms that a file of patient records was sent to the wrong external party and cannot be recovered.',
+          parts: [
+            { q: 'If the breach is reportable, by when should the supervisory authority be notified, where feasible?', options: ['Within 24 hours', 'Within 72 hours of becoming aware, so by Thursday at 09:00', 'Within 30 days', 'Only if a patient complains'], answer: 1, why: 'The GDPR requires notice without undue delay and, where feasible, within 72 hours of becoming aware of a reportable breach.' },
+            { q: 'A regulator asks Merrow Valley to show how it complies with all of these principles. Which principle requires it to be able to do that?', options: ['Transparency', 'Accountability', 'Accuracy', 'Purpose limitation'], answer: 1, why: 'Accountability means being able to demonstrate compliance, through policies, DPIAs, training, and audit evidence.' }
+          ]
+        }
+      ]
+    },
+    {
+      type: 'reflect', short: 'Reflect', title: 'Reflect on your readiness',
+      instr: 'Rate your confidence on each concept, then answer the prompts. Your responses appear in the summary report.',
+      prompts: [
+        { key: 'shift', label: 'Choose one AI tool your students or colleagues already use. Which EU AI Act tier would it fall into, and which AI RMF function would you start with?' },
+        { key: 'next', label: 'Which concept from this activity will you review before the next lesson, and how?' }
+      ]
+    }
+  ]
+};
+</script>
+<script src="practice.js"></script>
+</body>
+</html>

@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 8: Technology and Security | CRISC Workshop</title>
+<link rel="stylesheet" href="crisc-lesson.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-seal">CRISC<br>PREP</div>
+    <span class="nav-title">5-Day Faculty Workshop</span>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#lessons">Lessons</a></li>
+      <li><a href="index.html#practice">Practice</a></li>
+      <li><a href="index.html#schedule">Schedule</a></li>
+      <li><a href="index.html#domains">Domains</a></li>
+      <li><a href="index.html#exam-prep">Exam Prep</a></li>
+      <li><a href="index.html#faculty-tools">Faculty Tools</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="lesson-hero">
+  <div class="lesson-hero-inner">
+    <p class="breadcrumb"><a href="index.html">Workshop</a> &nbsp;&rsaquo;&nbsp; <a href="index.html#lessons">Lessons</a> &nbsp;&rsaquo;&nbsp; <span>Lesson 8</span></p>
+    <span class="lesson-badge-lg">Day 5, Morning &bull; Domain 4A</span>
+    <h1>Technology and <span>Security</span></h1>
+    <p class="lesson-lede">Every IT risk eventually lands on a technology: an architecture that ages, a change that breaks production, a project that skips a security gate, a backup that will not restore, or a new tool the business adopted before anyone asked what could go wrong. Domain 4A asks the risk practitioner to understand enough about how technology is built and run to see where risk enters, and to bring emerging technology such as AI under the same disciplined process as everything else.</p>
+    <div class="meta-chips">
+      <span class="meta-chip">Session: <strong>Day 5, 9:00 to 12:00</strong></span>
+      <span class="meta-chip">Duration: <strong>~3 hrs</strong></span>
+      <span class="meta-chip">Exam Weight: <strong>20%</strong></span>
+      <span class="meta-chip">Knowledge Check: <strong>8 Questions</strong></span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="block">
+    <p class="eyebrow">Overview</p>
+    <h2 class="h2">Where risk enters the technology stack</h2>
+    <div class="rule"></div>
+    <p class="lead">The first three domains give the risk practitioner a process: govern, assess, respond, and monitor. Domain 4 tests whether that process reaches the places where technology risk is actually created. Architecture decisions set the risk profile for years. Operations practices decide whether a bad change is caught or shipped. The system development life cycle decides whether security is designed in or bolted on. Resilience planning decides whether an outage costs an hour or a week.</p>
+    <p class="lead">This lesson walks the technology stack from enterprise architecture to disaster recovery, then turns to emerging technology: artificial intelligence and generative AI, cloud services, operational technology and the Internet of Things, and the move to post-quantum cryptography. The running example is Halloway Foods, a regional food manufacturer upgrading its production line and piloting a generative AI customer assistant.</p>
+    <div class="mindset"><span class="tip-label">&#9878;&#65039; Think like a risk practitioner</span>New technology does not get a new risk process. It gets the same one: tie it to a business objective, identify and assess the risk, recommend a response, and assign an owner. When a question offers &ldquo;ban the technology&rdquo; or &ldquo;buy a tool for it&rdquo; next to &ldquo;assess the risk first,&rdquo; the assessment is almost always the better answer.</div>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Learning Objectives</p>
+    <h2 class="h2">By the end of this lesson you will be able to&hellip;</h2>
+    <div class="rule"></div>
+    <ul class="objectives">
+      <li><span><strong>Explain</strong> how enterprise architecture, roadmaps, and technical debt shape an organization&rsquo;s IT risk profile. <em class="bloom-tag">Bloom: Understand</em></span></li>
+      <li><span><strong>Identify</strong> risk points in operations management (change, asset, incident, and problem) and in DevOps pipelines. <em class="bloom-tag">Bloom: Apply</em></span></li>
+      <li><span><strong>Analyze</strong> where risk enters each SDLC phase and each stage of the data lifecycle, and which control belongs there. <em class="bloom-tag">Bloom: Analyze</em></span></li>
+      <li><span><strong>Evaluate</strong> recovery strategies against RTO and RPO set by the business impact analysis. <em class="bloom-tag">Bloom: Evaluate</em></span></li>
+      <li><span><strong>Assess</strong> emerging technology initiatives (AI, cloud, OT/IoT, post-quantum) using recognized frameworks and recommend a governance tier. <em class="bloom-tag">Bloom: Evaluate</em></span></li>
+      <li><span><strong>Design</strong> an AI use-case risk review assignment for a college department, with a rubric. <em class="bloom-tag">Bloom: Create</em></span></li>
+    </ul>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Key Terms</p>
+    <h2 class="h2">Vocabulary flashcards</h2>
+    <div class="rule"></div>
+    <p class="flip-hint-top">&#128072; Read the term, recall the definition, then click or press Enter to check yourself.</p>
+    <div class="vocab-grid">
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Enterprise Architecture (EA)</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">The organized description of how business processes, data, applications, and technology fit together, with a target state and a roadmap to reach it.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Technical Debt</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">The future cost and risk created by shortcuts taken today: unpatched platforms, hard-coded settings, missing tests, and systems kept past end of support.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Change Enablement</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">The ITIL 4 practice (long called change management) that assesses, authorizes, and schedules changes so that their benefit outweighs their risk.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Problem Management</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">Finding and removing the root cause of one or more incidents. Incident management restores service; problem management stops it from failing again.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">DevSecOps</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">DevOps with security built into the automated pipeline: code scanning, dependency checks, secrets detection, and policy gates that stop a risky build.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Recovery Time Objective (RTO)</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">The target time to restore a process or system after a disruption. It must be shorter than the maximum tolerable downtime set in the BIA.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Recovery Point Objective (RPO)</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">The maximum acceptable amount of data loss, measured in time. An RPO of four hours means backups or replication at least every four hours.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Shared Responsibility Model</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">The split of security duties between a cloud provider and its customer. It shifts with the service model, but the customer always keeps data, identity, and accountability.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Human-in-the-Loop</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">A design in which a qualified person reviews or approves an AI system&rsquo;s output before it takes effect, used where errors carry real consequences.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Crypto-Agility</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">The ability to replace cryptographic algorithms and keys without redesigning systems, which is the foundation of a post-quantum migration.</div></div>
+        </div>
+      </button>
+
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Lesson Content</p>
+    <h2 class="h2">Study the material</h2>
+    <div class="rule"></div>
+    <div class="lesson-content">
+      <nav class="toc" aria-label="On this page">
+        <div class="toc-title">On this page</div>
+        <ul>
+          <li><a href="#s1">1. Technology Principles and Architecture</a></li>
+          <li><a href="#s2">2. Operations Management</a></li>
+          <li><a href="#s3">3. SDLC and Project Management</a></li>
+          <li><a href="#s4">4. Data Lifecycle Management</a></li>
+          <li><a href="#s5">5. Resilience and Disaster Recovery</a></li>
+          <li><a href="#s6">6. Emerging Technologies</a></li>
+          <li><a href="#s7">7. Interactive: Emerging Technology Risk Profiler</a></li>
+          <li><a href="#s8">8. Faculty Teaching Segment</a></li>
+        </ul>
+      </nav>
+      <div class="content-main">
+
+        <article class="content-section" id="s1">
+          <div class="cs-head"><span class="cs-num">1</span><h3>Technology Principles and Enterprise Architecture</h3></div>
+          <p>Enterprise architecture describes how the business, its data, its applications, and its infrastructure fit together today (the baseline) and how they should fit together later (the target). The gap between the two becomes a roadmap of projects. For the risk practitioner, the architecture is a map of concentration and dependency: where a single platform carries many processes, where data flows cross trust boundaries, and where old technology holds up new services.</p>
+          <ul class="detail">
+            <li><strong>TOGAF:</strong> The Open Group Architecture Framework. Its Architecture Development Method (ADM) cycles through architecture vision, business, information systems, and technology architectures, then opportunities, migration planning, implementation governance, and change management. Risk and security requirements belong in every phase, not just the technology one.</li>
+            <li><strong>COBIT 2019 link:</strong> APO03 Managed Enterprise Architecture sets the governance objective. A risk practitioner checks that architecture decisions are traced to business goals and that exceptions to architecture standards are recorded as risks.</li>
+            <li><strong>Technology roadmaps:</strong> a dated plan for adopting, upgrading, and retiring platforms. A roadmap that only adds technology and never retires any is a growing attack surface.</li>
+            <li><strong>Technical debt:</strong> deferred work that makes systems harder and riskier to change. It compounds like financial debt, and like financial debt it should be visible on a register with an owner and a repayment plan.</li>
+            <li><strong>End of life and end of support:</strong> when a vendor stops selling (EOL) and then stops patching (EOS) a product. Each EOS system needs a decision: replace, isolate, apply compensating controls, or formally accept the risk.</li>
+          </ul>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Architecture principle</th><th>What it means</th><th>Risk it reduces</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Standardization</td><td>Fewer platforms, approved patterns, reference designs</td><td>Unpatched one-off systems, skill gaps</td></tr>
+              <tr><td class="term">Modularity and loose coupling</td><td>Components connect through defined interfaces</td><td>Cascading failure, risky big-bang changes</td></tr>
+              <tr><td class="term">Secure by design</td><td>Security requirements set at the vision phase</td><td>Expensive retrofits, control gaps</td></tr>
+              <tr><td class="term">Resilience by design</td><td>Redundancy and failover where the BIA requires it</td><td>Single points of failure</td></tr>
+              <tr><td class="term">Data as an asset</td><td>Each data domain has an owner and a classification</td><td>Ungoverned copies, unclear accountability</td></tr>
+            </tbody>
+          </table></div>
+          <div class="in-practice"><span class="ip-label">&#128270; In practice</span><p>Halloway Foods runs its packaging line on a supervisory control system installed in 2012. The vendor ended support in 2024. The architecture review shows that the new IoT sensor project would connect directly to that system. The risk practitioner records the EOS platform as a risk, links it to the IoT project, and asks the plant manager, as risk owner, to choose between replacement on the roadmap and segmentation with documented acceptance until then.</p></div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a question describes a legacy system that cannot be patched, the BEST answer usually involves documenting the risk and getting a decision from the risk owner (replace, isolate, compensate, or accept). Quietly leaving it in place, or unilaterally shutting it down, both skip the owner.</div>
+        </article>
+
+        <article class="content-section" id="s2">
+          <div class="cs-head"><span class="cs-num">2</span><h3>Operations Management</h3></div>
+          <p>Most outages and many breaches start in operations: an untested change, an unknown asset, an incident closed without a root cause. ITIL 4 and COBIT 2019 describe these practices in different words, but the risk logic is the same. Each practice is a control, and each produces evidence the risk practitioner can monitor.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Practice</th><th>Purpose</th><th>Risk if weak</th><th>Useful indicator</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Change enablement</td><td>Assess, authorize, schedule, and review changes</td><td>Outages, unauthorized changes, backdoors</td><td>Unauthorized or emergency changes as a share of all changes</td></tr>
+              <tr><td class="term">IT asset management</td><td>Know what exists, who owns it, and its lifecycle state</td><td>Shadow IT, unpatched unknown devices</td><td>Assets discovered on the network that are not in the inventory</td></tr>
+              <tr><td class="term">Configuration management</td><td>Record approved baselines and relationships in a CMDB</td><td>Configuration drift, unclear blast radius</td><td>Systems out of compliance with their baseline</td></tr>
+              <tr><td class="term">Incident management</td><td>Restore normal service quickly</td><td>Long outages, missed breach notices</td><td>Mean time to restore; incidents breaching SLA</td></tr>
+              <tr><td class="term">Problem management</td><td>Find and remove root causes</td><td>The same incident recurring</td><td>Repeat incidents; open known errors past target date</td></tr>
+            </tbody>
+          </table></div>
+          <h4>Change risk in practice</h4>
+          <ul class="detail">
+            <li><strong>Standard changes:</strong> low-risk, pre-approved, repeatable (for example, adding a user to an approved group). They still leave a record.</li>
+            <li><strong>Normal changes:</strong> assessed and authorized by a change authority, with a test plan and a back-out plan.</li>
+            <li><strong>Emergency changes:</strong> made fast to restore service or close an active threat, then reviewed after the fact. A high rate of emergency changes is a key risk indicator.</li>
+            <li><strong>Segregation of duties:</strong> the person who writes a change should not be the only person who approves and deploys it. In automated pipelines, the pipeline enforces this through required reviews.</li>
+          </ul>
+          <h4>DevOps</h4>
+          <p>DevOps joins development and operations so that small changes ship often through an automated pipeline. That can lower risk, because small changes are easier to test and roll back. It can also raise it, because a compromised pipeline deploys bad code at the same speed. The control shifts from a weekly change board to the pipeline itself: protected branches, required peer review, automated tests, signed builds, and logs that prove each step happened.</p>
+          <div class="resource-link">
+            <span class="rl-icon" aria-hidden="true">&#9881;&#65039;</span>
+            <div class="rl-body"><span class="rl-label">Explore with an eMate</span><span class="rl-text"><strong>Configuration Management</strong>: baselines, change control, and why configuration drift turns into risk.</span></div>
+            <div class="rl-actions"><a class="btn secondary" href="https://d2hie3dpn9wvbb.cloudfront.net/ConfigMgmt/ConfigMgmt.html" target="_blank" rel="noopener noreferrer">Configuration Management <span class="ext">&#8599;</span></a></div>
+          </div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When incidents keep recurring, the answer is problem management (root cause), not faster incident response. When a question asks what BEST reduces the risk of unauthorized changes, look for a formal change process with segregation of duties, not more monitoring after the fact.</div>
+        </article>
+
+        <article class="content-section" id="s3">
+          <div class="cs-head"><span class="cs-num">3</span><h3>The SDLC and Project and Portfolio Management</h3></div>
+          <p>The cheapest place to fix a security flaw is in the requirements. The most expensive place is in production. Whatever delivery model a project uses, the risk practitioner wants the same things: security and privacy requirements stated early, risk reviewed at each decision point, and nothing promoted to production without evidence that it was tested.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>SDLC phase</th><th>Typical risk</th><th>Control or gate</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Initiation and feasibility</td><td>Project does not support a business objective; risk not considered in the business case</td><td>Business case with a risk section; portfolio approval</td></tr>
+              <tr><td class="term">Requirements</td><td>Security, privacy, and compliance needs missing</td><td>Security and privacy requirements; data classification; abuse cases</td></tr>
+              <tr><td class="term">Design</td><td>Architectural flaws, excessive trust</td><td>Threat modeling; architecture review; secure design patterns</td></tr>
+              <tr><td class="term">Development</td><td>Coding flaws, vulnerable libraries, leaked secrets</td><td>Secure coding standard; SAST; software composition analysis; secrets scanning</td></tr>
+              <tr><td class="term">Testing</td><td>Defects reach production; tests use real personal data</td><td>DAST; penetration testing; user acceptance; masked or synthetic test data</td></tr>
+              <tr><td class="term">Implementation</td><td>Unauthorized or failed deployment</td><td>Change approval; segregation of duties; back-out plan</td></tr>
+              <tr><td class="term">Operations and maintenance</td><td>Drift, new vulnerabilities, unpatched components</td><td>Vulnerability management; monitoring; periodic review</td></tr>
+              <tr><td class="term">Disposal</td><td>Data left on retired systems</td><td>Data migration, archiving, and sanitization with a record</td></tr>
+            </tbody>
+          </table></div>
+          <h4>Waterfall and Agile</h4>
+          <div class="compare-2col">
+            <div><b>Waterfall</b>Phases run in sequence with formal sign-off between them. Risk reviews attach naturally to phase gates. The risk is late discovery: a flaw found in testing may force a redesign.</div>
+            <div><b>Agile</b>Work ships in short iterations from a prioritized backlog. Risk work goes into the backlog as user stories and acceptance criteria, and into the definition of done. The risk is that security stories keep getting pushed to the next sprint.</div>
+          </div>
+          <ul class="detail">
+            <li><strong>DevSecOps gates:</strong> automated checks in the pipeline (static analysis, dependency scanning, container and infrastructure-as-code scanning, secrets detection) with thresholds that block a build. NIST SP 800-218, the Secure Software Development Framework (SSDF), is a useful reference for these practices.</li>
+            <li><strong>Project management:</strong> each project keeps a risk log (delivery risk) that is separate from, but linked to, the enterprise risk register (business risk). A project that will change the risk profile must update the register before go-live.</li>
+            <li><strong>Portfolio management:</strong> COBIT 2019 APO05 Managed Portfolio and BAI01 Managed Programs. The portfolio view lets leadership compare projects by value and risk and stop the ones that no longer support objectives.</li>
+          </ul>
+          <div class="in-practice"><span class="ip-label">&#128270; In practice</span><p>The Halloway Foods assistant team works in two-week sprints. For three sprints in a row, the story &ldquo;filter customer account numbers from prompts&rdquo; was moved to the next sprint. The risk practitioner did not rewrite the backlog. Instead, the practitioner showed the product owner the open risk on the register and proposed adding &ldquo;no personal data in prompt logs&rdquo; to the definition of done. The product owner agreed, and the story was finished in the next sprint.</p></div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a question asks when security requirements should be defined, the answer is the earliest phase offered, usually requirements or initiation. When it asks who decides whether a system with open risks goes live, the answer is the business owner, informed by the risk practitioner&rsquo;s assessment.</div>
+        </article>
+
+        <article class="content-section" id="s4">
+          <div class="cs-head"><span class="cs-num">4</span><h3>Data Lifecycle Management</h3></div>
+          <p>Data moves through six stages: create, store, use, share, archive, and destroy. Risk changes at each stage, and so do the controls. A data owner sets the requirements for each stage, and custodians operate the controls. The risk practitioner checks that requirements exist for every stage, not just storage.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Stage</th><th>Key risk</th><th>Typical controls</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Create or collect</td><td>Collecting more than needed; wrong classification</td><td>Data minimization; classification at creation; notice and lawful basis</td></tr>
+              <tr><td class="term">Store</td><td>Unauthorized access; loss of integrity</td><td>Encryption at rest; access control; backups; integrity checks</td></tr>
+              <tr><td class="term">Use</td><td>Misuse by authorized users; inference</td><td>Least privilege; logging and monitoring; purpose limitation</td></tr>
+              <tr><td class="term">Share</td><td>Leakage to third parties; loss of control</td><td>Data sharing agreements; DLP; encryption in transit; contract clauses</td></tr>
+              <tr><td class="term">Archive</td><td>Unreadable formats; forgotten copies; legal holds missed</td><td>Retention schedule; format migration; archive access review</td></tr>
+              <tr><td class="term">Destroy</td><td>Remanence; destroying data still under hold</td><td>Sanitization per NIST SP 800-88; certificate of destruction; hold check</td></tr>
+            </tbody>
+          </table></div>
+          <ul class="detail">
+            <li><strong>Data quality:</strong> risk decisions are only as good as the data behind them. Accuracy, completeness, and timeliness are control objectives in their own right, especially for data that trains AI models.</li>
+            <li><strong>Data lineage:</strong> knowing where data came from and every system it passed through. Lineage is what lets an organization answer a regulator, honor a deletion request, or trace a poisoned training set.</li>
+            <li><strong>Copies and derivatives:</strong> test environments, analytics extracts, and AI training sets are copies. They inherit the classification of the source unless the data has been properly de-identified.</li>
+          </ul>
+          <div class="tip jade"><span class="tip-label">&#128278; Note</span>For AI systems, the data lifecycle gains two new stages in practice: data used to train or tune a model, and data that the model generates. Both need an owner, a classification, and a retention rule.</div>
+        </article>
+
+        <article class="content-section" id="s5">
+          <div class="cs-head"><span class="cs-num">5</span><h3>Technology Resilience and Disaster Recovery</h3></div>
+          <p>Resilience starts with the business impact analysis from Domain 2. The BIA sets the maximum tolerable downtime (MTD) for each process. Technology recovery targets must sit inside it: the recovery time objective (RTO) says how fast a system must be back, and the recovery point objective (RPO) says how much data loss is tolerable. The disaster recovery plan (DRP) restores technology. The business continuity plan (BCP) keeps the business running, including manual workarounds, while it does.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Recovery option</th><th>Typical recovery speed</th><th>Relative cost</th><th>Good fit</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Hot site or active-active</td><td>Minutes to hours</td><td>Highest</td><td>Order processing, payment systems, OT control with tight RTO</td></tr>
+              <tr><td class="term">Warm site</td><td>Hours to a day or two</td><td>Moderate</td><td>Important internal systems</td></tr>
+              <tr><td class="term">Cold site</td><td>Days to weeks</td><td>Low</td><td>Non-critical systems with long MTD</td></tr>
+              <tr><td class="term">Cloud recovery (DR as a service)</td><td>Hours, if pre-built and tested</td><td>Pay as used</td><td>Virtualized workloads; must match data residency rules</td></tr>
+              <tr><td class="term">Reciprocal agreement</td><td>Uncertain</td><td>Low</td><td>Rarely acceptable; hard to enforce and test</td></tr>
+            </tbody>
+          </table></div>
+          <h4>Backup strategy</h4>
+          <ul class="detail">
+            <li><strong>Full, incremental, differential:</strong> a full backup copies everything. Incremental copies changes since the last backup of any kind (fast to take, slower to restore). Differential copies changes since the last full (slower to take, faster to restore).</li>
+            <li><strong>3-2-1 and beyond:</strong> at least three copies, on two types of media, with one off site. Against ransomware, add an immutable or offline copy that an attacker with administrator rights cannot delete.</li>
+            <li><strong>Restore testing:</strong> a backup is only a hope until it has been restored. Test restores on a schedule and measure them against RTO and RPO.</li>
+          </ul>
+          <h4>Testing the plan</h4>
+          <p>Plans are tested in increasing depth: checklist review, tabletop walkthrough, simulation, parallel test (recovery systems run alongside production), and full interruption test (production is shut down). Each step raises realism and risk. Full interruption tests are rare because the test itself can cause the outage it is meant to prevent.</p>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>If the RTO is shorter than the time a recovery option actually takes, the plan does not meet the business requirement, no matter how good it looks on paper. When a question asks what to verify FIRST about a DRP, look for alignment with the BIA. When it asks for the BEST evidence that backups work, the answer is a successful restore test.</div>
+          <div class="in-practice"><span class="ip-label">&#128270; In practice</span><p>Halloway&rsquo;s BIA sets an MTD of 8 hours for order processing, because grocery customers place orders for next-day delivery. The current DR design restores the order database from nightly tape at a cold site, a process that last took three days in a test. The gap goes on the risk register, and the CFO, as owner of order processing, approves funding for cloud-based recovery with replication every 15 minutes.</p></div>
+        </article>
+
+        <article class="content-section" id="s6">
+          <div class="cs-head"><span class="cs-num">6</span><h3>Emerging Technologies</h3></div>
+          <p>Emerging technology is where the risk practitioner&rsquo;s process is tested hardest, because the business wants speed and the evidence base is thin. The answer is not to block innovation. It is to apply the same discipline: inventory the use, tie it to an objective, assess the risk with a recognized framework, set a governance tier that matches the risk, and monitor as the technology matures.</p>
+
+          <h4>Artificial intelligence and generative AI</h4>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Framework</th><th>What it is</th><th>How a risk practitioner uses it</th></tr></thead>
+            <tbody>
+              <tr><td class="term">NIST AI RMF 1.0 (January 2023)</td><td>Voluntary framework with four functions: Govern, Map, Measure, and Manage</td><td>Structure for an AI risk program: Govern sets culture and accountability; Map establishes context and risks; Measure assesses them; Manage prioritizes and responds</td></tr>
+              <tr><td class="term">NIST AI 600-1 (July 2024)</td><td>Generative AI Profile of the AI RMF</td><td>Catalog of risks that are new or worse with GenAI, such as confabulation, data privacy, information integrity, and information security, with suggested actions</td></tr>
+              <tr><td class="term">ISO/IEC 42001:2023</td><td>Certifiable AI management system standard</td><td>Management system structure (policy, roles, risk assessment, impact assessment, controls, improvement) that fits alongside an ISO/IEC 27001 ISMS</td></tr>
+              <tr><td class="term">EU AI Act</td><td>Risk-based regulation with four tiers: unacceptable (prohibited), high-risk, limited risk (transparency duties), and minimal risk</td><td>Classify each AI use by tier; obligations phase in from 2025 to 2027, so check the current dates for each obligation</td></tr>
+            </tbody>
+          </table></div>
+          <ul class="detail">
+            <li><strong>Typical AI risk scenarios:</strong> sensitive data entered in prompts and retained by a provider; confident but wrong output (confabulation) acted on without review; prompt injection that makes an assistant ignore its instructions; biased outcomes in decisions about people; model drift as real-world data changes; and dependence on a single model provider.</li>
+            <li><strong>Typical AI controls:</strong> an AI use inventory and acceptable use policy; data classification rules for prompts and training data; human-in-the-loop review for consequential outputs; output filtering and grounding in approved sources; model monitoring with KRIs for error and complaint rates; vendor due diligence on data use and retention; and a documented way to switch the system off.</li>
+          </ul>
+          <div class="resource-link">
+            <span class="rl-icon" aria-hidden="true">&#129302;</span>
+            <div class="rl-body"><span class="rl-label">Explore with an eMate</span><span class="rl-text"><strong>AI Lifecycle Challenge</strong>: walk an AI system from problem framing to monitoring and spot where risk enters at each stage.</span></div>
+            <div class="rl-actions"><a class="btn secondary" href="https://tinyurl.com/ai-lifecycle" target="_blank" rel="noopener noreferrer">AI Lifecycle Challenge <span class="ext">&#8599;</span></a></div>
+          </div>
+
+          <h4>Cloud and shared responsibility</h4>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Layer</th><th>IaaS</th><th>PaaS</th><th>SaaS</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Data, identities, access</td><td>Customer</td><td>Customer</td><td>Customer</td></tr>
+              <tr><td class="term">Application</td><td>Customer</td><td>Customer</td><td>Provider (customer configures)</td></tr>
+              <tr><td class="term">Runtime, middleware, OS</td><td>Customer</td><td>Provider</td><td>Provider</td></tr>
+              <tr><td class="term">Virtualization, hardware, facilities</td><td>Provider</td><td>Provider</td><td>Provider</td></tr>
+            </tbody>
+          </table></div>
+          <p>Accountability never transfers. A SaaS provider runs the platform, but the customer still decides who has access, how data is classified, and whether the provider&rsquo;s assurance evidence (a SOC 2 Type II report or ISO/IEC 27001 certificate, for example) actually covers the services in use. Exit planning matters too: can the data be retrieved in a usable format, and how fast?</p>
+
+          <h4>Operational technology and IoT</h4>
+          <p>Operational technology (OT) controls physical processes: mixers, ovens, conveyors, and refrigeration. Its priorities differ from IT. Availability and safety come first, systems run for decades, and patching may require a plant shutdown. Connecting IoT sensors to OT networks brings analytics benefits and a new path for attackers. Useful references are NIST SP 800-82 Rev. 3, Guide to Operational Technology Security, and the ISA/IEC 62443 series. Typical controls include network segmentation between IT and OT zones, strict control of vendor remote access, asset inventory of every connected device, and monitoring designed for industrial protocols.</p>
+
+          <h4>Post-quantum cryptography</h4>
+          <p>A large enough quantum computer could break the public-key algorithms (RSA, elliptic-curve) that protect most key exchange and digital signatures today. Attackers can record encrypted traffic now and decrypt it later (&ldquo;harvest now, decrypt later&rdquo;), so data that must stay confidential for many years is already exposed to this risk. In August 2024, NIST published the first post-quantum standards: <strong>FIPS 203 (ML-KEM)</strong> for key encapsulation, <strong>FIPS 204 (ML-DSA)</strong> for digital signatures, and <strong>FIPS 205 (SLH-DSA)</strong>, a hash-based signature scheme. The risk practitioner&rsquo;s first job is not to pick algorithms. It is to make sure there is a cryptographic inventory, that data is ranked by how long it must stay secret, and that systems are being built for crypto-agility.</p>
+          <div class="in-practice"><span class="ip-label">&#128270; In practice</span><p>Halloway Foods has four technology proposals in front of its steering committee: a generative AI customer assistant, IoT sensors on the OT line, a migration to a SaaS ERP, and a quantum-vulnerable cryptography inventory. The committee asks the risk function for a consistent way to decide which ones need board attention. The interactive in the next section is that method.</p></div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a question asks what an organization should do FIRST about employees using public generative AI tools, look for an inventory of current use and an acceptable use policy grounded in a risk assessment. A blanket ban drives use underground; unrestricted use ignores data risk.</div>
+        </article>
+
+        <article class="content-section" id="s7">
+          <div class="cs-head"><span class="cs-num">7</span><h3>Interactive: Emerging Technology Risk Profiler</h3></div>
+          <p>Choose one of Halloway Foods&rsquo; four technology initiatives. Each is rated on six risk factors from 1 (low) to 5 (high), with defaults set from the case. The profiler converts the ratings to an overall score from 0 to 100, finds the top risk driver, and recommends a governance tier. The tier rule is deliberately simple: one factor at the maximum is enough for Enhanced review, and two factors at the maximum, or an overall score of 70 or more, send the initiative to the board. Change the ratings to see what moves the tier, and turn on Compare to overlay a second initiative&rsquo;s profile.</p>
+
+          <style>
+            .etp-row{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin-bottom:.8rem;}
+            .etp-row .etp-sp{flex:1 1 auto;}
+            .etp-cols{display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start;}
+            .etp-in{flex:1 1 260px;min-width:0;}
+            .etp-out{flex:1.4 1 320px;min-width:0;}
+            .etp-f{margin-bottom:.3rem;}
+            .etp-f input[type="range"]{margin:0;height:1.1rem;}
+            .etp-f label{display:flex;justify-content:space-between;gap:.5rem;font-size:.76rem;font-weight:700;color:var(--text-secondary);margin-bottom:0;}
+            .etp-f output{font-family:'Arial Narrow',Arial,sans-serif;font-weight:900;color:var(--gold);min-width:1.4rem;text-align:right;}
+            .etp-f output.hi{color:var(--wrong);}
+            .etp-scale{display:flex;justify-content:space-between;font-family:Arial,sans-serif;font-size:.66rem;color:var(--text-muted);margin-top:-.15rem;}
+            .etp-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem;margin-bottom:.6rem;}
+            .etp-tile{background:var(--section-alt);border:1px solid var(--border);border-radius:5px;padding:.4rem .6rem;min-width:0;}
+            .etp-tile .k{display:block;font-family:Arial,sans-serif;font-size:.64rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);}
+            .etp-tile .v{display:block;font-family:Georgia,serif;font-size:1.02rem;font-weight:700;color:var(--text-primary);line-height:1.25;overflow-wrap:anywhere;}
+            .etp-cmpsel{display:flex;gap:.4rem;align-items:center;font-size:.76rem;}
+            .etp-cmpsel label{font-family:Arial,sans-serif;font-size:.74rem;color:var(--text-muted);font-weight:700;}
+            .etp-cmpsel select{max-width:220px;min-width:0;}
+            .etp-ctl{font-family:Arial,sans-serif;font-size:.78rem;color:var(--text-secondary);line-height:1.5;margin:.2rem 0 0;padding-left:1.1rem;}
+            .etp-ctl li{margin:.15rem 0;}
+            .etp-ctl b{color:var(--gold);}
+            .etp-cv{position:relative;}
+          </style>
+
+          <div class="iw" id="etp-root">
+            <div class="iw-card">
+              <div class="iw-topbar">
+                <span class="iw-eyebrow">Interactive &middot; profile the initiative, set the tier</span>
+                <button type="button" class="iw-expand" aria-expanded="false" title="Open a larger view">&#10530; Expand</button>
+              </div>
+              <div class="etp-row" role="group" aria-label="Initiative">
+                <button type="button" class="iw-btn" data-i="0" aria-pressed="true">GenAI assistant</button>
+                <button type="button" class="iw-btn" data-i="1" aria-pressed="false">IoT on OT line</button>
+                <button type="button" class="iw-btn" data-i="2" aria-pressed="false">SaaS ERP</button>
+                <button type="button" class="iw-btn" data-i="3" aria-pressed="false">PQC crypto inventory</button>
+                <button type="button" class="iw-btn" id="etp-reset" title="Reset this initiative to the case defaults">Reset</button>
+                <span class="etp-sp"></span>
+                <button type="button" class="iw-btn jade" id="etp-cmp" aria-pressed="false">Compare with another initiative</button>
+                <span class="etp-cmpsel"><label for="etp-cmpto">with</label><select id="etp-cmpto" disabled></select></span>
+              </div>
+              <div class="etp-cols">
+                <div class="iw-panel etp-in">
+                  <h5 class="iw-h5" id="etp-name">GenAI customer assistant</h5>
+                  <p class="iw-lead" id="etp-desc"></p>
+                  <div id="etp-sliders"></div>
+                  <h5 class="iw-h5" style="margin-top:.7rem">Suggested controls for the top two drivers</h5>
+                  <ul class="etp-ctl" id="etp-ctl"></ul>
+                </div>
+                <div class="iw-panel etp-out" aria-live="polite">
+                  <div class="etp-tiles">
+                    <div class="etp-tile"><span class="k">Overall score</span><span class="v" id="etp-t1">0</span></div>
+                    <div class="etp-tile"><span class="k">Top driver</span><span class="v" id="etp-t2">-</span></div>
+                    <div class="etp-tile"><span class="k">Governance tier</span><span class="v" id="etp-t3">-</span></div>
+                    <div class="etp-tile"><span class="k" id="etp-t4k">Factors at 4 or 5</span><span class="v" id="etp-t4">0</span></div>
+                  </div>
+                  <div class="etp-cv"><canvas id="etp-cv" role="img" aria-label="Radar chart of six risk factor ratings for the selected initiative"></canvas></div>
+                  <div class="iw-verdict" id="etp-verdict"><span class="iw-pill" id="etp-pill">Ready</span><span id="etp-coach"></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <script>
+          (function(){
+            var root=document.getElementById('etp-root'); if(!root) return;
+            var $=function(id){return root.querySelector('#'+id);};
+            var F=[
+              {n:'Data sensitivity',s:'Data',c:'Classify and minimize data before it reaches the system; DLP or input filtering; a privacy impact assessment where personal data is involved.'},
+              {n:'Autonomy and decision impact',s:'Autonomy',c:'Human-in-the-loop review for consequential outputs; model and output monitoring with error and complaint KRIs; a documented way to switch it off.'},
+              {n:'Third-party dependence',s:'Third party',c:'Due diligence and assurance evidence (SOC 2 Type II, ISO/IEC 27001); contract clauses on data use, audit, and breach notice; a tested exit plan.'},
+              {n:'Technology immaturity',s:'Immaturity',c:'A limited pilot with success criteria; SDLC stage gates before scale-up; architecture review against the roadmap; vendor roadmap checks.'},
+              {n:'Regulatory exposure',s:'Regulatory',c:'Map obligations (EU AI Act tier, privacy law, sector rules); name a compliance owner; keep evidence of transparency and record-keeping.'},
+              {n:'Resilience impact',s:'Resilience',c:'BIA-based RTO and RPO; manual fallback procedures; segmentation for OT; a DR or failover test before go-live.'}
+            ];
+            var I=[
+              {n:'GenAI customer assistant',d:[4,5,4,4,3,2],t:'A chat assistant on the website answers order and allergen questions using a hosted large language model.',
+               note:'Allergen answers are a safety matter, so autonomy drives the profile: a wrong answer acted on by a customer is the scenario that matters most.'},
+              {n:'IoT sensors on the OT line',d:[2,3,4,3,3,5],t:'Wireless temperature and vibration sensors on the packaging line, monitored by the equipment vendor.',
+               note:'Resilience leads because the sensors connect to an end-of-support control system. Vendor remote access is the second path in.'},
+              {n:'SaaS ERP migration',d:[4,2,5,2,4,5],t:'Finance, purchasing, and order processing move from an on-premises ERP to a SaaS provider.',
+               note:'The technology is mature, but the business would depend on one provider for order processing and financial reporting. Concentration, not novelty, is the risk.'},
+              {n:'Quantum-vulnerable crypto inventory',d:[4,1,3,4,2,2],t:'Find every use of RSA and elliptic-curve cryptography and rank the data each one protects by how long it must stay secret.',
+               note:'A Standard tier does not mean the topic can wait. Recipes and supplier contracts must stay confidential for years, so harvest-now, decrypt-later risk is already real. The inventory itself is the low-risk first step.'}
+            ];
+            var cur=0, cmp=false, cmpTo=1;
+            var vals=I.map(function(x){return x.d.slice();});
+            // sliders
+            var box=$('etp-sliders');
+            F.forEach(function(f,k){
+              var d=document.createElement('div'); d.className='etp-f';
+              d.innerHTML='<label for="etp-s'+k+'"><span>'+f.n+'</span><output id="etp-o'+k+'" for="etp-s'+k+'">3</output></label><input type="range" id="etp-s'+k+'" min="1" max="5" step="1" value="3">';
+              box.appendChild(d);
+              d.querySelector('input').addEventListener('input',function(e){vals[cur][k]=+e.target.value;render();});
+            });
+            var sel=$('etp-cmpto');
+            function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()||'#86198f';}
+            function rgba(hex,a){hex=hex.replace('#','');if(hex.length===3)hex=hex.split('').map(function(c){return c+c;}).join('');var n=parseInt(hex,16);return 'rgba('+(n>>16&255)+','+(n>>8&255)+','+(n&255)+','+a+')';}
+            function stats(v){
+              var sum=v.reduce(function(a,b){return a+b;},0), score=Math.round((sum-6)/24*100);
+              var n5=v.filter(function(x){return x===5;}).length, n4=v.filter(function(x){return x>=4;}).length;
+              var order=v.map(function(x,k){return k;}).sort(function(a,b){return v[b]-v[a]||a-b;});
+              var tier, cls;
+              if(score>=70||n5>=2){tier='Board-level';cls='bad';}
+              else if(score>=45||n5>=1){tier='Enhanced review';cls='warn';}
+              else {tier='Standard';cls='good';}
+              return {score:score,n5:n5,n4:n4,top:order[0],second:order[1],tier:tier,cls:cls};
+            }
+            function fillSel(){
+              sel.innerHTML=I.map(function(x,k){return k===cur?'':'<option value="'+k+'">'+x.n+'</option>';}).join('');
+              if(cmpTo===cur) cmpTo=(cur+1)%I.length;
+              sel.value=cmpTo;
+            }
+            function draw(){
+              var cv=$('etp-cv'), wrap=cv.parentNode, w=Math.max(260,wrap.clientWidth), h;
+              if(root.classList.contains('is-expanded')){
+                var top=cv.getBoundingClientRect().top, below=0;
+                [$('etp-verdict')].forEach(function(e){below+=e.getBoundingClientRect().height+10;});
+                h=Math.max(240,Math.min(w*0.55,window.innerHeight-top-below-90));
+              } else h=Math.min(300,Math.max(250,w*0.75));
+              var dpr=window.devicePixelRatio||1;
+              cv.width=Math.round(w*dpr); cv.height=Math.round(h*dpr); cv.style.height=h+'px';
+              var g=cv.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,w,h);
+              var gold=css('--gold'), jade=css('--jade'), border=css('--border'), muted=css('--text-muted'), txt=css('--text-primary');
+              var LG=cmp?40:24, cx=w/2, cy=(h+LG)/2+2, R=Math.max(60,Math.min(w*0.3,(h-LG)/2-30)), N=6;
+              function pt(k,r){var a=-Math.PI/2+k*2*Math.PI/N;return [cx+Math.cos(a)*r,cy+Math.sin(a)*r];}
+              g.lineWidth=1;
+              for(var ring=1;ring<=5;ring++){
+                g.beginPath();for(var k=0;k<N;k++){var p=pt(k,R*ring/5);k?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1]);}g.closePath();
+                g.strokeStyle=ring===5?muted:border;g.stroke();
+              }
+              g.font='10px Arial';g.fillStyle=muted;g.textAlign='left';g.textBaseline='middle';
+              for(ring=1;ring<=5;ring++){var q=pt(0,R*ring/5);g.fillText(ring,q[0]+4,q[1]);}
+              g.strokeStyle=border;
+              for(k=0;k<N;k++){var e=pt(k,R);g.beginPath();g.moveTo(cx,cy);g.lineTo(e[0],e[1]);g.stroke();}
+              g.font='bold 12px Arial';g.fillStyle=txt;
+              for(k=0;k<N;k++){
+                var a=-Math.PI/2+k*2*Math.PI/N, lp=pt(k,R+14), c=Math.cos(a);
+                g.textAlign=Math.abs(c)<0.2?'center':(c>0?'left':'right');
+                g.textBaseline=Math.sin(a)<-0.5?'bottom':(Math.sin(a)>0.5?'top':'middle');
+                g.fillText(F[k].s+' ('+vals[cur][k]+')',lp[0],lp[1]);
+              }
+              function poly(v,col,fillA,dash){
+                g.beginPath();v.forEach(function(x,k){var p=pt(k,R*x/5);k?g.lineTo(p[0],p[1]):g.moveTo(p[0],p[1]);});g.closePath();
+                g.fillStyle=rgba(col,fillA);g.fill();g.setLineDash(dash||[]);g.strokeStyle=col;g.lineWidth=2.2;g.stroke();g.setLineDash([]);
+                v.forEach(function(x,k){var p=pt(k,R*x/5);g.beginPath();g.arc(p[0],p[1],3.2,0,7);g.fillStyle=col;g.fill();});
+              }
+              if(cmp) poly(vals[cmpTo],jade,0.10,[6,4]);
+              poly(vals[cur],gold,0.20);
+              // legend
+              g.font='11px Arial';g.textAlign='left';g.textBaseline='middle';
+              g.fillStyle=gold;g.fillRect(8,10,14,4);g.fillStyle=txt;g.fillText(I[cur].n,27,12);
+              if(cmp){g.strokeStyle=jade;g.setLineDash([5,3]);g.lineWidth=2;g.beginPath();g.moveTo(8,28);g.lineTo(22,28);g.stroke();g.setLineDash([]);g.fillStyle=txt;g.fillText(I[cmpTo].n,27,28);}
+              g.fillStyle=muted;g.textAlign='right';g.fillText('Rings: rating 1 to 5',w-8,h-8);
+            }
+            function render(){
+              var v=vals[cur], s=stats(v);
+              root.querySelectorAll('[data-i]').forEach(function(b){b.setAttribute('aria-pressed',+b.dataset.i===cur?'true':'false');});
+              $('etp-name').textContent=I[cur].n; $('etp-desc').textContent=I[cur].t+' Rate each factor from 1 (low risk) to 5 (high risk).';
+              F.forEach(function(f,k){var inp=$('etp-s'+k),o=$('etp-o'+k);inp.value=v[k];o.textContent=v[k];o.className=v[k]>=4?'hi':'';});
+              $('etp-t1').textContent=s.score+' / 100';
+              $('etp-t2').textContent=F[s.top].s+' ('+v[s.top]+')';
+              $('etp-t3').textContent=s.tier;
+              if(cmp){var o2=stats(vals[cmpTo]);$('etp-t4k').textContent='Compared: '+I[cmpTo].n.split(' ').slice(0,2).join(' ');$('etp-t4').textContent=o2.score+', '+o2.tier;}
+              else {$('etp-t4k').textContent='Factors at 4 or 5';$('etp-t4').textContent=s.n4+' of 6';}
+              var why;
+              if(s.cls==='bad') why=(s.n5>=2?'Two or more factors sit at 5, ':'The overall score is '+s.score+', ')+'so this initiative goes to the board or its risk committee. Concentrated risk at this level affects the enterprise risk profile and may exceed appetite.';
+              else if(s.cls==='warn') why=(s.n5>=1?'One factor ('+F[s.top].n.toLowerCase()+') sits at 5. An average can hide a single severe factor, so this needs ':'The overall score is '+s.score+', which calls for ')+'an enhanced review: a documented risk assessment, a named risk owner, and approval above the project team.';
+              else why='The score is '+s.score+' and no factor sits at 5, so standard project governance and change approval are enough, with the risk recorded on the register.';
+              var p=$('etp-pill');p.className='iw-pill '+s.cls;p.textContent=s.tier;$('etp-verdict').className='iw-verdict '+s.cls;
+              $('etp-coach').innerHTML=why+' '+I[cur].note+' The risk practitioner recommends the tier; the business owner of the initiative owns the decision.';
+              $('etp-ctl').innerHTML=[s.top,s.second].map(function(k){return '<li><b>'+F[k].n+' ('+v[k]+'):</b> '+F[k].c+'</li>';}).join('');
+              draw();
+            }
+            root.querySelectorAll('[data-i]').forEach(function(b){b.addEventListener('click',function(){cur=+b.dataset.i;fillSel();render();});});
+            $('etp-cmp').addEventListener('click',function(){cmp=!cmp;this.setAttribute('aria-pressed',cmp?'true':'false');sel.disabled=!cmp;render();});
+            sel.addEventListener('change',function(){cmpTo=+sel.value;render();});
+            $('etp-reset').addEventListener('click',function(){vals[cur]=I[cur].d.slice();render();});
+            window.addEventListener('resize',draw);
+            fillSel(); render();
+          })();
+          </script>
+
+          <div class="tip"><span class="tip-label">&#128161; Exam lesson</span>The profiler teaches two exam habits. First, an average can hide a single severe factor, so look at the worst factor as well as the total. Second, governance should scale with risk: a mature SaaS platform can need more oversight than a novel AI pilot if the business depends on it. When a question asks for the BEST way to govern a new technology, choose the answer that matches oversight to assessed risk, not to hype or novelty.</div>
+        </article>
+
+        <article class="content-section" id="s8">
+          <div class="cs-head"><span class="cs-num">8</span><h3>Faculty Teaching Segment</h3></div>
+          <p>Students arrive with strong opinions about AI and weak habits for assessing it. A structured use-case review on a real campus process turns opinion into evidence and gives them a reusable method.</p>
+          <ul class="detail">
+            <li><strong>Signature assignment:</strong> an AI use-case risk review for a college department. Teams receive a one-page proposal from a fictional department (for example, an admissions office that wants a GenAI assistant to draft replies to applicants). They classify the use under the EU AI Act tiers, map it to the four NIST AI RMF functions, rate the six profiler factors with a written reason for each, name the risk owner, and recommend a governance tier with three controls and two KRIs.</li>
+            <li><strong>Rubric criteria:</strong> (1) risk factors rated with evidence from the proposal, not assumptions; (2) framework use accurate, including correct AI RMF functions and a defensible EU AI Act tier; (3) controls matched to the top drivers and feasible for the department; (4) ownership and escalation clear, with the business owner deciding and the risk function advising.</li>
+            <li><strong>Lab idea:</strong> give students a synthetic prompt log of 200 entries from a fictional help-desk assistant, some containing fake student ID numbers and account details. Students write a simple filter rule, measure how many sensitive entries it catches and misses, and turn the miss rate into a KRI with thresholds. Use only synthetic data.</li>
+            <li><strong>Course fit:</strong> an IT risk management or emerging technology course, or the technology module of a GRC course. It supports the CAE-CD Knowledge Units Cybersecurity Planning and Management (CPM); Policy, Legal, Ethics, and Compliance (PLE); Privacy (PRI); and Supply Chain Security (SCS).</li>
+          </ul>
+          <div class="tip"><span class="tip-label">&#127891; Teaching note</span>Run the profiler in pairs. Give each pair a printed scoring sheet with the six factors and ask them to rate one Halloway initiative before they open the tool, then compare. Disagreements of two points or more on a factor are the discussion: make each side state the evidence behind its number. Collect the sheets as the artifact.</div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="emates">
+    <p class="eyebrow">Explore with eMates</p>
+    <h2 class="h2">Interactive refreshers for this lesson</h2>
+    <div class="rule"></div>
+    <p class="lead">Short, self-paced eMates from the myEMATES library. Each opens in a new tab. Concept refreshers support your own exam study. Student-ready modules also work as warm-ups in your own courses.</p>
+    <div class="em-grid">
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 4</span></div><h3>Configuration Management</h3><p>Baselines, change control, and drift: the operations practices that keep technology risk visible.</p><div class="em-foot"><span class="em-level">Concept refresher</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/ConfigMgmt/ConfigMgmt.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Configuration Management (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">AI Literacy</span><span class="em-sec">RING</span></div><h3>AI Lifecycle Challenge</h3><p>Trace an AI system from problem framing to monitoring and place the risk controls at each stage.</p><div class="em-foot"><span class="em-level student">Student-ready</span><a class="em-open" href="https://tinyurl.com/ai-lifecycle" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: AI Lifecycle Challenge (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">AI Literacy</span><span class="em-sec">RING</span></div><h3>Machine Learning Mission</h3><p>How models learn from data, a useful base for discussing data quality, bias, and drift as risk factors.</p><div class="em-foot"><span class="em-level student">Student-ready</span><a class="em-open" href="https://tinyurl.com/ml-mission" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Machine Learning Mission (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Networking</span><span class="em-sec">Section 4</span></div><h3>Digital Media Handling: Backups</h3><p>Backup types and media handling, the practical side of meeting RTO and RPO targets.</p><div class="em-foot"><span class="em-level student">Student-ready</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/backups/backups.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Digital Media Handling: Backups (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 4</span></div><h3>Stuxnet</h3><p>The classic attack on industrial control systems, a case study for OT and IoT risk on a production line.</p><div class="em-foot"><span class="em-level student">Student-ready</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/stuxnet/stuxnet.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Stuxnet (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cryptography</span><span class="em-sec">Section 6</span></div><h3>Blockchain</h3><p>How a distributed ledger works, for evaluating blockchain proposals as one more emerging technology.</p><div class="em-foot"><span class="em-level">Concept refresher</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/blockchain/blockchain.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Blockchain (opens in a new tab)">Open &#8599;</a></div></article>
+    </div>
+  </section>
+
+  <section class="block" id="practice-this-lesson">
+    <p class="eyebrow">Practice</p>
+    <h2 class="h2">Practice this lesson</h2>
+    <div class="rule"></div>
+    <p class="lead">Self-checking practice for this lesson, ready to use with your own students. Each item ends with a report you can print or save as a PDF. See all items in the <a href="practices.html">CRISC Practices</a> and the <a href="labs.html">CRISC Risk Lab</a>.</p>
+    <div class="pl-grid">
+      <article class="pl-card"><div class="pl-top"><span class="pl-type">CRISC Practices &middot; A9</span><span class="pl-time">&#9201; 40 min</span></div><h3><a href="activity09.html">Technology, Security, and Privacy</a></h3><p>Place risks in the SDLC, apply the NIST AI RMF and EU AI Act tiers, order a recovery, and apply CSF 2.0 and privacy principles.</p><div class="pl-foot"><span class="pl-level">Intermediate</span><a class="pl-open" href="activity09.html" aria-label="Open activity A9: Technology, Security, and Privacy">Open &#8594;</a></div></article>
+      <article class="pl-card pl-lab"><div class="pl-top"><span class="pl-type">CRISC Risk Lab &middot; B7</span><span class="pl-time">&#9201; 60 min</span></div><h3><a href="lab07.html">AI Use-Case Risk Review</a></h3><p>Review a generative AI assistant against the NIST AI RMF and EU AI Act, rate its risks, choose controls, and write the decision memo.</p><div class="pl-foot"><span class="pl-level">Advanced</span><a class="pl-open" href="lab07.html" aria-label="Open lab B7: AI Use-Case Risk Review">Open &#8594;</a></div></article>
+    </div>
+  </section>
+
+  <section class="block" id="knowledge-check">
+    <p class="eyebrow">Scored Knowledge Check</p>
+    <h2 class="h2">Test your understanding</h2>
+    <div class="rule"></div>
+    <p class="lead" style="margin-bottom:1.5rem">Select the best answer for each question, then submit for your score and the rationale for every item. Like the exam, several options may be true; choose the best one.</p>
+    <div class="quiz-card">
+      <form id="quiz">
+
+        <div class="q" data-answer="C">
+          <p class="q-stem"><span class="qn">Q1.</span>A manufacturer&rsquo;s marketing team has started using a public generative AI tool to draft customer emails that sometimes include order details. What should the risk practitioner do FIRST?</p>
+          <fieldset class="options">
+            <legend>Question 1 options</legend>
+            <label class="opt"><input type="radio" name="q1" value="A"><span><span class="opt-letter">A.</span> Block access to all public generative AI sites at the web proxy</span></label>
+            <label class="opt"><input type="radio" name="q1" value="B"><span><span class="opt-letter">B.</span> Purchase an enterprise AI license with data protection terms</span></label>
+            <label class="opt"><input type="radio" name="q1" value="C"><span><span class="opt-letter">C.</span> Determine how the tool is being used and assess the associated risk</span></label>
+            <label class="opt"><input type="radio" name="q1" value="D"><span><span class="opt-letter">D.</span> Report the marketing team to human resources for a policy violation</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: C.</b> The practitioner identifies and assesses before responding. Blocking and buying are responses chosen before the risk is understood, and either may be right later. Disciplinary action assumes a policy existed and was breached, which the stem does not say.</div>
+        </div>
+
+        <div class="q" data-answer="A">
+          <p class="q-stem"><span class="qn">Q2.</span>The same application outage has occurred four times this quarter. Each time, the service desk restored service within its SLA. Which action BEST addresses the risk?</p>
+          <fieldset class="options">
+            <legend>Question 2 options</legend>
+            <label class="opt"><input type="radio" name="q2" value="A"><span><span class="opt-letter">A.</span> Open a problem record to identify and remove the root cause</span></label>
+            <label class="opt"><input type="radio" name="q2" value="B"><span><span class="opt-letter">B.</span> Shorten the incident response SLA</span></label>
+            <label class="opt"><input type="radio" name="q2" value="C"><span><span class="opt-letter">C.</span> Add the application to the disaster recovery plan</span></label>
+            <label class="opt"><input type="radio" name="q2" value="D"><span><span class="opt-letter">D.</span> Increase monitoring so that the outage is detected sooner</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: A.</b> Recurring incidents point to an unresolved root cause, which is the purpose of problem management. A shorter SLA and faster detection reduce impact but not frequency. DR planning addresses major disruption, not a recurring defect.</div>
+        </div>
+
+        <div class="q" data-answer="D">
+          <p class="q-stem"><span class="qn">Q3.</span>A business impact analysis sets a maximum tolerable downtime of 8 hours for order processing. The disaster recovery plan restores the order system from offsite backups in about 36 hours. What is the MOST appropriate next step?</p>
+          <fieldset class="options">
+            <legend>Question 3 options</legend>
+            <label class="opt"><input type="radio" name="q3" value="A"><span><span class="opt-letter">A.</span> Run a full interruption test to confirm the 36-hour estimate</span></label>
+            <label class="opt"><input type="radio" name="q3" value="B"><span><span class="opt-letter">B.</span> Increase the backup frequency to every hour</span></label>
+            <label class="opt"><input type="radio" name="q3" value="C"><span><span class="opt-letter">C.</span> Ask the business to raise the MTD to 36 hours</span></label>
+            <label class="opt"><input type="radio" name="q3" value="D"><span><span class="opt-letter">D.</span> Report the gap to the process owner with recovery options and their costs</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: D.</b> The recovery capability does not meet the business requirement. The owner needs the gap and costed options to decide. A full interruption test is risky and does not close the gap. More frequent backups improve RPO, not recovery time. Changing the MTD to fit the plan reverses the logic of the BIA.</div>
+        </div>
+
+        <div class="q" data-answer="B">
+          <p class="q-stem"><span class="qn">Q4.</span>An organization is moving its HR system to a SaaS provider. Which responsibility remains with the organization under the shared responsibility model?</p>
+          <fieldset class="options">
+            <legend>Question 4 options</legend>
+            <label class="opt"><input type="radio" name="q4" value="A"><span><span class="opt-letter">A.</span> Patching the application servers</span></label>
+            <label class="opt"><input type="radio" name="q4" value="B"><span><span class="opt-letter">B.</span> Granting and reviewing user access to employee records</span></label>
+            <label class="opt"><input type="radio" name="q4" value="C"><span><span class="opt-letter">C.</span> Physical security of the provider&rsquo;s data center</span></label>
+            <label class="opt"><input type="radio" name="q4" value="D"><span><span class="opt-letter">D.</span> Maintaining the database management system</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: B.</b> In SaaS, the provider runs the infrastructure, platform, and application. The customer always keeps responsibility for its data and for identity and access decisions. The other three are provider duties in a SaaS model.</div>
+        </div>
+
+        <div class="q" data-answer="A">
+          <p class="q-stem"><span class="qn">Q5.</span>During a sprint review, a product owner proposes deferring a security acceptance criterion for the fourth consecutive sprint. What is the risk practitioner&rsquo;s BEST course of action?</p>
+          <fieldset class="options">
+            <legend>Question 5 options</legend>
+            <label class="opt"><input type="radio" name="q5" value="A"><span><span class="opt-letter">A.</span> Show the product owner the resulting risk and ask for a documented decision</span></label>
+            <label class="opt"><input type="radio" name="q5" value="B"><span><span class="opt-letter">B.</span> Add the security work to the next sprint directly in the backlog tool</span></label>
+            <label class="opt"><input type="radio" name="q5" value="C"><span><span class="opt-letter">C.</span> Halt the project until the criterion is met</span></label>
+            <label class="opt"><input type="radio" name="q5" value="D"><span><span class="opt-letter">D.</span> Escalate immediately to the board risk committee</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: A.</b> The practitioner advises and the owner decides, with the decision recorded. Halting the project and editing the backlog both take decisions the practitioner does not own. Going straight to the board skips the owner and normal escalation; it would follow only if the risk exceeded appetite and the owner would not act.</div>
+        </div>
+
+        <div class="q" data-answer="C">
+          <p class="q-stem"><span class="qn">Q6.</span>An organization holds supplier contracts that must remain confidential for 15 years. Which action BEST addresses the risk that quantum computing poses to this data?</p>
+          <fieldset class="options">
+            <legend>Question 6 options</legend>
+            <label class="opt"><input type="radio" name="q6" value="A"><span><span class="opt-letter">A.</span> Wait until a cryptographically relevant quantum computer is demonstrated</span></label>
+            <label class="opt"><input type="radio" name="q6" value="B"><span><span class="opt-letter">B.</span> Double the RSA key length on all systems</span></label>
+            <label class="opt"><input type="radio" name="q6" value="C"><span><span class="opt-letter">C.</span> Inventory where public-key cryptography protects the data and plan migration to standardized post-quantum algorithms</span></label>
+            <label class="opt"><input type="radio" name="q6" value="D"><span><span class="opt-letter">D.</span> Move the contracts to a cloud provider that advertises quantum security</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: C.</b> Long-lived data is exposed now to harvest-now, decrypt-later attacks. An inventory plus a migration plan toward NIST&rsquo;s post-quantum standards (such as FIPS 203 ML-KEM) is the structured response. Longer RSA keys do not resist a quantum attack in the long run, waiting ignores data already being collected, and a vendor claim is not an assessment.</div>
+        </div>
+
+        <div class="q" data-answer="B">
+          <p class="q-stem"><span class="qn">Q7.</span>A food plant wants to connect wireless sensors on its production line to the vendor&rsquo;s cloud analytics service. The line&rsquo;s control system is past end of support. Which control is MOST important to require?</p>
+          <fieldset class="options">
+            <legend>Question 7 options</legend>
+            <label class="opt"><input type="radio" name="q7" value="A"><span><span class="opt-letter">A.</span> Antivirus software on every sensor</span></label>
+            <label class="opt"><input type="radio" name="q7" value="B"><span><span class="opt-letter">B.</span> Network segmentation between the sensors, the control system, and external connections</span></label>
+            <label class="opt"><input type="radio" name="q7" value="C"><span><span class="opt-letter">C.</span> A user awareness campaign for plant operators</span></label>
+            <label class="opt"><input type="radio" name="q7" value="D"><span><span class="opt-letter">D.</span> Monthly patching of the control system</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: B.</b> Segmentation limits the new path from the internet to an unpatchable system, which is the core risk. Sensors rarely support antivirus. An end-of-support system cannot be patched, which is the problem. Awareness helps but does not address the network exposure.</div>
+        </div>
+
+        <div class="q" data-answer="D">
+          <p class="q-stem"><span class="qn">Q8.</span>Which framework would a risk practitioner use to organize an AI risk program around the functions Govern, Map, Measure, and Manage?</p>
+          <fieldset class="options">
+            <legend>Question 8 options</legend>
+            <label class="opt"><input type="radio" name="q8" value="A"><span><span class="opt-letter">A.</span> ISO/IEC 42001:2023</span></label>
+            <label class="opt"><input type="radio" name="q8" value="B"><span><span class="opt-letter">B.</span> The EU AI Act</span></label>
+            <label class="opt"><input type="radio" name="q8" value="C"><span><span class="opt-letter">C.</span> NIST Cybersecurity Framework 2.0</span></label>
+            <label class="opt"><input type="radio" name="q8" value="D"><span><span class="opt-letter">D.</span> NIST AI Risk Management Framework 1.0</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: D.</b> The NIST AI RMF 1.0 is built on those four functions. ISO/IEC 42001 is a certifiable AI management system standard with a different structure. CSF 2.0 uses six functions (Govern, Identify, Protect, Detect, Respond, Recover). The EU AI Act is a regulation organized by risk tier.</div>
+        </div>
+
+        <div class="quiz-actions">
+          <button type="button" class="btn" onclick="gradeQuiz()">Submit Answers</button>
+          <button type="button" class="btn secondary" onclick="resetQuiz()">Reset</button>
+          <span class="score" id="score" aria-live="polite"></span>
+        </div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<nav class="pager" aria-label="Lesson navigation">
+  <div class="pager-inner">
+    <a href="lesson07.html" class="prev"><span class="pager-dir">&#8592; Previous</span><span class="pager-name">Lesson 7: Risk Monitoring and Reporting</span></a>
+    <a href="lesson09.html" class="next"><span class="pager-dir">Next &#8594;</span><span class="pager-name">Lesson 9: Information Security Principles and Capstone</span></a>
+  </div>
+</nav>
+
+<footer>
+  <div class="footer-logo">CRISC 5-DAY FACULTY WORKSHOP</div>
+  <p class="footer-disclaimer">This workshop is an independent educational resource. It is not affiliated with, endorsed by, or sponsored by ISACA. CRISC&#174; is a registered mark of ISACA. All lesson text, questions, and scenarios are original and do not reproduce the ISACA CRISC Review Manual or question database. eMates are provided by the myEMATES library and open in a new tab. Always verify the current exam content outline at isaca.org before registering.</p>
+</footer>
+
+<script src="crisc-lesson.js"></script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>A4 Threats, Vulnerabilities, and Scenarios | CRISC 5-Day Faculty Workshop</title>
+<link rel="stylesheet" href="crisc-lesson.css">
+<link rel="stylesheet" href="practice.css">
+</head>
+<body>
+<div id="app"><noscript><p style="padding:2rem;font-family:Arial">This activity needs JavaScript enabled.</p></noscript></div>
+
+<script>
+window.ACTIVITY = {
+  id: 'A4',
+  title: 'Threats, Vulnerabilities, and Scenarios',
+  accent: 'and Scenarios',
+  domain: 'Domain 2A, Risk Assessment (22%)',
+  time: '40 min',
+  level: 'Intermediate',
+  lessonHref: 'lesson03.html#s1',
+  lessonLabel: 'Lesson 3, Risk Identification',
+  lede: 'From worry to scenario. Dovemarsh Medical Devices builds connected infusion pumps and a cloud console that hospitals use to manage them. Practice separating threats, vulnerabilities, events, and impacts, prioritizing vulnerabilities with CVSS, EPSS, KEV, and asset criticality, naming STRIDE threats, and judging whether a scenario is good enough to analyze.',
+  concepts: [
+    { key: 'elements', name: 'Threat, vulnerability, event, impact', review: 'Lesson 3, Risk Events and Risk Factors' },
+    { key: 'vulnprio', name: 'Vulnerability prioritization', review: 'Lesson 3, Vulnerability Management' },
+    { key: 'stride', name: 'STRIDE threat modeling', review: 'Lesson 3, Threat Modeling' },
+    { key: 'scenario', name: 'Scenario quality', review: 'Lesson 3, Risk Scenario Development and Evaluation' }
+  ],
+  stations: [
+    {
+      type: 'sort', short: 'Risk elements', title: 'Threat, vulnerability, risk event, or impact?', concept: 'elements',
+      instr: 'Each phrase came from a Dovemarsh risk workshop. Decide which element of risk it describes: the <b>threat</b> (who or what can cause harm), the <b>vulnerability</b> (the weakness it exploits), the <b>risk event</b> (what happens), or the <b>impact</b> (the effect on the business).',
+      hint: 'A threat has agency or force: an actor or a natural event. A vulnerability is a condition or weakness. An event is something that happens to an asset. An impact is measured in business terms: money, safety, contracts, reputation, objectives.',
+      buckets: ['Threat', 'Vulnerability', 'Risk event', 'Impact'],
+      review: { href: 'lesson03.html#s1', label: 'Lesson 3, Risk Events and Risk Factors' },
+      items: [
+        { text: 'A ransomware group that targets medical device makers’ build systems', answer: 0, why: 'An actor with motive and capability is a threat. It becomes risk only when it meets a weakness and an asset that matters.' },
+        { text: 'The firmware update server accepts packages that are not signed', answer: 1, why: 'A weakness that a threat can exploit is a vulnerability. On its own it is not yet a risk.' },
+        { text: 'Malicious firmware is pushed to 2,000 pumps in hospitals', answer: 2, why: 'This is what happens to the asset: the risk event that a scenario describes.' },
+        { text: 'A recall of deployed pumps costing an estimated $12 million and a pause in new hospital contracts', answer: 3, why: 'Money and lost contracts are the business consequence. That is impact.' },
+        { text: 'A disgruntled build engineer who still has server access', answer: 0, why: 'An insider with motive and access is a threat source.' },
+        { text: 'One default service password shared across every pump model', answer: 1, why: 'A shared default credential is a weakness that many threats could exploit.' },
+        { text: 'Design files for the next-generation pump are copied to an outside server', answer: 2, why: 'Theft or disclosure of information is the event.' },
+        { text: 'A competitor ships a similar design first, and Dovemarsh loses its market lead', answer: 3, why: 'Lost competitive advantage is one of the forms of loss in FAIR. It is the impact of the theft.' },
+        { text: 'A river flood at the city where the only contract manufacturer operates', answer: 0, why: 'Natural events are threats too. The threat type is natural, not malicious.' },
+        { text: 'No second source for the pump’s main circuit board', answer: 1, why: 'A single source is a weakness, a condition that makes an interruption more likely and longer.' },
+        { text: 'Pump production stops for six weeks', answer: 2, why: 'An interruption of a process is the event.' },
+        { text: 'Hospitals delay orders, and quarterly revenue falls 18%', answer: 3, why: 'The financial result for the business is the impact.' }
+      ]
+    },
+    {
+      type: 'order', short: 'Prioritize vulns', title: 'Prioritize the backlog', concept: 'vulnprio',
+      instr: 'The first list holds five findings from this month’s scans. Order them from <b>fix first</b> to <b>fix last</b>, using Dovemarsh’s rule: KEV on an internet-facing or critical asset first; then high EPSS or Critical CVSS on important assets; then high CVSS with low exploitation on internal, low-value assets; then the rest. In the second list, order the steps of the vulnerability management cycle.',
+      hint: 'CVSS tells you how severe a flaw is technically. EPSS estimates how likely exploitation is in the next 30 days. KEV says it is being exploited now. Asset criticality tells you what the business loses. Combine them; never sort by CVSS alone.',
+      topLabel: 'First',
+      bottomLabel: 'Last',
+      review: { href: 'lesson03.html#s4', label: 'Lesson 3, Vulnerability Management' },
+      groups: [
+        {
+          title: 'Scan findings, fix first to fix last',
+          table: {
+            caption: 'Dovemarsh Medical Devices: scan findings',
+            head: ['Finding', 'Asset and exposure', 'Asset criticality', 'CVSS-B', 'EPSS', 'On KEV'],
+            rows: [
+              ['V1', 'Remote support VPN appliance, internet-facing', 'Critical', '9.8', '0.97', 'Yes'],
+              ['V2', 'Firmware build server, internal', 'Critical', '7.8', '0.64', 'No'],
+              ['V3', 'HR intranet wiki, internal', 'Low', '9.1', '0.01', 'No'],
+              ['V4', 'Quality records database, internal', 'High', '8.1', '0.35', 'No'],
+              ['V5', 'Test lab printer, internal', 'Low', '4.3', '0.003', 'No']
+            ]
+          },
+          items: [
+            { text: 'V3: HR intranet wiki (CVSS-B 9.1, EPSS 0.01)', rank: 3, why: 'The highest CVSS score among the non-KEV findings, but exploitation is unlikely and the asset is internal and low value. It goes in the normal monthly cycle.' },
+            { text: 'V1: Remote support VPN appliance (KEV, EPSS 0.97)', rank: 0, why: 'Actively exploited, internet-facing, and critical. Remediate or isolate within days.' },
+            { text: 'V5: Test lab printer (CVSS-B 4.3, EPSS 0.003)', rank: 4, why: 'Low severity, low likelihood, low value. Next maintenance window, or accept with the owner’s sign-off.' },
+            { text: 'V4: Quality records database (CVSS-B 8.1, EPSS 0.35)', rank: 2, why: 'A high-value asset with a meaningful exploitation probability. It follows the build server.' },
+            { text: 'V2: Firmware build server (CVSS-B 7.8, EPSS 0.64)', rank: 1, why: 'High EPSS on a critical asset. A compromise here could reach every pump, so it comes right after the KEV item.' }
+          ]
+        },
+        {
+          title: 'The vulnerability management cycle',
+          items: [
+            { text: 'Verify the fix by rescanning, and report trends and overdue items as KRIs', rank: 4, why: 'Verification and reporting close the loop and give the practitioner evidence.' },
+            { text: 'Prioritize by exploitation evidence, severity, and business context', rank: 2, why: 'Prioritization turns raw findings into a work order that reflects risk.' },
+            { text: 'Know the assets: keep an inventory with owners and criticality', rank: 0, why: 'A scanner cannot assess what it does not know exists. Inventory comes first.' },
+            { text: 'Remediate by patching, reconfiguring, or applying a compensating control', rank: 3, why: 'Remediation follows priorities, within service-level targets set by policy.' },
+            { text: 'Discover weaknesses with scans, configuration checks, and testing', rank: 1, why: 'Discovery runs against the known inventory.' }
+          ]
+        }
+      ]
+    },
+    {
+      type: 'sort', short: 'STRIDE', title: 'Name the STRIDE threat', concept: 'stride',
+      instr: 'A threat modeling session walked the data flow from Dovemarsh’s cloud console to pumps on hospital networks. Assign each threat to its <b>STRIDE</b> category.',
+      hint: 'Match the property violated. Spoofing breaks authentication. Tampering breaks integrity. Repudiation breaks nonrepudiation. Information disclosure breaks confidentiality. Denial of service breaks availability. Elevation of privilege breaks authorization.',
+      buckets: ['Spoofing', 'Tampering', 'Repudiation', 'Information disclosure', 'Denial of service', 'Elevation of privilege'],
+      review: { href: 'lesson03.html#s3', label: 'Lesson 3, Threat Modeling' },
+      items: [
+        { text: 'An attacker replays a captured clinician token to sign in to the pump fleet console.', answer: 0, why: 'Pretending to be someone else defeats authentication. That is spoofing.' },
+        { text: 'Dose limits in the drug library are altered on the way from the cloud to the pump.', answer: 1, why: 'Unauthorized change to data in transit breaks integrity. That is tampering.' },
+        { text: 'A hospital denies approving a firmware rollout, and Dovemarsh has no signed record of the approval.', answer: 2, why: 'When no one can prove who did what, the threat is repudiation.' },
+        { text: 'Pump telemetry that includes patient identifiers travels unencrypted over hospital Wi-Fi.', answer: 3, why: 'Exposure of data to people who should not see it breaks confidentiality.' },
+        { text: 'A flood of malformed packets makes pumps drop their console connection during an update window.', answer: 4, why: 'Making a service unavailable is denial of service.' },
+        { text: 'A read-only support account exploits a flaw to gain administrator rights on the console.', answer: 5, why: 'Gaining rights beyond those granted breaks authorization. That is elevation of privilege.' },
+        { text: 'Pumps connect to a fake update server because they never check the server’s certificate.', answer: 0, why: 'The fake server pretends to be Dovemarsh. Failing to authenticate the server allows spoofing.' },
+        { text: 'A firmware image is modified on the build server before it is signed.', answer: 1, why: 'Changing the image breaks its integrity. Signing it afterward makes the tampering look legitimate.' },
+        { text: 'Console administrators share one account, so no change can be tied to a person.', answer: 2, why: 'Shared accounts mean actions cannot be attributed. The threat is repudiation.' },
+        { text: 'Service reports in a public cloud bucket reveal hospital network diagrams.', answer: 3, why: 'Data visible to anyone on the internet is information disclosure.' },
+        { text: 'The console API has no rate limit, and a script exhausts it so hospitals cannot see pump alarms.', answer: 4, why: 'Exhausting a resource so legitimate users cannot reach it is denial of service.' },
+        { text: 'A nurse-level user changes a URL parameter on the pump’s web page and reaches the biomedical engineering settings.', answer: 5, why: 'Reaching functions beyond the user’s role breaks authorization.' }
+      ]
+    },
+    {
+      type: 'scenario', short: 'Scenario quality', title: 'Is this scenario ready for analysis?', concept: 'scenario',
+      instr: 'You are reviewing draft scenarios from Dovemarsh’s risk workshop. A complete scenario names the <b>actor</b>, <b>threat type</b>, <b>event</b>, <b>asset or resource</b>, and <b>time</b> (duration, timing, detection), and ties them to a business objective. Choose the <b>BEST</b> answer.',
+      hint: 'Check the five components first, then the evaluation tests: complete, plausible, relevant, realistic, measurable, distinct. Top-down starts from objectives; bottom-up starts from assets, threats, and vulnerabilities. Owners validate; the practitioner facilitates.',
+      review: { href: 'lesson03.html#s5', label: 'Lesson 3, Risk Scenario Development' },
+      items: [
+        {
+          title: 'Draft 1', text: '“Hackers attack our systems.”',
+          parts: [
+            { q: 'What is the MOST significant problem with this draft?', options: ['It names an external actor', 'It lacks a specific event, asset, time, and business consequence, so no one can estimate frequency or impact', 'It is too long', 'It does not name a control'], answer: 1, why: 'A scenario must be specific enough to estimate. This one names only a vague actor. It cannot be owned, analyzed, or tested against controls.' }
+          ]
+        },
+        {
+          title: 'Draft 2', text: '“A cybercriminal group steals design files for the next-generation pump from the engineering file server, threatening Dovemarsh’s product launch.”',
+          parts: [
+            { q: 'Which component is missing?', options: ['Actor', 'Event', 'Asset or resource', 'Time: when it happens, how long it lasts, and how fast it is detected'], answer: 3, why: 'The actor, event, and asset are present, and the objective is named. Without the time element, analysts cannot judge detection lag or how loss grows.' }
+          ]
+        },
+        {
+          title: 'Draft 3', text: '“A river flood alters the dose limits in the cloud drug library.”',
+          parts: [
+            { q: 'Which evaluation test does this draft fail?', options: ['Plausible', 'Distinct', 'Measurable', 'Relevant'], answer: 0, why: 'A flood can interrupt or destroy a facility. It cannot change data in a cloud library. The combination of threat and event does not make sense.' }
+          ]
+        },
+        {
+          title: 'The workshop method', text: 'The workshop began with Dovemarsh’s objective, “keep FDA clearance and ship the new pump on schedule,” and asked what events could make it fail.',
+          parts: [
+            { q: 'Which approach is this, and what is its main weakness?', options: ['Bottom-up; it may produce long lists with no business link', 'Top-down; it may miss technical paths no one in the room knows about', 'Top-down; it cannot gain executive support', 'Bottom-up; it ignores threat intelligence'], answer: 1, why: 'Starting from objectives is top-down. It is strong on relevance but can miss technical paths, so mature programs reconcile it with a bottom-up list from threat models and scan data.' },
+            { q: 'Who should validate that the final scenarios are realistic and relevant?', options: ['The risk practitioner who wrote them', 'The business owners, such as the VP of manufacturing and the head of product', 'The scanning vendor', 'Internal audit'], answer: 1, why: 'The owner knows the process and will own the risk. The practitioner facilitates and challenges; the owner validates.' }
+          ]
+        },
+        {
+          title: 'Starting point', text: 'A new risk analyst asks what to gather before writing any scenarios for the cloud console.',
+          parts: [
+            { q: 'What is the MOST important input?', options: ['The latest CVSS scores for the console', 'The business objectives the console supports and the information and processes that depend on it', 'A list of security tools in use', 'Last year’s audit report'], answer: 1, why: 'Scenarios that are not tied to objectives cannot be prioritized. Technical inputs come in, but the objectives anchor the set.' }
+          ]
+        }
+      ]
+    },
+    {
+      type: 'reflect', short: 'Reflect', title: 'Reflect on your readiness',
+      instr: 'Rate your confidence on each concept, then answer the prompts. Your responses appear in the summary report.',
+      prompts: [
+        { key: 'scenario', label: 'Write one complete risk scenario for a system you teach with or depend on. Include all five components and the objective it threatens.' },
+        { key: 'next', label: 'Which concept from this activity will you review before the next lesson, and how?' }
+      ]
+    }
+  ]
+};
+</script>
+<script src="practice.js"></script>
+</body>
+</html>

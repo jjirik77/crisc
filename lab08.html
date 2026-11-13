@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>B8 Ransomware Tabletop Facilitation | CRISC 5-Day Faculty Workshop</title>
+<link rel="stylesheet" href="crisc-lesson.css">
+<link rel="stylesheet" href="practice.css">
+<style>
+/* ===== Lab B8: ransomware tabletop facilitation (scoped b8-) ===== */
+.b8-modes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .6rem; margin: 0 0 1rem; }
+.b8-mode { text-align: left; border: 1px solid var(--border); background: var(--card-bg); border-radius: 4px; padding: .7rem .85rem; cursor: pointer; font: .82rem/1.45 Arial, sans-serif; color: var(--text-secondary); }
+.b8-mode b { display: block; font: 700 .95rem Georgia, serif; color: var(--text-primary); margin-bottom: .15rem; }
+.b8-mode:hover { border-color: var(--gold); }
+.b8-mode[aria-pressed="true"] { border-color: var(--navy); box-shadow: inset 0 0 0 2px var(--navy); background: var(--blue-pale); }
+.b8-mode[aria-pressed="true"] b::after { content: " (selected)"; font: 700 .7rem Arial, sans-serif; color: var(--navy); letter-spacing: .04em; }
+.b8-mode:focus-visible, .b8-btnrow .btn:focus-visible, .b8-seg button:focus-visible, .b8-opt:focus-within, .b8-wi button:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+.b8-bar { display: flex; flex-wrap: wrap; gap: .6rem 1rem; align-items: center; padding: .75rem .9rem; border: 1px solid var(--blue-pale-border); background: var(--blue-pale); border-radius: 4px; margin-bottom: 1rem; font: .88rem Arial, sans-serif; color: var(--text-secondary); }
+.b8-bar .b8-simclk { font: 900 1.4rem 'Arial Narrow', Arial, sans-serif; color: var(--navy); letter-spacing: .02em; }
+.b8-btnrow { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
+.b8-seg { display: inline-flex; gap: .3rem; flex-wrap: wrap; }
+.b8-seg button { border: 1px solid var(--border); background: var(--card-bg); color: var(--text-secondary); border-radius: 4px; padding: .45rem .8rem; font: 700 .82rem Arial, sans-serif; cursor: pointer; }
+.b8-seg button[aria-pressed="true"] { background: var(--navy); border-color: var(--navy); color: #fff; }
+.b8-lbl { display: block; font: 700 .7rem Arial, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--text-muted); }
+
+/* Facilitator / team board (projector) */
+.b8-board { border: 2px solid var(--navy); border-radius: 6px; background: #fff; padding: 1.1rem 1.3rem 1.2rem; margin-bottom: 1.1rem; }
+.b8-b-top { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 1rem 1.6rem; align-items: start; padding-bottom: .9rem; border-bottom: 1px solid var(--border); }
+.b8-code { display: block; font: 700 3.4rem/1.05 'Courier New', monospace; letter-spacing: .08em; color: var(--navy); margin: .2rem 0 .3rem; }
+.b8-codenote { display: block; font: 700 .9rem/1.45 Arial, sans-serif; color: var(--navy); background: var(--gold-pale); border: 1px solid var(--gold); border-left-width: 5px; border-radius: 3px; padding: .35rem .6rem; }
+.b8-codenote.calm { color: var(--text-secondary); background: var(--blue-pale); border-color: var(--blue-pale-border); border-left-width: 1px; }
+.b8-clock { display: block; font: 900 3.2rem/1.05 'Arial Narrow', Arial, sans-serif; color: var(--text-primary); margin: .2rem 0 .25rem; }
+.b8-clock-sub { display: block; font: 700 1.05rem/1.4 Arial, sans-serif; color: var(--text-secondary); }
+.b8-state { display: inline-block; font: 700 .78rem Arial, sans-serif; letter-spacing: .08em; text-transform: uppercase; border-radius: 3px; padding: .15rem .5rem; margin-left: .4rem; vertical-align: middle; border: 1px solid var(--navy); color: var(--navy); }
+.b8-state.paused { border-color: var(--amber); color: var(--jade-dark); background: var(--jade-pale); }
+.b8-cur { padding: 1rem 0 .4rem; }
+.b8-cur .b8-cur-meta { font: 700 1rem Arial, sans-serif; color: var(--navy-light); letter-spacing: .04em; }
+.b8-cur h3 { font: 700 1.9rem/1.2 Georgia, serif; color: var(--text-primary); margin: .25rem 0 .5rem; }
+.b8-cur p { font: 1.15rem/1.55 Arial, sans-serif; color: var(--text-secondary); margin: 0 0 .6rem; max-width: 72ch; }
+.b8-cur ol.b8-cur-opts { list-style: none; margin: .4rem 0 .5rem; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem .9rem; }
+.b8-cur ol.b8-cur-opts li { font: 1.08rem/1.45 Arial, sans-serif; color: var(--text-primary); border: 1px solid var(--blue-pale-border); background: var(--blue-pale); border-radius: 4px; padding: .5rem .7rem; }
+.b8-cur ol.b8-cur-opts li b { font: 900 1.2rem 'Arial Narrow', Arial, sans-serif; color: var(--navy); margin-right: .35rem; }
+.b8-cur .b8-ask { font: 700 1.1rem Georgia, serif; color: var(--navy); margin: .3rem 0 .2rem; }
+.b8-board .b8-btnrow { padding-top: .8rem; border-top: 1px solid var(--border); }
+.b8-board.team .b8-code { font-size: 1.6rem; }
+.b8-board.team .b8-clock { font-size: 2.2rem; }
+.b8-board.team .b8-cur h3 { font-size: 1.4rem; }
+.b8-board.team .b8-cur p { font-size: .98rem; }
+.b8-prev { font: .8rem Arial, sans-serif; color: var(--text-muted); margin: .4rem 0 0; }
+.b8-join { display: flex; flex-wrap: wrap; gap: .6rem; align-items: flex-end; margin-bottom: .8rem; }
+.b8-join label { display: block; font: 700 .9rem Georgia, serif; color: var(--text-primary); margin-bottom: .3rem; }
+.b8-join input { font: 700 1.3rem 'Courier New', monospace; letter-spacing: .1em; text-transform: uppercase; width: 11rem; padding: .45rem .6rem; border: 1px solid var(--border); border-radius: 4px; color: var(--text-primary); }
+.b8-join input:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 0 3px var(--gold-pale); }
+.b8-err { font: 700 .88rem Arial, sans-serif; color: var(--wrong); margin: 0 0 .8rem; }
+.b8-warn { font: .88rem Arial, sans-serif; color: var(--text-primary); background: var(--jade-pale); border-left: 4px solid var(--amber); padding: .5rem .7rem; margin: 0 0 .8rem; }
+.b8-board:fullscreen { box-sizing: border-box; width: 100vw; height: 100vh; border: 0; border-radius: 0; padding: 3.5vh 4vw; display: flex; flex-direction: column; overflow: hidden; }
+.b8-board:fullscreen .b8-code { font-size: min(9vh, 6vw); }
+.b8-board:fullscreen .b8-clock { font-size: min(9vh, 6vw); }
+.b8-board:fullscreen .b8-clock-sub, .b8-board:fullscreen .b8-codenote { font-size: min(2.5vh, 1.6vw); }
+.b8-board:fullscreen .b8-cur { flex: 1; min-height: 0; overflow: hidden; }
+.b8-board:fullscreen .b8-cur h3 { font-size: min(4.6vh, 3vw); }
+.b8-board:fullscreen .b8-cur p { font-size: min(2.6vh, 1.7vw); max-width: none; }
+.b8-board:fullscreen .b8-cur ol.b8-cur-opts li { font-size: min(2.5vh, 1.6vw); }
+.b8-board:fullscreen .b8-cur .b8-cur-meta, .b8-board:fullscreen .b8-cur .b8-ask { font-size: min(2.5vh, 1.6vw); }
+
+/* Impact clock */
+.b8-ic { border: 1px solid var(--border); border-radius: 4px; padding: .9rem 1rem 1rem; margin-bottom: 1.1rem; background: var(--card-bg); }
+.b8-ic h4 { font: 700 1rem Georgia, serif; color: var(--text-primary); margin: 0 0 .2rem; }
+.b8-ic .b8-ic-sum { font: .86rem/1.55 Arial, sans-serif; color: var(--text-secondary); margin: .1rem 0 .7rem; }
+.b8-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .6rem; margin-bottom: .8rem; }
+.b8-tile { border: 1px solid var(--blue-pale-border); background: var(--blue-pale); border-radius: 4px; padding: .55rem .7rem .6rem; }
+.b8-tile .v { display: block; font: 900 1.75rem/1.1 'Arial Narrow', Arial, sans-serif; color: var(--navy); }
+.b8-tile .u { font: 700 .8rem Arial, sans-serif; color: var(--text-secondary); margin-left: .2rem; }
+.b8-tile .dl { display: block; font: 700 .74rem Arial, sans-serif; color: var(--text-muted); margin-top: .15rem; min-height: 1em; }
+.b8-tile .dl.up { color: var(--wrong); } .b8-tile .dl.good { color: var(--correct); }
+.b8-meter { height: 8px; background: #fff; border: 1px solid var(--blue-pale-border); border-radius: 4px; overflow: hidden; margin-top: .35rem; }
+.b8-meter i { display: block; height: 100%; background: var(--navy-light); }
+.b8-chart { width: 100%; height: auto; display: block; }
+.b8-chart text { font: 11px Arial, sans-serif; fill: #6c5669; }
+.b8-chart .ax { stroke: #e3d2e1; stroke-width: 1; }
+.b8-chart .grid { stroke: #f3e9f2; stroke-width: 1; }
+.b8-chart .ln { fill: none; stroke: #3b1838; stroke-width: 2.5; }
+.b8-chart .ln2 { fill: none; stroke: #b45309; stroke-width: 2.5; stroke-dasharray: 7 5; }
+.b8-chart .pt { fill: #3b1838; } .b8-chart .pt2 { fill: #fff; stroke: #b45309; stroke-width: 2; }
+.b8-chart .lbl { font-weight: 700; fill: #3b1838; } .b8-chart .lbl2 { font-weight: 700; fill: #92400e; }
+.b8-legend { font: .78rem Arial, sans-serif; color: var(--text-secondary); margin: .2rem 0 .4rem; display: flex; gap: 1.2rem; flex-wrap: wrap; }
+.b8-legend span::before { content: ""; display: inline-block; width: 26px; height: 0; border-top: 3px solid #3b1838; vertical-align: middle; margin-right: .35rem; }
+.b8-legend span.wi::before { border-top: 3px dashed #b45309; }
+
+/* Inject feed and decisions */
+.b8-feed { display: grid; gap: .8rem; }
+.b8-inj { border: 1px solid var(--border); border-left: 4px solid var(--navy); border-radius: 0 4px 4px 0; padding: .8rem 1rem .9rem; background: var(--card-bg); }
+.b8-inj.newest { border-left-color: var(--gold); }
+.b8-inj-h { font: 700 .74rem Arial, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); }
+.b8-inj h5 { font: 700 1.02rem Georgia, serif; color: var(--text-primary); margin: .2rem 0 .4rem; }
+.b8-inj p { font: .88rem/1.6 Arial, sans-serif; color: var(--text-secondary); margin: 0 0 .5rem; }
+.b8-inj p b { color: var(--text-primary); }
+.b8-dec { border-top: 1px dashed var(--border); padding-top: .6rem; margin-top: .3rem; }
+.b8-dec fieldset { border: 0; margin: 0; padding: 0; }
+.b8-dec legend { font: 700 .72rem Arial, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: .35rem; }
+.b8-opt { display: flex; gap: .5rem; align-items: flex-start; border: 1px solid var(--border); border-radius: 4px; padding: .45rem .6rem; margin-bottom: .35rem; font: .86rem/1.45 Arial, sans-serif; color: var(--text-primary); cursor: pointer; background: #fff; }
+.b8-opt:hover { border-color: var(--gold); }
+.b8-opt input { margin-top: .2rem; }
+.b8-opt b { color: var(--navy); }
+.b8-opt.mine { border-color: var(--navy); box-shadow: inset 0 0 0 1px var(--navy); background: var(--blue-pale); cursor: default; }
+.b8-opt.dim { opacity: .62; cursor: default; }
+.b8-tag { font: 700 .66rem Arial, sans-serif; letter-spacing: .06em; text-transform: uppercase; border-radius: 3px; padding: .05rem .35rem; border: 1px solid var(--navy); color: var(--navy); white-space: nowrap; background: #fff; }
+.b8-res { border-left: 4px solid var(--navy-light); background: var(--blue-pale); padding: .55rem .75rem; margin-top: .5rem; font: .86rem/1.55 Arial, sans-serif; color: var(--text-primary); }
+.b8-res .fx { display: block; font: 700 .78rem Arial, sans-serif; color: var(--text-secondary); margin-top: .3rem; }
+.b8-empty { font: .9rem Arial, sans-serif; color: var(--text-muted); border: 1px dashed var(--border); border-radius: 4px; padding: 1rem; text-align: center; }
+.b8-pending { font: .82rem Arial, sans-serif; color: var(--text-muted); margin: .3rem 0 0; }
+.b8-h4 { font: 700 1.05rem Georgia, serif; color: var(--text-primary); margin: 1.2rem 0 .6rem; }
+
+/* What-if replay */
+.b8-wi { border: 1px solid var(--border); border-radius: 4px; padding: .9rem 1rem 1rem; margin-top: 1.1rem; background: var(--card-bg); }
+.b8-wi-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .4rem 1rem; align-items: center; padding: .35rem 0; border-bottom: 1px solid var(--section-alt); font: .85rem Arial, sans-serif; color: var(--text-primary); }
+.b8-wi-row .b8-seg button { min-width: 2.6rem; }
+.b8-wi-row .b8-seg button.yours { border-style: dashed; border-color: var(--navy); }
+.b8-wi table.data td.num, .b8-wi table.data th.num { text-align: right; }
+@media (max-width: 760px) {
+  .b8-modes { grid-template-columns: 1fr; }
+  .b8-b-top { grid-template-columns: 1fr; }
+  .b8-code { font-size: 2.4rem; }
+  .b8-clock { font-size: 2.4rem; }
+  .b8-cur h3 { font-size: 1.35rem; }
+  .b8-cur p { font-size: 1rem; }
+  .b8-cur ol.b8-cur-opts { grid-template-columns: 1fr; }
+  .b8-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .b8-wi-row { grid-template-columns: 1fr; }
+}
+@media print { .b8-path-wrap { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<div id="app"><noscript><p style="padding:2rem;font-family:Arial">This lab needs JavaScript enabled.</p></noscript></div>
+
+<script>
+/* ===================== Scenario, consequence model, and session-code engine =====================
+   Ironvale Health Partners: a ransomware tabletop exercise that you facilitate as the risk
+   practitioner (CRISC Task 24). Eight injects. At each one you choose a facilitation or advisory
+   move. Each move carries a deterministic consequence for the scenario as the room plays it
+   (projected downtime hours, patient records exposed in thousands, direct cost in $K, and an
+   exercise value index). A few moves set flags that change the consequence of a later inject.
+   Disruption is priced per downtime hour. */
+(function () {
+  var BASE = { h: 6, m: 10 }; // T+0:00 = Monday 06:10 in the scenario
+  var DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  var BI_RATE = 25; // $K of disruption per downtime hour (diversions, delayed procedures, overtime)
+  var LETTERS = 'ABCD';
+  function o(t, dt, ex, cost, rep, res, flag) { return { t: t, d: { dt: dt, ex: ex, cost: cost, rep: rep }, res: res, flag: flag || null }; }
+  var INJECTS = [
+    { id: 'I1', t: 0, title: 'Encryption alerts on the imaging servers', refs: 'Exercise plan 3 (ground rules), IRP 2.1', best: 2, step: 'Declaration',
+      base: { dt: 8, ex: 30, cost: 60, rep: 0 },
+      sit: 'Scenario time Monday 06:10. The SOC reports EDR alerts for mass file encryption on two radiology imaging servers at Ironvale North Hospital, and a VPN sign-in by a vendor support account at 02:40. In the room, the infrastructure manager starts a detailed walk-through of the EDR console. Twelve minutes pass. Nobody has said whether this is an incident, and the CIO is waiting for someone else to call it.',
+      ask: 'As facilitator, what do you do?',
+      opts: [
+        o('Declare the incident yourself so the exercise keeps moving, then release the next inject.', 4, 10, 30, -8, 'The room moves on, but the exercise never tests who holds declaration authority. Two executives each believe the other declares incidents, and nobody notices until the after-action review.', 'decided'),
+        o('Let the technical walk-through finish, because the detail will help with the later injects.', 10, 20, 70, -6, 'The walk-through takes 25 minutes of a 90-minute exercise. In the scenario, encryption spreads while the room talks, and the declaration objective is left untested.', 'late'),
+        o('Pause the walk-through, ask who declares under the IRP, and have that person decide.', 0, 0, 10, 0, 'The CIO reads IRP 2.1, confirms the declaration authority is hers, and declares a Severity 1 incident at scenario time 06:25. The scribe records the time and the decision maker. Objective O1 is now being tested as written.'),
+        o('Skip ahead to the ransom demand inject, since that is where the hard decisions are.', 6, 14, 40, -10, 'The room jumps to ransom before anyone has declared, contained, or escalated. The first hour, where real incidents most often go wrong, is never exercised.')
+      ] },
+    { id: 'I2', t: 90, title: 'The EHR goes down at all three hospitals', refs: 'Appetite statement, IRP 3.1', best: 0, step: 'Escalation',
+      base: { dt: 10, ex: 0, cost: 80, rep: 0 },
+      sit: 'Scenario time 07:40. The EHR is unavailable at North, Central, and Lakeside hospitals, and the emergency departments have started downtime procedures. The COO, who owns clinical operations risk, proposes waiting until the noon leadership huddle before telling the CEO. The appetite statement is in everyone’s packet.',
+      ask: 'What is your facilitation move?',
+      opts: [
+        o('Ask the COO to check the outage against the tolerance in the appetite statement and decide.', 0, 0, 10, 0, 'The COO reads the tolerance aloud: an EHR outage over 4 hours at more than one hospital is outside appetite and goes to the CEO and the board risk committee chair within 1 hour. She escalates at 07:50. The scribe notes that nobody knew the threshold before reading it, which becomes a finding.'),
+        o('Call the board risk committee chair yourself, because the outage is plainly outside appetite.', 2, 0, 40, -8, 'The escalation happens, but the practitioner made it, not the risk owner. The exercise records an escalation path that does not exist in the plan, and the COO’s role is never tested.', 'decided'),
+        o('Accept the COO’s plan to wait for noon, since the risk owner is entitled to decide.', 8, 0, 90, -6, 'The owner decides, but without the tolerance in front of her. In the scenario, the CEO first hears of the outage from a news crew outside the North emergency department. The objective is marked not met, with no record of why.', 'late'),
+        o('Stop the exercise and give a short briefing on risk appetite and risk tolerance.', 4, 0, 50, -5, 'Ten minutes of teaching replaces the decision. The room learns the definitions but never practices using them under pressure, and the inject runs out of time.')
+      ] },
+    { id: 'I3', t: 180, title: 'Downtime procedures stall', refs: 'Exercise plan 3, BIA summary', best: 3, step: 'Capturing findings',
+      base: { dt: 12, ex: 0, cost: 90, rep: 0 },
+      sit: 'Scenario time 09:10. The nursing director reports that the paper downtime forms are the 2021 version and lack the current medication reconciliation fields. Pharmacy can verify only about 40 percent of normal orders by hand. The BIA sets an MTD of 8 hours for medication ordering. The room starts redesigning the form on the whiteboard, and one participant asks who let the forms go out of date.',
+      ask: 'How do you handle this in the room?',
+      opts: [
+        o('Let the room finish the redesign, since a fixed form is the most useful outcome of the day.', 6, 0, 80, -7, 'The redesign takes 30 minutes. Two objectives are left untested, and the whiteboard form is never reviewed by pharmacy.'),
+        o('Ask the nursing director to explain why the forms were not updated, so the cause is on record.', 4, 0, 60, -9, 'The question lands as blame. The nursing director goes quiet for the rest of the session, and later participants hedge their answers. A no-fault exercise only works when people can admit gaps.', 'blame'),
+        o('Note that forms are operational detail and move on, because the objectives are about decisions.', 8, 0, 100, -6, 'The gap disappears from the record. In the scenario, medication ordering stays at 40 percent past the 8-hour MTD, and nobody owns the fix.', 'lost'),
+        o('Have the scribe log it as a finding against the MTD, park the fix, and keep time.', 0, 0, 20, 0, 'The scribe logs the finding: downtime forms out of date, manual medication ordering at 40 percent against an 8-hour MTD. The CNO is named as the likely owner, and the exercise moves on with time left for every objective.')
+      ] },
+    { id: 'I4', t: 360, title: 'The lab-results vendor reports a compromise', refs: 'Register R-11, notification matrix', best: 1, step: 'Third-party obligations',
+      base: { dt: 4, ex: 18, cost: 70, rep: 0 },
+      sit: 'Scenario time 12:10. Corvane Diagnostics Network, which hosts Ironvale’s lab-results interface, emails that the same group compromised its support platform and may have accessed result files. Corvane is a business associate under a BAA. The vendor manager thinks the BAA requires notice “within a reasonable time.” Register entry R-11 rates the interface as low residual risk, based on a 2025 questionnaire.',
+      ask: 'What do you do as facilitator?',
+      opts: [
+        o('Tell the room the BAA almost certainly requires notice within 60 days, and move on.', 2, 6, 90, -6, 'The room accepts your guess, so nobody checks the contract. The after-action report has no finding on the BAA terms, and the real notice clause is never read.', 'decided'),
+        o('Hand out the BAA extract and ask the vendor manager and privacy officer what it requires.', 0, 0, 20, 0, 'The extract shows Corvane must report a breach of unsecured PHI within 10 days of discovery, but it says nothing about Corvane’s own subcontractors. The scribe logs two findings: the fourth-party gap, and an R-11 rating that rests on a questionnaire instead of evidence.'),
+        o('Treat the vendor issue as out of scope, because the exercise is about Ironvale’s own systems.', 6, 20, 140, -7, 'The third-party path stays untested. In the scenario, Ironvale learns weeks later, from a patient complaint, that lab results were exposed through Corvane.', 'lost'),
+        o('Ask the CIO to decide right now whether to cut the Corvane interface.', 8, 0, 110, -4, 'The CIO cuts the interface without the lab director, who owns the process. Lab results stop reaching the emergency departments for the rest of the scenario, and the decision right is still unclear.')
+      ] },
+    { id: 'I5', t: 1080, title: 'Ransom demand and a leak-site post', refs: 'IRP 5.2, Exercise plan 4 (roles)', best: 3, step: 'Decision rights',
+      base: { dt: 6, ex: 25, cost: 120, rep: -4 },
+      sit: 'Scenario time Tuesday 00:10. The group demands $4.5 million and posts 200 patient records on its leak site as proof. The CFO turns to you: “You’re the risk person. Should we pay?” IRP 5.2 gives payment decisions to the CEO with the board, on counsel’s advice, after sanctions screening and an insurer consent check. Immutable backups exist but have not been restore-tested this year.',
+      ask: 'How do you respond to the CFO?',
+      opts: [
+        o('Recommend paying, because the backups are untested and patient care has to come first.', -2, 10, 4600, -10, 'The room follows your lead and agrees to pay. Nobody checks sanctions, insurer consent, or whether the backups would work. The exercise records a decision made by the facilitator, which no plan allows.'),
+        o('Say that Ironvale never pays, and release the next inject to stay on time.', 4, 0, 60, -5, 'The answer sounds firm, but it is your policy, not the CEO’s decision. The room never works through backup viability, sanctions screening, or insurer consent, which were the point of the inject.', 'decided'),
+        o('Ask the CFO to make the call now, since the CFO owns financial risk.', 2, 0, 80, -6, 'The CFO decides, but IRP 5.2 gives this decision to the CEO with the board. The exercise rehearses the wrong decision path, and the scribe records it as if it were correct.'),
+        o('Say the CEO decides with the board, and ask counsel and the CIO for the IRP inputs.', 0, 0, 30, 0, 'The CEO takes the decision. Counsel lists sanctions screening and insurer consent; the CIO says the immutable backups have not been restore-tested this year. The CEO decides not to pay while recovery from backup is viable, and the scribe logs the untested backups as a finding.')
+      ] },
+    { id: 'I6', t: 1200, title: 'Who owns the notification clock?', refs: 'Notification matrix, IRP 5.3', best: 0, step: 'Regulatory obligations',
+      base: { dt: 2, ex: 0, cost: 60, rep: 0 },
+      sit: 'Scenario time Tuesday 02:10. The general counsel says notification can wait until forensics proves data was taken. The privacy officer is not sure. The notification matrix in the exercise packet summarizes the HIPAA Breach Notification Rule. The leak-site post already includes patient names and diagnoses.',
+      ask: 'What is your facilitation move?',
+      opts: [
+        o('Ask the privacy officer to walk the matrix: who owns the clock, discovery, and deadlines.', 0, 0, 20, 0, 'The privacy officer explains that HHS treats ransomware affecting PHI as a presumed breach unless a documented risk assessment shows a low probability of compromise, and the leak-site post rules that out. She records discovery as Monday 06:25 and lists the deadlines. The scribe logs that counsel and privacy disagreed on the trigger, a finding for training.'),
+        o('Agree with counsel, since legal owns notification and the facilitator should not second-guess.', 0, 0, 150, -8, 'Deferring to the owner is usually right, but letting a plain gap pass is not. The room plans to wait for forensics, which the presumption of breach does not allow, and the gap never reaches the report.'),
+        o('Tell the room that encrypted data is not a breach, so no notice is needed here.', 0, 0, 260, -12, 'This is wrong, and it comes from the facilitator. Under HHS guidance, ransomware that encrypts PHI is a presumed breach unless a risk assessment shows a low probability of compromise. The room leaves with a false belief.'),
+        o('Ask communications to draft a notice to all patients today, before the scope is known.', 0, 0, 120, -5, 'The room drafts a notice before anyone knows who was affected. It names the wrong hospitals, and in the scenario it has to be corrected the next day.')
+      ] },
+    { id: 'I7', t: 2400, title: 'Restore from the immutable backups', refs: 'Register R-07, BIA summary', best: 2, step: 'Register reality check',
+      base: { dt: 24, ex: 0, cost: 150, rep: 0 },
+      sit: 'Scenario time Tuesday 22:10. The CIO reports that the immutable backups are intact, but the newest EHR copy is 26 hours old and a full restore will take about 30 hours. The BIA sets an RTO of 24 hours and an RPO of 4 hours for the EHR. Register entry R-07, EHR recoverability, rates residual risk as low and cites “daily immutable backups.” No restore has been tested since 2025.',
+      ask: 'What do you do with this in the exercise?',
+      opts: [
+        o('Rule that the restore succeeds on time, so the exercise ends on a positive note.', 10, 0, 120, -9, 'The room relaxes, and the exercise hides its most important result. R-07 stays rated low, and the RTO and RPO gaps go unreported.', 'lost'),
+        o('Open a design discussion on a new backup architecture before the exercise moves on.', 20, 0, 260, -5, 'Forty minutes go to vendor options. The closing inject is cut short, and the redesign has no owner or budget.'),
+        o('Log the RTO and RPO gaps against R-07 and have the CIO confirm the facts.', 0, 0, 40, 0, 'The CIO, as control owner, confirms both gaps: about 30 hours to restore against a 24-hour RTO, and data 26 hours old against a 4-hour RPO. The scribe links the finding to R-07, whose low residual rating rested on a control nobody had tested.'),
+        o('Ask the COO to accept the gap as residual risk on the spot.', 6, 0, 90, -6, 'Acceptance without analysis is not acceptance. The COO agrees under time pressure, and the report records a risk decision that nobody costed or compared with appetite.')
+      ] },
+    { id: 'I8', t: 4320, title: 'Time is up: the hot wash', refs: 'Exercise plan 6 (after-action)', best: 1, step: 'After-action follow-through',
+      base: { dt: 6, ex: 0, cost: 40, rep: 0 },
+      sit: 'The exercise is at 85 of 90 minutes and the last inject is done. The CEO thanks everyone and suggests skipping the hot wash: “We all saw what happened. Send a summary when you can.” The scribe’s log holds several findings. Three involve risk register entries, and two register KRIs have no data source.',
+      ask: 'What do you recommend?',
+      opts: [
+        o('Skip the hot wash, and send a short summary email to participants next week.', 12, 0, 160, -9, 'Memories fade, and the summary lists events, not gaps. No corrective action gets an owner, and the next real incident meets the same out-of-date forms and untested restores.'),
+        o('Run a 15-minute hot wash now, then issue the after-action report with owners.', 0, 0, 20, 0, 'The hot wash adds two findings the scribe missed. Within ten business days, the after-action report goes to the risk committee with corrective actions, owners, and due dates, and the register and KRI updates enter the risk action plan.'),
+        o('Send the findings to internal audit and let audit decide which ones matter.', 6, 0, 90, -6, 'Audit can evaluate, but it does not own the response, and it should stay independent of it. The findings sit in an audit queue, and the risk owners never commit to actions.'),
+        o('Publish the scribe’s log with the names of the people whose answers were wrong.', 4, 0, 70, -12, 'The log is accurate, and the damage lasts. The next tabletop has half the attendance, and nobody volunteers a gap.')
+      ] }
+  ];
+  var SIM_END = 4800;
+
+  /* Consequence of committing option c at inject k, given the other committed decisions */
+  function effect(k, c, dec) {
+    var op = INJECTS[k].opts[c], d = { dt: op.d.dt, ex: op.d.ex, cost: op.d.cost, rep: op.d.rep }, notes = [];
+    function has(f) { for (var j = 0; j < k; j++) if (dec[j] != null && INJECTS[j].opts[dec[j]].flag === f) return true; return false; }
+    if (k === 3 && has('blame')) { d.cost += 40; d.rep -= 4; notes.push('After the blame at Inject 3, the vendor manager hedges instead of admitting what she does not know: +$40K and 4 fewer exercise value points.'); }
+    if (k === 4 && has('decided')) { d.cost += 150; d.rep -= 4; notes.push('Earlier, the facilitator made a decision for the room, so the decision owners now wait for you instead of using the plan: +$150K and 4 fewer exercise value points.'); }
+    if (k === 5 && has('late')) { d.cost += 60; d.rep -= 4; notes.push('The late declaration or escalation earlier leaves the discovery time in dispute, so the notification clock is unclear: +$60K and 4 fewer exercise value points.'); }
+    if (k === 7 && has('lost')) { d.dt += 18; notes.push('Gaps that were waved off earlier never reach the report, so the projected real incident keeps them: +18 downtime hours.'); }
+    return { d: d, notes: notes };
+  }
+
+  /* Totals after `count` injects released with decisions `dec` (array of option index or null) */
+  function model(dec, count) {
+    var n = count == null ? 8 : count, T = { dt: 0, ex: 0, cost: 0, rep: 100 }, steps = [], decided = 0;
+    for (var k = 0; k < n; k++) {
+      var b = INJECTS[k].base; T.dt += b.dt; T.ex += b.ex; T.cost += b.cost; T.rep += b.rep;
+      if (dec[k] != null) { var e = effect(k, dec[k], dec).d; T.dt += e.dt; T.ex += e.ex; T.cost += e.cost; T.rep += e.rep; decided++; }
+      steps.push({ dt: T.dt, ex: T.ex, cost: T.cost, total: T.cost + BI_RATE * T.dt, rep: T.rep, decided: dec[k] != null });
+    }
+    return { dt: T.dt, ex: T.ex, cost: T.cost, total: T.cost + BI_RATE * T.dt, rep: Math.max(0, T.rep), steps: steps, decided: decided };
+  }
+  var BEST = INJECTS.map(function (x) { return x.best; });
+
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function hm(min) { min = Math.max(0, Math.floor(min)); return Math.floor(min / 60) + ':' + pad(min % 60); }
+  function tplus(min) { return 'T+' + hm(min); }
+  function wall(min) { var tot = BASE.h * 60 + BASE.m + Math.floor(min), d = Math.floor(tot / 1440), r = tot % 1440; return DAYS[Math.min(d, DAYS.length - 1)] + ' ' + pad(Math.floor(r / 60)) + ':' + pad(r % 60); }
+  function money(k) { return '$' + (k / 1000).toFixed(2) + 'M'; }
+
+  /* ---------- Session code (own lab tag) ----------
+     30 payload bits in 6 Crockford base32 characters + 1 checksum character.
+     tag(2) | interval(2) | paused(1) | inject index(3) | anchor(22).
+     Running: anchor = start epoch second of the current inject window, mod 2^22.
+     Paused: anchor = seconds already elapsed in the current inject window. */
+  var ALPHA = '0123456789ABCDEFGHJKMNPQRSTVWXYZ', M = 4194304, TAG = 1, IVS = [300, 420, 600];
+  function checksum(vals) { var s = 19; /* CRISC-specific seed: CISSP codes fail the check */ vals.forEach(function (v, i) { s += (2 * i + 1) * v; }); return s % 32; }
+  function encode(st) {
+    var a = ((Math.floor(st.anchor) % M) + M) % M;
+    var v = (((TAG * 4 + st.iv) * 2 + (st.paused ? 1 : 0)) * 8 + st.b) * M + a, ch = [];
+    for (var i = 5; i >= 0; i--) { ch[i] = v % 32; v = Math.floor(v / 32); }
+    ch.push(checksum(ch));
+    return ch.map(function (c) { return ALPHA[c]; }).join('');
+  }
+  function fmtCode(c) { return c.slice(0, 3) + '-' + c.slice(3); }
+  function clean(s) { return String(s || '').toUpperCase().replace(/[\s\-_.]/g, '').replace(/O/g, '0').replace(/[IL]/g, '1').replace(/U/g, 'V'); }
+  function resolve(a, nowSec) { var c = nowSec - (((nowSec - a) % M) + M) % M; if (nowSec - c > M / 2) c += M; return c; }
+  function decode(raw, nowSec) {
+    var s = clean(raw);
+    if (!s) return { error: 'Enter the session code shown on the projector.' };
+    if (s.length !== 7) return { error: 'Session codes have 7 characters, such as K7Q-4MZP. You entered ' + s.length + '.' };
+    var vals = [];
+    for (var i = 0; i < 7; i++) { var k = ALPHA.indexOf(s[i]); if (k < 0) return { error: 'The code contains a character that session codes do not use: ' + s[i] + '.' }; vals.push(k); }
+    if (checksum(vals.slice(0, 6)) !== vals[6]) return { error: 'That code does not check out. One character is probably mistyped. Compare it with the projector and try again.' };
+    var v = 0; for (i = 0; i < 6; i++) v = v * 32 + vals[i];
+    var a = v % M, r = Math.floor(v / M), b = r % 8; r = Math.floor(r / 8); var p = r % 2; r = Math.floor(r / 2); var iv = r % 4, tag = Math.floor(r / 4);
+    if (tag !== TAG || iv > 2) return { error: 'That is not a session code for this lab. Ask the facilitator for the CRISC Lab B8 code.' };
+    var st = { code: s, b: b, paused: !!p, iv: iv };
+    if (p) { st.within = a; if (a > IVS[iv]) return { error: 'That code is not valid. Ask the facilitator for the current code.' }; }
+    else st.t0 = resolve(a, nowSec);
+    return { state: st };
+  }
+  function derive(st, nowSec) {
+    var I = IVS[st.iv], idx, within, nextIn = null;
+    if (st.paused) { idx = st.b; within = st.within || 0; }
+    else {
+      var el = Math.max(0, nowSec - st.t0), steps = Math.floor(el / I);
+      idx = Math.min(7, st.b + steps);
+      within = el - (idx - st.b) * I;
+      if (idx < 7) nextIn = I - within;
+    }
+    var w = Math.min(within, I), nextT = idx < 7 ? INJECTS[idx + 1].t : SIM_END;
+    var sim = INJECTS[idx].t + (nextT - INJECTS[idx].t) * w / I;
+    return { idx: idx, count: idx + 1, within: within, nextIn: nextIn, sim: sim, closed: idx === 7 && within >= I, I: I };
+  }
+
+  window.B8 = {
+    INJECTS: INJECTS, BEST: BEST, BI_RATE: BI_RATE, LETTERS: LETTERS, IVS: IVS, ALPHA: ALPHA, M: M, TAG: TAG,
+    hm: hm, tplus: tplus, wall: wall, money: money, effect: effect, model: model,
+    encode: encode, decode: decode, derive: derive, fmtCode: fmtCode, clean: clean, checksum: checksum,
+    answers: {
+      bestDowntime: function () { return model(BEST, 8).dt; },
+      bestCostM: function () { return Math.round(model(BEST, 8).total) / 1000; }
+    }
+  };
+})();
+</script>
+
+<script>
+(function () {
+  var B = window.B8, API = null, CUR = null;
+  function nowSec() { return Math.floor(Date.now() / 1000); }
+  function note(k, v) { var a = API || window.LAB_API; return a ? a.note(k, v) : undefined; }
+  function decs() { var d = note('dec') || {}; return B.INJECTS.map(function (x) { return d[x.id] == null ? null : +d[x.id]; }); }
+  function allDecided() { return decs().every(function (v) { return v != null; }); }
+  function lockDecision(k) { return function () { return decs()[k - 1] != null ? false : 'Unlocks after you commit your decision at Inject ' + k + ' on the Exercise tab.'; }; }
+  function lockAll() { return allDecided() ? false : 'Unlocks when all eight decisions are committed and the what-if replay opens on the Exercise tab.'; }
+
+  function live() {
+    var mode = note('mode') || 'solo', n = nowSec();
+    if (mode === 'solo') { var c = +(note('solo') || 0); return { mode: mode, count: c, idx: c - 1, sim: c ? B.INJECTS[c - 1].t : 0 }; }
+    if (mode === 'fac') {
+      var f = note('fac');
+      if (!f || !f.started) return { mode: mode, count: 0, idx: -1, sim: 0 };
+      var d = B.derive(f, n); d.mode = mode; d.fac = f; return d;
+    }
+    var code = note('code'), dec = code ? B.decode(code, n) : null;
+    if (!dec || !dec.state) return { mode: mode, count: 0, idx: -1, sim: 0, noCode: true };
+    var dt = B.derive(dec.state, n); dt.mode = mode; dt.state = dec.state; return dt;
+  }
+  function mmss(s) { s = Math.max(0, Math.ceil(s)); return Math.floor(s / 60) + ':' + (s % 60 < 10 ? '0' : '') + (s % 60); }
+
+  function keepFocus(fn) {
+    var a = document.activeElement, id = a && a.id, s1, s2;
+    try { s1 = a.selectionStart; s2 = a.selectionEnd; } catch (e) { }
+    fn();
+    if (id) { var el = document.getElementById(id); if (el && el !== document.activeElement) { el.focus({ preventScroll: true }); try { if (s1 != null) el.setSelectionRange(s1, s2); } catch (e) { } } }
+  }
+
+  /* ---------- Facilitator actions: every schedule change issues a new code ---------- */
+  function facCode(f, reason) {
+    var st = { iv: f.iv, b: f.b, paused: f.paused, anchor: f.paused ? f.within : f.t0 };
+    f.code = B.encode(st);
+    f.history = (f.history || []).concat([{ code: f.code, at: Date.now(), reason: reason }]).slice(-6);
+  }
+  function facAction(kind) {
+    var f = note('fac') || { iv: 1 }, n = nowSec();
+    if (kind === 'start') { f = { iv: f.iv == null ? 1 : f.iv, b: 0, t0: n, paused: false, within: 0, started: true, history: [] }; facCode(f, 'start'); }
+    else if (f.started) {
+      var d = B.derive(f, n);
+      if (kind === 'pause' && !f.paused) { f.b = d.idx; f.within = Math.min(Math.floor(d.within), B.IVS[f.iv]); f.paused = true; facCode(f, 'pause'); }
+      else if (kind === 'resume' && f.paused) { f.t0 = n - (f.within || 0); f.paused = false; facCode(f, 'resume'); }
+      else if (kind === 'next' && d.idx < 7) { f.b = d.idx + 1; f.within = 0; f.t0 = n; facCode(f, 'next'); }
+      else if (kind === 'end') { if (!confirm('End this exercise? Teams keep their decisions. You can start a new session afterward.')) return; f = { iv: f.iv }; }
+    }
+    note('fac', f); renderLive(true);
+  }
+
+  /* ---------- Rendering ---------- */
+  function esc(s) { return API.esc(s); }
+  function sgn(v, unit, dec) { var s = (v > 0 ? '+' : v < 0 ? '−' : '±') + Math.abs(v).toFixed(dec || 0); return s + (unit || ''); }
+  function fxLine(e) {
+    return 'Projected impact of this move: downtime ' + sgn(e.dt, ' h') + ', patient records ' + sgn(e.ex, 'K') + ', direct cost ' + sgn(e.cost / 1000, 'M', 2).replace(/^([+−±])/, '$1$') + ', exercise value ' + sgn(e.rep, ' pts') + '.';
+  }
+  function injCard(x, k, newest, D) {
+    var mine = D[k], draft = CUR.draft6 && CUR.draft6[x.id];
+    var opts = x.opts.map(function (op, c) {
+      var cls = mine != null ? (mine === c ? ' mine' : ' dim') : '';
+      return '<label class="b8-opt' + cls + '"><input type="radio" name="b8d-' + x.id + '" id="b8d-' + x.id + '-' + c + '" value="' + c + '" data-dec="' + x.id + '"' + ((mine != null ? mine === c : draft === c) ? ' checked' : '') + (mine != null ? ' disabled' : '') + '><span><b>' + B.LETTERS[c] + '.</b> ' + esc(op.t) + (mine === c ? ' <span class="b8-tag">your decision</span>' : '') + '</span></label>';
+    }).join('');
+    var res = '';
+    if (mine != null) {
+      var e = B.effect(k, mine, D);
+      res = '<div class="b8-res" role="status"><b>What happens.</b> ' + esc(x.opts[mine].res) + (e.notes.length ? ' ' + esc(e.notes.join(' ')) : '') + '<span class="fx">' + esc(fxLine(e.d)) + '</span></div>';
+    }
+    return '<article class="b8-inj' + (newest ? ' newest' : '') + '" aria-labelledby="b8h-' + x.id + '">' +
+      '<div class="b8-inj-h">Inject ' + (k + 1) + ' of 8 &middot; ' + B.tplus(x.t) + ' &middot; ' + B.wall(x.t) + (newest ? ' &middot; newest' : '') + (mine != null ? ' &middot; decision committed' : ' &middot; decision needed') + '</div>' +
+      '<h5 id="b8h-' + x.id + '">' + x.id + '. ' + esc(x.title) + '</h5>' +
+      '<p><b>Situation.</b> ' + esc(x.sit) + '</p>' +
+      '<p class="b8-pending">Plan sections in play: ' + esc(x.refs) + '</p>' +
+      '<div class="b8-dec"><fieldset><legend>' + esc(x.ask) + '</legend>' + opts + '</fieldset>' +
+      (mine == null ? '<div class="b8-btnrow"><button type="button" class="btn" id="b8-commit-' + x.id + '" data-commit="' + x.id + '">Commit decision</button><span class="b8-pending">Decisions are final once committed, as in a real incident.</span></div>' : '') + res + '</div></article>';
+  }
+  function feedHTML(L) {
+    if (!L.count) return '<p class="b8-empty">No injects released yet. ' + (L.mode === 'solo' ? 'Select <b>Start exercise</b> to release Inject 1.' : L.mode === 'fac' ? 'Select <b>Start exercise</b> to begin the clock.' : 'Enter the session code to join.') + '</p>';
+    var D = decs(), out = [];
+    for (var i = L.count - 1; i >= 0; i--) out.push(injCard(B.INJECTS[i], i, i === L.count - 1, D));
+    var open = D.slice(0, L.count).filter(function (v) { return v == null; }).length;
+    return '<p class="b8-pending" style="margin-bottom:.6rem">' + L.count + ' of 8 injects released. Newest first. ' + (open ? '<b>' + open + ' decision' + (open > 1 ? 's' : '') + ' waiting.</b> ' : '') + 'Your decisions are saved on this device only.</p><div class="b8-feed">' + out.join('') + '</div>';
+  }
+
+  function chartSVG(lines, n) {
+    // lines: [{steps, cls, pt, lbl}] cumulative total cost ($K) after each inject
+    var W = 640, H = 190, l = 52, r = 16, t = 14, b = 30, max = 1000;
+    lines.forEach(function (ln) { ln.steps.forEach(function (s) { max = Math.max(max, s.total); }); });
+    max = Math.ceil(max / 1000) * 1000;
+    function X(i) { return l + (W - l - r) * i / 7; }
+    function Y(v) { return t + (H - t - b) * (1 - v / max); }
+    var g = '', stepK = max <= 6000 ? 1000 : max <= 12000 ? 2000 : 5000;
+    for (var v = 0; v <= max; v += stepK) g += '<line class="grid" x1="' + l + '" x2="' + (W - r) + '" y1="' + Y(v) + '" y2="' + Y(v) + '"/><text x="' + (l - 6) + '" y="' + (Y(v) + 4) + '" text-anchor="end">$' + (v / 1000) + 'M</text>';
+    for (var i = 0; i < 8; i++) g += '<text x="' + X(i) + '" y="' + (H - 10) + '" text-anchor="middle">I' + (i + 1) + '</text>';
+    lines.forEach(function (ln) {
+      var s = ln.steps.slice(0, n); if (!s.length) return;
+      g += '<polyline class="' + ln.cls + '" points="' + s.map(function (p, i) { return X(i) + ',' + Y(p.total); }).join(' ') + '"/>';
+      s.forEach(function (p, i) { g += '<circle class="' + ln.pt + '" cx="' + X(i) + '" cy="' + Y(p.total) + '" r="4"/>'; });
+      var lp = s[s.length - 1], lx = X(s.length - 1);
+      g += '<text class="' + ln.lbl + '" x="' + (lx > W - 90 ? lx - 8 : lx + 8) + '" y="' + (Y(lp.total) + (ln.dy || -8)) + '" text-anchor="' + (lx > W - 90 ? 'end' : 'start') + '">' + B.money(lp.total) + '</text>';
+    });
+    return '<svg class="b8-chart" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(lines.map(function (ln) { var s = ln.steps.slice(0, n); return ln.name + ': total cost ' + (s.length ? B.money(s[s.length - 1].total) : 'none') + ' after ' + s.length + ' injects'; }).join('; ')) + '"><line class="ax" x1="' + l + '" x2="' + (W - r) + '" y1="' + Y(0) + '" y2="' + Y(0) + '"/>' + g + '</svg>';
+  }
+  function tile(label, val, unit, delta, goodDown, meter) {
+    var cls = delta == null || delta === 0 ? '' : ((delta > 0) === goodDown ? ' up' : ' good');
+    return '<div class="b8-tile"><span class="b8-lbl">' + label + '</span><span class="v">' + val + '<span class="u">' + unit + '</span></span>' + (meter != null ? '<div class="b8-meter" aria-hidden="true"><i style="width:' + meter + '%"></i></div>' : '') + '<span class="dl' + cls + '">' + (delta == null ? '&nbsp;' : 'Last decision ' + delta) + '</span></div>';
+  }
+  function icHTML(L) {
+    var D = decs(), m = B.model(D, L.count), last = CUR.lastDec, ld = null;
+    if (last != null && D[last] != null && last < L.count) ld = B.effect(last, D[last], D).d;
+    var waiting = D.slice(0, L.count).filter(function (v) { return v == null; }).length;
+    var sum = L.count ? 'Scenario time ' + B.tplus(L.sim || 0) + ' (' + B.wall(L.sim || 0) + '). ' + m.decided + ' of ' + L.count + ' released decisions committed' + (waiting ? '; waiting decisions are not yet counted.' : '.') + ' Projected cost includes disruption at $' + B.BI_RATE + 'K per downtime hour.' : 'The impact clock starts when Inject 1 is released. Every facilitation move you commit changes how the room plays the scenario.';
+    return '<section class="b8-ic" aria-labelledby="b8-ic-h"><h4 id="b8-ic-h">Impact clock: the scenario as your room plays it</h4><p class="b8-ic-sum">' + sum + '</p>' +
+      '<div class="b8-tiles">' +
+        tile('Downtime', m.dt, ' h', ld ? sgn(ld.dt, ' h') : null, true) +
+        tile('Patient records exposed', m.ex, 'K', ld ? sgn(ld.ex, 'K') : null, true) +
+        tile('Projected cost', B.money(m.total), '', ld ? sgn((ld.cost + B.BI_RATE * ld.dt) / 1000, 'M', 2).replace(/^([+\u2212\u00b1])/, '$1$') : null, true) +
+        tile('Exercise value', m.rep, ' / 100', ld ? sgn(ld.rep, ' pts') : null, false, m.rep) + '</div>' +
+      '<span class="b8-lbl">Total cost after each inject (direct cost plus service disruption)</span>' + chartSVG([{ name: 'Your path', steps: m.steps, cls: 'ln', pt: 'pt', lbl: 'lbl' }], L.count) + '</section>';
+  }
+
+  function wiHTML() {
+    var D = decs(); if (!D.every(function (v) { return v != null; })) return '';
+    var W = note('wi'); if (!W || W.length !== 8) W = D.slice();
+    var mine = B.model(D, 8), alt = B.model(W, 8);
+    var rows = B.INJECTS.map(function (x, k) {
+      return '<div class="b8-wi-row"><span><b>' + x.id + '.</b> ' + esc(x.title) + '</span><span class="b8-seg" role="group" aria-label="What-if decision for ' + x.id + '">' + B.LETTERS.split('').map(function (L, c) {
+        return '<button type="button" id="b8w-' + x.id + '-' + c + '" data-wi="' + k + '" data-c="' + c + '" aria-pressed="' + (W[k] === c) + '"' + (D[k] === c ? ' class="yours" title="Your committed decision"' : '') + '>' + L + (D[k] === c ? '<span class="sr-only"> (your decision)</span>' : '') + '</button>';
+      }).join('') + '</span></div>';
+    }).join('');
+    function diff(a, b, dec, unit) { var d = b - a; return d === 0 ? 'same' : sgn(d, unit || '', dec); }
+    var tbl = '<div class="table-wrap"><table class="data"><thead><tr><th scope="col">Measure</th><th scope="col" class="num">Your path</th><th scope="col" class="num">What-if path</th><th scope="col" class="num">Difference</th></tr></thead><tbody>' +
+      '<tr><td>Downtime (hours)</td><td class="num">' + mine.dt + '</td><td class="num"><b>' + alt.dt + '</b></td><td class="num">' + diff(mine.dt, alt.dt) + '</td></tr>' +
+      '<tr><td>Patient records exposed (thousands)</td><td class="num">' + mine.ex + '</td><td class="num"><b>' + alt.ex + '</b></td><td class="num">' + diff(mine.ex, alt.ex) + '</td></tr>' +
+      '<tr><td>Direct cost</td><td class="num">' + B.money(mine.cost) + '</td><td class="num">' + B.money(alt.cost) + '</td><td class="num">' + diff(mine.cost / 1000, alt.cost / 1000, 2, 'M') + '</td></tr>' +
+      '<tr><td>Total projected cost, including disruption</td><td class="num">' + B.money(mine.total) + '</td><td class="num"><b>' + B.money(alt.total) + '</b></td><td class="num">' + diff(mine.total / 1000, alt.total / 1000, 2, 'M') + '</td></tr>' +
+      '<tr><td>Exercise value (of 100)</td><td class="num">' + mine.rep + '</td><td class="num"><b>' + alt.rep + '</b></td><td class="num">' + diff(mine.rep, alt.rep) + '</td></tr></tbody></table></div>';
+    var same = W.join() === D.join();
+    return '<section class="b8-wi" aria-labelledby="b8-wi-h"><h4 class="b8-h4" id="b8-wi-h" style="margin-top:0">What-if replay</h4>' +
+      '<p class="lead-p" style="margin:.1rem 0 .6rem">All eight facilitation moves are committed. Your path is fixed; use the replay to test other paths through the same consequence model. A dashed outline marks your committed choice. The checklist number items ask you to set the replay to the moves that the exercise plan and Task 24 practice support.</p>' +
+      rows + '<div class="b8-btnrow" style="margin:.8rem 0"><button type="button" class="btn secondary" id="b8-wi-mine">Reset to my path</button><button type="button" class="btn ghost" id="b8-wi-ver">Apply my verified checklist answers</button><span class="b8-pending" id="b8-wi-msg" aria-live="polite">' + (same ? 'Showing your path.' : 'What-if path differs at ' + W.map(function (v, k) { return v !== D[k] ? 'I' + (k + 1) : null; }).filter(Boolean).join(', ') + '.') + '</span></div>' +
+      '<div class="b8-legend" aria-hidden="true"><span>Your path</span><span class="wi">What-if path</span></div>' +
+      chartSVG([{ name: 'Your path', steps: mine.steps, cls: 'ln', pt: 'pt', lbl: 'lbl', dy: -8 }, { name: 'What-if path', steps: alt.steps, cls: 'ln2', pt: 'pt2', lbl: 'lbl2', dy: 22 }], 8) + tbl + '</section>';
+  }
+
+  function curHTML(L, board) {
+    if (!L.count) return '<div class="b8-cur"><p>Waiting for Inject 1.</p></div>';
+    var x = B.INJECTS[L.idx];
+    return '<div class="b8-cur"><div class="b8-cur-meta">Inject ' + (L.idx + 1) + ' of 8 &middot; ' + B.tplus(x.t) + ' &middot; ' + B.wall(x.t) + '</div><h3>' + esc(x.title) + '</h3><p>' + esc(x.sit) + '</p>' +
+      (board ? '<p class="b8-ask">' + esc(x.ask) + '</p><ol class="b8-cur-opts">' + x.opts.map(function (op, c) { return '<li><b>' + B.LETTERS[c] + '</b>' + esc(op.t) + '</li>'; }).join('') + '</ol>' : '<p class="b8-pending">Decide on this inject in the feed below.</p>') + '</div>';
+  }
+  function clockText(L) {
+    if (!L.count) return { clk: 'T+0:00', sub: 'Not started' };
+    var sub = B.wall(L.sim);
+    if (L.mode === 'solo') sub += ' &middot; self-paced';
+    else if (L.closed) sub += ' &middot; all injects released; decision window closed';
+    else if (L.nextIn != null) sub += ' &middot; next inject in ' + mmss(L.nextIn);
+    else if (L.idx === 7) sub += ' &middot; final inject';
+    if (L.fac ? L.fac.paused : (L.state && L.state.paused)) sub += ' &middot; <b>paused</b>';
+    return { clk: B.tplus(L.sim), sub: sub };
+  }
+  function ctlHTML(L) {
+    var mode = L.mode;
+    if (mode === 'solo') {
+      var D = decs(), cur = L.count ? D[L.count - 1] : 0, btn;
+      if (L.count >= 8) btn = '<span><b>All 8 injects released.</b> ' + (allDecided() ? 'Use the what-if replay and complete the checklist.' : 'Commit the remaining decisions.') + '</span>';
+      else if (L.count && cur == null) btn = '<button type="button" class="btn" id="b8-rel" disabled aria-describedby="b8-relnote">Release next inject (' + (L.count + 1) + ' of 8)</button><span class="b8-pending" id="b8-relnote">Commit your decision on Inject ' + L.count + ' first.</span>';
+      else btn = '<button type="button" class="btn" id="b8-rel">' + (L.count ? 'Release next inject (' + (L.count + 1) + ' of 8)' : 'Start exercise: release Inject 1') + '</button>';
+      return '<div class="b8-bar"><div><span class="b8-lbl">Scenario clock</span><span class="b8-simclk" id="b8-clk">' + clockText(L).clk + '</span> <span id="b8-sub">' + clockText(L).sub + '</span></div>' +
+        '<div class="b8-btnrow" style="margin-left:auto">' + btn + '</div></div>';
+    }
+    if (mode === 'fac') {
+      var f = L.fac || note('fac') || { iv: 1 };
+      var ivSel = '<div class="b8-seg" role="group" aria-label="Real minutes per inject">' + B.IVS.map(function (s, k) { return '<button type="button" id="b8-iv' + k + '" data-iv="' + k + '" aria-pressed="' + ((f.iv == null ? 1 : f.iv) === k) + '"' + (f.started ? ' disabled' : '') + '>' + (s / 60) + ' min</button>'; }).join('') + '</div>';
+      if (!f.started) return '<div class="b8-board"><p class="b8-lbl">Facilitator setup</p><p class="lead-p" style="margin:.3rem 0 .8rem">Choose the real time per inject, then start. The board shows a session code; each team types it on its own device and follows this clock. The board shows the current inject and its options for discussion. Each team commits its own decisions, which stay on that team’s device.</p>' +
+        '<div class="b8-btnrow"><span class="b8-lbl" style="margin-right:.3rem">Pace</span>' + ivSel + '<button type="button" class="btn" id="b8-start">Start exercise</button></div></div>';
+      var last = f.history[f.history.length - 1], reasons = { start: 'Session started', pause: 'Exercise paused', resume: 'Exercise resumed', next: 'Next inject released early' };
+      var t = new Date(last.at), tt = (t.getHours() < 10 ? '0' : '') + t.getHours() + ':' + (t.getMinutes() < 10 ? '0' : '') + t.getMinutes();
+      var noteTxt = last.reason === 'start' ? 'Teams: open CRISC Lab B8, choose Team, and enter this code.' : reasons[last.reason] + ' at ' + tt + '. <b>New code.</b> Teams: enter this code to re-sync.';
+      var ct = clockText(L);
+      return '<div class="b8-board" id="b8-board" aria-label="Facilitator display">' +
+        '<div class="b8-b-top"><div><span class="b8-lbl">Session code</span><span class="b8-code" id="b8-code" aria-live="polite">' + B.fmtCode(f.code) + '</span><span class="b8-codenote' + (last.reason === 'start' ? ' calm' : '') + '">' + noteTxt + '</span>' +
+          (f.history.length > 1 ? '<p class="b8-prev">Earlier codes this session (no longer current): ' + f.history.slice(0, -1).map(function (h) { return B.fmtCode(h.code); }).join(', ') + '</p>' : '') + '</div>' +
+          '<div><span class="b8-lbl">Scenario clock <span class="b8-state' + (f.paused ? ' paused' : '') + '">' + (f.paused ? 'Paused' : 'Running') + '</span></span><span class="b8-clock" id="b8-clk">' + ct.clk + '</span><span class="b8-clock-sub" id="b8-sub">' + ct.sub + '</span><span class="b8-prev">Pace: ' + (B.IVS[f.iv] / 60) + ' real minutes per inject</span></div></div>' +
+        '<div id="b8-curbox">' + curHTML(L, true) + '</div>' +
+        '<div class="b8-btnrow">' + (f.paused ? '<button type="button" class="btn" id="b8-resume">Resume</button>' : '<button type="button" class="btn secondary" id="b8-pause">Pause</button>') +
+          (L.idx < 7 ? '<button type="button" class="btn ghost" id="b8-next">Release next inject now</button>' : '') +
+          (document.fullscreenEnabled ? '<button type="button" class="btn ghost" id="b8-fs">Present full screen</button>' : '') +
+          '<button type="button" class="btn ghost" id="b8-end">End exercise</button></div></div>';
+    }
+    var code = note('code'), err = CUR && CUR.err, warn = '';
+    var form = '<div class="b8-join"><div><label for="b8-codein">Session code</label><input type="text" id="b8-codein" maxlength="9" autocomplete="off" spellcheck="false" placeholder="ABC-DEFG" value="' + esc(CUR && CUR.draft != null ? CUR.draft : (code ? B.fmtCode(code) : '')) + '" aria-describedby="b8-codehelp' + (err ? ' b8-err' : '') + '"></div><button type="button" class="btn" id="b8-join">' + (code ? 'Re-sync with this code' : 'Join session') + '</button></div>' +
+      '<p class="b8-pending" id="b8-codehelp" style="margin:-.3rem 0 .8rem">Seven characters from the projector. Dashes and case do not matter. When the facilitator pauses, resumes, or skips ahead, a new code appears: enter it here. Device clocks must be correct to within a few seconds. Your team’s decisions stay on this device.</p>' +
+      (err ? '<p class="b8-err" id="b8-err" role="alert">' + esc(err) + '</p>' : '');
+    if (L.noCode) return '<div class="b8-board team"><span class="b8-lbl">Join a facilitated session</span>' + form + '</div>';
+    if (L.state && !L.state.paused) { var age = nowSec() - L.state.t0; if (age > 6 * 3600) warn = 'This code is from a session that started more than 6 hours ago. Ask the facilitator for the current code.'; if (age < -300) warn = 'This code starts in the future. Check that this device’s clock is set correctly.'; }
+    var c2 = clockText(L);
+    return '<div class="b8-board team" aria-label="Team display">' + (warn ? '<p class="b8-warn" role="status">' + esc(warn) + '</p>' : '') +
+      '<div class="b8-b-top"><div><span class="b8-lbl">Synced with code</span><span class="b8-code">' + B.fmtCode(code) + '</span><span class="b8-pending">' + (L.state.paused ? 'The facilitator paused the exercise. Wait for a new code.' : 'Following the facilitator clock.') + '</span></div>' +
+      '<div><span class="b8-lbl">Scenario clock</span><span class="b8-clock" id="b8-clk">' + c2.clk + '</span><span class="b8-clock-sub" id="b8-sub">' + c2.sub + '</span></div></div>' +
+      '<div id="b8-curbox">' + curHTML(L, false) + '</div><div style="border-top:1px solid var(--border);padding-top:.8rem">' + form + '</div></div>';
+  }
+
+  // In team and facilitator modes, an inject seen once stays visible (the clock may be re-synced backward)
+  function effCount(L) {
+    var seen = +(note('maxSeen') || 0);
+    if (L.mode === 'solo') return L.count;
+    return Math.max(L.count, Math.min(seen, 8));
+  }
+  function renderLive(force) {
+    if (!CUR || !document.body.contains(CUR.root)) return;
+    var L = live(), n = effCount(L), LL = Object.assign({}, L, { count: n });
+    keepFocus(function () {
+      CUR.root.querySelector('#b8-ctl').innerHTML = ctlHTML(L);
+      CUR.root.querySelector('#b8-icbox').innerHTML = icHTML(LL);
+      if (force || CUR.lastCount !== n) { CUR.root.querySelector('#b8-feed').innerHTML = feedHTML(LL); CUR.root.querySelector('#b8-wibox').innerHTML = wiHTML(); }
+      document.querySelectorAll('.b8-mode').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.mode === L.mode); });
+    });
+    if (CUR.lastCount !== n && n && CUR.lastCount != null) { var x = B.INJECTS[n - 1]; CUR.root.querySelector('#b8-live').textContent = 'Inject ' + n + ' released: ' + x.title + ', ' + B.tplus(x.t) + '. A decision is needed.'; }
+    CUR.lastCount = n; CUR.lastMin = Math.floor((L.sim || 0) / 10);
+    if (n > +(note('maxSeen') || 0)) note('maxSeen', n);
+  }
+  function tick() {
+    if (!CUR || !document.body.contains(CUR.root)) return;
+    var L = live();
+    if (effCount(L) !== CUR.lastCount) return renderLive();
+    var ct = clockText(L), c = document.getElementById('b8-clk'), s = document.getElementById('b8-sub');
+    if (c) c.textContent = ct.clk; if (s) s.innerHTML = ct.sub;
+    var m = Math.floor((L.sim || 0) / 10);
+    if (m !== CUR.lastMin) { CUR.lastMin = m; CUR.root.querySelector('#b8-icbox').innerHTML = icHTML(Object.assign({}, L, { count: effCount(L) })); }
+  }
+  setInterval(tick, 1000);
+
+  function commit(id) {
+    var k = +id.slice(1) - 1, sel = CUR.root.querySelector('input[name="b8d-' + id + '"]:checked');
+    if (!sel) { var b = document.getElementById('b8-commit-' + id); if (b && !document.getElementById('b8-ce-' + id)) { b.insertAdjacentHTML('afterend', '<span class="b8-err" id="b8-ce-' + id + '" role="alert" style="margin:0">Choose an option first.</span>'); } return; }
+    var d = note('dec') || {}; if (d[id] != null) return;
+    d[id] = +sel.value; note('dec', d); CUR.lastDec = k;
+    if (CUR.draft6) delete CUR.draft6[id];
+    renderLive(true);
+    API.refresh();
+    var h = document.getElementById('b8h-' + id); if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); }
+    CUR.root.querySelector('#b8-live').textContent = 'Decision committed for ' + id + '. The impact clock is updated.';
+  }
+
+  function plansHTML() {
+    function sec(n, h, t) { return '<li><b>' + n + ' ' + h + '.</b> ' + t + '</li>'; }
+    return '<div class="lb-doc"><p class="eyebrow">Document 1</p><h4>Exercise plan EX-2027-03: ransomware tabletop</h4><p class="b8-pending" style="margin:0 0 .5rem">Sponsor: Dr. Helen Marsh, CEO. Plan owner and facilitator: the ERM risk practitioner (you). Approved by the risk committee, February 2027.</p><ul>' +
+      sec('1', 'Objectives', '<b>O1</b> Confirm that the incident is declared and escalated as written, including escalation against the appetite statement within 1 hour. <b>O2</b> Confirm that clinical downtime procedures keep medication ordering within its 8-hour MTD. <b>O3</b> Test decision rights for third-party and extortion decisions. <b>O4</b> Confirm that notification duties, owners, and deadlines are identified. <b>O5</b> Validate EHR recovery against its RTO and RPO and test the risk register’s assumptions.') +
+      sec('2', 'Scope and length', 'One scenario, eight injects, 90 minutes, plus a 15-minute hot wash. Discussion only: no live systems are touched.') +
+      sec('3', 'Ground rules', 'No-fault discussion. Use the plans as written, not as remembered. Decisions are made by the role that owns them. The facilitator delivers injects, keeps time, and asks “who decides?” but does not decide. Fixes go to a parking lot; the scribe logs every decision, time, and gap.') +
+      sec('4', 'Roles', 'Facilitator: risk practitioner. Risk owners: COO (clinical operations), CFO (financial), CEO with the board (extortion and enterprise decisions). Control owners: CIO, CNO, lab director. Legal and privacy: general counsel, privacy officer. Scribe: second risk analyst. Evaluator: internal audit observer, who measures against the objectives and does not take part.') +
+      sec('5', 'Evaluation', 'For each objective, the evaluator records what was expected, what happened, and whether it was met.') +
+      sec('6', 'After-action', 'Hot wash in the room. After-action report to the risk committee within 10 business days: objectives and results, findings, corrective actions with owners and due dates, and the updates required to the risk register, plans, and KRIs. Corrective actions enter the risk action plan and are tracked like any other.') +
+      '</ul></div>' +
+      '<div class="lb-doc"><p class="eyebrow">Document 2</p><h4>Incident Response Plan v3.2 (excerpt)</h4><ul>' +
+      sec('2.1', 'Declaration', 'The CIO, or the CIO’s named delegate, declares an incident and sets its severity.') +
+      sec('3.1', 'Severity 1', 'Any of: a clinical system down at more than one hospital, PHI confirmed or presumed compromised, or ransomware active. Severity 1 activates the incident team and the escalation rules in the appetite statement.') +
+      sec('5.2', 'Extortion', 'Payment decisions belong to the CEO with the board, on counsel’s advice, after sanctions screening and an insurer consent check. Ironvale does not pay while recovery from backup is viable.') +
+      sec('5.3', 'Notification', 'The privacy officer owns the notification clock, with the general counsel. Notices follow the notification matrix.') +
+      '</ul></div>' +
+      '<div class="lb-doc"><p class="eyebrow">Document 3</p><h4>Appetite statement and BIA summary</h4><ul>' +
+      '<li><b>Appetite (board, 2026):</b> no appetite for risks that compromise patient safety; low appetite for loss of patient data; moderate appetite for short delays in nonclinical services.</li>' +
+      '<li><b>Tolerance and escalation:</b> an EHR outage longer than 4 hours at more than one hospital is outside appetite. The risk owner escalates to the CEO and the board risk committee chair within 1 hour of crossing it.</li></ul>' +
+      '<div class="table-wrap"><table class="data"><thead><tr><th scope="col">Process</th><th scope="col">MTD</th><th scope="col">RTO</th><th scope="col">RPO</th></tr></thead><tbody>' +
+      '<tr><td>EHR (clinical documentation and orders)</td><td>36 hours</td><td>24 hours</td><td>4 hours</td></tr>' +
+      '<tr><td>Medication ordering (manual fallback allowed)</td><td>8 hours</td><td>Not applicable</td><td>Not applicable</td></tr>' +
+      '<tr><td>Lab results interface (Corvane)</td><td>12 hours</td><td>8 hours</td><td>1 hour</td></tr></tbody></table></div></div>' +
+      '<div class="lb-doc"><p class="eyebrow">Document 4</p><h4>Notification matrix (summary for the exercise, not legal advice)</h4><div class="table-wrap"><table class="data"><thead><tr><th scope="col">Party</th><th scope="col">Trigger</th><th scope="col">Deadline</th><th scope="col">Owner</th></tr></thead><tbody>' +
+      '<tr><td>Affected individuals (HIPAA Breach Notification Rule)</td><td>Breach of unsecured PHI. Ransomware affecting PHI is presumed a breach unless a documented risk assessment shows a low probability of compromise.</td><td>Without unreasonable delay, no later than 60 days after discovery</td><td>Privacy officer</td></tr>' +
+      '<tr><td>HHS Office for Civil Rights</td><td>Breach affecting 500 or more individuals</td><td>At the same time as individual notice</td><td>Privacy officer</td></tr>' +
+      '<tr><td>Prominent media</td><td>More than 500 residents of one state affected</td><td>No later than 60 days after discovery</td><td>Privacy officer with communications</td></tr>' +
+      '<tr><td>Cyber insurer</td><td>Severity 1 incident</td><td>Within 48 hours; consent needed before any payment</td><td>General counsel</td></tr>' +
+      '<tr><td>Business associate to Ironvale (BAA clause 7)</td><td>Business associate discovers a breach of unsecured PHI</td><td>Within 10 days of discovery; the BAA is silent on subcontractors</td><td>Vendor manager</td></tr></tbody></table></div></div>';
+  }
+  function ctxHTML() {
+    function reg(id, risk, own, res, ctl, kri) { return '<tr><td><b>' + id + '</b></td><td>' + risk + '</td><td>' + own + '</td><td>' + res + '</td><td>' + ctl + '</td><td>' + kri + '</td></tr>'; }
+    return '<div class="lb-doc"><p class="eyebrow">Document 5</p><h4>Risk register extract (before the exercise)</h4><div class="table-wrap"><table class="data"><thead><tr><th scope="col">ID</th><th scope="col">Risk</th><th scope="col">Owner</th><th scope="col">Residual (L x I)</th><th scope="col">Key control</th><th scope="col">KRI and status</th></tr></thead><tbody>' +
+      reg('R-03', 'Ransomware disrupts clinical systems', 'COO', '12 (3 x 4)', 'EDR, MFA on remote access', 'Critical patches older than 30 days: amber (7 percent)') +
+      reg('R-07', 'EHR cannot be recovered within RTO', 'CIO', '4 (1 x 4), low', '“Daily immutable backups”', 'Days since last successful restore test: <b>no data source</b>') +
+      reg('R-11', 'Lab-results vendor (Corvane) compromise', 'Lab director', '4 (2 x 2), low', '2025 security questionnaire', 'Age of vendor assurance evidence: <b>no data source</b>') +
+      reg('R-14', 'Clinical downtime procedures fail', 'CNO', '6 (2 x 3)', 'Paper downtime forms', 'None defined') +
+      '</tbody></table></div></div>' +
+      '<div class="lb-doc"><p class="eyebrow">Document 6</p><h4>Participants</h4><div class="table-wrap"><table class="data"><thead><tr><th scope="col">Exercise role</th><th scope="col">Name and title</th></tr></thead><tbody>' +
+      '<tr><td>Executive sponsor and extortion decision (with the board)</td><td>Dr. Helen Marsh, CEO</td></tr><tr><td>Risk owner, clinical operations</td><td>Teresa Quintanilla, COO</td></tr><tr><td>Risk owner, financial</td><td>Martin Oyelaran, CFO</td></tr>' +
+      '<tr><td>Control owner, technology; declares incidents</td><td>Grace Lindqvist, CIO</td></tr><tr><td>Control owner, clinical downtime</td><td>Paul Ferreira, CNO</td></tr><tr><td>Legal and privacy</td><td>Simone Achterberg, general counsel; Ruth Kamau, privacy officer</td></tr>' +
+      '<tr><td>Vendor manager</td><td>Lena Brook</td></tr><tr><td>Scribe</td><td>Jonah Pell, risk analyst</td></tr><tr><td>Evaluator (no participation)</td><td>Internal audit observer</td></tr><tr><td>Facilitator</td><td>You, ERM risk practitioner</td></tr></tbody></table></div></div>' +
+      '<div class="lb-doc"><p class="eyebrow">Document 7</p><h4>Ironvale Health Partners context</h4><ul>' +
+      '<li><b>Ironvale Health Partners:</b> a regional health system with three hospitals (North, Central, Lakeside), 22 clinics, 6,800 employees, and about 410,000 patient records in the EHR.</li>' +
+      '<li><b>Why this exercise:</b> ransomware against health systems is the top scenario in the 2027 risk assessment, and R-07 and R-11 have KRIs that were never connected to a data source.</li></ul></div>' +
+      '<div class="lb-doc"><p class="eyebrow">Document 8</p><h4>How the impact clock works</h4><ul>' +
+      '<li>The clock projects what would happen to Ironvale if the decisions the room reaches were real. Each inject brings unavoidable impact from the attack. Your facilitation move shapes how the room plays the inject, and some moves change later injects.</li>' +
+      '<li><b>Downtime:</b> projected hours of clinical disruption. <b>Patient records exposed:</b> thousands of records taken or treated as exposed. <b>Projected cost:</b> direct cost plus disruption at $25K per downtime hour (diversions, delayed procedures, and overtime). <b>Exercise value:</b> an index from 100 that falls when the exercise loses findings, tests the wrong decision path, or breaks the ground rules.</li>' +
+      '<li>The model is deterministic: the same moves always produce the same outcome, so teams can compare paths in the debrief.</li></ul></div>';
+  }
+
+  window.B8UI = {
+    workbench: function (root, api) {
+      API = api; CUR = { root: root, lastCount: null, draft6: {} };
+      root.innerHTML = '<div class="lb-tool"><div class="lb-tabs" role="tablist" aria-label="Workbench tools">' +
+        '<button role="tab" id="tb-ex" aria-controls="pn-ex" aria-selected="true">Exercise</button>' +
+        '<button role="tab" id="tb-plan" aria-controls="pn-plan" aria-selected="false" tabindex="-1">Exercise packet</button>' +
+        '<button role="tab" id="tb-ctx" aria-controls="pn-ctx" aria-selected="false" tabindex="-1">Register and context</button></div>' +
+        '<div class="lb-panel" role="tabpanel" id="pn-ex" aria-labelledby="tb-ex">' +
+          '<div class="b8-modes" role="group" aria-label="Exercise mode">' +
+            '<button type="button" class="b8-mode" id="b8m-solo" data-mode="solo" aria-pressed="false"><b>Solo</b>Self-paced. Release each inject after you commit a decision.</button>' +
+            '<button type="button" class="b8-mode" id="b8m-fac" data-mode="fac" aria-pressed="false"><b>Facilitator</b>For the projector. Start the clock, show the code, and display each inject with its options.</button>' +
+            '<button type="button" class="b8-mode" id="b8m-team" data-mode="team" aria-pressed="false"><b>Team</b>Join with the projector code. Timing follows the facilitator; decisions stay on your device.</button></div>' +
+          '<div id="b8-ctl"></div><p class="sr-only" id="b8-live" aria-live="polite"></p><div id="b8-icbox"></div>' +
+          '<h4 class="b8-h4">Injects and decisions</h4><div id="b8-feed"></div><div id="b8-wibox"></div></div>' +
+        '<div class="lb-panel" role="tabpanel" id="pn-plan" aria-labelledby="tb-plan" hidden>' + plansHTML() + '</div>' +
+        '<div class="lb-panel" role="tabpanel" id="pn-ctx" aria-labelledby="tb-ctx" hidden>' + ctxHTML() + '</div></div>';
+      var tabs = [].slice.call(root.querySelectorAll('[role=tab]'));
+      function sel(t) { tabs.forEach(function (x) { var on = x === t; x.setAttribute('aria-selected', on); x.tabIndex = on ? 0 : -1; document.getElementById(x.getAttribute('aria-controls')).hidden = !on; }); api.note('tab', t.id); }
+      tabs.forEach(function (t, i) { t.addEventListener('click', function () { sel(t); }); t.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { var n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length]; sel(n); n.focus(); } }); });
+      if (api.note('tab')) { var tt = document.getElementById(api.note('tab')); if (tt) sel(tt); }
+
+      root.addEventListener('click', function (e) {
+        var b = e.target.closest('button'); if (!b || !root.contains(b)) return;
+        if (b.dataset.mode) { api.note('mode', b.dataset.mode); CUR.err = null; CUR.draft = null; renderLive(true); return; }
+        if (b.id === 'b8-rel') { var c = Math.min(8, +(api.note('solo') || 0) + 1); api.note('solo', c); renderLive(); var nb = document.getElementById('b8-rel'); if (nb && !nb.disabled) nb.focus(); else { var h = document.getElementById('b8h-I' + c); if (h) { h.setAttribute('tabindex', '-1'); h.focus(); } } return; }
+        if (b.dataset.iv != null) { var f = api.note('fac') || {}; f.iv = +b.dataset.iv; api.note('fac', f); renderLive(); return; }
+        if (b.id === 'b8-start') { facAction('start'); var p = document.getElementById('b8-pause'); if (p) p.focus(); return; }
+        if (b.id === 'b8-pause') { facAction('pause'); var r = document.getElementById('b8-resume'); if (r) r.focus(); return; }
+        if (b.id === 'b8-resume') { facAction('resume'); var q = document.getElementById('b8-pause'); if (q) q.focus(); return; }
+        if (b.id === 'b8-next') return facAction('next');
+        if (b.id === 'b8-end') return facAction('end');
+        if (b.id === 'b8-fs') { var bd = document.getElementById('b8-board'); if (document.fullscreenElement) document.exitFullscreen(); else if (bd && bd.requestFullscreen) bd.requestFullscreen(); return; }
+        if (b.id === 'b8-join') return join();
+        if (b.dataset.commit) return commit(b.dataset.commit);
+        if (b.dataset.wi != null) { var W = api.note('wi'); if (!W || W.length !== 8) W = decs(); W[+b.dataset.wi] = +b.dataset.c; api.note('wi', W); keepFocus(function () { CUR.root.querySelector('#b8-wibox').innerHTML = wiHTML(); }); return; }
+        if (b.id === 'b8-wi-mine') { api.note('wi', decs()); keepFocus(function () { CUR.root.querySelector('#b8-wibox').innerHTML = wiHTML(); }); return; }
+        if (b.id === 'b8-wi-ver') {
+          var W2 = api.note('wi'); if (!W2 || W2.length !== 8) W2 = decs();
+          var S = api.state(), applied = 0;
+          LAB.checklist.forEach(function (it) { if (it.inj != null && S.st[it.id] === 'ok') { W2[it.inj] = it.answer; applied++; } });
+          api.note('wi', W2); keepFocus(function () { CUR.root.querySelector('#b8-wibox').innerHTML = wiHTML(); });
+          var mg = document.getElementById('b8-wi-msg'); if (mg) mg.textContent = applied ? 'Applied ' + applied + ' verified checklist answer' + (applied > 1 ? 's' : '') + '. ' + mg.textContent : 'No decision items are verified yet. Verify checklist items 1 to 8 first.';
+          return;
+        }
+      });
+      function join() {
+        var inp = document.getElementById('b8-codein'), d = B.decode(inp.value, nowSec());
+        if (d.error) { CUR.err = d.error; CUR.draft = inp.value; renderLive(); var i2 = document.getElementById('b8-codein'); if (i2) i2.focus(); return; }
+        CUR.err = null; CUR.draft = null; api.note('code', d.state.code); renderLive(true);
+        var i3 = document.getElementById('b8-codein'); if (i3) i3.focus();
+      }
+      root.addEventListener('keydown', function (e) { if (e.target.id === 'b8-codein' && e.key === 'Enter') { e.preventDefault(); join(); } });
+      root.addEventListener('input', function (e) { if (e.target.id === 'b8-codein') CUR.draft = e.target.value; });
+      root.addEventListener('change', function (e) { var t = e.target; if (t.dataset.dec) { CUR.draft6[t.dataset.dec] = +t.value; } });
+      document.addEventListener('fullscreenchange', function () { var fb = document.getElementById('b8-fs'); if (fb) fb.textContent = document.fullscreenElement ? 'Exit full screen' : 'Present full screen'; });
+      renderLive(true);
+    },
+    lockDecision: lockDecision,
+    lockAll: lockAll
+  };
+
+  /* ---------- Report: add the learner's incident path ---------- */
+  function pathHTML() {
+    var D = decs(), S = (API || window.LAB_API).state(), m = B.model(D, 8);
+    var byInj = {}; LAB.checklist.forEach(function (it) { if (it.inj != null) byInj[it.inj] = it; });
+    var rows = B.INJECTS.map(function (x, k) {
+      var it = byInj[k], known = it && (S.st[it.id] === 'ok' || S.revealed[it.id]);
+      var mine = D[k], e = mine != null ? B.effect(k, mine, D).d : null;
+      return '<tr><td>' + x.id + '. ' + esc(x.title) + '</td><td>' + (mine == null ? '<em>Not committed</em>' : B.LETTERS[mine] + '. ' + esc(x.opts[mine].t)) + '</td><td>' + (known ? B.LETTERS[x.best] + (mine === x.best ? ' (matches)' : '') : 'Shown after item ' + (k + 1) + ' is verified') + '</td><td>' + (e ? sgn(e.dt, ' h') + ', ' + sgn(e.rep, ' value') + ', ' + sgn((e.cost + B.BI_RATE * e.dt) / 1000, 'M', 2).replace(/^([+\u2212\u00b1])/, '$1$') : '') + '</td></tr>';
+    }).join('');
+    return '<div class="b8-path-wrap" id="b8-path"><h3>Your facilitation path</h3><div class="table-wrap"><table class="data"><thead><tr><th>Inject</th><th>Your committed move</th><th>Supported move</th><th>Projected impact (downtime, exercise value, total cost)</th></tr></thead><tbody>' + rows +
+      '<tr class="px-total"><td>Outcome of your path</td><td colspan="3">' + (m.decided === 8 ? 'Downtime ' + m.dt + ' h; exposure ' + m.ex + 'K records; total cost ' + B.money(m.total) + '; exercise value ' + m.rep + ' of 100.' : m.decided + ' of 8 decisions committed.') + '</td></tr></tbody></table></div></div>';
+  }
+  function decorateReport() {
+    var rep = document.querySelector('.px-report'); if (!rep || rep.querySelector('#b8-path') || !API) return;
+    var hs = rep.querySelectorAll('h3'), anchor = null;
+    for (var i = 0; i < hs.length; i++) if (/Answers recorded/.test(hs[i].textContent)) anchor = hs[i];
+    if (anchor) anchor.insertAdjacentHTML('beforebegin', pathHTML());
+  }
+  document.addEventListener('DOMContentLoaded', function () {
+    var app = document.getElementById('app');
+    if (app) new MutationObserver(decorateReport).observe(app, { childList: true, subtree: true });
+  });
+  if (!API) { var waitApi = setInterval(function () { if (window.LAB_API) { API = API || window.LAB_API; clearInterval(waitApi); decorateReport(); } }, 200); }
+
+  // Automated test hook: release every inject in Solo mode and commit a path
+  window.LAB_TEST_UNLOCK = function () { var a = API || window.LAB_API; if (!a) return; a.note('mode', 'solo'); a.note('solo', 8); a.note('maxSeen', 8); var d = {}; B.INJECTS.forEach(function (x, k) { d[x.id] = (x.best + 1 + (k % 3)) % 4; }); a.note('dec', d); if (CUR) renderLive(true); };
+
+  window.LAB_SELFTEST = function () {
+    var log = [], P = [], now = nowSec(), i, j;
+    // 1) Round-trip encode/decode
+    var states = [
+      { iv: 1, b: 0, paused: false, anchor: now - 30 },
+      { iv: 0, b: 3, paused: false, anchor: now - 400 },
+      { iv: 2, b: 7, paused: false, anchor: now - 3600 },
+      { iv: 1, b: 4, paused: true, anchor: 100 },
+      { iv: 2, b: 0, paused: true, anchor: 0 },
+      { iv: 2, b: 6, paused: true, anchor: 600 }
+    ];
+    var kb = Math.ceil(now / B.M) * B.M; states.push({ iv: 1, b: 2, paused: false, anchor: kb - 5, _now: kb + 100 });
+    states.forEach(function (s, k) {
+      var c = B.encode(s), n = s._now || now, d = B.decode(B.fmtCode(c).toLowerCase(), n);
+      if (!/^[0-9A-HJKMNP-TV-Z]{7}$/.test(c)) P.push('code ' + c + ' has unexpected characters');
+      if (!d.state) { P.push('state ' + k + ' failed to decode: ' + d.error); return; }
+      var ok = d.state.iv === s.iv && d.state.b === s.b && d.state.paused === s.paused && (s.paused ? d.state.within === s.anchor : d.state.t0 === s.anchor);
+      if (!ok) P.push('state ' + k + ' did not round-trip (' + c + ')');
+    });
+    log.push('round-trip ' + states.length + ' session states');
+    // 2) Checksum rejects every single-character corruption; wrong tags rejected
+    var base = B.encode(states[0]), accepted = 0, tried = 0;
+    for (i = 0; i < 7; i++) for (j = 0; j < 32; j++) {
+      if (B.ALPHA[j] === base[i]) continue;
+      var bad = base.slice(0, i) + B.ALPHA[j] + base.slice(i + 1); tried++;
+      if (B.decode(bad, now).state) accepted++;
+    }
+    if (accepted) P.push(accepted + ' corrupted codes were accepted');
+    log.push('checksum rejected ' + (tried - accepted) + '/' + tried + ' single-character corruptions');
+    if (B.decode('ABC-DEF', now).state || B.decode('ABC-DEFU!', now).state || B.decode('', now).state) P.push('malformed code accepted');
+    [0, 2, 3].forEach(function (tag) { var v = (((tag * 4 + 1) * 2) * 8) * B.M + 5, ch = []; for (var q = 5; q >= 0; q--) { ch[q] = v % 32; v = Math.floor(v / 32); } ch.push(B.checksum(ch)); if (B.decode(ch.map(function (x) { return B.ALPHA[x]; }).join(''), now).state) P.push('code with lab tag ' + tag + ' accepted'); });
+    // CISSP-format code (tag 3, checksum seed 7) must not be accepted here
+    (function () { var v = (((3 * 4 + 1) * 2) * 8) * B.M + 5, ch = [], s = 7; for (var q = 5; q >= 0; q--) { ch[q] = v % 32; v = Math.floor(v / 32); } ch.forEach(function (x, i2) { s += (2 * i2 + 1) * x; }); ch.push(s % 32); if (B.decode(ch.map(function (x) { return B.ALPHA[x]; }).join(''), now).state) P.push('CISSP-format code accepted'); })();
+    // 3) Inject derivation at sample times
+    var I = B.IVS[1], t0 = 1800000000;
+    [[0, 0], [I - 1, 0], [I, 1], [3 * I - 1, 2], [7 * I, 7], [7 * I + 9999, 7], [-50, 0]].forEach(function (c) {
+      var d = B.derive({ iv: 1, b: 0, paused: false, t0: t0 }, t0 + c[0]); if (d.idx !== c[1]) P.push('running b=0 at +' + c[0] + 's gave inject ' + (d.idx + 1) + ', expected ' + (c[1] + 1));
+    });
+    var I0 = B.IVS[0], d3 = B.derive({ iv: 0, b: 3, paused: false, t0: t0 }, t0 + 2 * I0 + 10); if (d3.idx !== 5 || d3.within !== 10) P.push('running b=3, fast pace, two windows plus 10 s should be inject 6 with 10 s elapsed');
+    var d4 = B.derive({ iv: 2, b: 7, paused: false, t0: t0 }, t0 + 30); if (d4.nextIn !== null || d4.idx !== 7) P.push('final inject should have no next release');
+    [0, 500, 99999].forEach(function (dt) { var x4 = B.INJECTS[4], x5 = B.INJECTS[5], d = B.derive({ iv: 1, b: 4, paused: true, within: B.IVS[1] / 2 }, t0 + dt); if (d.idx !== 4 || d.nextIn !== null || Math.abs(d.sim - (x4.t + (x5.t - x4.t) * 0.5)) > 1e-9) P.push('paused state drifted at +' + dt + 's'); });
+    var dr = B.derive({ iv: 1, b: 4, paused: false, t0: t0 - 120 }, t0); if (dr.idx !== 4 || dr.within !== 120) P.push('resume anchor should keep the elapsed time in the inject');
+    var pc = B.decode(B.encode({ iv: 1, b: 2, paused: true, anchor: 90 }), now).state, rc = B.decode(B.encode({ iv: 1, b: 2, paused: false, anchor: now - 90 }), now).state;
+    if (B.derive(pc, now + 5000).idx !== 2 || B.derive(rc, now + I - 90).idx !== 3 || B.derive(rc, now + I - 91).idx !== 2) P.push('decoded pause/resume derivation wrong');
+    log.push('inject derivation checked at sample times, including paused states');
+    // 4) Consequence model: the plan-supported path, re-derived independently
+    var X = B.INJECTS, best = X.map(function (x) { return x.best; });
+    var dt = 0, cost = 0, ex = 0, rep = 100;
+    X.forEach(function (x) { var o = x.opts[x.best].d; dt += x.base.dt + o.dt; cost += x.base.cost + o.cost; ex += x.base.ex + o.ex; rep += x.base.rep + o.rep; if (x.opts[x.best].flag) P.push(x.id + ' best option should not set a penalty flag'); });
+    var tot = cost + B.BI_RATE * dt;
+    if (dt !== B.answers.bestDowntime()) P.push('best-path downtime mismatch: ' + dt + ' vs ' + B.answers.bestDowntime());
+    if (Math.abs(tot / 1000 - B.answers.bestCostM()) > 1e-9) P.push('best-path cost mismatch');
+    // The checklist keys must match the inject keys and options
+    LAB.checklist.forEach(function (it) { if (it.inj == null) return; var x = X[it.inj]; if (it.answer !== x.best) P.push(it.id + ' key differs from ' + x.id + ' best'); if (it.options.join('|') !== x.opts.map(function (o) { return o.t; }).join('|')) P.push(it.id + ' options differ from the workbench'); });
+    // Exhaustive: the plan path is lowest total cost, lowest exposure, and highest exercise value of all 65,536 paths
+    var path = [0, 0, 0, 0, 0, 0, 0, 0], beat = 0, ties = 0, minDt = 1e9, n = 0;
+    for (var code = 0; code < 65536; code++) {
+      for (i = 0; i < 8; i++) path[i] = (code >> (2 * i)) & 3;
+      var m = B.model(path, 8); n++;
+      if (m.dt < minDt) minDt = m.dt;
+      if (path.join() === best.join()) continue;
+      if (m.total < tot || m.rep > rep || m.ex < ex) beat++;
+      if (m.total === tot) ties++;
+    }
+    if (beat) P.push(beat + ' paths beat the plan path on cost, exposure, or exercise value');
+    if (ties) P.push(ties + ' paths tie the plan path on total cost');
+    // Every option produces a visibly different consequence within its inject
+    X.forEach(function (x) { var sig = x.opts.map(function (o) { return [o.d.dt, o.d.ex, o.d.cost, o.d.rep].join(); }); if (sig.filter(function (s, k) { return sig.indexOf(s) === k; }).length !== 4) P.push(x.id + ' has options with identical consequences'); });
+    // Option-length balance: the keyed option is never the strictly longest
+    X.forEach(function (x) { var L = x.opts.map(function (o) { return o.t.length; }), bl = L[x.best]; if (L.every(function (v, k) { return k === x.best || v < bl; })) P.push(x.id + ' keyed option is the longest'); });
+    var letters = best.map(function (b) { return 'ABCD'[b]; }).join('');
+    for (i = 1; i < 8; i++) if (X[i].t <= X[i - 1].t) P.push('inject times not increasing');
+    log.push('plan path ' + letters + ': downtime ' + dt + ' h (fastest possible ' + minDt + ' h), exposure ' + ex + 'K, total ' + B.money(tot) + ', exercise value ' + rep + '; checked ' + n + ' paths');
+    return { log: log, problems: P };
+  };
+})();
+</script>
+
+<script>
+window.LAB = {
+  id: 'B8',
+  title: 'Ransomware Tabletop Facilitation',
+  accent: 'Tabletop Facilitation',
+  domain: 'Domains 3 and 4 (Task 24)',
+  time: '75 min',
+  level: 'Advanced',
+  lessonHref: 'lesson09.html#s5',
+  lessonLabel: 'Lesson 9, Capstone Case and Tabletop Facilitation',
+  kus: ['Business Continuity and Disaster Recovery (BCD)', 'Cybersecurity Planning and Management (CPM)', 'Policy, Legal, Ethics, and Compliance (PLE)', 'Supply Chain Security (SCS)'],
+  lede: 'Facilitate a ransomware tabletop for a regional health system. At each of eight injects, choose the facilitation move a risk practitioner should make, watch the impact clock show how the room plays the scenario, and then write the after-action report that turns findings into risk register updates and KRIs. Run it solo, or as a facilitated class with team codes.',
+  workbenchTitle: 'Tabletop workbench',
+  ticket: {
+    number: 'ERM-2027-0214',
+    priority: 'Risk committee request',
+    from: 'Dr. Helen Marsh, CEO, Ironvale Health Partners',
+    to: 'ERM risk practitioner and exercise facilitator (you)',
+    subject: 'Facilitate the ransomware tabletop and report back to the risk committee',
+    due: 'After-action report to the risk committee within 10 business days (Exercise plan 6)',
+    body: '<p>Ironvale Health Partners runs three hospitals and 22 clinics. Ransomware against clinical systems is the top scenario in this year’s risk assessment, and the risk committee wants to know whether our plans hold up before a real attack tests them. You wrote the exercise plan; now <b>you facilitate the tabletop</b>.</p>' +
+      '<p>Remember your role. You deliver the injects, keep time, ask probing questions, and make sure the right people make the decisions. <b>You do not make the decisions.</b> The COO, the CFO, the CIO, and I own them, with the board where the plan says so. Your job is to make the exercise reveal what works and what does not.</p>' +
+      '<p>Eight injects arrive over three days of scenario time. At each one, commit the move you would make in the room. The impact clock projects what the room’s decisions would cost Ironvale if they were real: <b>downtime, patient records exposed, cost, and exercise value</b>. Use the exercise plan, the IRP excerpt, the appetite statement, the notification matrix, and the risk register extract on the workbench.</p>' +
+      '<p>When it is over, write the after-action report: which objectives were met, the findings, corrective actions with owners and due dates, and the specific updates to the risk register and its KRIs.</p>'
+  },
+  howTo: 'Choose a mode on the <b>Exercise</b> tab. <b>Solo</b>: release each inject yourself after you commit a move. <b>Facilitator</b>: for the projector; start the clock, show the session code, and display each inject with its options for discussion. <b>Team</b>: type the projector’s session code on your device; timing follows the facilitator, and your team’s moves stay on your device. If the facilitator pauses or skips ahead, a new code appears; enter it to re-sync. Decision items unlock as you commit each move. When all eight are committed, the <b>what-if replay</b> opens for the number items. The report shows your path. In team mode, enter the team name and members on the report.',
+  workIntro: 'Release or follow the injects on the <b>Exercise</b> tab, check each option against the <b>Exercise packet</b> and the <b>Register and context</b> documents, and commit a move. Watch the impact clock. Checklist items unlock as your moves are committed.',
+  checklist: [
+    { id: 'd1', inj: 0, type: 'choice', points: 7, short: 'I1: declaration', title: 'Inject 1: nobody declares',
+      locked: B8UI.lockDecision(1),
+      task: 'The room is lost in technical detail and nobody has declared an incident. Which facilitation move <b>best</b> follows the ground rules in Exercise plan 3?',
+      options: B8.INJECTS[0].opts.map(function (o) { return o.t; }), answer: 2,
+      hint: 'Who declares under IRP 2.1? What does the exercise plan say the facilitator may and may not do?',
+      debrief: '<p>The facilitator guides; the participants who own the decisions make them. Pausing the discussion and asking “who decides?” is the facilitator’s most useful tool, because it tests the decision rights that the plan assumes. Declaring the incident yourself keeps the clock moving but tests nothing, and a long technical walk-through uses up time the objectives need.</p><p>Objective O1 is about the first hour, which is where real incidents most often go wrong. Skipping ahead to the dramatic inject leaves the most important decisions unexercised.</p>',
+      reviewNote: 'The facilitator does not decide; ask who owns the decision under the plan and let that person decide.' },
+    { id: 'd2', inj: 1, type: 'choice', points: 7, short: 'I2: escalation', title: 'Inject 2: escalation against appetite',
+      locked: B8UI.lockDecision(2),
+      task: 'The EHR is down at all three hospitals and the COO wants to wait until noon. Which move <b>best</b> tests objective O1?',
+      options: B8.INJECTS[1].opts.map(function (o) { return o.t; }), answer: 0,
+      hint: 'The appetite statement sets a tolerance and an escalation rule. Who should apply it, and with what in front of them?',
+      debrief: '<p>Appetite and tolerance only work if the risk owner uses them when it matters. Asking the COO to compare the outage with the stated tolerance puts the decision where it belongs and shows whether the threshold is known and usable. The finding that nobody knew the threshold is exactly what a tabletop is for.</p><p>Calling the board chair yourself bypasses the owner and invents an escalation path. Simply accepting the wait respects ownership but lets the owner decide without the information the plan provides. Teaching in the middle of the inject replaces practice with a lecture.</p>',
+      reviewNote: 'Have the risk owner apply the tolerance in the appetite statement; the practitioner does not escalate on the owner’s behalf.' },
+    { id: 'd3', inj: 2, type: 'choice', points: 7, short: 'I3: findings', title: 'Inject 3: capturing a finding without blame',
+      locked: B8UI.lockDecision(3),
+      task: 'The downtime forms are out of date, the room starts redesigning them, and someone asks who is to blame. Which move is <b>best</b>?',
+      options: B8.INJECTS[2].opts.map(function (o) { return o.t; }), answer: 3,
+      hint: 'Exercise plan 3 has a rule for fixes, a rule for the scribe, and a rule about fault.',
+      debrief: '<p>A tabletop finds gaps; it does not fix them in the room. Logging the gap against the 8-hour MTD, naming a likely owner, and parking the fix keeps time for every objective and gets the gap into the after-action report, where it can be assigned and tracked.</p><p>Asking why the forms were not updated turns a no-fault exercise into a search for blame, and people stop admitting gaps. Waving the gap off as operational detail loses the finding, and the model carries that loss to the final inject.</p>',
+      reviewNote: 'Log the finding against the BIA target, park the fix, keep time, and keep the discussion no-fault.' },
+    { id: 'd4', inj: 3, type: 'choice', points: 7, short: 'I4: third party', title: 'Inject 4: the vendor’s obligations',
+      locked: B8UI.lockDecision(4),
+      task: 'A business associate reports a compromise, and nobody knows what the BAA requires. Which move <b>best</b> tests objective O3?',
+      options: B8.INJECTS[3].opts.map(function (o) { return o.t; }), answer: 1,
+      hint: 'Prepared injects can include documents. Who in the room should read the contract, and what should happen to R-11?',
+      debrief: '<p>Outsourcing a service does not outsource the risk. Handing out the contract extract and asking the vendor manager and the privacy officer to interpret it tests whether the owners know the terms. Here they learn the BAA sets a 10-day notice duty but says nothing about the vendor’s own subcontractors, a fourth-party gap.</p><p>The inject also exposes a register problem: R-11’s low rating rests on a questionnaire, not on evidence, and its KRI has no data source. Giving your own guess about the contract or declaring the vendor out of scope leaves both findings undiscovered.</p>',
+      reviewNote: 'Have the owners read the actual contract terms; record fourth-party gaps and ratings that rest on weak evidence.' },
+    { id: 'd5', inj: 4, type: 'choice', points: 7, short: 'I5: decision rights', title: 'Inject 5: “Should we pay?”',
+      locked: B8UI.lockDecision(5),
+      task: 'The CFO asks you, the risk practitioner, whether Ironvale should pay the ransom. Which response is <b>best</b>?',
+      options: B8.INJECTS[4].opts.map(function (o) { return o.t; }), answer: 3,
+      hint: 'IRP 5.2 names the decision maker and the inputs. What is the practitioner’s role in any risk decision?',
+      debrief: '<p>The risk practitioner advises and facilitates; the risk owner decides. Here the plan names the CEO with the board, on counsel’s advice, after sanctions screening and an insurer consent check. Redirecting the question and drawing out those inputs tests the real decision path and surfaces a new finding: the backups that make “do not pay” possible have not been restore-tested this year.</p><p>A recommendation to pay, or a firm “we never pay,” is the facilitator making the decision. Handing it to the CFO rehearses the wrong path, and the scribe would record it as if it were correct.</p>',
+      reviewNote: 'Point to the decision owner in the plan and bring out the inputs they need; never make the call yourself.' },
+    { id: 'd6', inj: 5, type: 'choice', points: 7, short: 'I6: notification', title: 'Inject 6: the notification clock',
+      locked: B8UI.lockDecision(6),
+      task: 'Counsel says notice can wait until forensics proves data was taken. Which move <b>best</b> tests objective O4?',
+      options: B8.INJECTS[5].opts.map(function (o) { return o.t; }), answer: 0,
+      hint: 'Read the first row of the notification matrix. Who owns the clock under IRP 5.3?',
+      debrief: '<p>The facilitator should not hand down legal conclusions, but should not let an obvious gap pass either. Asking the clock owner to walk the matrix puts the facts in front of the room: under HHS guidance, ransomware affecting PHI is presumed a breach unless a documented risk assessment shows a low probability of compromise, and a leak-site post with names and diagnoses rules that out. Notices go to individuals without unreasonable delay and within 60 days of discovery, to HHS at the same time for 500 or more people, and to the media when more than 500 residents of a state are affected.</p><p>The disagreement between counsel and privacy is itself a finding for training. Telling the room encrypted data is not a breach is wrong, and a premature notice to every patient has to be corrected later.</p>',
+      reviewNote: 'Have the clock owner apply the notification matrix; ransomware affecting PHI is a presumed breach.' },
+    { id: 'd7', inj: 6, type: 'choice', points: 7, short: 'I7: register reality', title: 'Inject 7: an untested control in the register',
+      locked: B8UI.lockDecision(7),
+      task: 'Restoring the EHR will miss both the RTO and the RPO, and R-07 rates the risk as low. Which move is <b>best</b>?',
+      options: B8.INJECTS[6].opts.map(function (o) { return o.t; }), answer: 2,
+      hint: 'Compare the CIO’s figures with the BIA. What does that mean for the rating in R-07, and who confirms the facts?',
+      debrief: '<p>This is the most valuable finding of the day: a control the register relies on has never been tested, and the scenario shows it would miss the 24-hour RTO by about 6 hours and the 4-hour RPO by 22. Logging it against R-07, with the CIO as control owner confirming the facts, sets up a register update: the residual rating rises, and the KRI “days since last successful restore test” gets a data source and thresholds.</p><p>Ruling that the restore succeeds hides the result. Redesigning the architecture in the room is a project without an owner. Asking the COO to accept the gap on the spot produces a risk acceptance nobody analyzed.</p>',
+      reviewNote: 'Tie exercise results back to the register; a residual rating that rests on an untested control must be revisited.' },
+    { id: 'd8', inj: 7, type: 'choice', points: 7, short: 'I8: after-action', title: 'Inject 8: hot wash and follow-through',
+      locked: B8UI.lockDecision(8),
+      task: 'Time is nearly up and the CEO wants to skip the hot wash. What do you <b>recommend</b>?',
+      options: B8.INJECTS[7].opts.map(function (o) { return o.t; }), answer: 1,
+      hint: 'Exercise plan 6 lists what comes after the last inject. What turns a finding into a response?',
+      debrief: '<p>The most important output of a tabletop is the after-action report with corrective actions and owners. A short hot wash while memories are fresh catches findings the scribe missed, and the report then goes to the risk committee with owners, due dates, and the register and KRI updates, which enter the risk action plan and are monitored like any other action.</p><p>An after-action report with no owners is a record, not a response. Internal audit evaluates but should not own the fixes, and naming people who answered wrongly destroys the no-fault culture the next exercise depends on.</p>',
+      reviewNote: 'Always hold the hot wash and issue an after-action report whose actions have owners and due dates.' },
+    { id: 'dt', type: 'number', points: 12, short: 'Supported path downtime', title: 'Projected downtime on the supported path',
+      locked: B8UI.lockAll, unit: 'hours', tol: 0.5,
+      task: 'In the <b>what-if replay</b>, set all eight moves to the supported answers from items 1 to 8 (the <b>Apply my verified checklist answers</b> button helps). What is the projected <b>downtime</b>?',
+      answer: function () { return B8.answers.bestDowntime(); },
+      hint: 'Verify items 1 to 8 first, then apply them in the replay and read the downtime row in the What-if column. One other path is slightly faster; that is the point of this item.',
+      debrief: '<p>The supported path projects 72 hours of disruption, all of it the unavoidable impact of the attack, including the slow EHR restore: none of the supported moves adds downtime of its own. The only faster path pays the ransom, which saves 2 hours, costs $4.6 million, and still exposes the records.</p><p>Downtime is one measure, not the goal. The 72 hours also hide a finding: a restore that takes about 30 hours against a 24-hour RTO. That gap belongs in the after-action report and in R-07.</p>',
+      reviewNote: 'Read the What-if column after applying the supported moves; the best path is not the fastest.' },
+    { id: 'cost', type: 'number', points: 12, short: 'Supported path cost', title: 'Projected cost on the supported path',
+      locked: B8UI.lockAll, unit: '$ millions', tol: 0.01,
+      task: 'With the same what-if path, what is the <b>total projected cost</b>, including disruption, in millions of dollars (for example, 2.75)?',
+      answer: function () { return B8.answers.bestCostM(); },
+      hint: 'Use the Total projected cost row, What-if column. Total cost is direct cost plus $25K per downtime hour.',
+      debrief: '<p>The supported path projects $2.64 million: $0.84 million in direct cost and $1.80 million in disruption for 72 hours. No other combination of moves costs less, and none ends with fewer records exposed or a higher exercise value.</p><p>Putting a number on each path helps the risk committee see that facilitation quality has value: a tabletop that loses findings or rehearses the wrong decision path leaves real losses waiting in the next incident.</p>',
+      reviewNote: 'Total cost = direct cost + downtime hours x $25K; compare paths on the whole picture.' },
+    { id: 'aar', type: 'text', points: 20, short: 'After-action report', title: 'After-action report with register and KRI updates', reportTitle: 'After-action report',
+      locked: B8UI.lockAll,
+      task: 'Write the after-action report (Exercise plan 6). For each objective, state what was expected, what happened, and whether it was met. List the findings, give each corrective action an owner and a due date, and state the specific updates to the risk register and its KRIs.',
+      fields: [
+        { key: 'obj', label: 'Objectives O1 to O5: expected, observed, met or not met', min: 80, placeholder: 'One line per objective, with numbers from the impact clock where they help.' },
+        { key: 'find', label: 'Findings (no-fault)', min: 60, placeholder: 'Gaps in plans, decision rights, controls, and evidence.' },
+        { key: 'act', label: 'Corrective actions, each with an owner and a due date', min: 60, placeholder: 'These enter the risk action plan.' },
+        { key: 'reg', label: 'Risk register updates (entries, ratings, owners)', min: 40, placeholder: 'For example, R-07 and R-11.' },
+        { key: 'kri', label: 'KRIs to add or fix, with data sources and thresholds', min: 40, placeholder: 'Name each KRI, its data source, and its amber and red thresholds.' }
+      ],
+      hint: 'Use the scribe’s findings in each inject’s result. Look at the register extract: which ratings rested on untested controls, and which KRIs have no data source?',
+      debrief: '<p><b>Model report.</b> <b>Objectives.</b> O1 met after facilitation: the CIO declared at 06:25 and the COO escalated at 07:50, but nobody knew the tolerance before reading it. O2 not met: manual medication ordering ran at 40 percent against an 8-hour MTD. O3 partly met: extortion followed IRP 5.2, but the BAA is silent on subcontractors. O4 met with a gap: counsel and privacy disagreed on the breach trigger. O5 not met: the restore would take about 30 hours against a 24-hour RTO, with data 26 hours old against a 4-hour RPO. The supported path projects 72 hours of downtime and $2.64 million. <b>Findings.</b> Out-of-date downtime forms; tolerance not known to the risk owner; fourth-party gap in the BAA; untested restore; disagreement on the breach presumption.</p>' +
+        '<p><b>Corrective actions.</b> Restore test of the EHR from immutable copies, owner CIO, due in 60 days. Update the downtime forms and run a pharmacy drill, owner CNO, due in 45 days. Amend the Corvane BAA to cover subcontractors and request current assurance evidence, owner vendor manager with the lab director, due next renewal or 90 days. Breach-presumption briefing for counsel and privacy, owner privacy officer, due in 30 days. Tolerance card for every risk owner, owner ERM, due in 30 days. <b>Register.</b> Raise R-07 residual from 4 to about 12 (likelihood 3 x impact 4) until a restore test passes; raise R-11 from 4 to about 9 until evidence replaces the questionnaire; record the downtime-form gap under R-14. Owners unchanged; the risk owners review the new ratings. <b>KRIs.</b> Days since last successful EHR restore test, from the backup console (amber over 90, red over 180); restore time in the last test as a percent of RTO (amber over 80, red over 100); age of Corvane assurance evidence, from the vendor file (amber over 12 months, red over 18); manual medication ordering capacity in the last drill (amber under 80 percent, red under 60). Your wording will differ; check that each action has an owner and date, and each KRI has a source and thresholds.</p>',
+      reviewNote: 'An after-action report states results by objective and turns findings into owned actions, register updates, and working KRIs.' }
+  ],
+  workbench: function (root, api) { B8UI.workbench(root, api); }
+};
+</script>
+<script src="lab.js"></script>
+</body>
+</html>

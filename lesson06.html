@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 6: Control Design and Implementation | CRISC Workshop</title>
+<link rel="stylesheet" href="crisc-lesson.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-seal">CRISC<br>PREP</div>
+    <span class="nav-title">5-Day Faculty Workshop</span>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#lessons">Lessons</a></li>
+      <li><a href="index.html#practice">Practice</a></li>
+      <li><a href="index.html#schedule">Schedule</a></li>
+      <li><a href="index.html#domains">Domains</a></li>
+      <li><a href="index.html#exam-prep">Exam Prep</a></li>
+      <li><a href="index.html#faculty-tools">Faculty Tools</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="lesson-hero">
+  <div class="lesson-hero-inner">
+    <p class="breadcrumb"><a href="index.html">Workshop</a> &nbsp;&rsaquo;&nbsp; <a href="index.html#lessons">Lessons</a> &nbsp;&rsaquo;&nbsp; <span>Lesson 6</span></p>
+    <span class="lesson-badge-lg">Day 4, Morning &bull; Domain 3B</span>
+    <h1>Control Design and <span>Implementation</span></h1>
+    <p class="lesson-lede">A risk response is only a promise until a control carries it out. Domain 3B covers how controls are classified, which frameworks supply them, how they are designed and selected, how they are put into service, and how a risk practitioner proves that they work: first by design, then in operation.</p>
+    <div class="meta-chips">
+      <span class="meta-chip">Session: <strong>Day 4, 9:00 to 12:30</strong></span>
+      <span class="meta-chip">Duration: <strong>~3.5 hrs</strong></span>
+      <span class="meta-chip">Exam Weight: <strong>32%</strong></span>
+      <span class="meta-chip">Knowledge Check: <strong>8 Questions</strong></span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="block">
+    <p class="eyebrow">Overview</p>
+    <h2 class="h2">From a chosen response to a working control</h2>
+    <div class="rule"></div>
+    <p class="lead">Lesson 5 ended with a decision: mitigate this risk. This lesson turns that decision into controls. A good control set is not the longest list. It is a balanced portfolio that prevents what it can, detects what it cannot prevent, and corrects and recovers when both fail, at a cost the business can justify.</p>
+    <p class="lead">The lesson moves through control types and functions, the major control frameworks, design and selection, implementation, control analysis, and control testing. The running case is Penmore Technical College, whose student information system (SIS) faces a rising account-takeover risk.</p>
+    <div class="mindset"><span class="tip-label">&#9878;&#65039; Think like a risk practitioner</span>The risk practitioner recommends controls and evaluates whether they work. The risk owner decides which response to fund, and the control owner operates the control day to day. When a question asks what a well-designed control must have FIRST, look for a clear objective tied to the risk and a named owner, not a product.</div>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Learning Objectives</p>
+    <h2 class="h2">By the end of this lesson you will be able to&hellip;</h2>
+    <div class="rule"></div>
+    <ul class="objectives">
+      <li><span><strong>Classify</strong> controls by function (preventive, detective, corrective, deterrent, recovery, compensating) and by nature (administrative, technical, physical). <em class="bloom-tag">Bloom: Understand</em></span></li>
+      <li><span><strong>Compare</strong> NIST SP 800-53 Rev. 5, ISO/IEC 27002:2022, CIS Controls v8.1, and COBIT 2019 as sources of controls. <em class="bloom-tag">Bloom: Analyze</em></span></li>
+      <li><span><strong>Select</strong> a cost-justified, balanced control portfolio that brings residual risk within appetite. <em class="bloom-tag">Bloom: Evaluate</em></span></li>
+      <li><span><strong>Distinguish</strong> design effectiveness from operating effectiveness and explain why both matter. <em class="bloom-tag">Bloom: Understand</em></span></li>
+      <li><span><strong>Choose</strong> the test method (inquiry, observation, inspection, reperformance) that gives enough assurance for a given control. <em class="bloom-tag">Bloom: Apply</em></span></li>
+      <li><span><strong>Design</strong> a control test workpaper assignment, with a rubric, for students in your own course. <em class="bloom-tag">Bloom: Create</em></span></li>
+    </ul>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Key Terms</p>
+    <h2 class="h2">Vocabulary flashcards</h2>
+    <div class="rule"></div>
+    <p class="flip-hint-top">&#128072; Read the term, recall the definition, then click or press Enter to check yourself.</p>
+    <div class="vocab-grid">
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Preventive Control</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">A control that stops an unwanted event before it happens, such as multi-factor authentication or segregation of duties.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Detective Control</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">A control that identifies an event while it is happening or after it has happened, such as log alerting or a reconciliation.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Corrective Control</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">A control that limits the damage of an event and fixes its cause, such as an incident playbook that disables a compromised account.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Compensating Control</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">An alternative control that meets the intent of a required control that cannot be implemented as written, with comparable risk reduction.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Key Control</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">A control whose failure alone would leave a risk outside appetite. Key controls get the most frequent and rigorous testing.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Design Effectiveness</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">Whether a control, if operated as described, would meet its objective and address the risk. Assessed at a point in time.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Operating Effectiveness</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">Whether a well-designed control actually ran as intended, consistently, by the right people, throughout a period.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Reperformance</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">The tester independently executes the control and compares the result. It gives the strongest assurance of the four test methods.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Walkthrough</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">Tracing one transaction from start to finish through a process, combining inquiry, observation, and inspection to confirm design and implementation.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Continuous Controls Monitoring (CCM)</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">Automated, ongoing testing of control data, such as configurations or access lists, that flags exceptions as they occur.</div></div>
+        </div>
+      </button>
+
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Lesson Content</p>
+    <h2 class="h2">Study the material</h2>
+    <div class="rule"></div>
+    <div class="lesson-content">
+      <nav class="toc" aria-label="On this page">
+        <div class="toc-title">On this page</div>
+        <ul>
+          <li><a href="#s1">1. Control Types and Functions</a></li>
+          <li><a href="#s2">2. Control Frameworks and Standards</a></li>
+          <li><a href="#s3">3. Control Design and Selection</a></li>
+          <li><a href="#s4">4. Control Implementation</a></li>
+          <li><a href="#s5">5. Control Analysis</a></li>
+          <li><a href="#s6">6. Control Testing</a></li>
+          <li><a href="#s7">7. Interactive: Control Portfolio Designer</a></li>
+          <li><a href="#s8">8. Faculty Teaching Segment</a></li>
+        </ul>
+      </nav>
+      <div class="content-main">
+
+        <article class="content-section" id="s1">
+          <div class="cs-head"><span class="cs-num">1</span><h3>Control Types and Functions</h3></div>
+          <p>A control is any policy, procedure, practice, or mechanism that modifies risk. Two independent questions classify every control. First, what does it do relative to the risk event: stop it, discourage it, find it, fix it, or restore after it? That is the control's <strong>function</strong>. Second, how is it delivered: through people and rules, through technology, or through the physical environment? That is the control's <strong>nature</strong>, sometimes called its category or type.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Function</th><th>What it does</th><th>Penmore SIS example</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Deterrent</td><td>Discourages a threat actor by raising the perceived cost or certainty of consequences.</td><td>A sign-in banner stating that access is monitored and misuse is prosecuted.</td></tr>
+              <tr><td class="term">Preventive</td><td>Stops the event from occurring.</td><td>Multi-factor authentication (MFA) on every SIS sign-in.</td></tr>
+              <tr><td class="term">Detective</td><td>Identifies the event during or after it occurs.</td><td>Alerts on sign-ins from two distant locations within an hour.</td></tr>
+              <tr><td class="term">Corrective</td><td>Limits the damage and removes the cause.</td><td>An account-takeover playbook: disable the session, reset credentials, review changes.</td></tr>
+              <tr><td class="term">Recovery</td><td>Restores normal operations and data after the event.</td><td>Restoring altered grade and aid records from a tested backup.</td></tr>
+              <tr><td class="term">Compensating</td><td>Meets the intent of a required control that cannot be implemented as written.</td><td>A second-person review of aid bank-account changes while a legacy module cannot enforce MFA.</td></tr>
+            </tbody>
+          </table></div>
+          <p>Some lists add a <strong>directive</strong> function for controls that tell people what to do, such as an acceptable use policy. Many controls serve more than one function. Security awareness training is mainly preventive, yet it also deters. An access recertification detects inappropriate access that already exists, then triggers its removal, which is corrective.</p>
+          <h4>The nature of a control</h4>
+          <ul class="detail">
+            <li><strong>Administrative (managerial or procedural):</strong> policies, standards, procedures, training, segregation of duties, background checks, and reviews performed by people. They set expectations and depend on consistent human performance.</li>
+            <li><strong>Technical (logical):</strong> controls enforced by hardware, software, or firmware, such as MFA, encryption, firewalls, and automated alerting. They act consistently once configured, which also makes them easier to test.</li>
+            <li><strong>Physical:</strong> controls on the physical environment, such as locks, badges, guards, cameras, and environmental protection for server rooms.</li>
+          </ul>
+          <div class="compare-2col">
+            <div><b>Function answers &ldquo;when&rdquo;</b>Before the event (deter, prevent), during or after it (detect), or after it (correct, recover). A portfolio needs coverage across that timeline.</div>
+            <div><b>Nature answers &ldquo;how&rdquo;</b>People and rules, technology, or the physical environment. A portfolio that relies on only one nature has a single point of failure.</div>
+          </div>
+          <div class="resource-link">
+            <span class="rl-icon" aria-hidden="true">&#128737;&#65039;</span>
+            <div class="rl-body"><span class="rl-label">Explore with an eMate</span><span class="rl-text"><strong>Cybersecurity Controls</strong>: sort controls by function and category before you design a portfolio of them.</span></div>
+            <div class="rl-actions"><a class="btn secondary" href="https://d2hie3dpn9wvbb.cloudfront.net/controls/cybersecurity_controls.html" target="_blank" rel="noopener noreferrer">Cybersecurity Controls <span class="ext">&#8599;</span></a></div>
+          </div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a question describes a control that is used because the required control is not feasible, the answer is a compensating control. Compensating controls must address the same risk with comparable strength, and they should be documented and reviewed, not left in place forever by default.</div>
+        </article>
+
+        <article class="content-section" id="s2">
+          <div class="cs-head"><span class="cs-num">2</span><h3>Control Frameworks and Standards</h3></div>
+          <p>Practitioners rarely invent controls from nothing. Control frameworks give a tested catalog, a shared vocabulary, and a way to show regulators and auditors that coverage is complete. The choice of framework follows the organization's legal, regulatory, and contractual requirements and its business context, not personal preference.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Framework</th><th>Structure</th><th>Best use</th></tr></thead>
+            <tbody>
+              <tr><td class="term">NIST SP 800-53 Rev. 5</td><td>A catalog of security and privacy controls in 20 families, such as AC (Access Control) and AU (Audit and Accountability). Baselines (low, moderate, high, and privacy) are published separately in SP 800-53B.</td><td>U.S. federal systems and contractors, and any organization that wants a deep, detailed catalog. Used with the NIST RMF (SP 800-37 Rev. 2).</td></tr>
+              <tr><td class="term">ISO/IEC 27002:2022</td><td>93 controls in 4 themes: organizational, people, physical, and technological. Each control carries attributes, such as control type (preventive, detective, corrective) and cybersecurity concept.</td><td>Guidance for the Annex A controls of an ISO/IEC 27001:2022 ISMS. Common in international and certified environments.</td></tr>
+              <tr><td class="term">CIS Controls v8.1</td><td>18 prioritized controls broken into safeguards, grouped into Implementation Groups IG1, IG2, and IG3. IG1 is essential cyber hygiene; each higher group adds safeguards.</td><td>Small and mid-sized organizations that need a prioritized, practical starting point.</td></tr>
+              <tr><td class="term">COBIT 2019</td><td>40 governance and management objectives in 5 domains: EDM, APO, BAI, DSS, and MEA.</td><td>Governance of enterprise information and technology. It frames controls in terms of business goals and assigns accountability.</td></tr>
+            </tbody>
+          </table></div>
+          <p>Other sources fill specific needs. NIST CSF 2.0 describes outcomes in six functions (Govern, Identify, Protect, Detect, Respond, Recover) rather than prescribing controls, and organizations map controls from a catalog to those outcomes. PCI DSS v4.0 is a contractual requirement for organizations that handle payment card data. Sector rules, such as the HIPAA Security Rule, add their own safeguards.</p>
+          <h4>Working with more than one framework</h4>
+          <ul class="detail">
+            <li><strong>Crosswalks (control mapping):</strong> one internal control can satisfy requirements in several frameworks. Mapping avoids building and testing the same control twice.</li>
+            <li><strong>A common control set:</strong> many organizations keep one internal control library with references to each external framework. Testing evidence is then gathered once and reused.</li>
+            <li><strong>Tailoring:</strong> no framework fits as published. Controls are scoped to the systems and risks in play and tailored to the organization's size and context.</li>
+          </ul>
+          <div class="tip jade"><span class="tip-label">&#128203; Note on ISO/IEC 27002:2022</span>The 2022 edition replaced the 2013 structure of 14 clauses and 114 controls with 93 controls in 4 themes. It also introduced attribute tags, so the same control list can be filtered by control type, by security property, or by CSF-style concept. Older study materials that cite 114 controls describe the previous edition.</div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a question asks what should drive the selection of a control framework, choose the organization's business, regulatory, and contractual requirements. A framework is a tool for meeting those requirements, not an end in itself.</div>
+          <div class="in-practice"><span class="ip-label">&#128270; In practice</span><p>Penmore Technical College receives federal student aid, so it must protect student financial data under the GLBA Safeguards Rule, and it runs a small IT team. The risk practitioner recommends CIS Controls v8.1 IG1 and IG2 as the working baseline, mapped to NIST CSF 2.0 for board reporting. One internal control, &ldquo;MFA on all remote and SIS access,&rdquo; maps to a CIS safeguard, a CSF Protect outcome, and the Safeguards Rule's MFA requirement at the same time.</p></div>
+        </article>
+
+        <article class="content-section" id="s3">
+          <div class="cs-head"><span class="cs-num">3</span><h3>Control Design and Selection</h3></div>
+          <p>Control design starts with the risk scenario, not the catalog. The practitioner asks which part of the scenario the control addresses: the threat, the vulnerability, the likelihood of the event, or the size of the loss. A control that addresses none of these is overhead, however good it looks on paper.</p>
+          <h4>Design principles</h4>
+          <ul class="detail">
+            <li><strong>Clear objective:</strong> each control states the risk it addresses and what success looks like. &ldquo;Ensure only current staff can change aid records&rdquo; is testable; &ldquo;secure the SIS&rdquo; is not.</li>
+            <li><strong>Defense in depth:</strong> several independent layers, so one failure does not expose the asset.</li>
+            <li><strong>Least privilege and segregation of duties:</strong> no single person can complete a sensitive action alone or reach more than the role needs.</li>
+            <li><strong>Fail secure:</strong> when the control breaks, it denies access rather than opening up.</li>
+            <li><strong>Automation where it is reliable:</strong> automated controls run the same way every time and are cheaper to test. Manual controls suit judgment-heavy tasks, such as reviewing unusual transactions.</li>
+            <li><strong>Evidence by design:</strong> the control leaves a record (log, ticket, signed review) that shows it ran. A control without evidence cannot be shown to work.</li>
+          </ul>
+          <h4>Selection criteria</h4>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Criterion</th><th>Question to ask</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Risk reduction</td><td>How much does it lower likelihood or impact for this scenario?</td></tr>
+              <tr><td class="term">Cost</td><td>What is the total cost of ownership: purchase, staff time, maintenance, and testing? Does it stay below the value of the risk it reduces?</td></tr>
+              <tr><td class="term">Compliance</td><td>Is it required by law, regulation, or contract regardless of cost-benefit?</td></tr>
+              <tr><td class="term">Feasibility</td><td>Can it work with the current technology, staff, and culture?</td></tr>
+              <tr><td class="term">Operational impact</td><td>What does it do to users and business processes? A control people route around is not a control.</td></tr>
+              <tr><td class="term">Balance</td><td>Does the portfolio still cover deterrence, prevention, detection, correction, and recovery?</td></tr>
+            </tbody>
+          </table></div>
+          <h4>Key and non-key controls</h4>
+          <p>A <strong>key control</strong> is one whose failure alone would leave the risk outside appetite. Key controls get the most rigorous design, the clearest ownership, and the most frequent testing. <strong>Non-key controls</strong> add depth, but the risk would remain acceptable without any single one of them. Identifying key controls lets the organization spend testing effort where it matters.</p>
+          <div class="resource-link">
+            <span class="rl-icon" aria-hidden="true">&#128208;</span>
+            <div class="rl-body"><span class="rl-label">Explore with an eMate</span><span class="rl-text"><strong>Cybersecurity Design Principles</strong>: least privilege, defense in depth, fail secure, and the other principles that make a control well designed.</span></div>
+            <div class="rl-actions"><a class="btn secondary" href="https://d2hie3dpn9wvbb.cloudfront.net/design/cybersecuritydesignprinciples.html" target="_blank" rel="noopener noreferrer">Design Principles <span class="ext">&#8599;</span></a></div>
+          </div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When two answers both reduce the risk, prefer the one that addresses the root cause in the scenario at a cost proportionate to the risk. A control that costs more than the loss it prevents is not justified unless law or contract requires it.</div>
+          <div class="in-practice"><span class="ip-label">&#128270; In practice</span><p>Penmore's first draft response was &ldquo;buy a SIEM.&rdquo; The risk practitioner reframed the scenario: attackers reuse staff passwords stolen by phishing, then change aid deposit accounts. MFA addresses the stolen-password vulnerability directly and costs less. Impossible-travel alerting detects the sessions MFA misses. A playbook and tested restores cover what happens next. The SIEM stays on the roadmap, but it is no longer the first purchase.</p></div>
+        </article>
+
+        <article class="content-section" id="s4">
+          <div class="cs-head"><span class="cs-num">4</span><h3>Control Implementation</h3></div>
+          <p>Implementation is where good designs fail most often. A control that is switched on without a tested change, a trained owner, or documentation tends to drift, break, or be bypassed within months.</p>
+          <ul class="detail">
+            <li><strong>Change management:</strong> new controls are changes to the environment. They go through the normal change process: a request, impact analysis, testing in a non-production environment, approval, a scheduled release, and a back-out plan.</li>
+            <li><strong>Ownership:</strong> every control has a named <strong>control owner</strong> who is accountable for operating it and producing evidence. The control owner is often different from the risk owner, who is accountable for the risk the control addresses.</li>
+            <li><strong>Documentation:</strong> a control narrative records the objective, the risk it addresses, the owner, the frequency (continuous, daily, quarterly), the procedure, and the evidence it leaves. This narrative becomes the basis for testing.</li>
+            <li><strong>Transition:</strong> pilot groups, phased rollout, or parallel running reduce disruption. For MFA, enrolling staff by department with a help desk ready is safer than a single cut-over.</li>
+            <li><strong>Training and communication:</strong> people who operate or are affected by a control need to know what changes and why.</li>
+            <li><strong>Post-implementation review:</strong> after go-live, confirm the control works as designed, measure user impact, and record lessons learned.</li>
+          </ul>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Role</th><th>Accountable for</th><th>Penmore example</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Risk owner</td><td>The risk and the decision on how to respond to it.</td><td>Vice President of Enrollment and Student Services</td></tr>
+              <tr><td class="term">Control owner</td><td>Operating the control and keeping evidence.</td><td>Identity and access manager (MFA); financial aid director (bank-change review)</td></tr>
+              <tr><td class="term">Risk practitioner</td><td>Advising on design, monitoring, and evaluating effectiveness.</td><td>The college's IT risk analyst</td></tr>
+              <tr><td class="term">Internal audit</td><td>Independent assurance that controls work.</td><td>The college's internal audit function (third line)</td></tr>
+            </tbody>
+          </table></div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a question asks who is accountable for making sure a control operates as intended, the answer is the control owner. The risk owner decides on the response, and the risk practitioner evaluates and reports, but neither runs the control.</div>
+          <div class="in-practice"><span class="ip-label">&#128270; In practice</span><p>Penmore's MFA rollout reached the financial aid office last, because its legacy aid module could not accept the new sign-in flow until a vendor update. The risk practitioner documented the gap, the financial aid director agreed to a time-boxed compensating control (second-person review of every bank-account change), and the exception was logged with a review date in the risk register.</p></div>
+        </article>
+
+        <article class="content-section" id="s5">
+          <div class="cs-head"><span class="cs-num">5</span><h3>Control Analysis</h3></div>
+          <p>Control analysis asks whether the current controls are enough, whether they are the right ones, and how mature they are. It compares what exists with what the risk requires.</p>
+          <h4>Gap analysis</h4>
+          <p>A gap analysis compares the current state of controls with a target state. The target can come from a framework baseline, a regulation, or the risk scenario itself. Each gap is recorded with its risk, an owner, and a remediation plan, and significant gaps go into the risk register and the risk action plan (Lesson 7).</p>
+          <h4>Design versus operating effectiveness</h4>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th></th><th>Design effectiveness</th><th>Operating effectiveness</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Question</td><td>If this control runs as described, would it meet its objective?</td><td>Did it actually run as described, consistently, throughout the period?</td></tr>
+              <tr><td class="term">Timing</td><td>Point in time</td><td>Over a period (for example, a quarter or a year)</td></tr>
+              <tr><td class="term">Typical evidence</td><td>Control narrative, configuration, walkthrough of one transaction</td><td>A sample of instances across the period, logs, reperformance</td></tr>
+              <tr><td class="term">Deficiency type</td><td>Design deficiency: the control is missing or would not work even if followed.</td><td>Operating deficiency: a sound control was not performed, or was performed wrongly.</td></tr>
+            </tbody>
+          </table></div>
+          <p>The order matters. Testing operating effectiveness of a poorly designed control wastes effort, because a control that would not work even when followed perfectly cannot become effective by being followed more often. Design is assessed first, then operation.</p>
+          <h4>Maturity and rationalization</h4>
+          <ul class="detail">
+            <li><strong>Capability and maturity:</strong> COBIT 2019 rates process capability on a scale from 0 (incomplete) to 5 (optimizing). Moving from ad hoc to defined and measured processes makes controls more repeatable.</li>
+            <li><strong>Control rationalization:</strong> remove or merge redundant controls that address the same risk with no added benefit. Fewer, stronger controls are easier to own and test.</li>
+            <li><strong>Control dependencies:</strong> automated controls rely on IT general controls, such as change management and access to the configuration. If those fail, the automated control can be altered without anyone noticing.</li>
+          </ul>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a question says a control is performed every time but the risk still materializes, suspect a design deficiency. When a control is well designed but evidence shows it was skipped in some periods, that is an operating deficiency.</div>
+        </article>
+
+        <article class="content-section" id="s6">
+          <div class="cs-head"><span class="cs-num">6</span><h3>Control Testing</h3></div>
+          <p>Testing produces the evidence that a control is designed well and operating as intended. Four basic methods are used, alone or together. They differ in how much assurance they give.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Method</th><th>What the tester does</th><th>Assurance</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Inquiry</td><td>Asks people how the control works.</td><td>Weakest. Never sufficient alone.</td><td>Interview the identity manager about MFA enforcement.</td></tr>
+              <tr><td class="term">Observation</td><td>Watches the control being performed.</td><td>Moderate, but only for the moment observed. People may behave differently when watched.</td><td>Watch a help-desk analyst verify identity before a password reset.</td></tr>
+              <tr><td class="term">Inspection</td><td>Examines documents, records, configurations, or logs.</td><td>Good. Shows evidence that the control ran.</td><td>Inspect signed quarterly access reviews for a sample of quarters.</td></tr>
+              <tr><td class="term">Reperformance</td><td>Independently executes the control and compares the result.</td><td>Strongest.</td><td>Attempt six failed sign-ins on a test account and confirm the lockout.</td></tr>
+            </tbody>
+          </table></div>
+          <p>A <strong>walkthrough</strong> traces a single transaction through the process from start to finish. It combines inquiry, observation, and inspection to confirm that the control is designed as documented and has been implemented. A walkthrough supports design effectiveness. It is not, by itself, a test of operating effectiveness over a period.</p>
+          <h4>Sampling</h4>
+          <ul class="detail">
+            <li><strong>Population first:</strong> confirm that the population is complete before sampling. A sample drawn from an incomplete list proves nothing about the missing items.</li>
+            <li><strong>Statistical sampling</strong> uses random selection and probability to draw conclusions about the whole population with stated confidence. <strong>Nonstatistical (judgmental) sampling</strong> relies on the tester's judgment and cannot be extrapolated with measured confidence.</li>
+            <li><strong>Frequency drives sample size:</strong> a control that runs many times a day needs a larger sample across the period than one that runs quarterly.</li>
+            <li><strong>Automated controls:</strong> once the configuration is confirmed, testing a single instance can be enough, provided IT general controls over changes to that configuration are effective for the period.</li>
+          </ul>
+          <h4>Continuous controls monitoring and who tests</h4>
+          <p><strong>Continuous controls monitoring (CCM)</strong> uses automation to test control data all the time: MFA enrollment, configuration drift, or orphaned accounts compared with the HR roster. It shifts testing from a yearly snapshot to an ongoing signal and feeds the key control indicators covered in Lesson 7. Testing can be done by the first line (control self-testing), the second line (risk and compliance functions), or the third line (internal audit). Independence increases from first to third line.</p>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a question asks which evidence gives the MOST assurance that a control is operating, choose reperformance. When the only evidence is that the control owner says it works, that is inquiry, and inquiry alone is never sufficient.</div>
+          <div class="tip jade"><span class="tip-label">&#9881;&#65039; Match method to control</span>Reperformance fits controls a tester can safely trigger, such as lockouts, alerts, and restores. Inspection fits controls that leave records, such as reviews and approvals. Observation fits controls that only exist while performed, such as a visitor sign-in or a banner on a screen.</div>
+        </article>
+
+        <article class="content-section" id="s7">
+          <div class="cs-head"><span class="cs-num">7</span><h3>Interactive: Control Portfolio Designer</h3></div>
+          <p>Penmore Technical College must treat an account-takeover risk on its student information system. Inherent risk is rated 4.2 for likelihood and 4.4 for impact on 5-point scales, a score of 18.5 out of 25. The risk owner's appetite is a residual score of 8 or less, and the budget is $100k a year. Toggle the ten candidate controls on and off. Each one lowers likelihood, impact, or both, and adds coverage to one or more control functions. The chart shows function coverage and a residual risk meter. Choose a control in the testing panel to see how it should be tested. When you are done, compare your portfolio with the model answer.</p>
+
+          <style>
+            .cpd-modes{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;margin-bottom:.7rem;}
+            .cpd-wrap{display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start;}
+            .cpd-in{flex:1 1 260px;min-width:0;}
+            .cpd-out{flex:1.4 1 320px;min-width:0;}
+            .cpd-list{display:flex;flex-direction:column;gap:.28rem;margin:0 0 .6rem;padding:0;list-style:none;}
+            .cpd-ctl{display:flex;justify-content:space-between;align-items:center;gap:.5rem;width:100%;text-align:left;font-family:Arial,sans-serif;font-size:.74rem;line-height:1.3;color:var(--text-primary);background:var(--card-bg);border:1px solid var(--border);border-radius:4px;padding:.28rem .5rem;cursor:pointer;}
+            .cpd-ctl:hover{border-color:var(--gold);}
+            .cpd-ctl:focus-visible{outline:2px solid var(--gold);outline-offset:1px;}
+            .cpd-ctl[aria-pressed="true"]{background:var(--gold-pale);border-color:var(--gold);box-shadow:inset 4px 0 0 var(--gold);}
+            .cpd-nm{font-weight:700;}
+            .cpd-tg{display:block;font-size:.64rem;color:var(--text-muted);}
+            .cpd-cost{font-weight:700;color:var(--jade-dark);white-space:nowrap;}
+            .cpd-key{display:inline-block;font-size:.58rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:var(--gold);border-radius:2px;padding:0 .3rem;margin-left:.3rem;vertical-align:1px;}
+            .cpd-bud{height:8px;background:var(--section-alt);border:1px solid var(--border);border-radius:4px;overflow:hidden;margin:.15rem 0 .2rem;}
+            .cpd-bud span{display:block;height:100%;background:var(--jade);}
+            .cpd-bud.over span{background:var(--wrong);}
+            #cpd-root .cpd-small{font-family:Arial,sans-serif;font-size:.7rem;color:var(--text-muted);margin:0 0 .5rem;}
+            .cpd-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.45rem;margin-bottom:.55rem;}
+            .cpd-tile{background:var(--card-bg);border:1px solid var(--border);border-radius:5px;padding:.3rem .55rem;}
+            .cpd-tile span{display:block;font-family:Arial,sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);}
+            .cpd-tile b{display:inline-block;margin-right:.35rem;font-family:Georgia,serif;font-size:1.08rem;color:var(--text-primary);line-height:1.25;}
+            .cpd-tile em{font-style:normal;font-family:Arial,sans-serif;font-size:.66rem;color:var(--text-muted);}
+            .cpd-cv{margin-bottom:.2rem;}
+            .cpd-test label{display:block;font-size:.66rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.2rem;}
+            .cpd-test select{width:100%;max-width:100%;min-width:0;}
+            .cpd-meth{display:flex;gap:.25rem;margin:.4rem 0 .35rem;}
+            .cpd-meth span{flex:1;text-align:center;font-family:'Arial Narrow',Arial,sans-serif;font-weight:700;font-size:.66rem;letter-spacing:.03em;text-transform:uppercase;padding:.28rem .1rem;border:1px solid var(--border);border-radius:3px;color:var(--text-muted);background:var(--card-bg);}
+            .cpd-meth span.on{background:var(--jade);border-color:var(--jade);color:#fff;}
+            #cpd-root .cpd-tx{font-family:Arial,sans-serif;font-size:.72rem;color:var(--text-secondary);line-height:1.45;margin:0;}
+            .cpd-tx b{color:var(--text-primary);}
+            .cpd-verd{min-height:3.2rem;}
+            #cpd-testbox{border-top:1px solid var(--border);padding-top:.5rem;margin-top:.2rem;}
+          </style>
+
+          <div class="iw" id="cpd-root">
+            <div class="iw-card">
+              <div class="iw-topbar">
+                <span class="iw-eyebrow">Interactive &middot; design a balanced control portfolio</span>
+                <button type="button" class="iw-expand" aria-expanded="false" title="Open a larger view">&#10530; Expand</button>
+              </div>
+              <div class="cpd-modes">
+                <button type="button" class="iw-btn" id="cpd-model">Show model answer</button>
+                <button type="button" class="iw-btn jade" id="cpd-reset">Reset to starting portfolio</button>
+                <button type="button" class="iw-btn jade" id="cpd-clear">Clear all</button>
+              </div>
+              <div class="cpd-wrap">
+                <div class="iw-panel cpd-in">
+                  <h5 class="iw-h5" id="cpd-lh">Candidate controls</h5>
+                  <ul class="cpd-list" id="cpd-list" aria-labelledby="cpd-lh"></ul>
+                  <p class="cpd-small" id="cpd-budtx">Budget</p>
+                  <div class="cpd-bud" id="cpd-bud" aria-hidden="true"><span id="cpd-budbar"></span></div>
+                </div>
+                <div class="iw-panel cpd-out">
+                  <div class="cpd-tiles">
+                    <div class="cpd-tile"><span>Budget used</span><b id="cpd-t1">$0k</b><em>of $100k a year</em></div>
+                    <div class="cpd-tile"><span>Residual likelihood</span><b id="cpd-t2">4.2</b><em>inherent 4.2 of 5</em></div>
+                    <div class="cpd-tile"><span>Residual impact</span><b id="cpd-t3">4.4</b><em>inherent 4.4 of 5</em></div>
+                    <div class="cpd-tile"><span>Coverage gaps</span><b id="cpd-t4">5</b><em id="cpd-t4s">functions below 20</em></div>
+                  </div>
+                  <div class="cpd-cv"><canvas id="cpd-canvas" role="img" aria-label="Bar chart of control function coverage and a residual risk meter"></canvas></div>
+                  <div aria-live="polite" class="cpd-verd" id="cpd-verdwrap">
+                    <div class="iw-verdict" id="cpd-verdict"><span class="iw-pill" id="cpd-pill">Ready</span><span id="cpd-coach"></span></div>
+                  </div>
+                  <div class="cpd-test" id="cpd-testbox">
+                    <label for="cpd-pick">Testing panel: choose a control</label>
+                    <select id="cpd-pick"></select>
+                    <div class="cpd-meth" id="cpd-meth" aria-hidden="true"><span data-m="inq">Inquiry</span><span data-m="obs">Observation</span><span data-m="ins">Inspection</span><span data-m="rep">Reperformance</span></div>
+                    <p class="cpd-tx" id="cpd-testtx" role="status"></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <script>
+          (function(){
+            var root=document.getElementById('cpd-root'); if(!root) return;
+            var $=function(id){return root.querySelector('#'+id);};
+            var L0=4.2, I0=4.4, APP=8, BUDGET=100;
+            var FN=['Deter','Prevent','Detect','Correct','Recover'];
+            var METH={inq:'Inquiry',obs:'Observation',ins:'Inspection',rep:'Reperformance'};
+            var C=[
+              {id:'mfa',nm:'Multi-factor authentication (MFA)',fn:{Prevent:45},nat:'Technical',auto:'Automated',cost:38,l:.45,i:1,best:'rep',
+                d:'Inspect the identity provider policy: MFA is required for every SIS role, with no excluded groups or legacy sign-in paths.',
+                o:'Attempt a sign-in on a test account in each role without the second factor, and inspect sign-in logs for a sample of days for any single-factor successes.'},
+              {id:'aware',nm:'Security awareness and phishing training',fn:{Prevent:15,Deter:15},nat:'Administrative',auto:'Manual',cost:12,l:.85,i:1,best:'ins',
+                d:'Inspect the training content and assignment rules: does it cover credential phishing, and is it assigned to every SIS user?',
+                o:'Inspect completion records and phishing simulation results for a sample of staff. Reperformance does not apply to training, and inquiry proves nothing.'},
+              {id:'recert',nm:'Quarterly access recertification',fn:{Detect:20,Prevent:10},nat:'Administrative',auto:'Manual',cost:9,l:.92,i:.88,best:'rep',
+                d:'Inspect the procedure: who reviews, against what source (the HR roster), and how removals are tracked to completion.',
+                o:'Inspect signed reviews for a sample of quarters, then reperform one review against the HR roster to see whether the reviewer missed leavers.'},
+              {id:'siem',nm:'SIEM alerting on SIS sign-ins',fn:{Detect:45},nat:'Technical',auto:'Automated',cost:45,l:1,i:.7,best:'rep',
+                d:'Inspect the rule logic and log sources: are all SIS sign-in sources forwarded, and do the rules match the account-takeover scenario?',
+                o:'Trigger a harmless test event and confirm the alert fires, is ticketed, and is worked within the response target.'},
+              {id:'travel',nm:'Impossible-travel sign-in detection',fn:{Detect:30},nat:'Technical',auto:'Automated',cost:14,l:.95,i:.75,best:'rep',
+                d:'Inspect the detection settings: distance and time limits, and which accounts are in scope.',
+                o:'Reperform with a test account that signs in from two distant locations within an hour, and confirm the alert and the session block.'},
+              {id:'lock',nm:'Account lockout after failed attempts',fn:{Prevent:20},nat:'Technical',auto:'Automated',cost:2,l:.85,i:1,best:'rep',
+                d:'Inspect the lockout threshold and duration in the configuration against the standard.',
+                o:'Reperform: enter wrong passwords on a test account until the threshold and confirm it locks. As an automated control, one test plus effective change control over the setting is enough.'},
+              {id:'play',nm:'Account-takeover incident playbook',fn:{Correct:50},nat:'Administrative',auto:'Manual',cost:6,l:1,i:.75,best:'obs',
+                d:'Inspect the playbook: roles, steps to disable sessions and reset credentials, and how altered records are found.',
+                o:'Observe a tabletop or drill and inspect the after-action report. The playbook only proves itself when people perform it.'},
+              {id:'backup',nm:'Tested backup and restore of SIS records',fn:{Recover:60},nat:'Technical',auto:'Semi-automated',cost:18,l:1,i:.8,best:'rep',
+                d:'Inspect the backup schedule, retention, and isolation from the production credentials an attacker would hold.',
+                o:'Reperform a restore of a sample of records to a test system and compare them with the source. A backup that has never been restored is not evidence.'},
+              {id:'banner',nm:'Sign-in warning banner',fn:{Deter:30},nat:'Administrative',auto:'Automated',cost:1,l:.97,i:1,best:'obs',
+                d:'Inspect the approved banner text against policy and legal advice.',
+                o:'Observe the sign-in screen on each entry point (web, mobile, and remote access) and confirm the banner appears.'},
+              {id:'review',nm:'Compensating review of aid bank-account changes',fn:{Detect:25,Correct:15},nat:'Administrative',auto:'Manual',cost:16,l:1,i:.7,best:'ins',comp:true,
+                d:'Inspect the procedure: every deposit-account change is checked by a second person who confirms it with the student by a known channel.',
+                o:'Inspect sign-off evidence for a sample of changes across the period, and reperform the check on a few of them to confirm the reviewer would catch a fraudulent change.'}
+            ];
+            var START=['mfa','aware','lock','banner'];
+            var MODEL=['mfa','aware','recert','travel','lock','play','backup','banner'];
+            var on={};
+            function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim();}
+            function compute(sel){
+              var L=L0,I=I0,cost=0,cov={},nats={};
+              FN.forEach(function(f){cov[f]=0;});
+              C.forEach(function(c){ if(!sel[c.id]) return; L*=c.l; I*=c.i; cost+=c.cost; nats[c.nat]=1;
+                Object.keys(c.fn).forEach(function(f){cov[f]=Math.min(100,cov[f]+c.fn[f]);}); });
+              L=Math.max(1,L); I=Math.max(1,I);
+              return {L:L,I:I,S:L*I,cost:cost,cov:cov,nats:nats};
+            }
+            function keyCtl(sel,base){
+              var keys={}; if(base.S>APP) return keys;
+              C.forEach(function(c){ if(!sel[c.id]) return; var s={}; for(var k in sel) s[k]=sel[k]; s[c.id]=false; if(compute(s).S>APP) keys[c.id]=1; });
+              return keys;
+            }
+            // build list
+            var list=$('cpd-list');
+            C.forEach(function(c){
+              var li=document.createElement('li');
+              var b=document.createElement('button'); b.type='button'; b.className='cpd-ctl'; b.id='cpd-c-'+c.id; b.setAttribute('aria-pressed','false');
+              b.innerHTML='<span><span class="cpd-nm">'+c.nm+'</span><span class="cpd-k" id="cpd-k-'+c.id+'"></span><span class="cpd-tg">'+Object.keys(c.fn).join(', ')+(c.comp?' (compensating)':'')+' &middot; '+c.nat+' &middot; '+c.auto+'</span></span><span class="cpd-cost">$'+c.cost+'k</span>';
+              b.addEventListener('click',function(){on[c.id]=!on[c.id]; $('cpd-pick').value=c.id; update();});
+              li.appendChild(b); list.appendChild(li);
+              var o=document.createElement('option'); o.value=c.id; o.textContent=c.nm; $('cpd-pick').appendChild(o);
+            });
+            function set(ids){on={}; ids.forEach(function(k){on[k]=true;});}
+            function testPanel(){
+              var c=C.filter(function(x){return x.id===$('cpd-pick').value;})[0]; if(!c) return;
+              [].forEach.call($('cpd-meth').children,function(s){s.classList.toggle('on',s.dataset.m===c.best);});
+              $('cpd-testtx').innerHTML='<b>Best method: '+METH[c.best]+'.</b> <b>Design:</b> '+c.d+' <b>Operation:</b> '+c.o+(c.auto==='Manual'?' Manual control: sample across the whole period.':'');
+            }
+            var last=null;
+            function update(){
+              C.forEach(function(c){$('cpd-c-'+c.id).setAttribute('aria-pressed',on[c.id]?'true':'false');});
+              var r=compute(on); last=r; var keys=keyCtl(on,r);
+              C.forEach(function(c){$('cpd-k-'+c.id).innerHTML=(on[c.id]&&keys[c.id])?'<span class="cpd-key">Key</span>':'';});
+              var gaps=FN.filter(function(f){return r.cov[f]<20;});
+              $('cpd-t1').textContent='$'+r.cost+'k'; $('cpd-t1').style.color=r.cost>BUDGET?css('--wrong'):'';
+              $('cpd-t2').textContent=r.L.toFixed(1); $('cpd-t3').textContent=r.I.toFixed(1);
+              $('cpd-t4').textContent=gaps.length; $('cpd-t4s').textContent=gaps.length?gaps.join(', '):'all five functions covered';
+              $('cpd-budtx').textContent='Budget: $'+r.cost+'k of $'+BUDGET+'k a year'+(r.cost>BUDGET?' (over by $'+(r.cost-BUDGET)+'k)':'');
+              $('cpd-budbar').style.width=Math.min(100,r.cost/BUDGET*100)+'%'; $('cpd-bud').classList.toggle('over',r.cost>BUDGET);
+              // verdict
+              var n=C.filter(function(c){return on[c.id];}).length, flags=[], cls='good', pill='Balanced';
+              function flag(c,p,t){ if(!flags.length||(c==='bad'&&cls!=='bad')){cls=c;pill=p;} flags.push(t); }
+              if(n===0){ verdict('bad','No controls','With no controls, residual risk equals inherent risk: 18.5 of 25, far above the appetite of 8. Start with the control that attacks the root cause, stolen passwords.'); draw(); testPanel(); return; }
+              if(r.cost>BUDGET) flag('bad','Over budget','The portfolio costs $'+r.cost+'k, $'+(r.cost-BUDGET)+'k over budget. Drop the control with the least risk reduction per dollar; the SIEM is the most expensive single item.');
+              if(r.S>APP) flag('bad','Above appetite','Residual score '+r.S.toFixed(1)+' is above the appetite of '+APP+'. The risk owner cannot accept it without escalation. Add a control that lowers likelihood at the root cause, such as MFA.');
+              if(r.cov.Detect<20) flag('warn','No detective control','Nothing detects an account takeover that gets past prevention. If MFA is bypassed or misconfigured, Penmore would learn about it from a student whose aid was stolen.');
+              if(Object.keys(r.nats).length===1 && r.nats.Administrative) flag('warn','Only administrative','Every selected control depends on people following a procedure. Add technical controls that enforce the rule consistently.');
+              if(r.cov.Correct<20 && r.cov.Recover<20) flag('warn','No response capability','Nothing corrects or recovers after an incident. Add the playbook or tested restores.');
+              if(!flags.length){ var k=Object.keys(keys).length;
+                verdict('good','Balanced','Residual score '+r.S.toFixed(1)+' is within the appetite of '+APP+', the portfolio is within budget, and it covers prevention, detection, and response with both technical and administrative controls. '+(k?k+' key control'+(k>1?'s':'')+' (tagged in the list) would push the risk above appetite if '+(k>1?'any one fails':'it fails')+', so '+(k>1?'they need':'it needs')+' the most rigorous testing.':'No single control is key, so the portfolio tolerates one failure.'));
+              } else verdict(cls,pill,'Residual score '+r.S.toFixed(1)+' of 25 (appetite '+APP+'). '+flags.join(' '));
+              draw(); testPanel();
+            }
+            function verdict(cls,p,msg){$('cpd-verdict').className='iw-verdict '+cls;$('cpd-pill').className='iw-pill '+cls;$('cpd-pill').textContent=p;$('cpd-coach').textContent=msg;}
+            function draw(){
+              var cv=$('cpd-canvas'), r=last; if(!r) return;
+              var w=cv.parentNode.clientWidth; if(w<10) return;
+              var h=Math.max(220,Math.min(270,w*0.5));
+              if(root.classList.contains('is-expanded')){ var below=$('cpd-verdwrap').offsetHeight+$('cpd-testbox').offsetHeight+95; h=Math.max(170,Math.min(w*0.55,window.innerHeight-cv.getBoundingClientRect().top-below)); }
+              var dpr=window.devicePixelRatio||1; cv.width=Math.round(w*dpr); cv.height=Math.round(h*dpr); cv.style.height=h+'px';
+              var g=cv.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,w,h);
+              var gold=css('--gold'),jade=css('--jade'),muted=css('--text-muted'),txt=css('--text-primary'),bord=css('--border'),ok=css('--correct'),bad=css('--wrong'),amb=css('--amber'),alt=css('--section-alt');
+              var meterW=Math.max(128,w*0.25), bx=72, bw=w-meterW-bx-26, top=24, bot=h-34, rowH=(bot-top)/FN.length;
+              g.font='bold 11px Arial'; g.fillStyle=txt; g.textAlign='left'; g.fillText('Function coverage',0,13);
+              // gridlines
+              g.strokeStyle=bord; g.lineWidth=1; g.font='10px Arial'; g.fillStyle=muted; g.textAlign='center';
+              [0,25,50,75,100].forEach(function(v){var x=bx+bw*v/100; g.beginPath(); g.moveTo(x,top); g.lineTo(x,bot); g.stroke(); g.fillText(v,x,bot+12);});
+              g.fillText('Coverage strength (0 to 100)',bx+bw/2,bot+26);
+              // threshold 20 line
+              var x20=bx+bw*0.2; g.setLineDash([3,3]); g.strokeStyle=amb; g.beginPath(); g.moveTo(x20,top); g.lineTo(x20,bot); g.stroke(); g.setLineDash([]);
+              FN.forEach(function(f,i){
+                var y=top+i*rowH, bh=Math.min(22,rowH*0.62), yy=y+(rowH-bh)/2, v=r.cov[f];
+                g.fillStyle=alt; g.fillRect(bx,yy,bw,bh);
+                g.fillStyle=v<20?bad:(f==='Detect'?jade:gold); g.fillRect(bx,yy,bw*v/100,bh);
+                g.fillStyle=txt; g.font='bold 11px Arial'; g.textAlign='right'; g.fillText(f,bx-8,yy+bh/2+4);
+                g.textAlign='left'; g.font='10px Arial'; g.fillStyle=v>85?'#fff':muted;
+                g.fillText(v<20?(v+' gap'):String(v), v>85?bx+bw*v/100-34:bx+bw*v/100+5, yy+bh/2+4);
+              });
+              // meter
+              var mx=w-meterW+14, mw=Math.min(34,meterW*0.24), mTop=top, mBot=bot, mH=mBot-mTop;
+              function my(s){return mBot-mH*Math.min(25,s)/25;}
+              g.font='bold 11px Arial'; g.fillStyle=txt; g.textAlign='left'; g.fillText('Residual risk',mx-8,13);
+              g.fillStyle=css('--correct-bg'); g.fillRect(mx,my(APP),mw,mBot-my(APP));
+              g.fillStyle=css('--jade-pale'); g.fillRect(mx,my(15),mw,my(APP)-my(15));
+              g.fillStyle=css('--wrong-bg'); g.fillRect(mx,mTop,mw,my(15)-mTop);
+              g.strokeStyle=bord; g.strokeRect(mx,mTop,mw,mH);
+              g.font='10px Arial'; g.fillStyle=muted; g.textAlign='right';
+              [0,5,10,15,20,25].forEach(function(v){g.fillText(v,mx-4,my(v)+3);});
+              g.save(); g.translate(mx-26,mTop+mH/2); g.rotate(-Math.PI/2); g.textAlign='center'; g.fillText('Score (L x I)',0,0); g.restore();
+              g.strokeStyle=ok; g.lineWidth=2; g.beginPath(); g.moveTo(mx-3,my(APP)); g.lineTo(mx+mw+3,my(APP)); g.stroke();
+              g.fillStyle=ok; g.textAlign='left'; g.font='bold 10px Arial'; g.fillText('Appetite '+APP,mx+mw+5,my(APP)+3);
+              // inherent marker
+              g.strokeStyle=muted; g.lineWidth=1.5; g.beginPath(); g.moveTo(mx,my(L0*I0)); g.lineTo(mx+mw,my(L0*I0)); g.stroke();
+              g.fillStyle=muted; g.font='10px Arial'; g.fillText('Inherent',mx+mw+5,my(L0*I0)+3);
+              // residual marker
+              var ry=my(r.S), col=r.S>APP?bad:ok; g.fillStyle=col;
+              g.beginPath(); g.moveTo(mx+mw+1,ry); g.lineTo(mx+mw+11,ry-6); g.lineTo(mx+mw+11,ry+6); g.closePath(); g.fill();
+              g.fillRect(mx,ry-2,mw,4);
+              g.font='bold 11px Arial'; g.fillText(r.S.toFixed(1),mx+mw+13,ry+(Math.abs(ry-my(APP))<12?14:4));
+            }
+            $('cpd-pick').addEventListener('change',testPanel);
+            $('cpd-model').addEventListener('click',function(){set(MODEL); $('cpd-pick').value='recert'; update();
+              $('cpd-coach').textContent+=' Model answer: MFA and lockout attack stolen passwords; impossible-travel detection and recertification catch what gets through; the playbook and tested restores handle the aftermath; training and the banner add low-cost depth. The SIEM is left out because one detective control costing $14k covers this scenario well enough within budget.';});
+            $('cpd-reset').addEventListener('click',function(){set(START); $('cpd-pick').value='mfa'; update();});
+            $('cpd-clear').addEventListener('click',function(){set([]); update();});
+            var rt; window.addEventListener('resize',function(){clearTimeout(rt); rt=setTimeout(draw,60);});
+            set(START); $('cpd-pick').value='lock'; update();
+          })();
+          </script>
+
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>The designer teaches the exam's control-selection logic: address the root cause first, keep detection in the portfolio because prevention fails, stay within a justified cost, and test key controls hardest. When a question asks which control to add to a prevention-only portfolio, the BEST answer is usually a detective control tied to the scenario.</div>
+        </article>
+
+        <article class="content-section" id="s8">
+          <div class="cs-head"><span class="cs-num">8</span><h3>Faculty Teaching Segment</h3></div>
+          <p>Control testing is a skill students can practice with nothing more than a control narrative, a small evidence set, and a workpaper template. Give them all three as files and ask them to reach a conclusion they can defend.</p>
+          <ul class="detail">
+            <li><strong>Signature assignment:</strong> provide a control test workpaper template and an evidence packet for three Penmore controls: MFA enforcement, quarterly access recertification, and the account lockout setting. For each, students state the control objective, judge design effectiveness, choose and justify a test method (inquiry, observation, inspection, or reperformance), test a sample of 10 items from a synthetic population of 60, record exceptions, and conclude whether the control is operating effectively.</li>
+            <li><strong>Rubric criteria:</strong> (1) design and operating effectiveness are assessed separately and in the right order; (2) the test method fits the control and is stronger than inquiry alone; (3) the sample is drawn from a population confirmed to be complete, and exceptions are counted correctly; (4) the conclusion follows from the evidence and names the deficiency type and a remediation owner.</li>
+            <li><strong>Lab idea:</strong> build a spreadsheet of 60 synthetic access-review records and an HR roster with a handful of leavers planted in it. Students reperform the recertification by matching the two lists, find the leavers the reviewer missed, and calculate the exception rate. Use only data you generate.</li>
+            <li><strong>Course fit:</strong> an IT audit, GRC, or security management course. It supports the CAE-CD IA Compliance (IAC), Cybersecurity Planning and Management (CPM), and Cybersecurity Principles (CSP) Knowledge Units.</li>
+          </ul>
+          <div class="tip"><span class="tip-label">&#127891; Teaching note</span>Run the Control Portfolio Designer in pairs. Hand each pair a one-page worksheet (as a file or printout) with a blank portfolio table: control, function, nature, cost, and test method. Pairs must reach a Balanced verdict, then trade worksheets with another pair, who choose one key control and write how they would test it. Debrief by comparing portfolios that reached Balanced in different ways.</div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="emates">
+    <p class="eyebrow">Explore with eMates</p>
+    <h2 class="h2">Interactive refreshers for this lesson</h2>
+    <div class="rule"></div>
+    <p class="lead">Short, self-paced eMates from the myEMATES library. Each opens in a new tab. Concept refreshers support your own exam study. Student-ready modules also work as warm-ups in your own courses.</p>
+    <div class="em-grid">
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 4</span></div><h3>Cybersecurity Controls</h3><p>Sort controls by function and category, the same classification the portfolio designer uses.</p><div class="em-foot"><span class="em-level student">Student-ready</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/controls/cybersecurity_controls.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Cybersecurity Controls (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 1</span></div><h3>Cybersecurity Design Principles</h3><p>The principles behind a well-designed control: least privilege, defense in depth, and fail secure.</p><div class="em-foot"><span class="em-level">Concept refresher</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/design/cybersecuritydesignprinciples.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Cybersecurity Design Principles (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 1</span></div><h3>Access Control</h3><p>Authentication, authorization, and access models behind MFA, lockout, and recertification controls.</p><div class="em-foot"><span class="em-level student">Student-ready</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/access_control/access_control.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Access Control (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 8</span></div><h3>Physical Protection Controls</h3><p>The physical side of a control portfolio: locks, guards, cameras, and environmental protection.</p><div class="em-foot"><span class="em-level">Concept refresher</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/physical_environmental/physical_environmental.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Physical Protection Controls (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 5</span></div><h3>Firewalls</h3><p>A technical preventive control whose rule sets are a classic target for inspection and reperformance testing.</p><div class="em-foot"><span class="em-level student">Student-ready</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/Firewalls/Firewalls.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Firewalls (opens in a new tab)">Open &#8599;</a></div></article>
+    </div>
+  </section>
+
+  <section class="block" id="practice-this-lesson">
+    <p class="eyebrow">Practice</p>
+    <h2 class="h2">Practice this lesson</h2>
+    <div class="rule"></div>
+    <p class="lead">Self-checking practice for this lesson, ready to use with your own students. Each item ends with a report you can print or save as a PDF. See all items in the <a href="practices.html">CRISC Practices</a> and the <a href="labs.html">CRISC Risk Lab</a>.</p>
+    <div class="pl-grid">
+      <article class="pl-card"><div class="pl-top"><span class="pl-type">CRISC Practices &middot; A7</span><span class="pl-time">&#9201; 35 min</span></div><h3><a href="activity07.html">Design and Test Controls</a></h3><p>Sort controls by function and nature, rank test evidence, and separate design effectiveness from operating effectiveness.</p><div class="pl-foot"><span class="pl-level">Intermediate</span><a class="pl-open" href="activity07.html" aria-label="Open activity A7: Design and Test Controls">Open &#8594;</a></div></article>
+      <article class="pl-card pl-lab"><div class="pl-top"><span class="pl-type">CRISC Risk Lab &middot; B5</span><span class="pl-time">&#9201; 60 min</span></div><h3><a href="lab05.html">Control Testing Workpapers</a></h3><p>Sample populations, inspect and reperform, record exceptions, and conclude on design and operating effectiveness.</p><div class="pl-foot"><span class="pl-level">Intermediate</span><a class="pl-open" href="lab05.html" aria-label="Open lab B5: Control Testing Workpapers">Open &#8594;</a></div></article>
+    </div>
+  </section>
+
+  <section class="block" id="knowledge-check">
+    <p class="eyebrow">Scored Knowledge Check</p>
+    <h2 class="h2">Test your understanding</h2>
+    <div class="rule"></div>
+    <p class="lead" style="margin-bottom:1.5rem">Select the best answer for each question, then submit for your score and the rationale for every item. Like the exam, several options may be true; choose the best one.</p>
+    <div class="quiz-card">
+      <form id="quiz">
+
+        <div class="q" data-answer="B">
+          <p class="q-stem"><span class="qn">Q1.</span>A college's legacy financial aid module cannot support multi-factor authentication until a vendor update next year. The risk owner wants the risk kept within appetite until then. What should the risk practitioner recommend FIRST?</p>
+          <fieldset class="options">
+            <legend>Question 1 options</legend>
+            <label class="opt"><input type="radio" name="q1" value="A"><span><span class="opt-letter">A.</span> Accept the risk until the vendor update is released</span></label>
+            <label class="opt"><input type="radio" name="q1" value="B"><span><span class="opt-letter">B.</span> A documented, time-boxed compensating control that addresses the same risk</span></label>
+            <label class="opt"><input type="radio" name="q1" value="C"><span><span class="opt-letter">C.</span> Replacing the financial aid module with a new product</span></label>
+            <label class="opt"><input type="radio" name="q1" value="D"><span><span class="opt-letter">D.</span> Additional security awareness training for financial aid staff</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: B.</b> When a required control is not feasible, a compensating control that meets the same intent keeps the risk within appetite, and documenting it with a review date keeps it from becoming permanent. Accepting the risk ignores the owner's stated goal, replacement is disproportionate for a temporary gap, and training alone does not address stolen-password risk with comparable strength.</div>
+        </div>
+
+        <div class="q" data-answer="D">
+          <p class="q-stem"><span class="qn">Q2.</span>A risk practitioner wants the MOST reliable evidence that an account lockout setting is operating as designed. Which test method should be used?</p>
+          <fieldset class="options">
+            <legend>Question 2 options</legend>
+            <label class="opt"><input type="radio" name="q2" value="A"><span><span class="opt-letter">A.</span> Interview the system administrator about the lockout threshold</span></label>
+            <label class="opt"><input type="radio" name="q2" value="B"><span><span class="opt-letter">B.</span> Observe a user who mistypes a password once</span></label>
+            <label class="opt"><input type="radio" name="q2" value="C"><span><span class="opt-letter">C.</span> Inspect the written password standard</span></label>
+            <label class="opt"><input type="radio" name="q2" value="D"><span><span class="opt-letter">D.</span> Attempt repeated failed sign-ins on a test account and confirm it locks</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: D.</b> Reperformance gives the strongest assurance because the tester executes the control and sees the result. Inquiry is the weakest evidence, a single mistyped password does not reach the threshold, and the written standard shows intended design, not operation.</div>
+        </div>
+
+        <div class="q" data-answer="A">
+          <p class="q-stem"><span class="qn">Q3.</span>Quarterly access reviews are signed on time every quarter, yet a recent audit found many former employees with active accounts. The reviewers had been checking access against the department's own staff list instead of the HR termination records. What is the PRIMARY issue?</p>
+          <fieldset class="options">
+            <legend>Question 3 options</legend>
+            <label class="opt"><input type="radio" name="q3" value="A"><span><span class="opt-letter">A.</span> A design deficiency in the review control</span></label>
+            <label class="opt"><input type="radio" name="q3" value="B"><span><span class="opt-letter">B.</span> An operating deficiency caused by late reviews</span></label>
+            <label class="opt"><input type="radio" name="q3" value="C"><span><span class="opt-letter">C.</span> Insufficient sample size in the audit</span></label>
+            <label class="opt"><input type="radio" name="q3" value="D"><span><span class="opt-letter">D.</span> A lack of a deterrent control</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: A.</b> The review is performed as described and on time, but it compares access with the wrong source, so it cannot meet its objective even when followed perfectly. That is a design deficiency. The reviews were not late, the audit finding is not a sampling problem, and deterrence does not remove leavers' access.</div>
+        </div>
+
+        <div class="q" data-answer="C">
+          <p class="q-stem"><span class="qn">Q4.</span>A small college with a two-person IT team needs a prioritized, practical set of safeguards to start its security program. Which source is the BEST fit?</p>
+          <fieldset class="options">
+            <legend>Question 4 options</legend>
+            <label class="opt"><input type="radio" name="q4" value="A"><span><span class="opt-letter">A.</span> The full NIST SP 800-53 Rev. 5 high baseline</span></label>
+            <label class="opt"><input type="radio" name="q4" value="B"><span><span class="opt-letter">B.</span> COBIT 2019 governance and management objectives</span></label>
+            <label class="opt"><input type="radio" name="q4" value="C"><span><span class="opt-letter">C.</span> CIS Controls v8.1, beginning with Implementation Group 1</span></label>
+            <label class="opt"><input type="radio" name="q4" value="D"><span><span class="opt-letter">D.</span> ISO/IEC 27001:2022 certification</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: C.</b> CIS Controls v8.1 are prioritized, and IG1 defines essential cyber hygiene for organizations with limited resources. The 800-53 high baseline is far more than a small team can implement, COBIT 2019 addresses governance rather than prioritized safeguards, and certification is a goal, not a starting control set.</div>
+        </div>
+
+        <div class="q" data-answer="D">
+          <p class="q-stem"><span class="qn">Q5.</span>Which statement about ISO/IEC 27002:2022 is MOST accurate?</p>
+          <fieldset class="options">
+            <legend>Question 5 options</legend>
+            <label class="opt"><input type="radio" name="q5" value="A"><span><span class="opt-letter">A.</span> It contains 114 controls in 14 clauses.</span></label>
+            <label class="opt"><input type="radio" name="q5" value="B"><span><span class="opt-letter">B.</span> It sets the certifiable requirements for an ISMS.</span></label>
+            <label class="opt"><input type="radio" name="q5" value="C"><span><span class="opt-letter">C.</span> It groups controls into 18 controls and 3 implementation groups.</span></label>
+            <label class="opt"><input type="radio" name="q5" value="D"><span><span class="opt-letter">D.</span> It contains 93 controls in 4 themes: organizational, people, physical, and technological.</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: D.</b> The 2022 edition reorganized the controls into 93 controls in 4 themes. A describes the 2013 edition, B describes ISO/IEC 27001, which is the certifiable standard, and C describes CIS Controls v8.1.</div>
+        </div>
+
+        <div class="q" data-answer="A">
+          <p class="q-stem"><span class="qn">Q6.</span>A team plans to test the operating effectiveness of a new manual approval control. The risk practitioner has not yet confirmed that the control, if performed, would address the risk. What should be done FIRST?</p>
+          <fieldset class="options">
+            <legend>Question 6 options</legend>
+            <label class="opt"><input type="radio" name="q6" value="A"><span><span class="opt-letter">A.</span> Evaluate the design effectiveness of the control</span></label>
+            <label class="opt"><input type="radio" name="q6" value="B"><span><span class="opt-letter">B.</span> Select a statistical sample of approvals from the past quarter</span></label>
+            <label class="opt"><input type="radio" name="q6" value="C"><span><span class="opt-letter">C.</span> Interview the approvers about how often they approve requests</span></label>
+            <label class="opt"><input type="radio" name="q6" value="D"><span><span class="opt-letter">D.</span> Implement continuous controls monitoring for the approvals</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: A.</b> Design is assessed before operation. If the control would not address the risk even when performed perfectly, testing how consistently it was performed wastes effort. Sampling and interviews belong to later testing, and CCM is an automation choice, not a first step.</div>
+        </div>
+
+        <div class="q" data-answer="C">
+          <p class="q-stem"><span class="qn">Q7.</span>A portfolio for an account-takeover risk includes MFA, account lockout, and a sign-in banner. Residual risk is within appetite. Which addition would MOST improve the portfolio?</p>
+          <fieldset class="options">
+            <legend>Question 7 options</legend>
+            <label class="opt"><input type="radio" name="q7" value="A"><span><span class="opt-letter">A.</span> A stronger password complexity rule</span></label>
+            <label class="opt"><input type="radio" name="q7" value="B"><span><span class="opt-letter">B.</span> A second warning banner on the password reset page</span></label>
+            <label class="opt"><input type="radio" name="q7" value="C"><span><span class="opt-letter">C.</span> Alerts on anomalous sign-ins, such as impossible travel</span></label>
+            <label class="opt"><input type="radio" name="q7" value="D"><span><span class="opt-letter">D.</span> An annual policy attestation by all staff</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: C.</b> The portfolio is prevention and deterrence only. A detective control finds the takeovers that get past MFA, which gives the organization a chance to respond. The other options add more prevention or deterrence of the same kind and leave the detection gap open.</div>
+        </div>
+
+        <div class="q" data-answer="B">
+          <p class="q-stem"><span class="qn">Q8.</span>Who should be accountable for performing a quarterly access recertification and keeping evidence that it was done?</p>
+          <fieldset class="options">
+            <legend>Question 8 options</legend>
+            <label class="opt"><input type="radio" name="q8" value="A"><span><span class="opt-letter">A.</span> The risk practitioner</span></label>
+            <label class="opt"><input type="radio" name="q8" value="B"><span><span class="opt-letter">B.</span> The control owner</span></label>
+            <label class="opt"><input type="radio" name="q8" value="C"><span><span class="opt-letter">C.</span> Internal audit</span></label>
+            <label class="opt"><input type="radio" name="q8" value="D"><span><span class="opt-letter">D.</span> The board's audit committee</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: B.</b> The control owner operates the control and keeps its evidence. The risk practitioner advises and evaluates, internal audit provides independent assurance and should not run controls it audits, and the audit committee provides oversight.</div>
+        </div>
+
+        <div class="quiz-actions">
+          <button type="button" class="btn" onclick="gradeQuiz()">Submit Answers</button>
+          <button type="button" class="btn secondary" onclick="resetQuiz()">Reset</button>
+          <span class="score" id="score" aria-live="polite"></span>
+        </div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<nav class="pager" aria-label="Lesson navigation">
+  <div class="pager-inner">
+    <a href="lesson05.html" class="prev"><span class="pager-dir">&#8592; Previous</span><span class="pager-name">Lesson 5: Risk Response</span></a>
+    <a href="lesson07.html" class="next"><span class="pager-dir">Next &#8594;</span><span class="pager-name">Lesson 7: Risk Monitoring and Reporting</span></a>
+  </div>
+</nav>
+
+<footer>
+  <div class="footer-logo">CRISC 5-DAY FACULTY WORKSHOP</div>
+  <p class="footer-disclaimer">This workshop is an independent educational resource. It is not affiliated with, endorsed by, or sponsored by ISACA. CRISC&#174; is a registered mark of ISACA. All lesson text, questions, and scenarios are original and do not reproduce the ISACA CRISC Review Manual or question database. eMates are provided by the myEMATES library and open in a new tab. Always verify the current exam content outline at isaca.org before registering.</p>
+</footer>
+
+<script src="crisc-lesson.js"></script>
+</body>
+</html>

@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 3: Risk Identification | CRISC Workshop</title>
+<link rel="stylesheet" href="crisc-lesson.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-seal">CRISC<br>PREP</div>
+    <span class="nav-title">5-Day Faculty Workshop</span>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#lessons">Lessons</a></li>
+      <li><a href="index.html#practice">Practice</a></li>
+      <li><a href="index.html#schedule">Schedule</a></li>
+      <li><a href="index.html#domains">Domains</a></li>
+      <li><a href="index.html#exam-prep">Exam Prep</a></li>
+      <li><a href="index.html#faculty-tools">Faculty Tools</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="lesson-hero">
+  <div class="lesson-hero-inner">
+    <p class="breadcrumb"><a href="index.html">Workshop</a> &nbsp;&rsaquo;&nbsp; <a href="index.html#lessons">Lessons</a> &nbsp;&rsaquo;&nbsp; <span>Lesson 3</span></p>
+    <span class="lesson-badge-lg">Day 2, Afternoon &bull; Domain 2A</span>
+    <h1>Risk <span>Identification</span></h1>
+    <p class="lesson-lede">You cannot analyze a risk you have not described. Risk identification turns a vague worry into a specific, testable statement: who or what acts, what happens, to which asset, and over what time. This lesson covers risk events and factors, threat actors and the threat landscape, threat modeling, vulnerability management with CVSS v4.0, EPSS, and the CISA KEV catalog, and the craft of building and evaluating risk scenarios.</p>
+    <div class="meta-chips">
+      <span class="meta-chip">Session: <strong>Day 2, 1:00 to 4:30</strong></span>
+      <span class="meta-chip">Duration: <strong>~3.5 hrs</strong></span>
+      <span class="meta-chip">Exam Weight: <strong>22%</strong></span>
+      <span class="meta-chip">Knowledge Check: <strong>8 Questions</strong></span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="block">
+    <p class="eyebrow">Overview</p>
+    <h2 class="h2">From worry to scenario</h2>
+    <div class="rule"></div>
+    <p class="lead">Domain 2 begins with identification because every later step depends on it. A risk that is never named is never analyzed, never owned, and never treated. A risk that is named badly, such as &ldquo;cyberattack&rdquo; or &ldquo;IT failure,&rdquo; cannot be measured or assigned. Good identification draws on threat intelligence, threat modeling, and vulnerability data, and it ends in risk scenarios that business owners recognize as real.</p>
+    <p class="lead">The running case is <strong>Brightwater Credit Union</strong>, a member-owned financial cooperative with a core banking platform, a wire-transfer operation, and online banking hosted in a cloud tenant. Brightwater is worried about ransomware and wire fraud. By the end of the lesson you will turn those worries into scenarios it can analyze in Lesson 4.</p>
+    <div class="mindset"><span class="tip-label">&#9878;&#65039; Think like a risk practitioner</span>Start from what the business is trying to achieve, then ask what could stop it. A vulnerability scan tells you what is broken. A risk scenario tells the business what that could cost them. When a question asks what drives scenario development, business objectives come before tools and scan results.</div>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Learning Objectives</p>
+    <h2 class="h2">By the end of this lesson you will be able to&hellip;</h2>
+    <div class="rule"></div>
+    <ul class="objectives">
+      <li><span><strong>Distinguish</strong> risk events, internal and external risk factors, threats, and vulnerabilities. <em class="bloom-tag">Bloom: Understand</em></span></li>
+      <li><span><strong>Characterize</strong> threat actors and select threat intelligence sources suited to an organization&rsquo;s sector. <em class="bloom-tag">Bloom: Apply</em></span></li>
+      <li><span><strong>Apply</strong> STRIDE, attack trees, and MITRE ATT&amp;CK to identify threats to a business process. <em class="bloom-tag">Bloom: Apply</em></span></li>
+      <li><span><strong>Prioritize</strong> vulnerabilities by combining CVSS v4.0, EPSS, CISA KEV status, and asset criticality. <em class="bloom-tag">Bloom: Analyze</em></span></li>
+      <li><span><strong>Construct</strong> and evaluate risk scenarios from top-down and bottom-up inputs, using the five scenario components. <em class="bloom-tag">Bloom: Evaluate</em></span></li>
+      <li><span><strong>Design</strong> a scenario workshop in which top-down and bottom-up student teams reconcile their scenario lists. <em class="bloom-tag">Bloom: Create</em></span></li>
+    </ul>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Key Terms</p>
+    <h2 class="h2">Vocabulary flashcards</h2>
+    <div class="rule"></div>
+    <p class="flip-hint-top">&#128072; Read the term, recall the definition, then click or press Enter to check yourself.</p>
+    <div class="vocab-grid">
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Risk Event</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">Something that happens, or could happen, that affects the achievement of objectives, such as an outage, a disclosure, or a fraudulent transfer.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Risk Factor</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">An internal or external condition that changes how often a risk event occurs or how much harm it causes.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Threat Actor</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">The person, group, or force that causes a risk event: a criminal group, an insider, a supplier, a nation-state, or nature.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">STRIDE</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">A threat modeling mnemonic: Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">MITRE ATT&amp;CK</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">A public knowledge base of adversary tactics and techniques drawn from real-world observations.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">CVSS v4.0</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">FIRST&rsquo;s Common Vulnerability Scoring System, released November 2023. Scores technical severity from 0 to 10 using Base, Threat, Environmental, and Supplemental metrics.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">EPSS</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">FIRST&rsquo;s Exploit Prediction Scoring System: an estimated probability that a vulnerability will see exploitation activity in the next 30 days.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">CISA KEV Catalog</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">CISA&rsquo;s Known Exploited Vulnerabilities catalog: vulnerabilities with reliable evidence of active exploitation and clear remediation guidance.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Risk Scenario</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">A description of a plausible event that affects business objectives, built from an actor, a threat type, an event, an asset or resource, and time.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Top-Down vs Bottom-Up</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">Top-down scenarios start from business objectives and impacts. Bottom-up scenarios start from threats, assets, and vulnerabilities.</div></div>
+        </div>
+      </button>
+
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Lesson Content</p>
+    <h2 class="h2">Study the material</h2>
+    <div class="rule"></div>
+    <div class="lesson-content">
+      <nav class="toc" aria-label="On this page">
+        <div class="toc-title">On this page</div>
+        <ul>
+          <li><a href="#s1">1. Risk Events and Risk Factors</a></li>
+          <li><a href="#s2">2. Threats, Actors, and the Threat Landscape</a></li>
+          <li><a href="#s3">3. Threat Modeling</a></li>
+          <li><a href="#s4">4. Vulnerability Management</a></li>
+          <li><a href="#s5">5. Risk Scenario Development</a></li>
+          <li><a href="#s6">6. Scenario Evaluation</a></li>
+          <li><a href="#s7">7. Interactive: Risk Scenario Builder</a></li>
+          <li><a href="#s8">8. Faculty Teaching Segment</a></li>
+        </ul>
+      </nav>
+      <div class="content-main">
+
+        <article class="content-section" id="s1">
+          <div class="cs-head"><span class="cs-num">1</span><h3>Risk Events and Risk Factors</h3></div>
+          <p>A <strong>risk event</strong> is the thing that happens: a system goes down, data leaks, money moves to the wrong account. A <strong>risk factor</strong> is a condition that makes the event more or less likely, or more or less harmful. Brightwater&rsquo;s aging core banking platform is a risk factor. A ransomware outage of that platform is a risk event.</p>
+          <p>Separating the two keeps the register clean. Factors are monitored and often become key risk indicators. Events are what scenarios describe and what analysis quantifies.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Internal risk factors</th><th>External risk factors</th></tr></thead>
+            <tbody>
+              <tr><td>Strategy and change: new products, mergers, migrations</td><td>Threat landscape: active criminal campaigns, new exploit techniques</td></tr>
+              <tr><td>Technology age, complexity, and technical debt</td><td>Regulation and supervision: new rules, examination findings</td></tr>
+              <tr><td>Staffing, skills, turnover, and key-person dependency</td><td>Suppliers and fourth parties: concentration and failures</td></tr>
+              <tr><td>Process maturity and control effectiveness</td><td>Economic and market conditions</td></tr>
+              <tr><td>Risk culture and tone at the top</td><td>Geopolitical events, natural hazards, and climate</td></tr>
+            </tbody>
+          </table></div>
+          <h4>Sources for identifying risk</h4>
+          <ul class="detail">
+            <li><strong>Internal data:</strong> incident and near-miss logs, audit findings, control test results, help desk trends, and loss history.</li>
+            <li><strong>People:</strong> interviews and workshops with process owners, who know where their processes break.</li>
+            <li><strong>Structured techniques:</strong> checklists, SWOT, root cause analysis, and the threat modeling methods in Section 3.</li>
+            <li><strong>External data:</strong> threat intelligence, regulator guidance, industry loss data, and peer incidents.</li>
+          </ul>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>A vulnerability alone is not a risk. Risk needs a threat that can exploit the vulnerability and an impact on something the business values. If an answer choice treats a scan finding as the risk itself, look for a better option that ties it to a threat and an objective.</div>
+        </article>
+
+        <article class="content-section" id="s2">
+          <div class="cs-head"><span class="cs-num">2</span><h3>Threats, Threat Actors, and the Threat Landscape</h3></div>
+          <p>A threat is anything that can cause harm by exploiting a weakness. The actor is the source. Knowing the actor tells you about motive, capability, and likely methods, which in turn shapes likelihood.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Actor</th><th>Typical motive</th><th>Credit union example</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Cybercriminal group</td><td>Money</td><td>Ransomware against the core platform; business email compromise aimed at wires</td></tr>
+              <tr><td class="term">Malicious insider</td><td>Money, grievance, coercion</td><td>A teller who sells member data</td></tr>
+              <tr><td class="term">Careless or mistaken employee</td><td>None (accidental)</td><td>A misdirected email containing member statements</td></tr>
+              <tr><td class="term">Supplier or third party</td><td>Varies; often failure or compromise</td><td>A core processor outage or a breach at a card processor</td></tr>
+              <tr><td class="term">Nation-state</td><td>Espionage, disruption</td><td>Rarely targets a regional credit union directly, but may hit shared infrastructure</td></tr>
+              <tr><td class="term">Hacktivist</td><td>Ideology, publicity</td><td>Denial of service against online banking</td></tr>
+              <tr><td class="term">Natural event</td><td>None</td><td>A flood that takes out a branch or a data center</td></tr>
+            </tbody>
+          </table></div>
+          <h4>Threat intelligence</h4>
+          <ul class="detail">
+            <li><strong>Strategic intelligence:</strong> trends and motives for leadership, such as which sectors ransomware groups are targeting.</li>
+            <li><strong>Operational intelligence:</strong> campaigns and adversary methods, useful for planning defenses and scenarios.</li>
+            <li><strong>Tactical and technical intelligence:</strong> indicators of compromise and specific techniques for security operations.</li>
+            <li><strong>Sources:</strong> Information Sharing and Analysis Centers such as FS-ISAC for financial services, government advisories such as those from CISA, vendor research, open-source intelligence, and the organization&rsquo;s own incidents.</li>
+          </ul>
+          <div class="resource-link">
+            <span class="rl-icon" aria-hidden="true">&#128373;&#65039;</span>
+            <div class="rl-body"><span class="rl-label">Explore with an eMate</span><span class="rl-text"><strong>Threat Actors</strong>: compare motives and capabilities of criminal, insider, hacktivist, and nation-state actors.</span></div>
+            <div class="rl-actions"><a class="btn secondary" href="https://d2hie3dpn9wvbb.cloudfront.net/ThreatActors/ThreatActors.html" target="_blank" rel="noopener noreferrer">Threat Actors <span class="ext">&#8599;</span></a></div>
+          </div>
+          <div class="in-practice"><span class="ip-label">&#128270; In practice</span><p>Brightwater joins FS-ISAC and receives an alert about a business email compromise campaign that impersonates title companies to redirect real estate closing wires. The risk practitioner adds a wire-fraud scenario to the register, asks the wire operations manager to confirm the callback procedure, and flags the campaign as an external risk factor on the next risk report.</p></div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a question asks for the MOST relevant source of threat information, prefer sector-specific intelligence (an ISAC for the organization&rsquo;s industry) and the organization&rsquo;s own incident history over general news or vendor marketing.</div>
+        </article>
+
+        <article class="content-section" id="s3">
+          <div class="cs-head"><span class="cs-num">3</span><h3>Threat Modeling</h3></div>
+          <p>Threat modeling asks a structured question of a system or process: what can go wrong here? It works best early in design, but it also helps when assessing an existing process. The usual inputs are a data flow diagram, the trust boundaries where data crosses from one level of trust to another, and the assets that matter.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>STRIDE threat</th><th>Property violated</th><th>Wire-transfer example</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Spoofing</td><td>Authentication</td><td>An attacker emails as a member and requests a wire</td></tr>
+              <tr><td class="term">Tampering</td><td>Integrity</td><td>Beneficiary account details are changed in transit</td></tr>
+              <tr><td class="term">Repudiation</td><td>Nonrepudiation</td><td>An employee denies approving a wire, and logs cannot prove otherwise</td></tr>
+              <tr><td class="term">Information disclosure</td><td>Confidentiality</td><td>Wire instructions are visible to all staff in a shared mailbox</td></tr>
+              <tr><td class="term">Denial of service</td><td>Availability</td><td>The wire system is unavailable at the daily cutoff</td></tr>
+              <tr><td class="term">Elevation of privilege</td><td>Authorization</td><td>A clerk gains approver rights and releases wires alone</td></tr>
+            </tbody>
+          </table></div>
+          <h4>Other methods</h4>
+          <ul class="detail">
+            <li><strong>Attack trees:</strong> the attacker&rsquo;s goal is the root (for example, &ldquo;send a fraudulent wire&rdquo;), and each branch is a way to reach it. Trees show which paths are cheapest for the attacker and where one control blocks several branches.</li>
+            <li><strong>MITRE ATT&amp;CK:</strong> a knowledge base of real adversary tactics, from Reconnaissance and Initial Access through Lateral Movement to Exfiltration and Impact, with the techniques used to achieve each. Use it to check whether scenarios reflect how attackers actually behave and whether detection covers the techniques that matter.</li>
+            <li><strong>Misuse cases:</strong> write the abuse version of each use case. &ldquo;Member requests a wire&rdquo; becomes &ldquo;attacker requests a wire as the member.&rdquo;</li>
+          </ul>
+          <div class="tip jade"><span class="tip-label">&#129517; From model to scenario</span>Each credible threat path in a model is a candidate bottom-up scenario. The model gives you the actor, the event, and the asset. The business supplies the impact and the time dimension.</div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a question asks when threat modeling gives the MOST value, choose the design phase of a new system or major change. Fixing a design flaw on paper costs far less than fixing it in production.</div>
+        </article>
+
+        <article class="content-section" id="s4">
+          <div class="cs-head"><span class="cs-num">4</span><h3>Vulnerability Management</h3></div>
+          <p>Vulnerability management is a continuous cycle, not a quarterly scan. Its value to the risk practitioner is evidence: which weaknesses exist, how exploitable they are, and whether they are fixed on time.</p>
+          <ul class="detail">
+            <li><strong>Inventory:</strong> know the assets first. A scanner cannot assess what it does not know exists.</li>
+            <li><strong>Discover:</strong> authenticated and unauthenticated scans, agent-based assessment, cloud configuration checks, software composition analysis, and penetration tests.</li>
+            <li><strong>Prioritize:</strong> combine severity, exploitation evidence, and business context, as shown below.</li>
+            <li><strong>Remediate:</strong> patch, reconfigure, or apply a compensating control, within service-level targets set by policy.</li>
+            <li><strong>Verify and report:</strong> rescan to confirm, track overdue items and approved exceptions, and report trends as KRIs.</li>
+          </ul>
+          <h4>Three signals, three different questions</h4>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Signal</th><th>Owner</th><th>Question it answers</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr><td class="term">CVSS v4.0</td><td>FIRST</td><td>How severe is this vulnerability technically?</td><td>Released November 2023. Metric groups: Base, Threat, Environmental, Supplemental. Scores are labeled by the groups used, such as CVSS-B (Base only) or CVSS-BTE. Ratings: Low 0.1 to 3.9, Medium 4.0 to 6.9, High 7.0 to 8.9, Critical 9.0 to 10.0.</td></tr>
+              <tr><td class="term">EPSS</td><td>FIRST</td><td>How likely is exploitation activity in the next 30 days?</td><td>A probability from 0 to 1 with a percentile, updated daily from observed data. It estimates likelihood, not impact.</td></tr>
+              <tr><td class="term">CISA KEV catalog</td><td>CISA</td><td>Is it being exploited right now?</td><td>Lists vulnerabilities with reliable evidence of active exploitation. Binding Operational Directive 22-01 requires U.S. federal civilian agencies to remediate listed items by set due dates. Many other organizations use it as a priority signal.</td></tr>
+            </tbody>
+          </table></div>
+          <h4>An example prioritization rule</h4>
+          <p>The following is an illustrative internal policy, not a standard. Each organization sets its own targets based on appetite and capacity.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Condition</th><th>Example target</th></tr></thead>
+            <tbody>
+              <tr><td>On the KEV catalog and on an internet-facing or critical asset</td><td>Remediate or isolate within days</td></tr>
+              <tr><td>High EPSS probability, or Critical CVSS on a critical asset</td><td>Remediate within two weeks</td></tr>
+              <tr><td>High CVSS, low EPSS, internal asset</td><td>Remediate within the normal monthly cycle</td></tr>
+              <tr><td>Low severity and low exploitation likelihood</td><td>Next scheduled maintenance, or accept with an owner&rsquo;s sign-off</td></tr>
+            </tbody>
+          </table></div>
+          <div class="warn tip"><span class="tip-label">&#9888;&#65039; Common mistake</span>Treating the CVSS Base score as a risk rating. CVSS measures technical severity. It says nothing about whether attackers are using the flaw, what the affected system does for the business, or which controls already reduce exposure.</div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When asked how to BEST prioritize a large backlog of vulnerabilities, choose the answer that combines exploitability and business impact (asset criticality), not the one that sorts by CVSS score alone or by age.</div>
+        </article>
+
+        <article class="content-section" id="s5">
+          <div class="cs-head"><span class="cs-num">5</span><h3>Risk Scenario Development</h3></div>
+          <p>A risk scenario is a short, structured story about a plausible event and its effect on business objectives. Scenarios are the bridge between the technical world (threats and vulnerabilities) and the business world (objectives and losses). They are also the unit of analysis in Lesson 4.</p>
+          <div class="compare-2col">
+            <div><b>Top-down</b>Start from business objectives and ask what events would cause them to fail. Strong at relevance and executive buy-in. May miss technical paths that nobody in the room knows about.</div>
+            <div><b>Bottom-up</b>Start from assets, threats, and vulnerabilities and ask what they could lead to. Strong at technical completeness. May produce long lists of scenarios with no clear business link.</div>
+          </div>
+          <p>Mature programs use both, then reconcile the lists. Top-down scenarios with no technical path are dropped or rewritten. Bottom-up scenarios with no business impact are merged or set aside.</p>
+          <h4>The five components</h4>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Component</th><th>Meaning</th><th>Brightwater example</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Actor</td><td>Who or what causes the event, internal or external</td><td>A cybercriminal group</td></tr>
+              <tr><td class="term">Threat type</td><td>The nature of the event: malicious, accidental, failure, natural, or external requirement</td><td>Malicious</td></tr>
+              <tr><td class="term">Event</td><td>What happens: disclosure, interruption, modification, theft, destruction, or ineffective design or execution</td><td>Interruption</td></tr>
+              <tr><td class="term">Asset or resource</td><td>What is affected: information, systems, processes, people, facilities</td><td>The core banking platform</td></tr>
+              <tr><td class="term">Time</td><td>Duration, timing (when it occurs), and detection lag</td><td>Lasts three days; detected within hours; occurs at month end</td></tr>
+            </tbody>
+          </table></div>
+          <p>Put together: <em>&ldquo;A cybercriminal group deploys ransomware that interrupts Brightwater&rsquo;s core banking platform for up to three days during month-end processing. The outage is detected within hours. It threatens the objective of keeping member services available.&rdquo;</em> That statement can be owned, analyzed, and tested against controls.</p>
+          <div class="resource-link">
+            <span class="rl-icon" aria-hidden="true">&#128272;</span>
+            <div class="rl-body"><span class="rl-label">Explore with an eMate</span><span class="rl-text"><strong>Ransomware</strong>: follow a ransomware attack from initial access to impact, then turn it into a scenario statement.</span></div>
+            <div class="rl-actions"><a class="btn secondary" href="https://d2hie3dpn9wvbb.cloudfront.net/ransomware/RansomwareAttack.html" target="_blank" rel="noopener noreferrer">Ransomware <span class="ext">&#8599;</span></a></div>
+          </div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a question asks for the MOST important input to developing risk scenarios, look for business objectives and the information the business depends on. Scenarios that are not tied to objectives cannot be prioritized.</div>
+        </article>
+
+        <article class="content-section" id="s6">
+          <div class="cs-head"><span class="cs-num">6</span><h3>Scenario Evaluation</h3></div>
+          <p>A workshop can produce a hundred scenarios in an afternoon. Leadership cannot discuss a hundred. Evaluation turns the raw list into a manageable set that is realistic, relevant, and complete enough to drive decisions.</p>
+          <h4>Tests for every scenario</h4>
+          <ul class="detail">
+            <li><strong>Complete:</strong> all five components are present and specific enough to estimate frequency and impact.</li>
+            <li><strong>Plausible:</strong> the combination makes sense. A flood can destroy a data center. A flood cannot alter wire instructions.</li>
+            <li><strong>Relevant:</strong> it affects a stated business objective and an asset the organization actually has.</li>
+            <li><strong>Realistic:</strong> evidence supports it: threat intelligence, incident history, or peer losses. Rare events are kept only when their impact justifies attention.</li>
+            <li><strong>Measurable:</strong> duration and detection are defined, so analysts can estimate loss.</li>
+            <li><strong>Distinct:</strong> it does not duplicate another scenario in the set.</li>
+          </ul>
+          <h4>Reducing the set</h4>
+          <ul class="detail">
+            <li><strong>Consolidate</strong> scenarios that share an event and asset into one, noting the different actors as variations.</li>
+            <li><strong>Move from generic to specific:</strong> start with generic scenarios such as &ldquo;loss of a key system,&rdquo; then specify the few that matter most.</li>
+            <li><strong>Validate with business owners:</strong> they confirm that the scenario is realistic and that the impact matters. The practitioner facilitates; the owner validates.</li>
+            <li><strong>Review on a schedule and on change:</strong> new threats, new systems, and incidents all trigger a scenario review.</li>
+          </ul>
+          <div class="in-practice"><span class="ip-label">&#128270; In practice</span><p>Brightwater&rsquo;s first workshop produced 64 candidate scenarios. Consolidation brought them to 22. Validation with the COO and the head of member services cut them to 12 priority scenarios, including ransomware on the core platform, business email compromise of the wire process, and a misconfigured cloud tenant exposing member data. Those 12 move into the risk register for analysis in Lesson 4.</p></div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>Who should validate that a scenario is realistic and relevant? The business process owner. The risk practitioner facilitates and challenges, but the owner knows the process and will own the risk.</div>
+        </article>
+
+        <article class="content-section" id="s7">
+          <div class="cs-head"><span class="cs-num">7</span><h3>Interactive: Risk Scenario Builder</h3></div>
+          <p>Build a risk scenario for Brightwater Credit Union from its five components and link it to a business objective. The builder writes the scenario statement, checks it against five quality tests, estimates likelihood and impact on a 1 to 5 scale, and plots it on a small heat map. Plausibility rules flag combinations that do not make sense, such as a natural event that modifies data. In Challenge mode, save three valid, distinct scenarios.</p>
+
+          <style>
+            .rsb-modes{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.6rem;}
+            .rsb-wrap{display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start;}
+            .rsb-in{flex:1 1 260px;min-width:0;}
+            .rsb-out{flex:1.4 1 320px;min-width:0;}
+            .rsb-fields{display:flex;flex-wrap:wrap;gap:.45rem .6rem;}
+            .rsb-f{flex:1 1 140px;min-width:0;}
+            .rsb-f.full{flex-basis:100%;}
+            .rsb-f label{display:block;font-size:.68rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.15rem;}
+            .rsb-f select{width:100%;max-width:100%;min-width:0;}
+            .rsb-chk{list-style:none;margin:.55rem 0 .2rem;padding:0;font-family:Arial,sans-serif;font-size:.74rem;color:var(--text-secondary);}
+            .rsb-chk li{display:flex;gap:.4rem;align-items:baseline;padding:.08rem 0;}
+            .rsb-chk li b{flex-shrink:0;width:1rem;text-align:center;}
+            .rsb-chk li.ok b{color:var(--correct);} .rsb-chk li.no b{color:var(--wrong);} .rsb-chk li.mid b{color:var(--amber);}
+            .rsb-stmt{font-family:Georgia,serif;font-size:.86rem;line-height:1.5;color:var(--text-primary);background:var(--blue-pale);border:1px solid var(--blue-pale-border);border-left:4px solid var(--gold);border-radius:5px;padding:.55rem .7rem;margin-bottom:.55rem;}
+            .rsb-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.45rem;}
+            .rsb-tile{background:var(--card-bg);border:1px solid var(--border);border-radius:5px;padding:.3rem .55rem;font-family:Arial,sans-serif;}
+            .rsb-tile b{display:block;font-size:1.15rem;color:var(--gold);line-height:1.15;}
+            .rsb-tile span{font-size:.64rem;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);}
+            .rsb-ch{font-family:Arial,sans-serif;font-size:.72rem;color:var(--text-primary);background:var(--jade-pale);border:1px solid var(--jade-border);border-radius:5px;padding:.45rem .6rem;margin-bottom:.6rem;line-height:1.45;}
+            .rsb-ch ol{margin:.2rem 0 0 1.1rem;padding:0;}
+            .rsb-mh{font-weight:700;margin-top:.3rem;}
+            .rsb-row{display:flex;gap:.45rem;flex-wrap:wrap;align-items:center;margin-top:.5rem;}
+            .rsb-tally{font-family:Arial,sans-serif;font-size:.74rem;color:var(--text-muted);margin-left:auto;}
+            .rsb-hide{display:none !important;}
+            .rsb-cvwrap{margin-top:.2rem;}
+          </style>
+
+          <div class="iw" id="rsb-root">
+            <div class="iw-card">
+              <div class="iw-topbar">
+                <span class="iw-eyebrow">Interactive &middot; Brightwater Credit Union scenario builder</span>
+                <button type="button" class="iw-expand" aria-expanded="false" title="Open a larger view">&#10530; Expand</button>
+              </div>
+              <div class="rsb-wrap">
+                <div class="iw-panel rsb-in">
+                  <div class="rsb-modes" role="group" aria-label="Mode">
+                    <button type="button" class="iw-btn" id="rsb-m1" aria-pressed="true">Explore</button>
+                    <button type="button" class="iw-btn" id="rsb-m2" aria-pressed="false">Challenge: three valid scenarios</button>
+                  </div>
+                  <div class="rsb-ch rsb-hide" id="rsb-chbox"></div>
+                  <div class="rsb-fields">
+                    <div class="rsb-f"><label for="rsb-actor">Actor</label>
+                      <select id="rsb-actor">
+                        <option value="cyber">Cybercriminal group</option>
+                        <option value="insider">Malicious insider</option>
+                        <option value="careless">Careless employee</option>
+                        <option value="supplier">Supplier or third party</option>
+                        <option value="nation">Nation-state</option>
+                        <option value="natural">Natural event</option>
+                        <option value="regulator">Regulator or standard setter</option>
+                      </select></div>
+                    <div class="rsb-f"><label for="rsb-type">Threat type</label>
+                      <select id="rsb-type">
+                        <option value="malicious">Malicious</option>
+                        <option value="accidental">Accidental</option>
+                        <option value="failure">Failure</option>
+                        <option value="natural">Natural</option>
+                        <option value="external">External requirement</option>
+                      </select></div>
+                    <div class="rsb-f"><label for="rsb-event">Event</label>
+                      <select id="rsb-event">
+                        <option value="disclosure">Disclosure</option>
+                        <option value="interruption" selected>Interruption</option>
+                        <option value="modification">Modification</option>
+                        <option value="theft">Theft</option>
+                        <option value="destruction">Destruction</option>
+                        <option value="design">Ineffective design</option>
+                      </select></div>
+                    <div class="rsb-f"><label for="rsb-asset">Asset or resource</label>
+                      <select id="rsb-asset">
+                        <option value="member">Member data</option>
+                        <option value="wire">Wire-transfer process</option>
+                        <option value="core" selected>Core banking platform</option>
+                        <option value="cloud">Cloud tenant (online banking)</option>
+                        <option value="reputation">Reputation</option>
+                      </select></div>
+                    <div class="rsb-f"><label for="rsb-dur">Duration</label>
+                      <select id="rsb-dur">
+                        <option value="">Not specified</option>
+                        <option value="hours">Hours</option>
+                        <option value="days" selected>One to three days</option>
+                        <option value="weeks">A week or longer</option>
+                      </select></div>
+                    <div class="rsb-f"><label for="rsb-det">Detection</label>
+                      <select id="rsb-det">
+                        <option value="">Not specified</option>
+                        <option value="immediate" selected>Immediately</option>
+                        <option value="days">Within days</option>
+                        <option value="months">After months</option>
+                      </select></div>
+                    <div class="rsb-f full"><label for="rsb-obj">Business objective at risk</label>
+                      <select id="rsb-obj">
+                        <option value="">Not linked yet</option>
+                        <option value="avail" selected>Keep member services and online banking available</option>
+                        <option value="funds">Move member funds accurately and on time</option>
+                        <option value="privacy">Protect member data and meet GLBA and NCUA rules</option>
+                        <option value="trust">Grow membership through trust and service</option>
+                      </select></div>
+                  </div>
+                  <ul class="rsb-chk" id="rsb-chk"></ul>
+                  <div class="rsb-row rsb-hide" id="rsb-chrow">
+                    <button type="button" class="iw-btn jade" id="rsb-save">Save scenario</button>
+                    <button type="button" class="iw-btn" id="rsb-model" aria-pressed="false">Show model answer</button>
+                    <span class="rsb-tally" id="rsb-tally">Saved: 0 / 3</span>
+                  </div>
+                </div>
+                <div class="iw-panel rsb-out">
+                  <h5 class="iw-h5">Scenario statement</h5>
+                  <div class="rsb-stmt" id="rsb-stmt"></div>
+                  <div class="rsb-tiles">
+                    <div class="rsb-tile"><b id="rsb-q">0 / 5</b><span>Quality checks passed</span></div>
+                    <div class="rsb-tile"><b id="rsb-r">-</b><span>Indicative rating (L &times; I)</span></div>
+                    <div class="rsb-tile"><b id="rsb-l">-</b><span>Likelihood (1 to 5)</span></div>
+                    <div class="rsb-tile"><b id="rsb-i">-</b><span>Impact (1 to 5)</span></div>
+                  </div>
+                  <div aria-live="polite"><div class="iw-verdict" id="rsb-verdict"><span class="iw-pill" id="rsb-pill">Ready</span><span id="rsb-coach"></span></div></div>
+                  <div class="rsb-cvwrap"><canvas id="rsb-cv" role="img" aria-label="Likelihood and impact sketch showing the current scenario and any saved scenarios"></canvas></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <script>
+          (function(){
+            var root=document.getElementById('rsb-root'); if(!root) return;
+            var $=function(id){return root.querySelector('#'+id);};
+            var cv=$('rsb-cv'), ctx=cv.getContext('2d');
+            var ACTOR={cyber:'A cybercriminal group',insider:'A malicious insider',careless:'A careless employee',supplier:'A third-party supplier',nation:'A nation-state actor',natural:'A natural event, such as a severe flood,',regulator:'A regulator or standard setter'};
+            var ACTOR_L={cyber:4,insider:2,careless:4,supplier:3,nation:1,natural:2,regulator:3};
+            var ACTOR_T={cyber:['malicious'],insider:['malicious'],careless:['accidental'],supplier:['malicious','accidental','failure'],nation:['malicious'],natural:['natural'],regulator:['external']};
+            var TYPE_E={malicious:['disclosure','interruption','modification','theft','destruction'],accidental:['disclosure','interruption','modification','destruction','design'],failure:['interruption','modification','destruction'],natural:['interruption','destruction'],external:['design','interruption']};
+            var TNAME={malicious:'malicious',accidental:'accidental',failure:'failure',natural:'natural',external:'external requirement'};
+            var ENAME={disclosure:'disclosure',interruption:'interruption',modification:'modification',theft:'theft',destruction:'destruction',design:'ineffective design'};
+            var MANNER={malicious:'deliberately',accidental:'accidentally',failure:'through a technical or service failure',natural:'physically',external:''};
+            var VERB={disclosure:'exposes',interruption:'interrupts',modification:'alters',theft:'steals',destruction:'destroys',design:'leaves ineffective controls around'};
+            var ASSET={member:'member personal and account data',wire:'the wire-transfer process',core:'the core banking platform',cloud:'the cloud tenant that hosts online banking',reputation:'Brightwater&rsquo;s reputation'};
+            var ASHORT={member:'member data',wire:'wire process',core:'core platform',cloud:'cloud tenant',reputation:'reputation'};
+            var ASSET_I={member:4,wire:5,core:5,cloud:4,reputation:3};
+            var OBJ={avail:'keep member services and online banking available',funds:'move member funds accurately and on time',privacy:'protect member data and meet GLBA and NCUA rules',trust:'grow membership through trust and service'};
+            var OBJ_FIT={avail:['core','cloud','wire'],funds:['wire','core'],privacy:['member','cloud'],trust:['reputation','member']};
+            var DUR={hours:'The effect lasts hours',days:'The effect lasts one to three days',weeks:'The effect lasts a week or longer'};
+            var DET={immediate:'is detected immediately',days:'is detected within days',months:'goes undetected for months'};
+            var MODEL=[
+              {actor:'cyber',type:'malicious',event:'interruption',asset:'core',dur:'days',det:'immediate',obj:'avail',why:'Cybercriminal group / malicious / interruption / core platform (ransomware)'},
+              {actor:'cyber',type:'malicious',event:'modification',asset:'wire',dur:'hours',det:'days',obj:'funds',why:'Cybercriminal group / malicious / modification / wire process (email fraud)'},
+              {actor:'supplier',type:'accidental',event:'disclosure',asset:'member',dur:'weeks',det:'months',obj:'privacy',why:'Supplier / accidental / disclosure / member data (misconfiguration)'}
+            ];
+            function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()||'#888';}
+            function val(){return {actor:$('rsb-actor').value,type:$('rsb-type').value,event:$('rsb-event').value,asset:$('rsb-asset').value,dur:$('rsb-dur').value,det:$('rsb-det').value,obj:$('rsb-obj').value};}
+            function clamp(x){return Math.max(1,Math.min(5,x));}
+            function evaluate(v){
+              var why=[], plaus=true;
+              if(ACTOR_T[v.actor].indexOf(v.type)<0){plaus=false; why.push('A '+(v.actor==='natural'?'natural event':ACTOR[v.actor].replace(/^An? /,'').toLowerCase())+' does not produce a '+TNAME[v.type]+' threat. '+(v.actor==='careless'?'Careless means accidental, not malicious.':v.actor==='insider'?'A malicious insider acts deliberately.':v.actor==='natural'?'Nature is a natural threat type.':v.actor==='regulator'?'A regulator creates an external requirement.':'Match the threat type to the actor.'));}
+              if(TYPE_E[v.type].indexOf(v.event)<0){plaus=false; why.push('A '+TNAME[v.type]+' threat cannot plausibly cause '+ENAME[v.event]+'.'+(v.type==='natural'?' A flood can interrupt or destroy, but it cannot alter, steal, or disclose data.':''));}
+              if(v.asset==='reputation' && plaus){plaus=false; why.push('Reputation is a consequence, not the asset the actor touches. Name the system, data, or process that is hit, and carry reputation into the impact.');}
+              var complete=!!(v.dur||v.det);
+              var linked=!!v.obj && OBJ_FIT[v.obj].indexOf(v.asset)>=0;
+              var measurable=!!(v.dur&&v.det);
+              var realistic=v.actor!=='nation';
+              var L=clamp(ACTOR_L[v.actor]+(v.event==='modification'||v.event==='destruction'?-1:0)+(v.actor==='supplier'&&v.type==='failure'?0:0));
+              var I=clamp(ASSET_I[v.asset]+(v.event==='destruction'?1:0)+(v.event==='design'?-1:0)+(v.event==='disclosure'&&v.asset==='member'?1:0)+(v.dur==='hours'?-1:v.dur==='weeks'?1:0)+(v.det==='immediate'?-1:v.det==='months'?1:0));
+              var checks=[
+                {ok:complete,t:'Five components present (actor, threat type, event, asset, time)'},
+                {ok:plaus,t:'Plausible combination of actor, threat type, event, and asset'},
+                {ok:linked,t:'Linked to a relevant business objective'},
+                {ok:measurable,t:'Measurable: duration and detection defined'},
+                {ok:realistic,mid:!realistic,t:'Realistic for a regional credit union&rsquo;s threat landscape'}
+              ];
+              var q=checks.filter(function(c){return c.ok;}).length;
+              return {plaus:plaus,why:why,linked:linked,complete:complete,measurable:measurable,realistic:realistic,L:L,I:I,q:q,checks:checks};
+            }
+            function statement(v){
+              var s;
+              if(v.type==='external' && v.actor==='regulator') s=ACTOR[v.actor]+' introduces a new requirement that '+(v.event==='design'?'leaves current controls ineffective around':'forces an interruption of')+' '+ASSET[v.asset]+'.';
+              else s=ACTOR[v.actor]+' '+(MANNER[v.type]?MANNER[v.type]+' ':'')+VERB[v.event]+' '+ASSET[v.asset]+'.';
+              if(v.dur&&v.det) s+=' '+DUR[v.dur]+' and '+DET[v.det]+'.';
+              else if(v.dur) s+=' '+DUR[v.dur]+'. Detection time is not stated.';
+              else if(v.det) s+=' The event '+DET[v.det]+'. Duration is not stated.';
+              else s+=' No duration or detection time is stated.';
+              s+=v.obj?' This threatens the objective to '+OBJ[v.obj]+'.':' <em>No business objective is linked yet.</em>';
+              return s;
+            }
+            function band(sc){return sc<=4?'Low':sc<=9?'Medium':sc<=15?'High':'Critical';}
+            var mode='explore', saved=[], showModel=false;
+            function size(){
+              var w=cv.parentElement.clientWidth||360, dpr=window.devicePixelRatio||1, h;
+              if(root.classList.contains('is-expanded')){ var top=cv.getBoundingClientRect().top; h=Math.min(w*0.55, window.innerHeight-top-60); h=Math.max(h,150); }
+              else h=Math.min(Math.max(w*0.5,210),250);
+              cv.width=Math.round(w*dpr); cv.height=Math.round(h*dpr); cv.style.width=w+'px'; cv.style.height=h+'px';
+              ctx.setTransform(dpr,0,0,dpr,0,0); return {w:w,h:h};
+            }
+            var last=null;
+            function draw(){
+              var d=size(), W=d.w, H=d.h; ctx.clearRect(0,0,W,H);
+              var padL=42, padB=30, padT=6, padR=6, gw=W-padL-padR, gh=H-padT-padB, cw=gw/5, ch=gh/5;
+              var fills=['#dcefe2','#fbefd9','#f8e0c6','#f6d0d0'];
+              ctx.font='10px Arial'; ctx.textBaseline='middle';
+              for(var L=1;L<=5;L++) for(var I=1;I<=5;I++){
+                var s=L*I, b=s<=4?0:s<=9?1:s<=15?2:3, x=padL+(L-1)*cw, y=padT+(5-I)*ch;
+                ctx.fillStyle=fills[b]; ctx.fillRect(x,y,cw,ch); ctx.strokeStyle='#fff'; ctx.lineWidth=2; ctx.strokeRect(x,y,cw,ch);
+              }
+              var txt=css('--text-primary'); ctx.fillStyle=txt; ctx.textAlign='center'; ctx.font='11px Arial';
+              for(var k=1;k<=5;k++){ ctx.fillText(String(k),padL+(k-0.5)*cw,padT+gh+10); ctx.fillText(String(k),padL-11,padT+(5-k+0.5)*ch); }
+              ctx.font='bold 11px Arial'; ctx.fillText('Likelihood →',padL+gw/2,H-7);
+              ctx.save(); ctx.translate(11,padT+gh/2); ctx.rotate(-Math.PI/2); ctx.fillText('Impact →',0,0); ctx.restore();
+              ctx.strokeStyle=css('--gold'); ctx.lineWidth=1; ctx.strokeRect(padL,padT,gw,gh);
+              var r=Math.max(11,Math.min(15,ch*0.34));
+              function dot(L,I,label,fill,hollow,off){
+                var cx=padL+(L-0.5)*cw+(off||0), cy=padT+(5-I+0.5)*ch;
+                ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2);
+                if(hollow){ ctx.fillStyle='#fff'; ctx.fill(); ctx.setLineDash([3,2]); ctx.strokeStyle=css('--text-muted'); ctx.lineWidth=1.5; ctx.stroke(); ctx.setLineDash([]); ctx.fillStyle=css('--text-muted'); }
+                else { ctx.fillStyle=fill; ctx.fill(); ctx.strokeStyle='#fff'; ctx.lineWidth=2; ctx.stroke(); ctx.fillStyle='#fff'; }
+                ctx.font='bold '+(label.length>2?9:10)+'px Arial'; ctx.textAlign='center'; ctx.fillText(label,cx,cy+0.5);
+              }
+              saved.forEach(function(s,i){ dot(s.L,s.I,'S'+(i+1),css('--jade'),false,(i-1)*r*0.9); });
+              if(last){ var hit=saved.some(function(s){return s.L===last.L&&s.I===last.I;}); if(!hit) dot(last.L,last.I,last.plaus?'Now':'?',css('--gold'),!last.plaus,0); }
+            }
+            function verdict(cls,pill,msg){$('rsb-verdict').className='iw-verdict '+cls;$('rsb-pill').className='iw-pill '+cls;$('rsb-pill').textContent=pill;$('rsb-coach').innerHTML=msg;}
+            function chText(){
+              var h='<b>Challenge.</b> Save three valid scenarios for Brightwater. Each must pass all five checks and use a different asset.';
+              if(saved.length) h+='<ol>'+saved.map(function(s){return '<li>'+s.short+'</li>';}).join('')+'</ol>';
+              if(showModel) h+='<div class="rsb-mh">Model answers</div><ol>'+MODEL.map(function(m){return '<li>'+m.why+'</li>';}).join('')+'</ol>';
+              $('rsb-chbox').innerHTML=h; $('rsb-tally').textContent='Saved: '+saved.length+' / 3';
+            }
+            function update(){
+              var v=val(), e=evaluate(v); last=e;
+              $('rsb-stmt').innerHTML=statement(v);
+              $('rsb-chk').innerHTML=e.checks.map(function(c){return '<li class="'+(c.ok?'ok':c.mid?'mid':'no')+'"><b aria-hidden="true">'+(c.ok?'✓':c.mid?'!':'✗')+'</b><span>'+c.t+'<span class="sr-only">'+(c.ok?': passed':': not passed')+'</span></span></li>';}).join('');
+              $('rsb-q').textContent=e.q+' / 5';
+              $('rsb-r').textContent=e.plaus? ((e.L*e.I)+' '+band(e.L*e.I)) : 'Not rated';
+              $('rsb-l').textContent=e.plaus?e.L:'-'; $('rsb-i').textContent=e.plaus?e.I:'-';
+              if(!e.plaus) verdict('bad','Implausible',e.why.join(' ')+' Fix the combination before rating it.');
+              else if(e.q===5) verdict('good','Valid scenario','All five components are present, the combination is plausible, the scenario is tied to the objective to '+OBJ[v.obj]+', and its duration and detection make impact measurable. It is ready for analysis in Lesson 4.');
+              else {
+                var fix=[];
+                if(!e.complete) fix.push('add a time dimension (duration or detection)');
+                if(!v.obj) fix.push('link a business objective, because a scenario without one cannot be prioritized');
+                else if(!e.linked) fix.push('choose an objective this asset actually supports');
+                if(e.complete && !e.measurable) fix.push('define both duration and detection so the impact can be estimated');
+                var msg=fix.length?'To strengthen it: '+fix.join('; ')+'.':'';
+                if(!e.realistic) msg+=(msg?' ':'')+'A nation-state is plausible but rarely targets a regional credit union directly. Keep the scenario only if threat intelligence supports it, or recast it as an attack on a shared supplier.';
+                verdict('warn',e.q===4&&!e.realistic?'Plausible, unlikely':'Needs work',msg);
+              }
+              draw();
+            }
+            function save(){
+              var v=val(), e=evaluate(v);
+              if(e.q<5){ verdict('warn','Not saved','Only scenarios that pass all five checks can be saved. '+$('rsb-coach').innerHTML); return; }
+              if(saved.some(function(s){return s.asset===v.asset;})){ verdict('warn','Duplicate asset','You already saved a scenario for '+ASSET[v.asset]+'. A useful set covers different assets and objectives.'); return; }
+              if(saved.length>=3){ saved=[]; }
+              saved.push({asset:v.asset,L:e.L,I:e.I,short:(function(t){return t.charAt(0).toUpperCase()+t.slice(1);})(ACTOR[v.actor].replace(/,.*$/,'').replace(/^An? /,''))+' / '+ENAME[v.event]+' / '+ASHORT[v.asset]+' ('+e.L+'&times;'+e.I+')'});
+              chText(); draw();
+              if(saved.length===3) verdict('good','Challenge complete','Three valid, distinct scenarios across three assets. Compare them with the model answers: did you cover availability, fraud, and privacy? A balanced set gives leadership a view of each major objective.');
+              else verdict('good','Saved '+saved.length+' / 3','Saved. Now build a scenario for a different asset and objective.');
+            }
+            function setMode(m){
+              mode=m; $('rsb-m1').setAttribute('aria-pressed',m==='explore'); $('rsb-m2').setAttribute('aria-pressed',m==='challenge');
+              $('rsb-chbox').classList.toggle('rsb-hide',m==='explore'); $('rsb-chrow').classList.toggle('rsb-hide',m==='explore');
+              if(m==='challenge'){ saved=[]; showModel=false; $('rsb-model').setAttribute('aria-pressed','false'); $('rsb-model').textContent='Show model answer'; chText(); }
+              else saved=[];
+              update();
+            }
+            ['rsb-actor','rsb-type','rsb-event','rsb-asset','rsb-dur','rsb-det','rsb-obj'].forEach(function(id){ $(id).addEventListener('change',update); });
+            $('rsb-m1').addEventListener('click',function(){setMode('explore');});
+            $('rsb-m2').addEventListener('click',function(){setMode('challenge');});
+            $('rsb-save').addEventListener('click',save);
+            $('rsb-model').addEventListener('click',function(){ showModel=!showModel; this.setAttribute('aria-pressed',showModel); this.textContent=showModel?'Hide model answer':'Show model answer'; chText(); });
+            window.addEventListener('resize',draw);
+            update();
+          })();
+          </script>
+
+          <div class="in-practice"><span class="ip-label">&#128270; In practice</span><p>Try the nonsense combinations on purpose: a natural event that modifies member data, a careless employee acting maliciously, or reputation as the asset. Each one fails for a reason that also appears on the exam. Then try the same event with and without detection and duration. The rating moves, which shows why time is a scenario component and not an afterthought.</p></div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>The builder teaches the exam&rsquo;s test for a good scenario: complete components, a plausible combination, and a clear link to a business objective. The likelihood and impact values are indicative only. Real ratings come from the analysis methods in Lesson 4, with input from the risk owner.</div>
+        </article>
+
+        <article class="content-section" id="s8">
+          <div class="cs-head"><span class="cs-num">8</span><h3>Faculty Teaching Segment</h3></div>
+          <p>Scenario writing is a skill students only learn by doing, and the most useful lesson comes from comparing two methods on the same organization.</p>
+          <ul class="detail">
+            <li><strong>Signature assignment:</strong> split the class into top-down and bottom-up teams, each with a case packet on a fictional credit union. Top-down teams receive the strategic plan and objectives. Bottom-up teams receive an asset list, a synthetic vulnerability scan summary, and two threat advisories. Each team writes eight scenarios using the five components. The teams then meet, reconcile the lists into a single set of ten, and submit a one-page memo explaining what each method found that the other missed.</li>
+            <li><strong>Rubric criteria:</strong> every scenario has all five components and a plausible combination; each is tied to a named business objective; the reconciled set is distinct, with duplicates merged and the reasons documented; the memo explains the strengths and blind spots of both methods with specific examples.</li>
+            <li><strong>Lab idea:</strong> students take a synthetic list of 25 vulnerabilities with CVSS v4.0 scores, EPSS probabilities, KEV flags, and asset criticality, all supplied by the instructor. They rank the list by CVSS alone, then by a combined rule, and explain the three biggest changes in rank. Use only the synthetic data set you supply.</li>
+            <li><strong>Course fit:</strong> this lesson fits an IT risk management, threat intelligence, or vulnerability management course. It supports the CAE-CD Cyber Threats (CTH), Vulnerability Analysis (VLA), and Cybersecurity Planning and Management (CPM) Knowledge Units.</li>
+          </ul>
+          <div class="tip"><span class="tip-label">&#127891; Teaching note</span>Run the Risk Scenario Builder in pairs in Challenge mode. Give each pair a printed scenario card template with the five components, the objective, and the five quality checks. Pairs copy each saved scenario onto a card, then trade cards with another pair, which must find one way to make each scenario more specific. Collect the cards as the input for the Lesson 4 analysis exercise.</div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="emates">
+    <p class="eyebrow">Explore with eMates</p>
+    <h2 class="h2">Interactive refreshers for this lesson</h2>
+    <div class="rule"></div>
+    <p class="lead">Short, self-paced eMates from the myEMATES library. Each opens in a new tab. Concept refreshers support your own exam study. Student-ready modules also work as warm-ups in your own courses.</p>
+    <div class="em-grid">
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 6</span></div><h3>Threat Actors</h3><p>Motives and capabilities of the actors who appear in the first component of every risk scenario.</p><div class="em-foot"><span class="em-level student">Student-ready</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/ThreatActors/ThreatActors.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Threat Actors (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 3</span></div><h3>Ransomware</h3><p>A ransomware attack step by step, the raw material for Brightwater&rsquo;s core platform scenario.</p><div class="em-foot"><span class="em-level student">Student-ready</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/ransomware/RansomwareAttack.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Ransomware (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 4</span></div><h3>Attacks: Malware, APT, Zero Day</h3><p>Attack types and threat events to draw on when building bottom-up scenarios.</p><div class="em-foot"><span class="em-level">Concept refresher</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/attacks/attacks.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Attacks: Malware, APT, Zero Day (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 3</span></div><h3>Phishing Mystery</h3><p>Trace a phishing incident, the most common initial access path behind wire-fraud scenarios.</p><div class="em-foot"><span class="em-level student">Student-ready</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/phishing/phishing.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Phishing Mystery (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 5</span></div><h3>Heart-bleed Bug</h3><p>A real vulnerability case that shows why exploitation evidence, not only severity, drives priority.</p><div class="em-foot"><span class="em-level">Concept refresher</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/heartbleed/heartbleed.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Heart-bleed Bug (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 2</span></div><h3>Open-source Intelligence</h3><p>Gather threat information from public sources, one input to the threat landscape.</p><div class="em-foot"><span class="em-level student">Student-ready</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/OSINT/OSINT.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Open-source Intelligence (opens in a new tab)">Open &#8599;</a></div></article>
+    </div>
+  </section>
+
+  <section class="block" id="practice-this-lesson">
+    <p class="eyebrow">Practice</p>
+    <h2 class="h2">Practice this lesson</h2>
+    <div class="rule"></div>
+    <p class="lead">Self-checking practice for this lesson, ready to use with your own students. Each item ends with a report you can print or save as a PDF. See all items in the <a href="practices.html">CRISC Practices</a> and the <a href="labs.html">CRISC Risk Lab</a>.</p>
+    <div class="pl-grid">
+      <article class="pl-card"><div class="pl-top"><span class="pl-type">CRISC Practices &middot; A4</span><span class="pl-time">&#9201; 35 min</span></div><h3><a href="activity04.html">Threats, Vulnerabilities, and Scenarios</a></h3><p>Sort threats, vulnerabilities, events, and impacts, prioritize with CVSS, EPSS, and KEV, apply STRIDE, and judge scenario quality.</p><div class="pl-foot"><span class="pl-level">Intermediate</span><a class="pl-open" href="activity04.html" aria-label="Open activity A4: Threats, Vulnerabilities, and Scenarios">Open &#8594;</a></div></article>
+      <article class="pl-card pl-lab"><div class="pl-top"><span class="pl-type">CRISC Risk Lab &middot; B2</span><span class="pl-time">&#9201; 60 min</span></div><h3><a href="lab02.html">Risk Scenario and Register Workshop</a></h3><p>Turn threat intel and a vulnerability scan into register entries with owners, score them on a live heat map, and set priorities.</p><div class="pl-foot"><span class="pl-level">Intermediate</span><a class="pl-open" href="lab02.html" aria-label="Open lab B2: Risk Scenario and Register Workshop">Open &#8594;</a></div></article>
+    </div>
+  </section>
+
+  <section class="block" id="knowledge-check">
+    <p class="eyebrow">Scored Knowledge Check</p>
+    <h2 class="h2">Test your understanding</h2>
+    <div class="rule"></div>
+    <p class="lead" style="margin-bottom:1.5rem">Select the best answer for each question, then submit for your score and the rationale for every item. Like the exam, several options may be true; choose the best one.</p>
+    <div class="quiz-card">
+      <form id="quiz">
+
+        <div class="q" data-answer="C">
+          <p class="q-stem"><span class="qn">Q1.</span>A credit union&rsquo;s scanners report 400 vulnerabilities rated High or Critical by CVSS. The team can fix about 40 this month. What is the BEST way to choose which to fix first?</p>
+          <fieldset class="options">
+            <legend>Question 1 options</legend>
+            <label class="opt"><input type="radio" name="q1" value="A"><span><span class="opt-letter">A.</span> Fix the 40 with the highest CVSS Base scores</span></label>
+            <label class="opt"><input type="radio" name="q1" value="B"><span><span class="opt-letter">B.</span> Fix the 40 oldest findings first</span></label>
+            <label class="opt"><input type="radio" name="q1" value="C"><span><span class="opt-letter">C.</span> Combine evidence of exploitation (KEV status and EPSS) with the criticality of the affected assets</span></label>
+            <label class="opt"><input type="radio" name="q1" value="D"><span><span class="opt-letter">D.</span> Ask each system administrator to pick the findings they consider most important</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: C.</b> Risk-based prioritization combines likelihood of exploitation with business impact. CVSS Base scores measure technical severity only, age says nothing about exploitation, and administrator preference is inconsistent and lacks a business view.</div>
+        </div>
+
+        <div class="q" data-answer="A">
+          <p class="q-stem"><span class="qn">Q2.</span>A risk practitioner is starting a top-down risk scenario exercise. Which input should come FIRST?</p>
+          <fieldset class="options">
+            <legend>Question 2 options</legend>
+            <label class="opt"><input type="radio" name="q2" value="A"><span><span class="opt-letter">A.</span> The organization&rsquo;s business objectives and the impacts that would threaten them</span></label>
+            <label class="opt"><input type="radio" name="q2" value="B"><span><span class="opt-letter">B.</span> The most recent vulnerability scan results</span></label>
+            <label class="opt"><input type="radio" name="q2" value="C"><span><span class="opt-letter">C.</span> A list of threat indicators from the security operations center</span></label>
+            <label class="opt"><input type="radio" name="q2" value="D"><span><span class="opt-letter">D.</span> The results of last year&rsquo;s control testing</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: A.</b> Top-down scenarios start from objectives and work toward events. Scan results, indicators, and control test results are bottom-up inputs that help later to confirm technical paths.</div>
+        </div>
+
+        <div class="q" data-answer="D">
+          <p class="q-stem"><span class="qn">Q3.</span>A draft register entry reads: &ldquo;Hackers attack our systems.&rdquo; What is the MOST important improvement?</p>
+          <fieldset class="options">
+            <legend>Question 3 options</legend>
+            <label class="opt"><input type="radio" name="q3" value="A"><span><span class="opt-letter">A.</span> Add the CVSS score of the most severe open vulnerability</span></label>
+            <label class="opt"><input type="radio" name="q3" value="B"><span><span class="opt-letter">B.</span> Assign the entry to the IT department as owner</span></label>
+            <label class="opt"><input type="radio" name="q3" value="C"><span><span class="opt-letter">C.</span> Raise the rating to Critical so it receives attention</span></label>
+            <label class="opt"><input type="radio" name="q3" value="D"><span><span class="opt-letter">D.</span> Rewrite it as a scenario that names the actor, event, affected asset, and time, linked to a business objective</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: D.</b> The entry cannot be analyzed or owned until it is specific. A CVSS score does not define the event, IT is not automatically the risk owner, and inflating a rating without analysis distorts the risk profile.</div>
+        </div>
+
+        <div class="q" data-answer="B">
+          <p class="q-stem"><span class="qn">Q4.</span>During threat modeling of a wire-transfer system, the team notes that an approver could deny releasing a wire and the logs could not prove otherwise. Which STRIDE category does this represent?</p>
+          <fieldset class="options">
+            <legend>Question 4 options</legend>
+            <label class="opt"><input type="radio" name="q4" value="A"><span><span class="opt-letter">A.</span> Spoofing</span></label>
+            <label class="opt"><input type="radio" name="q4" value="B"><span><span class="opt-letter">B.</span> Repudiation</span></label>
+            <label class="opt"><input type="radio" name="q4" value="C"><span><span class="opt-letter">C.</span> Tampering</span></label>
+            <label class="opt"><input type="radio" name="q4" value="D"><span><span class="opt-letter">D.</span> Elevation of privilege</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: B.</b> Repudiation is the ability to deny an action without proof to the contrary, addressed by nonrepudiation controls such as signed, protected audit logs. Spoofing is impersonation, tampering is unauthorized change, and elevation of privilege is gaining rights one should not have.</div>
+        </div>
+
+        <div class="q" data-answer="D">
+          <p class="q-stem"><span class="qn">Q5.</span>What does a CVSS v4.0 Base score PRIMARILY measure?</p>
+          <fieldset class="options">
+            <legend>Question 5 options</legend>
+            <label class="opt"><input type="radio" name="q5" value="A"><span><span class="opt-letter">A.</span> The probability that the vulnerability will be exploited in the next 30 days</span></label>
+            <label class="opt"><input type="radio" name="q5" value="B"><span><span class="opt-letter">B.</span> Whether the vulnerability is being actively exploited</span></label>
+            <label class="opt"><input type="radio" name="q5" value="C"><span><span class="opt-letter">C.</span> The business impact of exploitation for the organization</span></label>
+            <label class="opt"><input type="radio" name="q5" value="D"><span><span class="opt-letter">D.</span> The intrinsic technical severity of the vulnerability</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: D.</b> The Base metrics describe intrinsic technical severity. EPSS estimates the probability of exploitation activity in the next 30 days, the CISA KEV catalog records active exploitation, and business impact comes from the organization&rsquo;s own context, partly captured by Environmental metrics.</div>
+        </div>
+
+        <div class="q" data-answer="B">
+          <p class="q-stem"><span class="qn">Q6.</span>A scenario workshop produced 140 candidate risk scenarios. What should the risk practitioner do NEXT?</p>
+          <fieldset class="options">
+            <legend>Question 6 options</legend>
+            <label class="opt"><input type="radio" name="q6" value="A"><span><span class="opt-letter">A.</span> Run a full quantitative analysis on all 140</span></label>
+            <label class="opt"><input type="radio" name="q6" value="B"><span><span class="opt-letter">B.</span> Consolidate and filter them into a manageable set of relevant, realistic scenarios validated with business owners</span></label>
+            <label class="opt"><input type="radio" name="q6" value="C"><span><span class="opt-letter">C.</span> Keep only the scenarios linked to vulnerabilities with Critical CVSS scores</span></label>
+            <label class="opt"><input type="radio" name="q6" value="D"><span><span class="opt-letter">D.</span> Present all 140 to the board for ranking</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: B.</b> Scenario evaluation reduces the list to a set that leadership can discuss and analysts can analyze. Analyzing all 140 wastes effort on duplicates, filtering by CVSS ignores non-technical scenarios, and the board needs a prioritized view, not a raw list.</div>
+        </div>
+
+        <div class="q" data-answer="A">
+          <p class="q-stem"><span class="qn">Q7.</span>A regional credit union wants threat intelligence that reflects attacks on organizations like itself. Which source is MOST useful?</p>
+          <fieldset class="options">
+            <legend>Question 7 options</legend>
+            <label class="opt"><input type="radio" name="q7" value="A"><span><span class="opt-letter">A.</span> Membership in a financial-sector Information Sharing and Analysis Center</span></label>
+            <label class="opt"><input type="radio" name="q7" value="B"><span><span class="opt-letter">B.</span> National news coverage of large data breaches</span></label>
+            <label class="opt"><input type="radio" name="q7" value="C"><span><span class="opt-letter">C.</span> A security vendor&rsquo;s product brochure</span></label>
+            <label class="opt"><input type="radio" name="q7" value="D"><span><span class="opt-letter">D.</span> The general CVE list for all software</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: A.</b> A sector ISAC shares intelligence on campaigns against peer institutions. News is broad and late, brochures are marketing, and the full CVE list covers vulnerabilities, not who is attacking whom.</div>
+        </div>
+
+        <div class="q" data-answer="C">
+          <p class="q-stem"><span class="qn">Q8.</span>Who should validate that a proposed risk scenario is realistic and relevant to a business process?</p>
+          <fieldset class="options">
+            <legend>Question 8 options</legend>
+            <label class="opt"><input type="radio" name="q8" value="A"><span><span class="opt-letter">A.</span> Internal audit</span></label>
+            <label class="opt"><input type="radio" name="q8" value="B"><span><span class="opt-letter">B.</span> An external penetration testing firm</span></label>
+            <label class="opt"><input type="radio" name="q8" value="C"><span><span class="opt-letter">C.</span> The business process owner, with the risk practitioner facilitating</span></label>
+            <label class="opt"><input type="radio" name="q8" value="D"><span><span class="opt-letter">D.</span> The vendor that supplies the affected system</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: C.</b> The process owner knows how the process works and what failure would cost, and will own the resulting risk. Internal audit must stay independent, a penetration tester sees only technical paths, and a vendor has a conflict of interest.</div>
+        </div>
+
+        <div class="quiz-actions">
+          <button type="button" class="btn" onclick="gradeQuiz()">Submit Answers</button>
+          <button type="button" class="btn secondary" onclick="resetQuiz()">Reset</button>
+          <span class="score" id="score" aria-live="polite"></span>
+        </div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<nav class="pager" aria-label="Lesson navigation">
+  <div class="pager-inner">
+    <a href="lesson02.html" class="prev"><span class="pager-dir">&#8592; Previous</span><span class="pager-name">Lesson 2: Risk Governance</span></a>
+    <a href="lesson04.html" class="next"><span class="pager-dir">Next &#8594;</span><span class="pager-name">Lesson 4: Risk Analysis</span></a>
+  </div>
+</nav>
+
+<footer>
+  <div class="footer-logo">CRISC 5-DAY FACULTY WORKSHOP</div>
+  <p class="footer-disclaimer">This workshop is an independent educational resource. It is not affiliated with, endorsed by, or sponsored by ISACA. CRISC&#174; is a registered mark of ISACA. All lesson text, questions, and scenarios are original and do not reproduce the ISACA CRISC Review Manual or question database. eMates are provided by the myEMATES library and open in a new tab. Always verify the current exam content outline at isaca.org before registering.</p>
+</footer>
+
+<script src="crisc-lesson.js"></script>
+</body>
+</html>

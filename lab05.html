@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>B5 Control Testing Workpapers | CRISC 5-Day Faculty Workshop</title>
+<link rel="stylesheet" href="crisc-lesson.css">
+<link rel="stylesheet" href="practice.css">
+<style>
+/* B5: control matrix, seeded sampler, evidence workbench, workpaper summary (light only) */
+.b5-note { font: .84rem/1.55 Arial, sans-serif; color: var(--text-secondary); margin: 0 0 .8rem; }
+.b5-tbl table.data { font-size: .8rem; }
+.b5-tbl table.data td, .b5-tbl table.data th { padding: .45rem .55rem; vertical-align: top; }
+.b5-tbl tbody th[scope=row] { white-space: nowrap; color: var(--navy); }
+.b5-flex { display: flex; flex-wrap: wrap; gap: 1rem 1.25rem; align-items: flex-start; }
+.b5-flex > .b5-col { flex: 1 1 300px; min-width: 0; }
+.b5-box { border: 1px solid var(--border); border-left: 4px solid var(--gold); border-radius: 0 4px 4px 0; background: var(--blue-pale); padding: .8rem 1rem; margin: 0 0 1rem; }
+.b5-box h4 { font: 700 .95rem Georgia, serif; color: var(--text-primary); margin: 0 0 .4rem; }
+.b5-box ul { margin: 0; padding-left: 1.1rem; font: .84rem/1.55 Arial, sans-serif; color: var(--text-secondary); }
+.b5-form { display: flex; flex-wrap: wrap; gap: .6rem 1rem; align-items: flex-end; margin: 0 0 .8rem; }
+.b5-form .b5-f { display: flex; flex-direction: column; gap: .25rem; }
+.b5-form label { font: 700 .72rem Arial, sans-serif; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); }
+.b5-form select, .b5-form input, .b5-wp select, .b5-wp input { font: .86rem Arial, sans-serif; padding: .4rem .5rem; border: 1px solid var(--border); border-radius: 4px; background: #fff; color: var(--text-primary); max-width: 100%; }
+.b5-form input[type=number] { width: 7rem; }
+.b5-seed { font: 700 .86rem 'Courier New', monospace; color: var(--navy); background: #fff; border: 1px dashed var(--border); border-radius: 4px; padding: .38rem .6rem; }
+.b5-msg { font: .84rem/1.5 Arial, sans-serif; margin: .4rem 0 .8rem; color: var(--text-primary); min-height: 1.2em; }
+.b5-msg.bad { color: var(--wrong); }
+.b5-ids { display: flex; flex-wrap: wrap; gap: .3rem; margin: .2rem 0 1rem; padding: 0; list-style: none; }
+.b5-ids li { font: 700 .74rem 'Courier New', monospace; background: #fff; border: 1px solid var(--blue-pale-border); border-radius: 3px; padding: .15rem .4rem; color: var(--navy); }
+.b5-ids li span { color: var(--text-muted); font-weight: 400; margin-right: .25rem; }
+.b5-drawn { border: 1px solid var(--border); border-radius: 4px; padding: .7rem .9rem; margin: 0 0 .8rem; background: #fff; }
+.b5-drawn h5 { font: 700 .85rem Arial, sans-serif; color: var(--text-primary); margin: 0 0 .3rem; }
+.b5-wp table.data { min-width: 860px; }
+.b5-wp td { vertical-align: middle; }
+.b5-wp input[type=number] { width: 5.2rem; }
+.b5-rate { font: 700 .86rem 'Courier New', monospace; color: var(--navy); white-space: nowrap; }
+.b5-tag { display: inline-block; font: 700 .7rem Arial, sans-serif; padding: .12rem .45rem; border-radius: 3px; border: 1px solid var(--border); background: var(--section-alt); color: var(--text-secondary); }
+.b5-tag.ok { color: var(--correct); border-color: var(--correct); background: var(--correct-bg); }
+.b5-tag.bad { color: var(--wrong); border-color: var(--wrong); background: var(--wrong-bg); }
+</style>
+</head>
+<body>
+<div id="app"><noscript><p style="padding:2rem;font-family:Arial">This lab needs JavaScript enabled.</p></noscript></div>
+
+<script>
+/* ===================== Penmore Technical College data (fictional, seeded) =====================
+   Every population is generated from fixed seeds, so the same rows, the same sample, and the
+   same exception counts appear in every browser. Checklist answers are computed from this data. */
+window.B5DATA = (function () {
+  function rng(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; var t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  function pick(r, a) { return a[Math.floor(r() * a.length)]; }
+  function int(r, lo, hi) { return lo + Math.floor(r() * (hi - lo + 1)); }
+  var DAY = 86400000;
+  function d2s(t) { return new Date(t).toISOString().slice(0, 10); }
+  function s2d(s) { var m = s.match(/(\d+)-(\d+)-(\d+)/); return Date.UTC(+m[1], +m[2] - 1, +m[3]); }
+  function add(s, n) { return d2s(s2d(s) + n * DAY); }
+  function pad(n, w) { n = String(n); while (n.length < w) n = '0' + n; return n; }
+  var FIRST = ['Amara', 'Bennett', 'Calla', 'Dorian', 'Elsa', 'Fintan', 'Greer', 'Hollis', 'Imani', 'Jasper', 'Kenji', 'Lorna', 'Mateo', 'Nadia', 'Orrin', 'Paloma', 'Quentin', 'Rhea', 'Soren', 'Tamsin', 'Ulric', 'Vida', 'Wren', 'Xiomara', 'Yusuf', 'Zelda', 'Anouk', 'Brannock', 'Cerys', 'Dashiell', 'Eamon', 'Faye', 'Gideon', 'Hana', 'Ilse', 'Joaquin', 'Keziah', 'Leif', 'Marisol', 'Niall'];
+  var LAST = ['Abernethy', 'Baptiste', 'Castellanos', 'Dunmore', 'Eklund', 'Fairbrother', 'Galloway', 'Haddad', 'Ingram', 'Jaramillo', 'Kowalczyk', 'Lindqvist', 'Mbeki', 'Nakashima', 'Okafor', 'Pellegrino', 'Quarles', 'Rasmussen', 'Szabo', 'Thibodeaux', 'Underhill', 'Vasquez', 'Whitcombe', 'Yoon', 'Zielinski', 'Achebe', 'Brandvold', 'Cormier', 'Delacroix', 'Esposito'];
+
+  /* ---------- Sampling: seeded Fisher-Yates over the population IDs ---------- */
+  function shuffle(ids, seed) { var r = rng(seed), a = ids.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(r() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  var SEED = { uar: 4471, chg: 2611 };
+
+  /* ---------- C1: quarterly SIS privileged access reviews (30) ---------- */
+  var GROUPS = [['Registrar administrators', 'Office of the Registrar'], ['Financial aid processors', 'Financial Aid'], ['Bursar and cashiering', 'Business Office'], ['Admissions officers', 'Admissions'], ['Academic advising', 'Advising Center'], ['Grade change approvers', 'Academic Affairs'], ['Student accounts write', 'Business Office'], ['Veterans certifying officials', 'Veterans Services'], ['SIS configuration admins', 'Information Technology'], ['Report writers (FERPA data)', 'Institutional Research']];
+  var QE = ['2026-03-31', '2026-06-30', '2026-09-30'];
+  var r1 = rng(1101), UAR = [];
+  QE.forEach(function (qe, q) {
+    GROUPS.forEach(function (g, k) {
+      var so = add(qe, int(r1, 3, 13)), rev = int(r1, 6, 48), rem = r1() < .55 ? int(r1, 1, 4) : 0;
+      UAR.push({ id: 'UAR-Q' + (q + 1) + '-' + pad(k + 1, 2), grp: g[0], qe: qe, rv: pick(r1, FIRST) + ' ' + pick(r1, LAST) + ' (' + g[1] + ')', so: so, n: rev, rem: rem, done: rem ? add(so, int(r1, 1, 8)) : '', ev: 'Signed review export (PDF) and removal tickets' });
+    });
+  });
+  var uarOrder = shuffle(UAR.map(function (u) { return u.id; }), SEED.uar);
+  // Two late reviews exist in the population, outside the 10-item sample (sampling risk is real).
+  var lateIds = uarOrder.slice(10).filter(function (id) { return /Q2|Q3/.test(id); }).slice(0, 2);
+  UAR.forEach(function (u) { if (lateIds.indexOf(u.id) >= 0) { u.so = add(u.qe, 19 + lateIds.indexOf(u.id) * 4); if (u.rem) u.done = add(u.so, 3); } });
+
+  /* ---------- C2: HR separations (42) and SIS active accounts ---------- */
+  var r2 = rng(2202), used = {}, people = [];
+  function person(r) { var nm; do { nm = pick(r, FIRST) + ' ' + pick(r, LAST); } while (used[nm]); used[nm] = 1; return nm; }
+  var DEPTS = ['Nursing', 'Welding', 'Business', 'Information Technology', 'Early Childhood', 'HVAC', 'General Education', 'Automotive', 'Student Services', 'Library'];
+  var empNo = 10200;
+  function nextEmp(r) { empNo += int(r, 3, 29); return 'E' + empNo; }
+  var SEP = [], adjCount = 0;
+  for (var i = 0; i < 42; i++) {
+    var type = i % 6 === 2 ? 'Adjunct' : (i % 3 === 0 ? 'Faculty' : 'Staff');
+    if (type === 'Adjunct') adjCount++;
+    SEP.push({ emp: nextEmp(r2), nm: person(r2), type: type, dept: pick(r2, DEPTS), sep: d2s(Date.UTC(2026, 0, 2) + int(r2, 0, 270) * DAY), by: type === 'Adjunct' ? 'Academic Affairs (adjunct contract end)' : 'Human Resources' });
+  }
+  SEP.sort(function (a, b) { return a.sep < b.sep ? -1 : a.sep > b.sep ? 1 : 0; });
+  var adj = SEP.filter(function (s) { return s.type === 'Adjunct'; });
+  var ORPH = [adj[1].emp, adj[3].emp, adj[5].emp];     // three adjuncts nobody told the service desk about
+  var USEDAFTER = adj[3].emp;                          // one of them signed in after separation
+  var twin = SEP.filter(function (s) { return s.type === 'Staff'; })[4];  // a namesake still employed
+  var ACT = [];
+  var ROLES = ['Faculty', 'Staff', 'Adjunct', 'Advisor', 'Financial aid', 'Registrar', 'Business office', 'IT administrator'];
+  var r3 = rng(3303), empNo2 = 11000;
+  for (var k = 0; k < 236; k++) {
+    empNo2 += int(r3, 2, 11);
+    var nm = k === 57 ? twin.nm : person(r3);
+    var u = nm.toLowerCase().replace(/[^a-z ]/g, '').split(' '); u = u[0].charAt(0) + u[1] + (k % 17 === 0 ? '2' : '');
+    ACT.push({ user: u, emp: 'E' + empNo2, nm: nm, role: pick(r3, ROLES), st: 'Active', last: d2s(Date.UTC(2026, 8, 1) + int(r3, 0, 30) * DAY) + ' ' + pad(int(r3, 7, 21), 2) + ':' + pad(int(r3, 0, 59), 2) });
+  }
+  SEP.forEach(function (s) {
+    if (ORPH.indexOf(s.emp) < 0) return;
+    var u = s.nm.toLowerCase().split(' ');
+    var last = s.emp === USEDAFTER ? add(s.sep, 96) + ' 22:41' : add(s.sep, -int(r3, 2, 9)) + ' ' + pad(int(r3, 8, 17), 2) + ':' + pad(int(r3, 0, 59), 2);
+    ACT.splice(int(r3, 5, ACT.length - 5), 0, { user: u[0].charAt(0) + u[1], emp: s.emp, nm: s.nm, role: 'Adjunct', st: 'Active', last: last });
+  });
+  [['svc-sis-batch', 'Service account: nightly batch'], ['svc-finaid-isir', 'Service account: aid file import'], ['svc-lms-sync', 'Service account: LMS roster sync'], ['svc-report', 'Service account: reporting'], ['sis-admin-bg', 'Break-glass administrator'], ['svc-payment', 'Service account: payment gateway']].forEach(function (s, j) {
+    ACT.splice(20 + j * 37, 0, { user: s[0], emp: '', nm: s[1], role: 'System', st: 'Active', last: d2s(Date.UTC(2026, 9, 1)) + ' 0' + (j + 1) + ':15' });
+  });
+
+  /* ---------- C3: SIS change tickets (160) ---------- */
+  var r4 = rng(4404), CHG = [];
+  var SUMS = ['Patch SIS application tier', 'Update financial aid award rules', 'Add degree audit requirement', 'Change grade roster report', 'Rotate integration certificate', 'Update tuition rate table', 'Fix registration hold logic', 'Add LMS roster field', 'Upgrade database driver', 'Change transcript template', 'Adjust waitlist job schedule', 'Update FERPA consent screen', 'Apply OS security updates', 'Change payment gateway endpoint', 'Add advising note category'];
+  var SC = ['SC-01 OS patch window', 'SC-02 report template', 'SC-03 rate table load'];
+  var REQ = ['Graham Osei', 'Lucia Barreto', 'Tobias Renard', 'Ingrid Solberg', 'Malik Ferreira'];
+  for (var c = 0; c < 160; c++) {
+    var x = r4(), ty = x < .44 ? 'Standard' : (x < .9 ? 'Normal' : 'Emergency');
+    var dep = d2s(Date.UTC(2026, 0, 5) + Math.floor(c * 1.68) * DAY + int(r4, 0, 1) * DAY);
+    var appr = ty === 'Normal' ? add(dep, -int(r4, 1, 6)) : ty === 'Emergency' ? add(dep, int(r4, 0, 1)) : '';
+    CHG.push({ id: 'CHG-26' + pad(c + 101, 4), sum: pick(r4, SUMS), ty: ty, req: pick(r4, REQ), appr: appr, dep: dep, by: ty === 'Standard' ? 'Pre-approved: ' + pick(r4, SC) : ty === 'Emergency' ? 'ECAB (retrospective)' : 'CAB', min: ty === 'Standard' ? 'Not required: standard change model' : ty === 'Emergency' ? 'ECAB approval recorded' : 'Approved' });
+  }
+  var chgOrder = shuffle(CHG.map(function (c) { return c.id; }), SEED.chg);
+  var s25 = chgOrder.slice(0, 25), byId = {}; CHG.forEach(function (c) { byId[c.id] = c; });
+  var normals = s25.filter(function (id) { return byId[id].ty === 'Normal'; });
+  var emerg = s25.filter(function (id) { return byId[id].ty === 'Emergency'; });
+  // Exception 1: a normal change deployed three days before the CAB approved it.
+  var ex1 = byId[normals[2]]; ex1.appr = add(ex1.dep, 3);
+  // Exception 2: the ticket shows an approval date, but the CAB minutes record the change as deferred.
+  var ex2 = byId[normals[5]]; ex2.min = 'Deferred: rollback plan missing; not approved';
+  // Policy-permitted: a sampled emergency change approved by the ECAB two days after deployment.
+  var em = emerg.length ? byId[emerg[0]] : byId[normals[7]];
+  if (!emerg.length) { em.ty = 'Emergency'; em.by = 'ECAB (retrospective)'; em.min = 'ECAB approval recorded'; }
+  em.appr = add(em.dep, 2);
+
+  function sample(pop, n) {
+    n = Math.max(0, Math.min(+n || 0, pop === 'uar' ? UAR.length : CHG.length));
+    var order = pop === 'uar' ? uarOrder : chgOrder, src = pop === 'uar' ? UAR : CHG, m = {};
+    src.forEach(function (x) { m[x.id] = x; });
+    return order.slice(0, n).map(function (id) { return m[id]; });
+  }
+  function chgIsException(c) {
+    if (c.ty === 'Standard') return false;
+    if (c.ty === 'Emergency') return !c.appr || (s2d(c.appr) - s2d(c.dep)) / DAY > 2;
+    return !c.appr || s2d(c.appr) > s2d(c.dep) || c.min.indexOf('Approved') !== 0;
+  }
+  function uarIsException(u) { return (s2d(u.so) - s2d(u.qe)) / DAY > 15 || (u.rem && (s2d(u.done) - s2d(u.so)) / DAY > 10); }
+  var key = {
+    uarSize: 10, chgSize: 25,
+    chgExc: function () { return sample('chg', 25).filter(chgIsException).map(function (c) { return c.id; }); },
+    uarExc: function () { return sample('uar', 10).filter(uarIsException).map(function (u) { return u.id; }); },
+    orphans: function () { var a = {}; ACT.forEach(function (x) { if (x.emp) a[x.emp] = x; }); return SEP.filter(function (s) { return a[s.emp]; }).map(function (s) { return s.emp; }); },
+    usedAfter: function () { var a = {}; ACT.forEach(function (x) { if (x.emp) a[x.emp] = x; }); return SEP.filter(function (s) { return a[s.emp] && a[s.emp].last.slice(0, 10) > s.sep; }).map(function (s) { return s.emp; }); }
+  };
+  return { UAR: UAR, SEP: SEP, ACT: ACT, CHG: CHG, SEED: SEED, sample: sample, key: key, ex1: ex1, ex2: ex2, em: em, twin: twin, adjCount: adjCount, lateIds: lateIds, chgIsException: chgIsException };
+})();
+</script>
+<script>
+(function () {
+var D = window.B5DATA, K = D.key;
+var CHGX = K.chgExc(), ORPH = K.orphans(), USED = K.usedAfter();
+var SEPBY = {}; D.SEP.forEach(function (s) { SEPBY[s.emp] = s; });
+function nm(id) { return SEPBY[id].nm + ' (' + id + ')'; }
+var EMOK = D.sample('chg', 25).filter(function (c) { return c.ty === 'Emergency' && c.appr > c.dep; });
+var chgRate = Math.round(1000 * CHGX.length / 25) / 10;
+var c2Rate = Math.round(1000 * ORPH.length / D.SEP.length) / 10;
+
+window.LAB = {
+  id: 'B5',
+  title: 'Control Testing Workpapers',
+  accent: 'Workpapers',
+  domain: 'Domain 3 (32%)',
+  time: '75 min',
+  level: 'Intermediate',
+  lessonHref: 'lesson06.html#s6',
+  lessonLabel: 'Lesson 6, Control Testing',
+  kus: ['IA Compliance (IAC)', 'Cybersecurity Planning and Management (CPM)'],
+  lede: 'Test three access and change controls over Penmore Technical College’s student information system the way a second-line risk function should: confirm the population, draw a reproducible sample, inspect and reperform, record each exception, and conclude on design and operating effectiveness.',
+  workbenchTitle: 'Testing workbench',
+  ticket: {
+    number: 'PTC-RISK-2611',
+    priority: 'High priority',
+    from: 'Odalys Brenneman, Director of Enterprise Risk, Penmore Technical College',
+    to: 'Risk practitioner (you)',
+    subject: 'Q1 to Q3 2026 control testing: SIS access reviews, deprovisioning, and change approval',
+    due: 'Workpapers to me by Friday, November 20, 2026, for the Risk and Audit Committee pre-read',
+    body: '<p>After the October breach of the student information system (SIS), the Risk and Audit Committee asked one question: were the controls we rely on actually working this year, or did we only believe they were? Internal audit will review our work in January and will reperform a selection of it, so the workpapers have to stand on their own.</p>' +
+      '<p>Please test the three key controls in the control matrix for January 1 to September 30, 2026:</p>' +
+      '<ul><li><b>C1, quarterly privileged access review.</b> Sample the reviews and inspect the sign-offs.</li>' +
+      '<li><b>C2, SIS deprovisioning on separation.</b> We have complete exports from HR and from the SIS, so reperform the control across the whole population instead of sampling.</li>' +
+      '<li><b>C3, change approval before deployment.</b> Sample the change tickets and inspect the CAB minutes for each one.</li></ul>' +
+      '<p>Use our testing standard, ICT-04, for sample sizes and for what counts as an exception. Use the seeds in the test plan so audit can draw the same sample. Record every exception, conclude on design and operating effectiveness for each control, and draft the summary I will send to the control owners and to Dr. Lenora Faulk, Vice President of Student Services, who owns the SIS access risk. Remember that we advise: the owners decide what to do about it.</p>'
+  },
+  howTo: 'Step 2 opens a workbench with four tabs. <b>Test plan</b> holds the control matrix and the ICT-04 testing standard. <b>Sampler</b> draws a reproducible random sample from the access review or change ticket population with the seed fixed in the plan. <b>Evidence</b> is a two-pane evidence workbench: put one table in pane A and another in pane B, then match keys, look up columns, and compare dates to reperform the control. <b>Workpaper</b> is where you record the method, items tested, exceptions, and conclusions for each control. Your work saves in this browser.',
+  workIntro: 'All Penmore data are fictional and generated from fixed seeds, so every participant sees the same rows and the same sample. The testing period is January 1 to September 30, 2026. The SIS export was taken on October 2, 2026.',
+  checklist: [
+    { id: 'size', type: 'number', points: 8, short: 'Change sample size', title: 'Size the change ticket sample',
+      task: 'Using ICT-04 in the <b>Test plan</b> tab, how many change tickets must you sample to test C3? Then draw that sample in the <b>Sampler</b> tab.',
+      unit: 'tickets', tol: 0,
+      answer: K.chgSize,
+      hint: 'Count the change tickets in the population, then find that count in the ICT-04 sample size table. C3 is a manual control.',
+      debrief: '<p>The population holds 160 change tickets, which falls in the 53 to 365 band, so ICT-04 calls for <b>25</b>. The sample size comes from how often the control operated in the period, not from how risky the tester feels the system is. A larger sample adds assurance; a smaller one does not meet the standard and audit will not rely on it.</p><p>The seed matters as much as the size. Because the seed is recorded in the test plan, internal audit can draw the identical 25 tickets and reperform your work, which is what makes a sample defensible.</p>',
+      reviewNote: 'Sample size follows the testing standard and the number of times the control operated in the period.' },
+    { id: 'chgexc', type: 'number', points: 12, short: 'Change exceptions', title: 'Count the change approval exceptions',
+      task: 'In the <b>Evidence</b> tab, inspect your 25 sampled tickets and their CAB minutes. How many sampled tickets are true exceptions to C3 under ICT-04?',
+      unit: 'exceptions', tol: 0,
+      answer: CHGX.length,
+      hint: 'Put the change sample in pane A and compare <b>CAB approved</b> with <b>Deployed</b>. Then read every flagged row against the ICT-04 rules for emergency changes, read the <b>CAB minutes</b> column, and remember that standard changes are pre-approved.',
+      debrief: '<p>There are <b>' + CHGX.length + '</b> exceptions in the sample. <b>' + D.ex1.id + '</b> is a normal change deployed on ' + D.ex1.dep + ', three days before the CAB approved it on ' + D.ex1.appr + '. <b>' + D.ex2.id + '</b> shows an approval date in the ticket, but the CAB minutes record it as deferred because the rollback plan was missing; the ticket field was wrong, and only inspection of the minutes reveals it.</p><p>Some rows look like exceptions and are not. ' + EMOK.map(function (c) { return '<b>' + c.id + '</b>'; }).join(' and ') + (EMOK.length > 1 ? ' are emergency changes' : ' is an emergency change') + ' the ECAB approved within two days after deployment, which CM-02 permits. Standard changes have no approval date because they run under a pre-approved change model. Counting them would overstate the deficiency, and missing the deferred change would understate it. Date comparison finds candidates; inspection decides.</p>',
+      reviewNote: 'Inspect the source record (CAB minutes), not just the ticket field, and apply policy-permitted variations before calling an exception.' },
+    { id: 'chgrate', type: 'number', points: 8, short: 'Change exception rate', title: 'Compute the change sample exception rate',
+      task: 'What is the exception rate for the C3 sample, as a percentage? Round to one decimal place.',
+      unit: '%', tol: 0.05,
+      answer: chgRate,
+      hint: 'Exceptions divided by items tested, times 100. Items tested is the sample, not the population.',
+      debrief: '<p>' + CHGX.length + ' exceptions in 25 tested items is <b>' + chgRate + ' percent</b>. Dividing by the 160-ticket population (' + (Math.round(1000 * CHGX.length / 160) / 10) + ' percent) is a common error: you did not inspect 135 of those tickets, so you cannot claim they had no exceptions.</p><p>ICT-04 expects zero exceptions in a sample. Any confirmed exception means the control did not operate effectively for the period, whatever the rate looks like.</p>',
+      reviewNote: 'An exception rate is exceptions over items actually tested.' },
+    { id: 'orphans', type: 'set', points: 14, short: 'Separated users still active', title: 'Reperform deprovisioning across the population',
+      task: 'Match all 42 HR separations against the SIS active account export. Enter the employee IDs of every separated person who still has an active SIS account.',
+      label: 'Employee IDs, separated by commas', placeholder: 'e.g., E10231, E10450',
+      answer: ORPH,
+      hint: 'Put HR separations in pane A and SIS active accounts in pane B. Match on <b>employee ID</b>, not on name, and flag the A rows that <b>have</b> a match.',
+      debrief: '<p>Three separated people still have active SIS accounts: ' + ORPH.map(nm).join(', ') + '. All three are adjuncts.</p><p>Matching on name instead of employee ID adds a false hit: <b>' + D.twin.nm + '</b> left Penmore, and a current employee with the same name has an active account under a different employee ID. Unique identifiers are the only safe key for reperformance. Service accounts carry no employee ID and correctly match nothing.</p><p>Because both exports are complete and machine-readable, this test covers 100 percent of the population. That is stronger than any sample: there is no sampling risk in the result.</p>',
+      reviewNote: 'Reperform access removal by matching unique IDs across complete HR and system exports.' },
+    { id: 'used', type: 'set', points: 10, short: 'Sign-in after separation', title: 'Find access used after separation',
+      task: 'For the separated people who still have accounts, compare the last SIS sign-in with the separation date. Enter the employee IDs of anyone who signed in <b>after</b> separation.',
+      label: 'Employee IDs, separated by commas', placeholder: 'e.g., E10231',
+      answer: USED,
+      hint: 'With the match still in place, use <b>Lookup</b> to bring <b>Last sign-in</b> from pane B into pane A, then <b>Compare</b>: the new column is later than <b>Separation date</b>.',
+      debrief: '<p><b>' + USED.map(nm).join(', ') + '</b> signed in on ' + D.ACT.filter(function (a) { return a.emp === USED[0]; })[0].last + ', more than three months after separating on ' + SEPBY[USED[0]].sep + '. The other two accounts are dormant: a real exposure, but no evidence of use.</p><p>This changes the finding from a control gap to a possible incident. The practitioner does not investigate the session alone. Notify the information security team under the incident procedure now, so the account is disabled and the activity is reviewed, and record the escalation in the workpaper. Penmore’s October breach also used a stale account, which is exactly what this KCI should have warned about.</p>',
+      reviewNote: 'Access used after separation is escalated as a potential incident, not held for the report.' },
+    { id: 'method', type: 'choice', points: 8, short: 'C2 test method', title: 'Name the C2 test method',
+      task: 'You matched every HR separation against the SIS accounts yourself and compared the result with what the control should have produced. Which test method is that?',
+      options: ['Inquiry, because you used reports the service desk provided', 'Observation, because you watched the data in the evidence tool', 'Reperformance, because you independently executed the control’s logic over the population and compared outcomes', 'Walkthrough, because you traced the deprovisioning process end to end'],
+      answer: 2,
+      hint: 'Which method has the tester carry out the control independently and compare the result?',
+      debrief: '<p>This is <b>reperformance</b>, the strongest of the four methods: you executed the control’s logic yourself and compared the result with what the control should have produced. Inquiry asks people. Observation watches the control happen at a moment in time. A walkthrough traces one transaction to confirm design and implementation. It supports design effectiveness but does not test operation across a period.</p><p>Note that the data came from the system owners, so completeness still matters. Reconciling the HR export to the HR system’s separation count is part of the workpaper.</p>',
+      reviewNote: 'Reperformance independently executes the control and gives the strongest assurance.' },
+    { id: 'ineff', type: 'set', points: 12, short: 'Ineffective controls', title: 'Which controls are not operating effectively',
+      task: 'Based on your testing and the ICT-04 exception rule, enter the IDs of every control that was <b>not</b> operating effectively for the period.',
+      label: 'Control IDs, separated by commas', placeholder: 'e.g., C1',
+      answer: ['C2', 'C3'],
+      hint: 'Check C1 too: draw the access review sample and compare each sign-off with the quarter end. ICT-04 expects zero exceptions.',
+      debrief: '<p><b>C2</b> (' + ORPH.length + ' of ' + D.SEP.length + ' separations, ' + c2Rate + ' percent) and <b>C3</b> (' + CHGX.length + ' of 25) were not operating effectively. <b>C1</b> had no exceptions in its 10-item sample: every sampled review was signed within 15 days of quarter end and every requested removal closed within 10 days, so it is effective as tested.</p><p>Two cautions belong in the workpaper. A clean sample is evidence, not proof: the C1 population still carries sampling risk. And C1 is a detective backstop for C2: a quarterly review should eventually catch separated users, but only for the privileged role groups it covers, and adjunct teaching accounts are not among them.</p>',
+      reviewNote: 'Under a zero-exception standard, any confirmed exception means the control did not operate effectively.' },
+    { id: 'c2design', type: 'choice', points: 12, short: 'C2 root cause', title: 'Conclude on C2 design and operation',
+      task: 'All three deprovisioning exceptions are adjuncts, whose separations are entered by Academic Affairs. The C2 narrative says the service desk acts on termination notices from Human Resources. What is the best conclusion?',
+      options: ['Operating deficiency only: the service desk was slow on three tickets and needs coaching', 'Design deficiency: the trigger covers only HR-processed separations, so adjunct separations never reach the service desk. Report it to the control owner and the risk owner with a recommended fix', 'Effective: 39 of 42 accounts were removed, which is above 90 percent', 'No conclusion is possible until internal audit retests the control in January'],
+      answer: 1,
+      hint: 'Ask whether the control would have worked for adjuncts even if every analyst did everything the narrative says.',
+      debrief: '<p>This is a <b>design deficiency</b>. Even performed perfectly, C2 never fires for adjuncts, because Academic Affairs ends their contracts outside the HR process that sends the notice. The four adjuncts who were removed were caught by chance, when a department chair happened to file a ticket. Coaching the service desk would fix nothing.</p><p>The practitioner reports the deficiency and recommends a fix, such as adding adjunct contract end dates to the deprovisioning feed and a monthly HR-to-SIS reconciliation as a detective KCI. The control owner designs the fix, and Dr. Faulk, as risk owner, decides on the response and the timeline. A percentage above 90 is not a pass under a zero-exception standard, and waiting for audit leaves live accounts open.</p>',
+      reviewNote: 'When every exception shares a cause the control never covers, the deficiency is in design, not operation.' },
+    { id: 'memo', type: 'text', points: 16, short: 'Workpaper summary', title: 'Write the workpaper summary', reportTitle: 'Control testing summary for the control owners and the risk owner',
+      task: 'Write the summary Odalys Brenneman will send to the control owners and to Dr. Faulk. Cover each control’s test and result, the conclusions, and your recommendations with owners.',
+      fields: [
+        { key: 'tests', label: 'Tests performed: population, sample or 100 percent, seed, method', min: 60, placeholder: 'C1: 10 of 30 reviews, seed 4471, inspection. C2: ... C3: ...' },
+        { key: 'exc', label: 'Exceptions found, with IDs and rates', min: 60, placeholder: 'List each exception and the rate for each control.' },
+        { key: 'concl', label: 'Conclusions on design and operating effectiveness', min: 50, placeholder: 'For each control: design effective or deficient; operating effective or not.' },
+        { key: 'recs', label: 'Recommendations, escalations, and who owns each decision', min: 60, placeholder: 'What you recommend, what you escalated, and who decides.' }
+      ],
+      hint: 'Lead with the account used after separation. Keep the practitioner’s role clear: recommend and escalate, while the owners decide and fix.',
+      debrief: '<p><b>Model summary.</b> <b>Tests:</b> C1, inspection of signed reviews and removal tickets for 10 of 30 quarterly reviews (seed 4471). C2, reperformance of 100 percent of 42 separations against the October 2 SIS export, matched on employee ID. C3, inspection of 25 of 160 change tickets and their CAB minutes (seed 2611).</p><p><b>Exceptions:</b> C1, none (0 percent). C2, ' + ORPH.join(', ') + ' still active, ' + c2Rate + ' percent; ' + USED[0] + ' signed in after separation and was referred to information security as a potential incident. C3, ' + CHGX.join(' and ') + ', ' + chgRate + ' percent; ' + EMOK.map(function (c) { return c.id; }).join(' and ') + ' (emergency, ECAB within 2 days) and the standard changes were policy-permitted and are not exceptions.</p><p><b>Conclusions:</b> C1 designed and operating effectively as tested. C2 has a design deficiency: adjunct separations from Academic Affairs never trigger it. C3 is soundly designed but did not operate effectively: one change went live before approval and one deferred change was deployed.</p><p><b>Recommendations:</b> disable the three accounts now (service desk manager); add adjunct contract end dates to the deprovisioning trigger and run a monthly HR-to-SIS reconciliation reported as a KCI (control owner, with Academic Affairs); block deployment in the release pipeline until the CAB approval is recorded (change manager). Dr. Faulk, as risk owner, decides the response and accepts any residual risk; we track the actions in the risk register and retest in Q1 2027.</p>',
+      reviewNote: 'A workpaper summary states method, exceptions with IDs, conclusions, and owner-assigned actions.' }
+  ],
+
+  /* ===================== Workbench ===================== */
+  workbench: function (root, api) {
+    var esc = api.esc;
+    var samples = api.note('samples') || {};
+    var wp = api.note('wp') || {};
+    var CTRL = [
+      ['C1', 'Quarterly SIS privileged access review', 'SIS Application Manager (Theo Lindqvist)', 'Manual, detective. Quarterly, one review per privileged role group (10 groups).', 'Each role group owner signs the review within 15 days after quarter end, and every removal requested is completed within 10 days of sign-off.', 'Access review log, 30 reviews'],
+      ['C2', 'SIS deprovisioning on separation', 'IT Service Desk Manager (Priya Wendt)', 'Manual, preventive. Runs for each separation.', 'When Human Resources processes a separation, the HR system sends a termination notice to the service desk queue, and an analyst disables the SIS account within 1 business day.', 'HR separations, 42; SIS active accounts export'],
+      ['C3', 'Change approval before deployment', 'Change Manager (Graham Osei)', 'Manual, preventive. Runs for each production change.', 'Every normal change to SIS production is approved by the Change Advisory Board (CAB) before it is deployed, and the approval is recorded in the CAB minutes.', 'SIS change tickets, 160']
+    ];
+    var POP = { uar: { n: D.UAR.length, name: 'C1 access reviews', seed: D.SEED.uar }, chg: { n: D.CHG.length, name: 'C3 change tickets', seed: D.SEED.chg } };
+
+    root.innerHTML =
+      '<div class="lb-tool">' +
+      '<div class="lb-tabs" role="tablist" aria-label="Workbench tools">' +
+        '<button role="tab" id="tb-tp" aria-controls="pn-tp" aria-selected="true">Test plan</button>' +
+        '<button role="tab" id="tb-sm" aria-controls="pn-sm" aria-selected="false" tabindex="-1">Sampler</button>' +
+        '<button role="tab" id="tb-ev" aria-controls="pn-ev" aria-selected="false" tabindex="-1">Evidence</button>' +
+        '<button role="tab" id="tb-wp" aria-controls="pn-wp" aria-selected="false" tabindex="-1">Workpaper</button></div>' +
+      /* test plan */
+      '<div class="lb-panel" role="tabpanel" id="pn-tp" aria-labelledby="tb-tp">' +
+        '<p class="eyebrow">Control matrix, SIS access and change, Q1 to Q3 2026</p>' +
+        '<div class="table-wrap b5-tbl"><table class="data" style="min-width:820px"><thead><tr><th scope="col">ID</th><th scope="col">Control</th><th scope="col">Control owner</th><th scope="col">Nature and frequency</th><th scope="col">Control narrative (design)</th><th scope="col">Population source</th></tr></thead><tbody>' +
+          CTRL.map(function (c) { return '<tr><th scope="row">' + c[0] + '</th><td><b>' + esc(c[1]) + '</b></td><td>' + esc(c[2]) + '</td><td>' + esc(c[3]) + '</td><td>' + esc(c[4]) + '</td><td>' + esc(c[5]) + '</td></tr>'; }).join('') +
+        '</tbody></table></div>' +
+        '<div class="b5-flex" style="margin-top:1rem"><div class="b5-col"><div class="b5-box"><h4>ICT-04 Internal Control Testing Standard (excerpt)</h4><ul>' +
+          '<li><b>Population first.</b> Reconcile the population count to the source system before sampling. Record the reconciliation.</li>' +
+          '<li><b>Random selection.</b> Draw samples at random with a recorded seed, so a reviewer can draw the same items.</li>' +
+          '<li><b>Full-population testing.</b> When complete, machine-readable data exist from both the source and the target system, reperform the control over 100 percent of the population instead of sampling.</li>' +
+          '<li><b>Exceptions.</b> An exception is any instance where the control did not operate as designed. The expected number of exceptions is zero. One or more confirmed exceptions means the control did not operate effectively for the period.</li>' +
+          '<li><b>Reporting.</b> Report every exception to the control owner and every deficiency to the risk owner. Possible unauthorized access is referred to information security at once.</li></ul></div></div>' +
+        '<div class="b5-col"><div class="table-wrap b5-tbl"><table class="data"><caption class="b5-note" style="caption-side:top;text-align:left">ICT-04 sample sizes for manual controls</caption><thead><tr><th scope="col">Times the control operated in the period</th><th scope="col">Sample size</th></tr></thead><tbody>' +
+          '<tr><td>1 to 4</td><td>All</td></tr><tr><td>5 to 52</td><td>10</td></tr><tr><td>53 to 365</td><td>25</td></tr><tr><td>More than 365</td><td>40</td></tr></tbody></table></div>' +
+          '<div class="b5-box" style="margin-top:1rem"><h4>Change policy CM-02: permitted variations (not exceptions)</h4><ul>' +
+          '<li><b>Standard changes</b> run under a pre-approved change model and need no CAB approval date.</li>' +
+          '<li><b>Emergency changes</b> may be deployed first and approved by the Emergency CAB (ECAB) no more than 2 days after deployment.</li>' +
+          '<li><b>Normal changes</b> must be approved by the CAB before deployment, and the CAB minutes are the record of approval.</li></ul></div>' +
+          '<p class="b5-note"><b>Seeds recorded in this plan:</b> C1 access reviews <span class="b5-seed">' + D.SEED.uar + '</span>, C3 change tickets <span class="b5-seed">' + D.SEED.chg + '</span>.</p></div></div>' +
+      '</div>' +
+      /* sampler */
+      '<div class="lb-panel" role="tabpanel" id="pn-sm" aria-labelledby="tb-sm" hidden>' +
+        '<p class="b5-note">The sampler shuffles the population with the seed from the test plan and takes the first <i>n</i> items. The same seed and size always give the same sample. The drawn sample loads into the Evidence tab as its own table, with the inspection records attached.</p>' +
+        '<div class="b5-form"><div class="b5-f"><label for="sm-pop">Population</label><select id="sm-pop"><option value="uar">C1 access reviews (' + D.UAR.length + ')</option><option value="chg">C3 change tickets (' + D.CHG.length + ')</option></select></div>' +
+          '<div class="b5-f"><label for="sm-n">Sample size</label><input type="number" id="sm-n" min="1" step="1"></div>' +
+          '<div class="b5-f"><span class="b5-form-l" style="font:700 .72rem Arial,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted)">Seed (from the plan)</span><span class="b5-seed" id="sm-seed"></span></div>' +
+          '<button type="button" class="btn" id="sm-draw">Draw sample</button><button type="button" class="btn ghost" id="sm-clear">Clear this sample</button></div>' +
+        '<p class="b5-msg" id="sm-msg" role="status" aria-live="polite"></p>' +
+        '<div id="sm-out"></div>' +
+      '</div>' +
+      /* evidence */
+      '<div class="lb-panel" role="tabpanel" id="pn-ev" aria-labelledby="tb-ev" hidden><div id="b5-ev"></div></div>' +
+      /* workpaper */
+      '<div class="lb-panel" role="tabpanel" id="pn-wp" aria-labelledby="tb-wp" hidden>' +
+        '<p class="b5-note">Record your testing here. The rate and the ICT-04 result update as you type. This sheet is your working record; the checklist is where your conclusions are verified.</p>' +
+        '<div class="table-wrap b5-tbl b5-wp"><table class="data"><thead><tr><th scope="col">Control</th><th scope="col">Test method</th><th scope="col">Items tested</th><th scope="col">Exceptions</th><th scope="col">Rate</th><th scope="col">Design</th><th scope="col">Operation</th></tr></thead><tbody id="wp-body"></tbody></table></div>' +
+        '<p class="b5-msg" id="wp-msg" role="status" aria-live="polite"></p>' +
+      '</div></div>';
+
+    /* tabs */
+    var tabs = [].slice.call(root.querySelectorAll('[role=tab]'));
+    function sel(t) { tabs.forEach(function (x) { var on = x === t; x.setAttribute('aria-selected', on); x.tabIndex = on ? 0 : -1; document.getElementById(x.getAttribute('aria-controls')).hidden = !on; }); api.note('tab', t.id); }
+    tabs.forEach(function (t, i) { t.addEventListener('click', function () { sel(t); }); t.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { var n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length]; sel(n); n.focus(); } }); });
+    var saved = api.note('tab'); if (saved && document.getElementById(saved)) sel(document.getElementById(saved));
+
+    /* evidence panes */
+    var UCOLS = [{ k: 'id', h: 'Review ID' }, { k: 'grp', h: 'Role group', wrap: 1 }, { k: 'qe', h: 'Quarter end' }, { k: 'rv', h: 'Reviewer', wrap: 1 }, { k: 'so', h: 'Signed off' }, { k: 'n', h: 'Accounts reviewed', num: 1 }, { k: 'rem', h: 'Removals requested', num: 1 }, { k: 'done', h: 'Removals completed', blank: '(none requested)' }];
+    var CCOLS = [{ k: 'id', h: 'Ticket' }, { k: 'sum', h: 'Summary', wrap: 1 }, { k: 'ty', h: 'Type' }, { k: 'req', h: 'Requested by' }, { k: 'appr', h: 'CAB approved', blank: '(no date)' }, { k: 'dep', h: 'Deployed' }, { k: 'by', h: 'Approval route' }];
+    function panes() {
+      var us = samples.uar ? D.sample('uar', samples.uar) : [], cs = samples.chg ? D.sample('chg', samples.chg) : [];
+      return [
+        { id: 'sep', title: 'HR separations', source: 'Human Resources export, separations January 1 to September 30, 2026. 42 records, reconciled to the HR system report.', cols: [{ k: 'emp', h: 'Employee ID' }, { k: 'nm', h: 'Name' }, { k: 'type', h: 'Type' }, { k: 'dept', h: 'Department' }, { k: 'sep', h: 'Separation date' }, { k: 'by', h: 'Separation entered by', wrap: 1 }], rows: D.SEP },
+        { id: 'act', title: 'SIS active accounts', source: 'SIS user export, all accounts with status Active, taken October 2, 2026. Service accounts carry no employee ID.', cols: [{ k: 'user', h: 'Username' }, { k: 'emp', h: 'Employee ID', blank: '(none)' }, { k: 'nm', h: 'Display name' }, { k: 'role', h: 'Role' }, { k: 'st', h: 'Status' }, { k: 'last', h: 'Last sign-in' }], rows: D.ACT },
+        { id: 'chgs', title: 'C3 change sample with CAB minutes', source: samples.chg ? 'Sample of ' + cs.length + ' drawn with seed ' + D.SEED.chg + '. The CAB minutes column records what the minutes for each ticket show.' : 'No sample drawn yet. Use the Sampler tab.', cols: CCOLS.concat([{ k: 'min', h: 'CAB minutes', wrap: 1 }]), rows: cs },
+        { id: 'uars', title: 'C1 access review sample', source: samples.uar ? 'Sample of ' + us.length + ' drawn with seed ' + D.SEED.uar + '. Evidence inspected: signed review exports and removal tickets.' : 'No sample drawn yet. Use the Sampler tab.', cols: UCOLS, rows: us },
+        { id: 'chg', title: 'C3 change tickets (population)', source: 'Change system export, SIS production changes deployed January 1 to September 30, 2026. 160 tickets, reconciled to the change system report.', cols: CCOLS, rows: D.CHG },
+        { id: 'uar', title: 'C1 access reviews (population)', source: 'Access review log, Q1 to Q3 2026. 30 reviews: 10 role groups, 3 quarters.', cols: UCOLS, rows: D.UAR }
+      ];
+    }
+    function buildEV() { window.EV.create(root.querySelector('#b5-ev'), { id: 'b5', api: api, panes: panes(), a: 'sep', b: 'act', intro: 'Choose the evidence for each pane. Pane A is the table you test; pane B is the table you match against. Columns sort when you select their headers.' }); }
+    buildEV();
+
+    /* sampler */
+    var popSel = root.querySelector('#sm-pop'), nIn = root.querySelector('#sm-n'), msg = root.querySelector('#sm-msg');
+    var smPop = api.note('smPop') || 'uar'; popSel.value = smPop;
+    function drawOut() {
+      var p = popSel.value; root.querySelector('#sm-seed').textContent = POP[p].seed;
+      nIn.value = samples[p] || '';
+      var h = '';
+      ['uar', 'chg'].forEach(function (k) {
+        if (!samples[k]) return;
+        var s = D.sample(k, samples[k]);
+        h += '<div class="b5-drawn"><h5>' + esc(POP[k].name) + ': ' + s.length + ' of ' + POP[k].n + ' drawn, seed ' + POP[k].seed + '</h5><ol class="b5-ids">' + s.map(function (x, i) { return '<li><span>' + (i + 1) + '.</span>' + esc(x.id) + '</li>'; }).join('') + '</ol></div>';
+      });
+      root.querySelector('#sm-out').innerHTML = h || '<p class="b5-note">No samples drawn yet.</p>';
+    }
+    popSel.addEventListener('change', function () { api.note('smPop', popSel.value); msg.textContent = ''; msg.className = 'b5-msg'; drawOut(); });
+    root.querySelector('#sm-draw').addEventListener('click', function () {
+      var p = popSel.value, n = parseInt(nIn.value, 10);
+      if (!(n >= 1) || n > POP[p].n) { msg.className = 'b5-msg bad'; msg.textContent = 'Enter a sample size from 1 to ' + POP[p].n + '.'; nIn.focus(); return; }
+      samples[p] = n; api.note('samples', samples); buildEV(); drawOut();
+      msg.className = 'b5-msg'; msg.innerHTML = 'Drew <b>' + n + '</b> of ' + POP[p].n + ' ' + esc(POP[p].name) + ' with seed ' + POP[p].seed + '. The sample is in the Evidence tab as <b>' + (p === 'uar' ? 'C1 access review sample' : 'C3 change sample with CAB minutes') + '</b>.';
+    });
+    root.querySelector('#sm-clear').addEventListener('click', function () { var p = popSel.value; delete samples[p]; api.note('samples', samples); buildEV(); drawOut(); msg.className = 'b5-msg'; msg.textContent = 'Cleared the ' + POP[popSel.value].name + ' sample.'; });
+    drawOut();
+
+    /* workpaper */
+    var METH = ['', 'Inquiry', 'Observation', 'Inspection', 'Reperformance'];
+    var DES = ['', 'Effective', 'Deficient'], OPS = ['', 'Effective', 'Not effective', 'Not tested'];
+    function opt(list, cur) { return list.map(function (o) { return '<option value="' + o + '"' + (o === (cur || '') ? ' selected' : '') + '>' + (o || 'Choose') + '</option>'; }).join(''); }
+    function rate(r) { var t = +r.t, e = +r.e; return t > 0 && r.e !== '' && r.e != null && e >= 0 ? Math.round(1000 * e / t) / 10 : null; }
+    function drawWP() {
+      root.querySelector('#wp-body').innerHTML = CTRL.map(function (c) {
+        var r = wp[c[0]] || {}, rt = rate(r), id = c[0];
+        var tag = rt == null ? '' : (+r.e === 0 ? '<span class="b5-tag ok">ICT-04: no exceptions</span>' : '<span class="b5-tag bad">ICT-04: not effective</span>');
+        return '<tr><th scope="row">' + id + '<br><span style="font-weight:400;color:var(--text-secondary)">' + esc(c[1]) + '</span></th>' +
+          '<td><label class="sr-only" for="wp-' + id + '-m">Test method for ' + id + '</label><select id="wp-' + id + '-m" data-c="' + id + '" data-f="m">' + opt(METH, r.m) + '</select></td>' +
+          '<td><label class="sr-only" for="wp-' + id + '-t">Items tested for ' + id + '</label><input type="number" min="0" step="1" id="wp-' + id + '-t" data-c="' + id + '" data-f="t" value="' + esc(r.t == null ? '' : r.t) + '"></td>' +
+          '<td><label class="sr-only" for="wp-' + id + '-e">Exceptions for ' + id + '</label><input type="number" min="0" step="1" id="wp-' + id + '-e" data-c="' + id + '" data-f="e" value="' + esc(r.e == null ? '' : r.e) + '"></td>' +
+          '<td><span class="b5-rate" id="wp-' + id + '-r">' + (rt == null ? '&ndash;' : rt + '%') + '</span><br>' + tag + '</td>' +
+          '<td><label class="sr-only" for="wp-' + id + '-d">Design conclusion for ' + id + '</label><select id="wp-' + id + '-d" data-c="' + id + '" data-f="d">' + opt(DES, r.d) + '</select></td>' +
+          '<td><label class="sr-only" for="wp-' + id + '-o">Operating conclusion for ' + id + '</label><select id="wp-' + id + '-o" data-c="' + id + '" data-f="o">' + opt(OPS, r.o) + '</select></td></tr>';
+      }).join('');
+      var bad = CTRL.filter(function (c) { var r = wp[c[0]] || {}; return +r.e > 0 && r.o === 'Effective'; });
+      var wm = root.querySelector('#wp-msg');
+      wm.className = 'b5-msg' + (bad.length ? ' bad' : '');
+      wm.textContent = bad.length ? 'Check ' + bad.map(function (c) { return c[0]; }).join(', ') + ': you recorded exceptions but concluded the control operates effectively. ICT-04 expects zero exceptions.' : '';
+      root.querySelectorAll('#wp-body select, #wp-body input').forEach(function (el) {
+        el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'change', function () {
+          var c = el.dataset.c; wp[c] = wp[c] || {}; wp[c][el.dataset.f] = el.value; api.note('wp', wp);
+          var keep = el.id; drawWP(); var f = document.getElementById(keep); if (f) f.focus();
+        });
+      });
+    }
+    drawWP();
+  },
+  onReset: function () { }
+};
+})();
+</script>
+<script src="evidence.js"></script>
+<script src="lab.js"></script>
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>A6 Respond, Own, and Manage Third Parties | CRISC 5-Day Faculty Workshop</title>
+<link rel="stylesheet" href="crisc-lesson.css">
+<link rel="stylesheet" href="practice.css">
+</head>
+<body>
+<div id="app"><noscript><p style="padding:2rem;font-family:Arial">This activity needs JavaScript enabled.</p></noscript></div>
+
+<script>
+window.ACTIVITY = {
+  id: 'A6',
+  title: 'Respond, Own, and Manage Third Parties',
+  accent: 'Manage Third Parties',
+  domain: 'Domain 3 (32%)',
+  time: '40 min',
+  level: 'Intermediate',
+  lessonHref: 'lesson05.html#s1',
+  lessonLabel: 'Lesson 5, Risk Response',
+  lede: 'Thornbury Freight runs trucking, cross-dock, and warehouse services across three states, and much of its operation now runs on vendors. Practice the response choices a risk practitioner brings to the owner: name the option, test it against appetite and cost, keep exceptions honest, and read a vendor’s assurance report for what it means to Thornbury’s own risk.',
+  concepts: [
+    { key: 'response', name: 'Choosing the response option', review: 'Lesson 5, Risk Response Options and Selection Criteria' },
+    { key: 'costben', name: 'Cost-benefit and residual risk', review: 'Lesson 5, Cost-Benefit Analysis and Residual Risk' },
+    { key: 'terms', name: 'Exceptions, exemptions, findings, and issues', review: 'Lesson 5, Issues, Findings, Exceptions, and Exemptions' },
+    { key: 'owner', name: 'Ownership and acceptance', review: 'Lesson 5, Risk and Control Ownership' },
+    { key: 'tprm', name: 'Third-party lifecycle and assurance', review: 'Lesson 5, Vendor and Supply Chain Risk' }
+  ],
+  stations: [
+    {
+      type: 'sort', short: 'Name the response', title: 'Accept, mitigate, transfer, avoid, or share?', concept: 'response',
+      instr: 'Each statement describes a decision Thornbury Freight made about a risk. Name the response option it represents. In this activity, <b>transfer</b> moves financial impact to an insurer, and <b>share</b> splits the loss with a contract partner, for example through an indemnity clause or a joint venture. Then select <b>Check answers</b>.',
+      hint: 'Ask what happens to the risk. Kept as it is, with a documented decision: accept. Made smaller by a control: mitigate. Paid for by an insurer: transfer. Split with a business partner under a contract: share. Gone because the activity stops: avoid.',
+      buckets: ['Accept', 'Mitigate', 'Transfer', 'Avoid', 'Share'],
+      review: { href: 'lesson05.html#s1', label: 'Lesson 5, Risk Response Options and Selection Criteria' },
+      items: [
+        { text: 'The VP of Fleet signs a documented decision to keep the older yard-management dashboard for one more year, with a review date, because its residual risk is within appetite.', answer: 0, why: 'Retaining the risk at its current level, with a documented decision by an authorized owner and a review date, is acceptance.' },
+        { text: 'Phishing-resistant MFA is required on the dispatch portal that drivers and brokers use.', answer: 1, why: 'A control that lowers the likelihood of account takeover is mitigation.' },
+        { text: 'Thornbury buys a cyber policy that pays for forensics, breach notification, and legal defense.', answer: 2, why: 'Insurance moves part of the financial impact to the insurer. Accountability and reputational harm stay with Thornbury.' },
+        { text: 'Thornbury stops offering same-day courier service in one city, because the regulatory exposure exceeds appetite and the service is not core to its strategy.', answer: 3, why: 'Stopping the activity that creates the risk is avoidance. It fits when no response reduces the risk enough at reasonable cost and the activity is not essential.' },
+        { text: 'The cold-chain sensor partner agrees to an indemnity clause, so it bears half of any loss caused by a failure of its platform.', answer: 4, why: 'Splitting the loss with a contract partner is sharing. The partner carries part of the impact under the contract terms.' },
+        { text: 'Anomaly monitoring is added to the route data feed so unusual downloads are flagged within minutes.', answer: 1, why: 'Detection that shortens the time to respond lowers impact. It is a mitigating control.' },
+        { text: 'Thornbury retires the public API that exposed shipment manifests, after finding that only two customers used it.', answer: 3, why: 'Removing the exposed service ends the activity, and with it the risk. That is avoidance.' },
+        { text: 'Thornbury and another carrier form a joint venture to run a shared cross-dock facility, each bearing half of the operating losses.', answer: 4, why: 'A joint venture that divides losses between partners is a sharing arrangement.' },
+        { text: 'A crime policy is purchased to cover losses from fraudulent funds transfers to fake carriers.', answer: 2, why: 'A policy that reimburses financial loss is a transfer to the insurer.' },
+        { text: 'The warehouse robotics network is segmented from the office network and given its own firewall rules.', answer: 1, why: 'Segmentation limits how far an attacker can move. It reduces impact and likelihood, so it is mitigation.' }
+      ]
+    },
+    {
+      type: 'calc', short: 'Cost-benefit', title: 'Two responses to a vendor breach',
+      instr: 'Thornbury’s warehouse management vendor holds customer shipment data. The risk practitioner is comparing two responses for the risk owner, the VP of Operations. Use the figures in the table. <b>ALE = ARO × SLE.</b> Value of a response = ALE before − ALE after − annual cost. Total cost of risk = residual ALE + annual response cost. Enter whole dollars, without the dollar sign.',
+      hint: 'Before any response: 0.4 × $900,000. Option A lowers only the frequency, so multiply the new ARO by the full SLE. Option B leaves the frequency at 0.4, but the loss Thornbury still carries per event is the deductible plus the reputational loss the policy does not cover.',
+      review: { href: 'lesson05.html#s2', label: 'Lesson 5, Cost-Benefit Analysis and Residual Risk' },
+      table: {
+        caption: 'Scenario: breach at the warehouse management vendor (all figures annual unless stated)',
+        head: ['Item', 'Value'],
+        rows: [
+          ['Expected breaches per year (ARO)', '0.4'],
+          ['Loss per breach (SLE)', '$900,000: $600,000 financial, $300,000 reputational'],
+          ['Option A: MFA on the vendor portal plus anomaly monitoring', 'Lowers ARO to 0.1. Annual cost $110,000'],
+          ['Option B: cyber insurance', 'Premium $45,000. Deductible $100,000 per event. Covers financial loss above the deductible, not reputational loss'],
+          ['Appetite set by the board', 'Residual ALE of $120,000 or less']
+        ]
+      },
+      items: [
+        { title: 'Before any response', label: 'ALE before any response', answer: 360000, unit: 'dollars', concept: 'costben', why: '0.4 × $900,000 = $360,000 a year.' },
+        { title: 'Option A: controls', label: 'Residual ALE after Option A', answer: 90000, unit: 'dollars', concept: 'costben', why: '0.1 × $900,000 = $90,000. The controls change how often the loss happens, not its size.' },
+        { title: 'Option A: controls', label: 'Annual value of Option A (ALE before − ALE after − annual cost)', answer: 160000, unit: 'dollars', concept: 'costben', why: '$360,000 − $90,000 − $110,000 = $160,000. The response is worth funding because the value is positive.' },
+        { title: 'Option A: controls', label: 'Total cost of risk with Option A (residual ALE + annual cost)', answer: 200000, unit: 'dollars', concept: 'costben', why: '$90,000 + $110,000 = $200,000. Residual ALE of $90,000 is within the $120,000 appetite.' },
+        { title: 'Option B: insurance', label: 'Residual ALE after Option B', answer: 160000, unit: 'dollars', concept: 'costben', why: 'Per event, Thornbury still carries the $100,000 deductible and the $300,000 reputational loss: $400,000. 0.4 × $400,000 = $160,000.' },
+        { title: 'Option B: insurance', label: 'Total cost of risk with Option B', answer: 205000, unit: 'dollars', concept: 'costben', why: '$160,000 + $45,000 = $205,000. Even if Option B had cost less, its residual ALE of $160,000 is above appetite. Appetite is the first test, and Option A is the one to recommend to the VP of Operations.' }
+      ]
+    },
+    {
+      type: 'scenario', short: 'Exceptions and findings', title: 'Exception, exemption, finding, or issue?', concept: 'terms',
+      instr: 'You are the risk practitioner in Thornbury’s second-line risk team. Each case is a known problem or deviation. Choose the <b>BEST</b> answer for how it should be named or handled.',
+      hint: 'An issue is any known problem that needs action. A finding comes from an audit, assessment, or test. An exception is approved, time-boxed, and has compensating controls. An exemption is a longer-term exclusion, approved at a higher level and reviewed periodically. Approval follows the residual risk, not the requester’s seniority.',
+      review: { href: 'lesson05.html#s5', label: 'Lesson 5, Issues, Findings, Exceptions, and Exemptions' },
+      items: [
+        {
+          title: 'Case 1: The handheld scanners', text: 'The operating system on 300 warehouse handheld scanners cannot take a required security patch for about 120 days, until the vendor releases new firmware. Operations cannot replace the scanners this year.',
+          parts: [
+            { q: 'What is the BEST way to handle the gap with the patching standard?', options: ['Rewrite the patching standard so it no longer applies to handheld devices', 'Approve a time-boxed exception with compensating controls, such as isolating the scanners on their own network segment, and set an expiry date', 'Grant a permanent exemption, since the scanners are outside IT’s control', 'Leave the gap undocumented until the firmware arrives'], answer: 1, why: 'A defined period of noncompliance calls for a formal exception: risk assessed, compensating controls in place, the right approver, and an expiry date. Changing the standard or granting a permanent exemption are weaker answers.' },
+            { q: 'Two years later, the same exception has been renewed four times with no change to the plan. What should you do?', options: ['Renew it again, since nothing has gone wrong', 'Close the exception and treat the scanners as compliant', 'Treat it as an undeclared exemption and escalate it for a formal decision by the right authority', 'Ask the scanner vendor to sign the renewal'], answer: 2, why: 'An exception renewed without change is an exemption in disguise. Escalation puts the decision with someone who has the authority to accept the longer-term risk.' }
+          ]
+        },
+        {
+          title: 'Case 2: The audit report', text: 'Internal audit tested access removal for 40 departed drivers. Six still had working accounts on the dispatch app more than 30 days after they left. Management has written an action plan with a due date.',
+          parts: [
+            { q: 'What is this result called?', options: ['A finding', 'An exception', 'An exemption', 'A risk acceptance'], answer: 0, why: 'A documented result of an audit or test that shows a control gap is a finding. It needs a management response, an action plan, an owner, and validation.' },
+            { q: 'When can the finding be closed?', options: ['When the action plan is approved', 'When the action is complete and audit, or another independent function, validates that the gap is fixed', 'When the dispatch manager confirms by email that accounts were removed', 'At the next annual audit, whatever its status'], answer: 1, why: 'A plan is not a fix. The finding closes when the work is done and the party that raised it validates the result.' }
+          ]
+        },
+        {
+          title: 'Case 3: The unstaffed depots', text: 'Thornbury’s small rural depots have no on-site staff overnight. The physical security standard requires a staffed visitor desk at every site. The security steering committee approves camera monitoring and badge readers instead, documents the rationale, and sets an annual review.',
+          parts: [
+            { q: 'What has the committee approved?', options: ['An issue', 'A finding', 'An exemption', 'A short-term exception'], answer: 2, why: 'A formally approved, longer-term exclusion that is reviewed periodically rather than expiring on a short timer is an exemption. It is approved at a higher level than an exception.' }
+          ]
+        },
+        {
+          title: 'Case 4: The night-shift report', text: 'A dispatcher tells the help desk that night-shift staff share one login on the load-planning system because there are not enough licenses.',
+          parts: [
+            { q: 'How should this be recorded FIRST?', options: ['As an issue, with an owner and a due date, linked to the affected risk in the register', 'As an audit finding', 'As an approved exception, since the business needs it', 'It should not be recorded until audit confirms it'], answer: 0, why: 'A known problem reported by staff is an issue. It is logged with an owner and a due date and tracked to closure. It is not an exception, because no one has assessed or approved it.' }
+          ]
+        },
+        {
+          title: 'Case 5: Who signs?', text: 'The IT operations manager requests an exception for an unsupported database server. The risk assessment shows residual risk above appetite. The delegation of authority lets the IT operations manager approve only exceptions within appetite.',
+          parts: [
+            { q: 'Who should approve or reject this exception?', concept: 'owner', options: ['The IT operations manager, who requested it', 'The risk practitioner, who assessed it', 'The business risk owner, with escalation to senior management because residual risk exceeds appetite', 'The database administrator, who runs the server'], answer: 2, why: 'Approval follows the residual risk. Above appetite, the decision moves to the risk owner and senior management. The practitioner advises; a signature from someone without authority is not an acceptance.' }
+          ]
+        }
+      ]
+    },
+    {
+      type: 'order', short: 'Third-party lifecycle', title: 'The vendor relationship, start to finish', concept: 'tprm',
+      instr: 'Put each list in order. The first is the third-party risk management lifecycle Thornbury applies to every new vendor. The second is how the risk practitioner works through an exception found in a vendor’s assurance report.',
+      hint: 'Depth of review depends on the tier, so tiering comes first. Requirements must be in the contract before access is granted. For the exception, understand it before you judge it, and judge it before anyone decides.',
+      topLabel: 'First',
+      bottomLabel: 'Last',
+      review: { href: 'lesson05.html#s4', label: 'Lesson 5, Vendor and Supply Chain Risk' },
+      groups: [
+        {
+          title: 'Third-party lifecycle at Thornbury',
+          items: [
+            { text: 'Ongoing monitoring: reassessment by tier, new SOC reports, SLA and KRI tracking', rank: 4, why: 'Monitoring runs for the life of the relationship, after the vendor is live.' },
+            { text: 'Planning and tiering: define the need, rate criticality and data sensitivity', rank: 0, why: 'The tier sets how deep the review must go, so it comes first.' },
+            { text: 'Contracting: security requirements, right to audit, breach notice, data return', rank: 2, why: 'What due diligence finds is turned into enforceable terms before the vendor gets access.' },
+            { text: 'Offboarding: revoke access, certify data destruction, transition the service', rank: 5, why: 'The relationship ends with access removed and data returned or destroyed.' },
+            { text: 'Due diligence: questionnaire, SOC 2 or ISO/IEC 27001 evidence, fourth parties, finances', rank: 1, why: 'Due diligence gathers the evidence, at the depth the tier requires.' },
+            { text: 'Onboarding: least-privilege access, named contacts, entry in the risk register', rank: 3, why: 'Access is granted only after the contract is signed, and the vendor joins the register.' }
+          ]
+        },
+        {
+          title: 'Working through a vendor SOC 2 exception',
+          items: [
+            { text: 'The vendor relationship owner decides on the response and it is recorded in the register', rank: 3, why: 'The owner decides, using the practitioner’s analysis.' },
+            { text: 'Read the exception and the vendor’s management response', rank: 0, why: 'Start by understanding exactly what failed, when, and what the vendor says it did about it.' },
+            { text: 'Monitor through a KRI and confirm the fix in the next report or a bridge letter', rank: 4, why: 'The response is not finished until evidence shows it worked.' },
+            { text: 'Evaluate the impact on Thornbury’s own risk, including complementary and compensating controls', rank: 1, why: 'The FIRST judgment is impact on the enterprise’s own risk. Terminating or ignoring are both premature.' },
+            { text: 'Recommend options, such as a remediation plan request or a contract change', rank: 2, why: 'The practitioner advises with options after the impact is understood.' }
+          ]
+        }
+      ]
+    },
+    {
+      type: 'scenario', short: 'SOC 2 report', title: 'Reading the warehouse vendor’s SOC 2 report', concept: 'tprm',
+      instr: 'Thornbury rates Quayline WMS, its warehouse management SaaS vendor, as Tier 1 (critical). The summary of Quayline’s latest SOC 2 report is below. It is now November 2026. Choose the <b>BEST</b> answer for each question.',
+      hint: 'Type II tests operation over a period. Exceptions are judged against Thornbury’s own risk. A CUEC is a control the vendor expects the customer to run. A carve-out leaves the subservice organization outside the report.',
+      review: { href: 'lesson05.html#s4', label: 'Lesson 5, Reading a SOC 2 report' },
+      items: [
+        {
+          title: 'Quayline WMS: SOC 2 summary',
+          text: 'The report covers the Quayline warehouse management platform that Thornbury uses. Thornbury has never reviewed its own user list on the platform. A quick check finds 14 former Thornbury employees with active Quayline accounts.',
+          table: {
+            caption: 'Quayline WMS SOC 2 report, summary',
+            head: ['Section', 'Content'],
+            rows: [
+              ['Report type and period', 'Type II, 1 July 2025 to 30 June 2026'],
+              ['Exception 1', 'Quarterly privileged access review not performed in one of four quarters'],
+              ['Exception 2', '2 of 25 sampled production changes had no documented approval'],
+              ['CUEC 1', 'Customers review their own user accounts at least quarterly'],
+              ['CUEC 2', 'Customers enforce MFA through their own single sign-on'],
+              ['Subservice organization', 'Cloud hosting provider, carve-out method']
+            ]
+          },
+          parts: [
+            { q: 'What should the risk practitioner do FIRST about the two exceptions?', options: ['Recommend ending the contract', 'Evaluate their impact on Thornbury’s own risk, including any compensating or complementary controls', 'Ignore them, since the auditor issued the report', 'Ask Quayline to remove them from the report'], answer: 1, why: 'An exception is a fact about the vendor. The question for Thornbury is what it means for Thornbury’s risk. Termination and ignoring are both premature.' },
+            { q: 'What do the 14 active former-employee accounts show?', options: ['A Quayline control failure that Quayline must fix', 'A CUEC that Thornbury has not performed, so Quayline’s controls may not protect Thornbury', 'Nothing, because the report has no exception for it', 'A carve-out problem at the hosting provider'], answer: 1, why: 'Reviewing customer users is a complementary user entity control. Quayline assumes Thornbury does it. Because Thornbury did not, the gap is Thornbury’s.' },
+            { q: 'Who should own fixing the user-review gap?', concept: 'owner', options: ['Quayline’s security team', 'The external auditor who wrote the report', 'A named Thornbury control owner, such as the warehouse systems manager', 'The risk practitioner, who found it'], answer: 2, why: 'The CUEC is Thornbury’s control, so a Thornbury control owner operates it and keeps evidence. The practitioner identifies the gap and recommends; the practitioner does not run the control.' },
+            { q: 'The cloud hosting provider is carved out. What does that mean for Thornbury?', options: ['The hosting provider’s controls were tested and passed', 'The hosting provider’s controls are excluded from the report, so Thornbury needs separate assurance over them', 'The hosting provider is no longer used', 'Thornbury must audit the hosting provider itself before renewal'], answer: 1, why: 'A carve-out excludes the subservice organization’s controls. Thornbury should obtain other assurance, such as the provider’s own SOC 2 report, rather than assume they are covered.' },
+            { q: 'The report period ended on 30 June 2026. What should Thornbury request to cover the months since then?', options: ['A Type I report', 'A bridge (gap) letter from Quayline', 'A new security questionnaire only', 'Nothing, since the report is under a year old'], answer: 1, why: 'A bridge letter from the vendor covers the time between the end of the report period and today.' }
+          ]
+        }
+      ]
+    },
+    {
+      type: 'reflect', short: 'Reflect', title: 'Reflect on your readiness',
+      instr: 'Rate your confidence on each concept, then answer the prompts. Your responses appear in the summary report.',
+      prompts: [
+        { key: 'shift', label: 'In the cost-benefit station, the cheaper-looking option failed the appetite test. How would you explain that order of tests to a student or a business manager?' },
+        { key: 'next', label: 'Which concept from this activity will you review before the next lesson, and how?' }
+      ]
+    }
+  ]
+};
+</script>
+<script src="practice.js"></script>
+</body>
+</html>

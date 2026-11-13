@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRISC Exam-Day One-Pager | CRISC Workshop</title>
+<link rel="stylesheet" href="crisc-lesson.css">
+<style>
+  .sheet-wrap { max-width: 1080px; margin: 0 auto; padding: 1.75rem 1.5rem 2.5rem; }
+  .sheet-bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.1rem; }
+  .sheet-bar p { font-family: Arial, sans-serif; font-size: 0.84rem; color: var(--text-secondary); margin: 0; max-width: 680px; line-height: 1.55; }
+  .sheet { background: var(--card-bg); border: 1px solid var(--border); border-top: 4px solid var(--gold); border-radius: 6px; padding: 1.1rem 1.25rem 1rem; font-family: Arial, sans-serif; color: var(--text-primary); }
+  .sh-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+  .sh-head h1 { font-family: Georgia, serif; font-size: 1.45rem; color: var(--text-primary); line-height: 1.15; margin: 0; }
+  .sh-head h1 span { color: var(--gold); }
+  .sh-head .tag { font-size: 0.72rem; color: var(--text-muted); }
+  .facts { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.65rem 0 0.75rem; }
+  .facts span { font-size: 0.72rem; background: var(--navy); color: #fff; border-radius: 3px; padding: 0.22rem 0.55rem; }
+  .facts span b { color: #f5c48a; }
+  .facts span.w { background: var(--jade-pale); color: var(--jade-dark); border: 1px solid var(--jade-border); }
+  .facts span.w b { color: var(--text-primary); }
+  .box { border: 1px solid var(--border); border-radius: 4px; padding: 0.5rem 0.65rem; background: var(--card-bg); break-inside: avoid; }
+  .box h2 { font-family: 'Arial Narrow', Arial, sans-serif; font-size: 0.74rem; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); margin: 0 0 0.3rem; }
+  .box.mind { background: var(--gold-pale); border-left: 4px solid var(--gold); }
+  .box.own { border-left: 4px solid var(--jade); }
+  .box ol, .box ul { margin: 0; padding-left: 1.05rem; font-size: 0.78rem; line-height: 1.42; color: var(--text-secondary); }
+  .box li { margin: 0.08rem 0; }
+  .box li b { color: var(--text-primary); }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 0.6rem; }
+  .row3 { display: grid; grid-template-columns: 1.1fr 1fr 1fr; gap: 0.6rem; margin-top: 0.6rem; }
+  .traps { margin: 0; }
+  .trap-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 1rem; }
+  .trap { display: grid; grid-template-columns: 1.3rem 1fr; gap: 0.2rem; padding: 0.22rem 0; border-bottom: 1px solid var(--border); font-size: 0.76rem; line-height: 1.35; }
+  .trap .n { font-family: 'Arial Narrow', Arial, sans-serif; font-weight: 900; color: var(--jade); }
+  .trap .t { color: var(--wrong); font-weight: 700; }
+  .trap .d { color: var(--text-secondary); }
+  .trap .d b { color: var(--text-primary); }
+  .fx { font-family: 'SFMono-Regular', Consolas, Menlo, monospace; font-size: 0.74rem; color: var(--text-primary); background: var(--blue-pale); border-radius: 3px; padding: 0.05rem 0.3rem; white-space: nowrap; }
+  table.mini { width: 100%; border-collapse: collapse; font-size: 0.74rem; line-height: 1.35; }
+  table.mini td { padding: 0.16rem 0.3rem; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--text-secondary); }
+  table.mini td:first-child { font-weight: 700; color: var(--text-primary); white-space: nowrap; }
+  .ladder { display: flex; align-items: center; gap: 0.25rem; flex-wrap: wrap; font-size: 0.72rem; margin: 0.15rem 0 0.25rem; }
+  .ladder span { border: 1px solid var(--jade-border); background: var(--jade-pale); color: var(--jade-dark); border-radius: 3px; padding: 0.08rem 0.35rem; font-weight: 700; }
+  .ladder span:last-child { background: var(--jade); color: #fff; border-color: var(--jade); }
+  .ladder i { color: var(--text-muted); font-style: normal; }
+  .small { font-size: 0.72rem; color: var(--text-secondary); line-height: 1.4; margin: 0.2rem 0 0; }
+  .small b { color: var(--text-primary); }
+  .print-note { display: none; }
+  @media (max-width: 820px) { .row2, .row3, .trap-grid { grid-template-columns: 1fr; } .fx { white-space: normal; } }
+  @media print {
+    @page { size: letter portrait; margin: 0.32in; }
+    html { font-size: 12.6px; }
+    body { background: #fff; }
+    .no-print, footer, .topnav { display: none !important; }
+    .sheet-wrap { max-width: none; padding: 0; }
+    .sheet { border: none; padding: 0; border-radius: 0; }
+    .row2, .row3 { grid-template-columns: 1fr 1fr; }
+    .row3 { grid-template-columns: 1.1fr 1fr 1fr; }
+    .trap-grid { grid-template-columns: 1fr 1fr; }
+    .print-note { display: block; font-size: 0.66rem; color: #555; font-style: italic; margin-top: 0.4rem; }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-seal">CRISC<br>PREP</div>
+    <span class="nav-title">5-Day Faculty Workshop</span>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#lessons">Lessons</a></li>
+      <li><a href="index.html#practice">Practice</a></li>
+      <li><a href="index.html#schedule">Schedule</a></li>
+      <li><a href="index.html#domains">Domains</a></li>
+      <li><a href="index.html#exam-prep">Exam Prep</a></li>
+      <li><a href="index.html#faculty-tools">Faculty Tools</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="sheet-wrap">
+  <div class="sheet-bar no-print">
+    <p><a href="index.html#exam-prep" style="color:var(--gold)">&#8592; Exam Prep</a> &nbsp;&middot;&nbsp; The highest-yield material from the workshop on one page. Print it and review it the morning of the exam.</p>
+    <button type="button" class="btn" onclick="window.print()">&#128424;&#65039; Print / Save as PDF</button>
+  </div>
+
+  <article class="sheet" aria-label="CRISC exam-day one-pager">
+    <div class="sh-head">
+      <h1>CRISC <span>Exam-Day One-Pager</span></h1>
+      <span class="tag">Think like a risk practitioner: advise, analyze, report. The owner decides.</span>
+    </div>
+    <div class="facts" aria-label="Exam facts">
+      <span><b>150</b> questions</span><span><b>4</b> hours</span><span>Scaled <b>200 to 800</b>, pass <b>450</b></span><span><b>4</b> domains</span>
+      <span class="w">D1 Governance <b>26%</b></span><span class="w">D2 Risk Assessment <b>22%</b></span><span class="w">D3 Risk Response and Reporting <b>32%</b></span><span class="w">D4 Technology and Security <b>20%</b></span>
+    </div>
+
+    <div class="row2">
+      <section class="box mind">
+        <h2>The practitioner mindset filters</h2>
+        <ol>
+          <li><b>Advise, and the owner decides.</b> You analyze, recommend, and report. The accountable risk owner selects the response and accepts residual risk.</li>
+          <li><b>Business objectives first.</b> Risk only matters in relation to what the business is trying to achieve. Start with objectives and context.</li>
+          <li><b>Assess before you respond.</b> Identify and analyze (or reassess after a change) before choosing controls, tools, or escalation.</li>
+          <li><b>Process and owner before tools.</b> A named owner and a working process come before any technology purchase.</li>
+        </ol>
+      </section>
+      <section class="box own">
+        <h2>Ownership rules</h2>
+        <ul>
+          <li><b>Board and executive management:</b> approve risk appetite; ultimately accountable for risk governance.</li>
+          <li><b>Risk owner (business):</b> accountable for the risk; selects the response; accepts residual risk and exceptions.</li>
+          <li><b>Control owner:</b> responsible for designing and operating a specific control.</li>
+          <li><b>Risk practitioner (second line):</b> facilitates, analyzes, monitors, reports. Never accepts risk for the owner.</li>
+          <li><b>Data owner (business):</b> classifies data, approves access. <b>Custodian (IT):</b> implements protection.</li>
+          <li><b>Internal audit (third line):</b> independent assurance. Does not own controls or make management decisions.</li>
+        </ul>
+      </section>
+    </div>
+
+    <section class="box traps">
+      <h2>15 trap answers, and what to choose instead</h2>
+      <div class="trap-grid">
+        <div class="trap"><span class="n">1</span><span><span class="t">Fix it yourself.</span> <span class="d">Advise and coordinate; <b>the owner acts</b>.</span></span></div>
+        <div class="trap"><span class="n">2</span><span><span class="t">Practitioner accepts the risk.</span> <span class="d">Only the <b>risk owner</b> accepts residual risk.</span></span></div>
+        <div class="trap"><span class="n">3</span><span><span class="t">Buy a tool to close the gap.</span> <span class="d">Start from objectives, <b>owner, and process</b>.</span></span></div>
+        <div class="trap"><span class="n">4</span><span><span class="t">Implement controls right away.</span> <span class="d"><b>Assess the risk first</b>, then respond.</span></span></div>
+        <div class="trap"><span class="n">5</span><span><span class="t">Pick the most secure option.</span> <span class="d">Pick the <b>cost-justified</b> option within appetite.</span></span></div>
+        <div class="trap"><span class="n">6</span><span><span class="t">KRI breached: raise the threshold.</span> <span class="d"><b>Escalate</b> on the defined path to the owner.</span></span></div>
+        <div class="trap"><span class="n">7</span><span><span class="t">Insurance transfers the risk fully.</span> <span class="d">It shares cost; <b>accountability stays</b>.</span></span></div>
+        <div class="trap"><span class="n">8</span><span><span class="t">Rank vulnerabilities by CVSS alone.</span> <span class="d">Use <b>exploitation evidence + asset criticality</b>.</span></span></div>
+        <div class="trap"><span class="n">9</span><span><span class="t">Send the board the full register.</span> <span class="d">Top risks <b>vs appetite</b>, trends, decisions needed.</span></span></div>
+        <div class="trap"><span class="n">10</span><span><span class="t">Late action plan: reset or close it.</span> <span class="d"><b>Report the delay</b> and exposure to the owner.</span></span></div>
+        <div class="trap"><span class="n">11</span><span><span class="t">Interview the control owner as proof.</span> <span class="d">Inquiry is weakest; <b>reperform</b> a sample.</span></span></div>
+        <div class="trap"><span class="n">12</span><span><span class="t">IT owns and classifies the data.</span> <span class="d">The <b>business data owner</b> does.</span></span></div>
+        <div class="trap"><span class="n">13</span><span><span class="t">Vendor SOC 2 exception: terminate.</span> <span class="d"><b>Evaluate the impact</b> and follow up on remediation.</span></span></div>
+        <div class="trap"><span class="n">14</span><span><span class="t">Open-ended or verbal exception.</span> <span class="d">Documented, <b>time-bound</b>, compensating, owner-accepted.</span></span></div>
+        <div class="trap"><span class="n">15</span><span><span class="t">Block the new technology (AI).</span> <span class="d">Find out how it is used, <b>assess, then govern</b>.</span></span></div>
+        <div class="trap"><span class="n">&#10003;</span><span class="d"><b>Tie-breaker:</b> if two answers look right, choose the one that informs the <b>owner</b> with <b>analysis</b> tied to <b>objectives</b>.</span></div>
+      </div>
+    </section>
+
+    <div class="row3">
+      <section class="box">
+        <h2>Key formulas</h2>
+        <table class="mini">
+          <tr><td>SLE</td><td><span class="fx">AV x EF</span> asset value x exposure factor</td></tr>
+          <tr><td>ARO</td><td>events per year (once in 4 yrs = <span class="fx">0.25</span>)</td></tr>
+          <tr><td>ALE</td><td><span class="fx">SLE x ARO</span></td></tr>
+          <tr><td>Control value</td><td><span class="fx" style="white-space:normal">(ALE before - ALE after) - annual cost</span>; positive = justified</td></tr>
+          <tr><td>FAIR risk</td><td><span class="fx">LEF x LM</span> loss event frequency x loss magnitude</td></tr>
+          <tr><td>FAIR LEF</td><td><span class="fx">TEF x Vulnerability</span> (threat event frequency x susceptibility)</td></tr>
+          <tr><td>Recovery</td><td><span class="fx">RTO &lt; MTD</span>; RPO sets backup frequency</td></tr>
+          <tr><td>Residual</td><td>risk left after response; compare to appetite and tolerance</td></tr>
+        </table>
+      </section>
+      <section class="box">
+        <h2>Metric types</h2>
+        <table class="mini">
+          <tr><td>KRI</td><td>Risk exposure; leading; threshold tied to appetite. <i>Unpatched critical servers.</i></td></tr>
+          <tr><td>KCI</td><td>Control performance. <i>% privileged accounts reviewed on time.</i></td></tr>
+          <tr><td>KPI</td><td>Goal or process performance. <i>% projects delivered on schedule.</i></td></tr>
+        </table>
+        <h2 style="margin-top:0.4rem">Response options</h2>
+        <table class="mini">
+          <tr><td>Accept</td><td>Within appetite; owner signs off; keep monitoring.</td></tr>
+          <tr><td>Mitigate</td><td>Controls reduce likelihood or impact.</td></tr>
+          <tr><td>Transfer / share</td><td>Insurance, contracts. Accountability stays.</td></tr>
+          <tr><td>Avoid</td><td>Stop the activity that creates the risk.</td></tr>
+        </table>
+      </section>
+      <section class="box">
+        <h2>Control functions</h2>
+        <table class="mini">
+          <tr><td>Preventive</td><td>stops the event (MFA, SoD)</td></tr>
+          <tr><td>Detective</td><td>finds it (log review, KRI alert)</td></tr>
+          <tr><td>Corrective</td><td>fixes it (restore, patch)</td></tr>
+          <tr><td>Deterrent</td><td>discourages it (warning banner)</td></tr>
+          <tr><td>Compensating</td><td>substitutes when the primary is not feasible</td></tr>
+        </table>
+        <p class="small">Categories: <b>administrative, technical, physical</b>.</p>
+        <h2 style="margin-top:0.4rem">Test method strength</h2>
+        <div class="ladder"><span>Inquiry</span><i>&lt;</i><span>Observation</span><i>&lt;</i><span>Inspection</span><i>&lt;</i><span>Reperformance</span></div>
+        <p class="small"><b>Design</b> effectiveness: could it work? <b>Operating</b> effectiveness: did it work over the period? Test a sample across time.</p>
+      </section>
+    </div>
+    <p class="print-note">CRISC&#174; is a registered mark of ISACA. Independent study aid, not affiliated with or endorsed by ISACA. Verify the current exam content outline at isaca.org.</p>
+  </article>
+</main>
+
+<footer>
+  <div class="footer-logo">CRISC 5-DAY FACULTY WORKSHOP</div>
+  <p class="footer-disclaimer">This workshop is an independent educational resource. It is not affiliated with, endorsed by, or sponsored by ISACA. CRISC&#174; is a registered mark of ISACA. All lesson text, questions, and scenarios are original and do not reproduce the ISACA CRISC Review Manual or question database. Always verify the current exam content outline at isaca.org before registering.</p>
+</footer>
+
+<script src="crisc-lesson.js"></script>
+</body>
+</html>

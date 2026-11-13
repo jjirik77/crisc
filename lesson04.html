@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 4: Risk Analysis | CRISC Workshop</title>
+<link rel="stylesheet" href="crisc-lesson.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-seal">CRISC<br>PREP</div>
+    <span class="nav-title">5-Day Faculty Workshop</span>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#lessons">Lessons</a></li>
+      <li><a href="index.html#practice">Practice</a></li>
+      <li><a href="index.html#schedule">Schedule</a></li>
+      <li><a href="index.html#domains">Domains</a></li>
+      <li><a href="index.html#exam-prep">Exam Prep</a></li>
+      <li><a href="index.html#faculty-tools">Faculty Tools</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="lesson-hero">
+  <div class="lesson-hero-inner">
+    <p class="breadcrumb"><a href="index.html">Workshop</a> &nbsp;&rsaquo;&nbsp; <a href="index.html#lessons">Lessons</a> &nbsp;&rsaquo;&nbsp; <span>Lesson 4</span></p>
+    <span class="lesson-badge-lg">Day 3, Morning &bull; Domain 2B</span>
+    <h1>Risk <span>Analysis</span></h1>
+    <p class="lesson-lede">A risk scenario says what could happen. Risk analysis says how often, how badly, and whether the enterprise can live with it. This lesson moves from business impact analysis and the risk register to qualitative, semi-quantitative, and quantitative methods, ending with a FAIR-style Monte Carlo model that turns honest ranges into a loss exceedance curve a board can read.</p>
+    <div class="meta-chips">
+      <span class="meta-chip">Session: <strong>Day 3, 9:00 to 12:30</strong></span>
+      <span class="meta-chip">Duration: <strong>~3.5 hrs</strong></span>
+      <span class="meta-chip">Exam Weight: <strong>22%</strong></span>
+      <span class="meta-chip">Knowledge Check: <strong>8 Questions</strong></span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="block">
+    <p class="eyebrow">Overview</p>
+    <h2 class="h2">From &ldquo;it could happen&rdquo; to &ldquo;how much, how often&rdquo;</h2>
+    <div class="rule"></div>
+    <p class="lead">Risk identification produced a set of realistic scenarios. Analysis gives each one a size. It estimates likelihood and impact, compares the result with the enterprise&rsquo;s appetite and tolerance, and records it in a risk register where an owner can act on it. The method can be a color on a heat map or a dollar distribution from ten thousand simulated years. What matters is that the method fits the decision being made.</p>
+    <p class="lead">This lesson covers the assessment standards, business impact analysis, the risk register, the main analysis methodologies (including SLE and ALE, FAIR, Monte Carlo, and bow-tie analysis), and the difference between inherent, residual, and current risk. The flagship interactive lets you build a loss exceedance curve and test it against a stated tolerance.</p>
+    <div class="mindset"><span class="tip-label">&#9878;&#65039; Think like a risk practitioner</span>Analysis serves a decision. The risk practitioner estimates and explains; the risk owner decides. A precise number nobody can act on is worth less than an honest range tied to the enterprise&rsquo;s tolerance. When a question offers a technical score and a business-impact answer, the business-impact answer is usually the better one.</div>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Learning Objectives</p>
+    <h2 class="h2">By the end of this lesson you will be able to&hellip;</h2>
+    <div class="rule"></div>
+    <ul class="objectives">
+      <li><span><strong>Explain</strong> how NIST SP 800-30 Rev. 1, ISO 31000:2018, and ISO/IEC 27005:2022 structure a risk assessment. <em class="bloom-tag">Bloom: Understand</em></span></li>
+      <li><span><strong>Use</strong> a business impact analysis to set MTD, RTO, and RPO for critical processes and their dependencies. <em class="bloom-tag">Bloom: Apply</em></span></li>
+      <li><span><strong>Specify</strong> the fields of a useful risk register and link each entry to an owner, KRIs, and an action plan. <em class="bloom-tag">Bloom: Apply</em></span></li>
+      <li><span><strong>Compare</strong> qualitative, semi-quantitative, and quantitative methods, and calculate SLE and ALE. <em class="bloom-tag">Bloom: Analyze</em></span></li>
+      <li><span><strong>Interpret</strong> a FAIR-style Monte Carlo result and a loss exceedance curve against a tolerance statement. <em class="bloom-tag">Bloom: Evaluate</em></span></li>
+      <li><span><strong>Design</strong> a spreadsheet Monte Carlo lab that teaches students why ranges beat single-point estimates. <em class="bloom-tag">Bloom: Create</em></span></li>
+    </ul>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Key Terms</p>
+    <h2 class="h2">Vocabulary flashcards</h2>
+    <div class="rule"></div>
+    <p class="flip-hint-top">&#128072; Read the term, recall the definition, then click or press Enter to check yourself.</p>
+    <div class="vocab-grid">
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Business Impact Analysis (BIA)</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">A structured study of what happens to the business, over time, when a process or resource is disrupted. It sets recovery priorities and objectives.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Maximum Tolerable Downtime (MTD)</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">The longest a business process can be unavailable before the damage becomes unacceptable. Set by the business owner, not by IT.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Recovery Time Objective (RTO)</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">The target time to restore a system or process after a disruption. It must leave room to verify and resume work inside the MTD.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Recovery Point Objective (RPO)</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">The maximum amount of data, measured in time, the business can afford to lose. It drives backup and replication frequency.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Annualized Loss Expectancy (ALE)</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">The expected loss per year from a risk: single loss expectancy times annualized rate of occurrence (SLE &times; ARO). In a simulation, the mean annual loss.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Loss Event Frequency (LEF)</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">In FAIR, how often a loss event is expected to occur in a period, usually a year. It is threat event frequency times vulnerability.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Loss Magnitude (LM)</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">In FAIR, the probable size of the loss from one event, combining primary losses and secondary losses from external stakeholders.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Loss Exceedance Curve</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">A chart of the probability that annual loss will exceed each dollar amount. It is compared with a tolerance curve or point.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Inherent Risk</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">The level of risk before considering the controls or other responses that management has put in place.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Residual Risk</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">The risk that remains after responses are applied. It is the level compared with appetite and tolerance, and it needs an owner who accepts it.</div></div>
+        </div>
+      </button>
+
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Lesson Content</p>
+    <h2 class="h2">Study the material</h2>
+    <div class="rule"></div>
+    <div class="lesson-content">
+      <nav class="toc" aria-label="On this page">
+        <div class="toc-title">On this page</div>
+        <ul>
+          <li><a href="#s1">1. Concepts and Standards</a></li>
+          <li><a href="#s2">2. Business Impact Analysis</a></li>
+          <li><a href="#s3">3. The Risk Register</a></li>
+          <li><a href="#s4">4. Analysis Methodologies</a></li>
+          <li><a href="#s5">5. Inherent, Residual, and Current Risk</a></li>
+          <li><a href="#s6">6. Interactive: Loss Exceedance Simulator</a></li>
+          <li><a href="#s7">7. Faculty Teaching Segment</a></li>
+        </ul>
+      </nav>
+      <div class="content-main">
+
+        <article class="content-section" id="s1">
+          <div class="cs-head"><span class="cs-num">1</span><h3>Risk Analysis Concepts and Standards</h3></div>
+          <p>Risk is a combination of two things: how likely an adverse event is, and how much harm it would cause. <strong>Likelihood</strong> can be expressed as a probability, a frequency per year, or an ordinal rating. <strong>Impact</strong> can be expressed in money, in downtime, in records exposed, or in a rating tied to a business objective. Analysis estimates both for each scenario, then <strong>evaluation</strong> compares the result with criteria the enterprise has already set, such as appetite and tolerance.</p>
+          <p>The CRISC exam does not require you to memorize any one standard, but it expects you to recognize their shared logic. Each standard puts context and criteria first, then identification, analysis, and evaluation, then treatment, with communication and monitoring running throughout.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Standard</th><th>What it contributes to analysis</th><th>Key structure</th></tr></thead>
+            <tbody>
+              <tr><td class="term">NIST SP 800-30 Rev. 1</td><td>A detailed guide for conducting information security risk assessments, with threat sources, threat events, vulnerabilities, predisposing conditions, likelihood, and impact.</td><td>Prepare, conduct, communicate, maintain. Conduct runs from threat sources to likelihood, impact, and risk.</td></tr>
+              <tr><td class="term">ISO 31000:2018</td><td>Enterprise-wide principles and process for any kind of risk. Defines risk as the effect of uncertainty on objectives.</td><td>Scope, context, and criteria; assessment (identification, analysis, evaluation); treatment; monitoring and review; recording and reporting.</td></tr>
+              <tr><td class="term">ISO/IEC 27005:2022</td><td>Information security risk management guidance aligned to ISO/IEC 27001:2022. Supports both event-based and asset-based identification.</td><td>Context, assessment, treatment, acceptance, communication, monitoring and review.</td></tr>
+              <tr><td class="term">ISACA Risk IT Framework, 2nd ed.</td><td>Connects IT risk to enterprise risk and business objectives, with scenario-based analysis and risk aggregation.</td><td>Risk governance, risk evaluation, risk response.</td></tr>
+              <tr><td class="term">FAIR (Open Group O-RT, O-RA)</td><td>A quantitative taxonomy that decomposes risk into loss event frequency and loss magnitude, measured in money.</td><td>Risk = LEF &times; LM, with ranges and simulation.</td></tr>
+            </tbody>
+          </table></div>
+          <h4>Good analysis has four qualities</h4>
+          <ul class="detail">
+            <li><strong>Relevant:</strong> it measures impact on business objectives, not on servers. &ldquo;Members cannot send wires for two days&rdquo; is relevant. &ldquo;Server 14 is down&rdquo; is not, until it is translated.</li>
+            <li><strong>Consistent:</strong> the same scales, criteria, and assumptions are used across the enterprise, so two risks can be compared and aggregated.</li>
+            <li><strong>Transparent:</strong> sources, assumptions, and the confidence in each estimate are written down, so a reviewer can challenge them.</li>
+            <li><strong>Proportionate:</strong> the effort matches the decision. A small, reversible decision does not need a two-week quantitative study.</li>
+          </ul>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a question asks what the risk practitioner should do FIRST before analyzing a risk, look for an answer about understanding the business context or the criteria (appetite, tolerance, impact scales). Analysis without agreed criteria cannot be evaluated.</div>
+          <div class="resource-link">
+            <span class="rl-icon" aria-hidden="true">&#129482;</span>
+            <div class="rl-body"><span class="rl-label">Explore with an eMate</span><span class="rl-text"><strong>Cybersecurity Scenario</strong>: walk a scenario from event to business consequence before you put a number on it.</span></div>
+            <div class="rl-actions"><a class="btn secondary" href="https://d2hie3dpn9wvbb.cloudfront.net/cyber_scenario/cyber_scenario.html" target="_blank" rel="noopener noreferrer">Cybersecurity Scenario <span class="ext">&#8599;</span></a></div>
+          </div>
+        </article>
+
+        <article class="content-section" id="s2">
+          <div class="cs-head"><span class="cs-num">2</span><h3>Business Impact Analysis</h3></div>
+          <p>A business impact analysis (BIA) asks a simple question with a complicated answer: if this process stops, what happens to the enterprise, and how fast does it get worse? The BIA is a business exercise. IT supplies the dependency map, but process owners supply the impact, because only they know what a lost day costs in members, money, regulatory standing, and trust.</p>
+          <h4>The BIA sequence</h4>
+          <ul class="detail">
+            <li><strong>Identify critical processes:</strong> start from business objectives and list the processes that deliver them. Not every process is critical, and treating them all as critical makes none of them a priority.</li>
+            <li><strong>Assess impact over time:</strong> estimate financial, operational, legal, and reputational impact at intervals (one hour, one day, one week). Impact usually grows nonlinearly.</li>
+            <li><strong>Set recovery objectives:</strong> the business owner sets the MTD. The RTO and RPO follow from it.</li>
+            <li><strong>Map dependencies:</strong> applications, infrastructure, data, people, facilities, and third parties. A process is only as recoverable as its slowest dependency.</li>
+            <li><strong>Validate and approve:</strong> senior management confirms priorities, because recovery capacity is funded from them.</li>
+          </ul>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Brightwater process</th><th>MTD</th><th>RTO</th><th>RPO</th><th>Key dependencies</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Outbound wire transfers</td><td>8 hours</td><td>4 hours</td><td>15 minutes</td><td>Core banking, payment network gateway, dual-control approvers</td></tr>
+              <tr><td class="term">Online and mobile banking</td><td>24 hours</td><td>12 hours</td><td>1 hour</td><td>Digital banking vendor, identity service, core banking</td></tr>
+              <tr><td class="term">Loan origination</td><td>3 days</td><td>48 hours</td><td>24 hours</td><td>Loan platform (SaaS), credit bureau feeds, document storage</td></tr>
+              <tr><td class="term">Marketing campaigns</td><td>2 weeks</td><td>7 days</td><td>1 week</td><td>Email platform, member list export</td></tr>
+            </tbody>
+          </table></div>
+          <p>The figures above are illustrative values for the fictional credit union, chosen to show the relationships. The RTO sits inside the MTD with room to spare, because restoring a system is not the same as resuming the business. Staff must verify data, catch up on backlog, and reconcile transactions before the process is truly back.</p>
+          <div class="compare-2col">
+            <div><b>RTO: how fast</b>Time to restore the process or system. It drives the recovery strategy: hot site, warm site, cloud failover, or manual workaround.</div>
+            <div><b>RPO: how much data</b>The point in time to which data must be recoverable. It drives backup frequency, journaling, and replication.</div>
+          </div>
+          <div class="in-practice"><span class="ip-label">&#128270; In practice</span><p>Brightwater&rsquo;s IT team proposed nightly backups for the wire system. The BIA showed that wire instructions received after the last backup could not be reconstructed, and the treasury manager set a 15-minute RPO. The gap between &ldquo;nightly&rdquo; and &ldquo;15 minutes&rdquo; became a risk register entry with a named owner, not an IT preference.</p></div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a question asks who should determine recovery time or tolerable downtime, choose the business process owner, supported by the BIA. IT recommends strategies to meet the objective; it does not set the objective.</div>
+        </article>
+
+        <article class="content-section" id="s3">
+          <div class="cs-head"><span class="cs-num">3</span><h3>The Risk Register</h3></div>
+          <p>The risk register is the working record of the risk program. It is where analysis results live, where owners are named, and where responses and indicators are tracked. A register that lists threats with no owners, dates, or links to action is an inventory, not a management tool.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Field</th><th>Why it matters</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Risk ID and title</td><td>A stable reference for reports, action plans, and audit trails.</td></tr>
+              <tr><td class="term">Scenario statement</td><td>Actor, event, asset or process, and consequence, written so a business reader understands it.</td></tr>
+              <tr><td class="term">Business objective affected</td><td>Links the risk to strategy and makes aggregation by objective possible.</td></tr>
+              <tr><td class="term">Risk owner</td><td>The person accountable for the response decision and for accepting residual risk.</td></tr>
+              <tr><td class="term">Inherent rating</td><td>Likelihood and impact before responses, using the enterprise scale or a dollar range.</td></tr>
+              <tr><td class="term">Existing controls and owners</td><td>What is in place today and who operates it, with the latest test result.</td></tr>
+              <tr><td class="term">Current and residual rating</td><td>The level now, given actual control performance, and the level expected after planned responses.</td></tr>
+              <tr><td class="term">Response and action plan</td><td>The option chosen, the tasks, the owner of each task, the due date, and the status.</td></tr>
+              <tr><td class="term">KRIs</td><td>The indicators that warn when the risk is moving toward tolerance, with thresholds.</td></tr>
+              <tr><td class="term">Review date and history</td><td>When it was last assessed, by whom, and what changed.</td></tr>
+            </tbody>
+          </table></div>
+          <p>Registers exist at more than one level. A business unit register holds detailed IT risks. The enterprise register holds aggregated risks that matter to senior management and the board. The two must be linked, so that several small entries with a common cause can be seen as one larger exposure.</p>
+          <div class="tip jade"><span class="tip-label">&#128204; Register hygiene</span>Duplicate entries, stale ratings, and risks owned by &ldquo;IT&rdquo; rather than a named person are the three most common register defects. Each one quietly breaks reporting and aggregation.</div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>If a question asks for the PRIMARY benefit of a well-maintained risk register, prefer answers about accountability and informed decisions (owners, responses, and status in one place) over answers about satisfying auditors.</div>
+        </article>
+
+        <article class="content-section" id="s4">
+          <div class="cs-head"><span class="cs-num">4</span><h3>Risk Analysis Methodologies</h3></div>
+          <p>There is no single correct methodology. There is a method that fits the decision, the data available, and the audience. The CRISC exam expects you to know what each method does well, where it breaks, and how to move from one to another.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Method</th><th>Output</th><th>Strengths</th><th>Weaknesses</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Qualitative</td><td>Ratings such as Low, Medium, High; heat maps</td><td>Fast, inclusive, good for screening many risks</td><td>Subjective; ratings mean different things to different people; cannot support a cost-benefit decision</td></tr>
+              <tr><td class="term">Semi-quantitative</td><td>Numeric scores (for example, 1 to 5 times 1 to 5)</td><td>Ranks risks; easy to aggregate in a spreadsheet</td><td>The numbers are ordinal labels, so multiplying them can mislead; a &ldquo;20&rdquo; is not twice a &ldquo;10&rdquo;</td></tr>
+              <tr><td class="term">Quantitative</td><td>Dollars per year, probabilities, distributions</td><td>Supports cost-benefit, insurance, and capital decisions; comparable across risks</td><td>Needs data and calibrated estimates; can look more precise than it is</td></tr>
+            </tbody>
+          </table></div>
+          <h4>Classic quantitative: SLE and ALE</h4>
+          <ul class="detail">
+            <li><strong>Asset value (AV):</strong> the value of the asset or process at risk.</li>
+            <li><strong>Exposure factor (EF):</strong> the fraction of that value lost in one event.</li>
+            <li><strong>Single loss expectancy (SLE):</strong> SLE = AV &times; EF.</li>
+            <li><strong>Annualized rate of occurrence (ARO):</strong> expected events per year. Once every five years is 0.2.</li>
+            <li><strong>Annualized loss expectancy (ALE):</strong> ALE = SLE &times; ARO. A control is cost-justified when the ALE it removes exceeds its annual cost.</li>
+          </ul>
+          <p>Example: a $2,000,000 payment platform, an exposure factor of 25%, and an event expected once every five years. SLE = $500,000; ALE = $500,000 &times; 0.2 = $100,000 per year. The weakness is that every input is a single point. Nobody knows the exposure factor is exactly 25%, and the formula hides that uncertainty.</p>
+          <h4>FAIR: decomposing risk into ranges</h4>
+          <p>Factor Analysis of Information Risk (FAIR), published by The Open Group as the Risk Taxonomy (O-RT) and Risk Analysis (O-RA) standards, measures risk in money and breaks it into estimable parts.</p>
+          <ul class="detail">
+            <li><strong>Loss event frequency (LEF):</strong> threat event frequency (how often a threat acts against the asset) times vulnerability (the probability that a threat event becomes a loss event).</li>
+            <li><strong>Loss magnitude (LM):</strong> primary loss to the organization plus secondary loss from the reactions of external stakeholders such as regulators, customers, and litigants.</li>
+            <li><strong>Six forms of loss:</strong> productivity, response, replacement, fines and judgments, competitive advantage, and reputation.</li>
+            <li><strong>Ranges, not points:</strong> each factor is estimated as a minimum, most likely, and maximum, often by calibrated subject-matter experts, and fitted to a PERT distribution.</li>
+          </ul>
+          <h4>Monte Carlo simulation</h4>
+          <p>Monte Carlo simulation samples each uncertain input thousands of times and records the result of each trial. In a FAIR-style model, each trial is one simulated year: draw a frequency, draw a number of events, draw a loss for each event, and add them up. Sorting thousands of simulated years produces a distribution of annual loss. From it you can read the mean (the ALE), percentiles such as P90, and the probability of exceeding any amount. Plotting that probability against loss gives the <strong>loss exceedance curve</strong>.</p>
+          <h4>Bow-tie analysis</h4>
+          <p>A bow-tie diagram places the risk event (the &ldquo;knot&rdquo;) in the center. Causes and threats sit on the left, with <strong>preventive</strong> controls between them and the event. Consequences sit on the right, with <strong>detective, corrective, and recovery</strong> controls between the event and each consequence. It is a qualitative tool, but it is excellent for showing an owner which controls reduce frequency and which reduce magnitude, which is exactly the split FAIR uses.</p>
+          <div class="in-practice"><span class="ip-label">&#128270; In practice</span><p>Brightwater&rsquo;s ransomware scenario rated &ldquo;High&rdquo; on the heat map for three years in a row. The board asked a different question: how much should we budget for it? A FAIR-style analysis estimated an event frequency of 0.1 to 1.0 per year (most likely 0.3) and a loss per event of $150,000 to $4,000,000 (most likely $600,000). The simulation produced a mean annual loss above $400,000 and a 17% chance of losing more than $1,000,000 in a year. Those two numbers started a budget conversation the heat map never did.</p></div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a question asks which method BEST supports a cost-benefit decision about a control, choose quantitative analysis. When it asks which method is BEST for quickly prioritizing a long list of risks with limited data, choose qualitative. Neither is &ldquo;better&rdquo; in the abstract.</div>
+          <div class="resource-link">
+            <span class="rl-icon" aria-hidden="true">&#129482;</span>
+            <div class="rl-body"><span class="rl-label">Explore with an eMate</span><span class="rl-text"><strong>Risk Analysis</strong>: practice qualitative and quantitative analysis, including SLE, ARO, and ALE.</span></div>
+            <div class="rl-actions"><a class="btn secondary" href="https://d2hie3dpn9wvbb.cloudfront.net/risk_analysis/risk_analysis.html" target="_blank" rel="noopener noreferrer">Risk Analysis <span class="ext">&#8599;</span></a></div>
+          </div>
+        </article>
+
+        <article class="content-section" id="s5">
+          <div class="cs-head"><span class="cs-num">5</span><h3>Inherent, Residual, and Current Risk; Aggregation</h3></div>
+          <p>One scenario can carry three ratings at once, and confusing them is a common exam trap.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Rating</th><th>Question it answers</th><th>Typical use</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Inherent risk</td><td>How big is this risk with no controls or responses in place?</td><td>Shows how much the enterprise depends on its controls; sets the priority for control assurance.</td></tr>
+              <tr><td class="term">Current risk</td><td>How big is it today, given how the controls are actually performing?</td><td>Reflects test results, open findings, and failed KCIs. It can be worse than planned residual risk.</td></tr>
+              <tr><td class="term">Residual risk</td><td>How big will it be after the selected responses are fully in place and working?</td><td>Compared with appetite and tolerance; accepted formally by the risk owner.</td></tr>
+            </tbody>
+          </table></div>
+          <p>The difference between inherent and residual risk is the work the controls are expected to do. A large gap means a large dependency. If those controls fail, the enterprise is back at inherent risk without warning, which is why high-dependency controls deserve independent testing and key control indicators.</p>
+          <h4>Risk aggregation</h4>
+          <ul class="detail">
+            <li><strong>Why aggregate:</strong> several risks that are each within tolerance can combine into an exposure that is not. Senior management needs the combined view.</li>
+            <li><strong>Common causes:</strong> risks that share a cause (an unsupported platform, a single critical vendor, a shared identity service) can occur together, so their losses are correlated.</li>
+            <li><strong>How to aggregate:</strong> roll up by business objective, by cause, or by asset class. With quantitative data, simulate the risks together so correlations are captured; simply adding averages hides the tail.</li>
+            <li><strong>Risk profile:</strong> the aggregated view, at a point in time, of the risks the enterprise faces. It is what senior management compares with appetite.</li>
+          </ul>
+          <div class="warn tip"><span class="tip-label">&#9888;&#65039; Common mistake</span>Reporting planned residual risk as if it were current risk. If the planned control is still being implemented, or failed its last test, the current risk is closer to inherent. Report what is true today and show the plan separately.</div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When several business units report low-rated risks that share a common cause, the BEST next step is usually to aggregate them and reassess at the enterprise level, not to accept each one separately.</div>
+        </article>
+
+        <article class="content-section" id="s6">
+          <div class="cs-head"><span class="cs-num">6</span><h3>Interactive: Loss Exceedance Simulator</h3></div>
+          <p>This simulator runs a FAIR-style model of a Brightwater Credit Union scenario. Enter a minimum, most likely, and maximum for loss event frequency (events per year) and for loss magnitude (dollars per event). For each of 5,000 simulated years, the model draws an event rate from a PERT distribution, draws a Poisson count of events at that rate, draws a PERT loss for each event, and adds them up. The control effect slider removes that share of events (a frequency control), so you see the inherent curve and the residual curve together. The red zone is the tolerance statement: annual loss above the threshold should happen no more often than the stated probability. The random number generator is seeded, so the same inputs always give the same result.</p>
+
+          <style>
+            .les-presets{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.7rem;}
+            .les-row{display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start;}
+            .les-in{flex:1 1 260px;min-width:0;}
+            .les-out{flex:1.4 1 320px;min-width:0;}
+            .les-grp{margin-bottom:.65rem;}
+            .les-grp > .les-glabel{display:block;font-family:Arial,sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.25rem;}
+            .les-tri{display:flex;gap:.4rem;}
+            .les-tri > div{flex:1 1 0;min-width:0;}
+            .les-tri label{display:block;font-size:.68rem;color:var(--text-muted);margin-bottom:.12rem;}
+            .les-tri input{width:100%;min-width:0;box-sizing:border-box;}
+            .les-sl label{display:flex;justify-content:space-between;font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.15rem;}
+            .les-sl label b{color:var(--gold);font-size:.8rem;letter-spacing:0;text-transform:none;}
+            .les-tol{display:flex;gap:.4rem;align-items:flex-end;}
+            .les-tol > div{flex:1 1 0;min-width:0;}
+            .les-tol label{display:block;font-size:.68rem;color:var(--text-muted);margin-bottom:.12rem;}
+            .les-tol select{width:100%;min-width:0;}
+            .les-note{font-family:Arial,sans-serif;font-size:.72rem;color:var(--text-muted);line-height:1.45;margin:.2rem 0 0;}
+            .les-note.les-err{color:var(--wrong);}
+            .les-foot{display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;margin-top:.4rem;}
+            .les-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem;margin-bottom:.1rem;}
+            .les-tile{background:var(--section-alt);border:1px solid var(--border);border-radius:5px;padding:.45rem .6rem;min-width:0;}
+            .les-tile .les-k{display:block;font-family:Arial,sans-serif;font-size:.64rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);}
+            .les-tile .les-v{display:block;font-family:'Arial Narrow',Arial,sans-serif;font-weight:900;font-size:1.2rem;color:var(--text-primary);line-height:1.2;}
+            .les-tile .les-s{display:block;font-family:Arial,sans-serif;font-size:.68rem;color:var(--text-muted);}
+            .les-tile.les-bad .les-v{color:var(--wrong);} .les-tile.les-good .les-v{color:var(--correct);}
+            .les-out .iw-verdict{margin:.5rem 0;}
+            .les-cv{position:relative;}
+            .iw.is-expanded .les-tile .les-v{font-size:1.35rem;}
+          </style>
+
+          <div class="iw" id="les-root">
+            <div class="iw-card">
+              <div class="iw-topbar">
+                <span class="iw-eyebrow">Interactive &middot; FAIR-style Monte Carlo &middot; 5,000 simulated years</span>
+                <button type="button" class="iw-expand" aria-expanded="false" title="Open a larger view">&#10530; Expand</button>
+              </div>
+              <div class="les-row">
+                <div class="iw-panel les-in">
+                  <h5 class="iw-h5">Brightwater scenario</h5>
+                  <div class="les-presets" role="group" aria-label="Scenario preset">
+                    <button type="button" class="iw-btn" id="les-p1" aria-pressed="true">Ransomware on core banking</button>
+                    <button type="button" class="iw-btn" id="les-p2" aria-pressed="false">Wire-transfer fraud</button>
+                  </div>
+                  <div class="les-grp" role="group" aria-labelledby="les-lef-h">
+                    <span class="les-glabel" id="les-lef-h">Loss event frequency (events per year)</span>
+                    <div class="les-tri">
+                      <div><label for="les-f0">Minimum</label><input type="number" id="les-f0" min="0" max="50" step="0.05" value="0.1"></div>
+                      <div><label for="les-f1">Most likely</label><input type="number" id="les-f1" min="0" max="50" step="0.05" value="0.3"></div>
+                      <div><label for="les-f2">Maximum</label><input type="number" id="les-f2" min="0" max="50" step="0.05" value="1"></div>
+                    </div>
+                  </div>
+                  <div class="les-grp" role="group" aria-labelledby="les-lm-h">
+                    <span class="les-glabel" id="les-lm-h">Loss magnitude per event ($ thousands)</span>
+                    <div class="les-tri">
+                      <div><label for="les-m0">Minimum</label><input type="number" id="les-m0" min="1" max="100000" step="10" value="150"></div>
+                      <div><label for="les-m1">Most likely</label><input type="number" id="les-m1" min="1" max="100000" step="10" value="600"></div>
+                      <div><label for="les-m2">Maximum</label><input type="number" id="les-m2" min="1" max="100000" step="10" value="4000"></div>
+                    </div>
+                  </div>
+                  <div class="les-grp les-sl">
+                    <label for="les-ctl"><span>Control effect (events prevented)</span><b id="les-ctl-v">30%</b></label>
+                    <input type="range" id="les-ctl" min="0" max="90" step="5" value="30">
+                  </div>
+                  <div class="les-grp">
+                    <span class="les-glabel">Tolerance statement</span>
+                    <div class="les-tol">
+                      <div><label for="les-tp">No more than</label>
+                        <select id="les-tp"><option value="0.05">5% chance</option><option value="0.1" selected>10% chance</option><option value="0.2">20% chance</option><option value="0.25">25% chance</option></select></div>
+                      <div><label for="les-tt">of a yearly loss over</label>
+                        <select id="les-tt"><option value="250000">$250k</option><option value="500000">$500k</option><option value="1000000" selected>$1M</option><option value="2000000">$2M</option><option value="5000000">$5M</option></select></div>
+                    </div>
+                  </div>
+                  <p class="les-note" id="les-msg" role="note"></p>
+                  <div class="les-foot">
+                    <button type="button" class="iw-btn jade" id="les-seed">New random seed</button>
+                    <span class="les-note" id="les-run"></span>
+                  </div>
+                </div>
+                <div class="iw-panel les-out">
+                  <div class="les-tiles">
+                    <div class="les-tile"><span class="les-k">ALE (mean annual loss)</span><span class="les-v" id="les-t1">&nbsp;</span><span class="les-s" id="les-t1s">&nbsp;</span></div>
+                    <div class="les-tile"><span class="les-k">P90 annual loss</span><span class="les-v" id="les-t2">&nbsp;</span><span class="les-s" id="les-t2s">&nbsp;</span></div>
+                    <div class="les-tile" id="les-t3b"><span class="les-k">Chance of exceeding tolerance</span><span class="les-v" id="les-t3">&nbsp;</span><span class="les-s" id="les-t3s">&nbsp;</span></div>
+                    <div class="les-tile"><span class="les-k">Single-point ALE</span><span class="les-v" id="les-t4">&nbsp;</span><span class="les-s" id="les-t4s">most likely LEF &times; most likely LM</span></div>
+                  </div>
+                  <div aria-live="polite">
+                    <div class="iw-verdict" id="les-verdict"><span class="iw-pill" id="les-pill">Running</span><span id="les-coach">Simulating&hellip;</span></div>
+                  </div>
+                  <div class="les-cv"><canvas id="les-cv" role="img" aria-label="Loss exceedance curve: probability of exceeding each annual loss amount, inherent and residual, with the tolerance zone"></canvas></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <script>
+          (function(){
+            var root=document.getElementById('les-root'); if(!root) return;
+            var $=function(id){return root.querySelector('#'+id);};
+            var N=5000, SEED0=20261112, seed=SEED0, last=null, timer=null;
+            var PRESETS={
+              p1:{f:[0.1,0.3,1],m:[150,600,4000],c:30,tp:'0.1',tt:'1000000'},
+              p2:{f:[1,3,8],m:[20,80,900],c:30,tp:'0.1',tt:'1000000'}
+            };
+            /* Seeded RNG (mulberry32): deterministic for a given seed */
+            function rng(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+            function normal(r){var u=0;while(u===0)u=r();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*r());}
+            /* Marsaglia-Tsang gamma sampler, valid for shape k >= 1 (PERT shapes are always >= 1) */
+            function gamma(r,k){var d=k-1/3,c=1/Math.sqrt(9*d);for(;;){var x,v;do{x=normal(r);v=1+c*x;}while(v<=0);v=v*v*v;var u=r();if(u<1-0.0331*x*x*x*x)return d*v;if(Math.log(u)<0.5*x*x+d*(1-v+Math.log(v)))return d*v;}}
+            /* PERT(a,m,b): alpha = 1 + 4(m-a)/(b-a), beta = 1 + 4(b-m)/(b-a); Beta = X/(X+Y), scaled to [a,b] */
+            function pert(r,a,m,b){if(b<=a)return a;var al=1+4*(m-a)/(b-a),be=1+4*(b-m)/(b-a);var x=gamma(r,al),y=gamma(r,be);return a+(b-a)*x/(x+y);}
+            function poisson(r,l){if(l<=0)return 0;if(l>30){var n=Math.round(l+Math.sqrt(l)*normal(r));return n<0?0:n;}var L=Math.exp(-l),k=0,p=1;do{k++;p*=r();}while(p>L);return k-1;}
+            function simulate(f,m,c,s){
+              var r=rng(s), thin=rng(s^0x9e3779b9), inh=new Float64Array(N), res=new Float64Array(N);
+              for(var i=0;i<N;i++){
+                var lam=pert(r,f[0],f[1],f[2]), n=poisson(r,lam), a=0, b=0;
+                for(var j=0;j<n;j++){var x=pert(r,m[0],m[1],m[2]);a+=x;if(thin()>=c)b+=x;}
+                inh[i]=a; res[i]=b;
+              }
+              inh.sort(); res.sort();
+              return {inh:inh,res:res};
+            }
+            function mean(a){var s=0;for(var i=0;i<a.length;i++)s+=a[i];return s/a.length;}
+            function pct(a,p){return a[Math.min(a.length-1,Math.floor(p*a.length))];}
+            /* P(L > x) from a sorted array, by binary search */
+            function exceed(a,x){var lo=0,hi=a.length;while(lo<hi){var mid=(lo+hi)>>1;if(a[mid]<=x)lo=mid+1;else hi=mid;}return (a.length-lo)/a.length;}
+            function money(v){var s=v<0?'-':'';v=Math.abs(v);if(v>=1e6)return s+'$'+parseFloat((v/1e6).toFixed(v>=1e7?1:2))+'M';if(v>=1e3)return s+'$'+Math.round(v/1e3)+'k';return s+'$'+Math.round(v);}
+            function axisMoney(v){if(v>=1e6)return '$'+(v/1e6)+'M';if(v>=1e3)return '$'+(v/1e3)+'k';return '$'+v;}
+            function pctTxt(p){return (p*100).toFixed(1)+'%';}
+            function readTri(ids,scale){
+              var v=ids.map(function(id){var x=parseFloat($(id).value);return isFinite(x)&&x>=0?x*scale:NaN;});
+              if(v.some(isNaN)) return {err:true};
+              var s=v.slice().sort(function(a,b){return a-b;});
+              return {v:s,reordered:(s[0]!==v[0]||s[1]!==v[1]||s[2]!==v[2])};
+            }
+            function css(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}
+            function setPill(cls,txt,msg){var v=$('les-verdict');v.className='iw-verdict '+cls;var p=$('les-pill');p.className='iw-pill '+cls;p.textContent=txt;$('les-coach').innerHTML=msg;}
+
+            function run(){
+              var F=readTri(['les-f0','les-f1','les-f2'],1), M=readTri(['les-m0','les-m1','les-m2'],1000);
+              var msg=$('les-msg');
+              if(F.err||M.err){msg.className='les-note les-err';msg.textContent='Enter a number of zero or more in every field.';return;}
+              if(F.v[2]>50){F.v=[Math.min(F.v[0],50),Math.min(F.v[1],50),50];}
+              msg.className='les-note'; msg.textContent=(F.reordered||M.reordered)?'Inputs were reordered so that minimum ≤ most likely ≤ maximum.':'';
+              var c=+$('les-ctl').value/100, tp=+$('les-tp').value, tt=+$('les-tt').value;
+              var t0=performance.now();
+              var S=simulate(F.v,M.v,c,seed);
+              var ms=performance.now()-t0;
+              var R={F:F.v,M:M.v,c:c,tp:tp,tt:tt,S:S,
+                aleI:mean(S.inh),aleR:mean(S.res),p90I:pct(S.inh,0.9),p90R:pct(S.res,0.9),
+                exI:exceed(S.inh,tt),exR:exceed(S.res,tt),spI:F.v[1]*M.v[1],spR:F.v[1]*(1-c)*M.v[1]};
+              last=R;
+              $('les-run').textContent='Seed '+seed+' · '+N.toLocaleString()+' years · '+ms.toFixed(0)+' ms';
+              $('les-t1').textContent=money(R.aleR); $('les-t1s').textContent='Inherent: '+money(R.aleI);
+              $('les-t2').textContent=money(R.p90R); $('les-t2s').textContent='Inherent: '+money(R.p90I);
+              $('les-t3').textContent=pctTxt(R.exR); $('les-t3s').textContent='Limit '+Math.round(tp*100)+'% · inherent '+pctTxt(R.exI);
+              $('les-t3b').className='les-tile '+(R.exR>tp?'les-bad':'les-good');
+              $('les-t4').textContent=money(R.spR); $('les-t4s').textContent='Simulated ALE is '+(R.spR>0?(R.aleR/R.spR).toFixed(1)+'× this':'higher');
+              verdict(R); draw();
+            }
+            function verdict(R){
+              var tol='a '+Math.round(R.tp*100)+'% limit on a yearly loss over '+money(R.tt);
+              var skew=R.spR>0?' The single-point estimate (most likely frequency × most likely loss) is '+money(R.spR)+', but the simulated ALE is '+money(R.aleR)+'. Loss distributions are skewed to the right: rare, severe years pull the mean up, and a single point hides exactly the tail that a tolerance statement is written about.':'';
+              var diff=R.exR-R.tp;
+              if(Math.abs(diff)<0.01){
+                setPill('warn','Too close to call','Residual chance of exceeding '+money(R.tt)+' is '+pctTxt(R.exR)+' against '+tol+'. That is within about one point of the limit, which is inside the uncertainty of the estimates themselves. Treat it as a breach until the inputs are better calibrated or the control is proven, and track a KRI on it.'+skew);
+              } else if(diff>0){
+                setPill('bad','Breaches tolerance','Residual chance of exceeding '+money(R.tt)+' is '+pctTxt(R.exR)+' against '+tol+'. The risk practitioner reports the gap; the risk owner must choose a further response or seek formal acceptance at the right level of authority. Try a stronger control effect and watch where the residual curve crosses the threshold.'+skew);
+              } else if(R.exI>R.tp){
+                setPill('good','Within tolerance','Residual chance of exceeding '+money(R.tt)+' is '+pctTxt(R.exR)+', inside '+tol+'. The inherent curve breaches it at '+pctTxt(R.exI)+', so tolerance now depends on the control working as assumed. That control needs a named owner, independent testing, and a key control indicator.'+skew);
+              } else {
+                setPill('good','Within tolerance','Even the inherent curve stays inside '+tol+' ('+pctTxt(R.exI)+'). Additional spending on this scenario would need another justification, such as a regulatory requirement.'+skew);
+              }
+            }
+            function draw(){
+              var cv=$('les-cv'); if(!cv||!last) return;
+              var w=cv.parentNode.clientWidth; if(w<=0) return;
+              var h;
+              if(root.classList.contains('is-expanded')){h=Math.min(w*0.55,window.innerHeight-cv.getBoundingClientRect().top-90);h=Math.max(h,240);}
+              else h=Math.max(220,Math.min(w*0.55,290));
+              var dpr=window.devicePixelRatio||1;
+              cv.width=Math.round(w*dpr); cv.height=Math.round(h*dpr); cv.style.height=h+'px';
+              var g=cv.getContext('2d'); g.setTransform(dpr,0,0,dpr,0,0); g.clearRect(0,0,w,h);
+              var R=last, S=R.S;
+              var cGold=css('--gold')||'#86198f', cJade=css('--jade')||'#b45309', cMuted=css('--text-muted')||'#6c5669', cBorder=css('--border')||'#e3d2e1', cWrong=css('--wrong')||'#b91c1c', cText=css('--text-primary')||'#2a1328';
+              var L=54,Rr=14,T=12,B=40, pw=w-L-Rr, ph=h-T-B;
+              /* x range: log10 dollars */
+              var lo=Math.max(1e3,Math.min(R.M[0],R.tt)*0.8), hi=Math.max(pct(S.inh,0.998),R.tt*2,R.M[2]*1.2);
+              var e0=Math.floor(Math.log10(lo)), m0=lo/Math.pow(10,e0), x0=Math.log10((m0>=5?5:(m0>=2?2:1))*Math.pow(10,e0)), x1=Math.ceil(Math.log10(hi)); if(x1-x0<2)x0=x1-2;
+              var ymaxRaw=exceed(S.inh,Math.pow(10,x0)); var ymax=Math.min(1,Math.max(0.1,Math.ceil((Math.max(ymaxRaw,R.tp)+0.02)*10)/10));
+              function X(v){return L+(Math.log10(v)-x0)/(x1-x0)*pw;}
+              function Y(p){return T+ph-(p/ymax)*ph;}
+              g.font='11px Arial, sans-serif'; g.lineWidth=1;
+              /* tolerance zone */
+              var zx=X(R.tt), zy=Y(R.tp);
+              g.fillStyle='rgba(185,28,28,0.08)'; g.fillRect(zx,T,L+pw-zx,zy-T);
+              /* grid and axes */
+              g.strokeStyle=cBorder; g.fillStyle=cMuted; g.textAlign='right'; g.textBaseline='middle';
+              var ystep=ymax>0.5?0.2:(ymax>0.25?0.1:0.05);
+              for(var p=0;p<=ymax+1e-9;p+=ystep){var yy=Y(p);g.beginPath();g.moveTo(L,yy);g.lineTo(L+pw,yy);g.stroke();g.fillText(Math.round(p*100)+'%',L-6,yy);}
+              g.textAlign='center'; g.textBaseline='top';
+              for(var e=Math.floor(x0);e<=x1;e++){[1,2,5].forEach(function(k){var v=k*Math.pow(10,e);if(Math.log10(v)>x1+1e-9||Math.log10(v)<x0-1e-9)return;var xx=X(v);g.strokeStyle=k===1?cBorder:'rgba(0,0,0,0.04)';g.beginPath();g.moveTo(xx,T);g.lineTo(xx,T+ph);g.stroke();if(k===1||pw>420)g.fillText(axisMoney(v),xx,T+ph+5);});}
+              if(pw<=420){g.fillText(axisMoney(Math.round(Math.pow(10,x0))),L,T+ph+5);}
+              g.strokeStyle=cMuted; g.beginPath(); g.moveTo(L,T); g.lineTo(L,T+ph); g.lineTo(L+pw,T+ph); g.stroke();
+              g.fillStyle=cText; g.font='bold 11px Arial, sans-serif'; g.fillText('Annual loss (log scale)',L+pw/2,T+ph+22);
+              g.save(); g.translate(13,T+ph/2); g.rotate(-Math.PI/2); g.textAlign='center'; g.textBaseline='middle'; g.fillText('P(annual loss > x)',0,0); g.restore();
+              /* tolerance lines */
+              g.strokeStyle=cWrong; g.lineWidth=1.5; g.setLineDash([5,4]);
+              g.beginPath(); g.moveTo(zx,T+ph); g.lineTo(zx,zy); g.lineTo(L+pw,zy); g.stroke(); g.setLineDash([]);
+              /* curves */
+              function curve(a,color,dash,lw){
+                g.strokeStyle=color; g.lineWidth=lw; g.setLineDash(dash); g.beginPath();
+                var steps=Math.max(80,Math.round(pw/3));
+                for(var i=0;i<=steps;i++){var lv=x0+(x1-x0)*i/steps, v=Math.pow(10,lv), pp=exceed(a,v), xx=L+pw*i/steps, yy=Y(Math.min(pp,ymax));if(i===0)g.moveTo(xx,yy);else g.lineTo(xx,yy);}
+                g.stroke(); g.setLineDash([]);
+              }
+              curve(S.inh,cMuted,[6,4],1.6);
+              curve(S.res,cGold,[],2.6);
+              /* markers */
+              g.fillStyle=cWrong; g.beginPath(); g.arc(zx,zy,4,0,Math.PI*2); g.fill();
+              var ry=Y(Math.min(R.exR,ymax)); g.fillStyle=R.exR>R.tp?cWrong:css('--correct')||'#15803d'; g.strokeStyle='#fff'; g.lineWidth=1.5; g.beginPath(); g.arc(zx,ry,5,0,Math.PI*2); g.fill(); g.stroke();
+              g.font='bold 11px Arial, sans-serif'; g.textBaseline='bottom'; g.textAlign=zx>L+pw-120?'right':'left';
+              g.fillStyle=cText; g.fillText('Residual '+pctTxt(R.exR),zx+(g.textAlign==='left'?8:-8),ry-4);
+              /* P90 tick on residual */
+              var px=X(Math.max(R.p90R,Math.pow(10,x0)));
+              if(R.p90R>Math.pow(10,x0)){g.strokeStyle=cJade;g.lineWidth=1;g.setLineDash([2,3]);g.beginPath();g.moveTo(px,Y(0.1));g.lineTo(px,T+ph);g.stroke();g.setLineDash([]);g.fillStyle=cJade;g.font='bold 10px Arial, sans-serif';g.textAlign='left';g.textBaseline='bottom';g.fillText('P90 '+money(R.p90R),px+3,T+ph-3);}
+              /* legend */
+              var lx=L+pw-178, ly=T+8; g.fillStyle='rgba(255,255,255,0.9)'; g.fillRect(lx-6,ly-6,182,54);
+              g.font='11px Arial, sans-serif'; g.textAlign='left'; g.textBaseline='middle';
+              g.strokeStyle=cMuted; g.lineWidth=1.6; g.setLineDash([6,4]); g.beginPath(); g.moveTo(lx,ly+4); g.lineTo(lx+22,ly+4); g.stroke(); g.setLineDash([]); g.fillStyle=cText; g.fillText('Inherent (no control)',lx+28,ly+4);
+              g.strokeStyle=cGold; g.lineWidth=2.6; g.beginPath(); g.moveTo(lx,ly+20); g.lineTo(lx+22,ly+20); g.stroke(); g.fillText('Residual ('+Math.round(R.c*100)+'% prevented)',lx+28,ly+20);
+              g.fillStyle='rgba(185,28,28,0.18)'; g.fillRect(lx,ly+30,22,10); g.fillStyle=cText; g.fillText('Beyond tolerance',lx+28,ly+36);
+            }
+            function schedule(){clearTimeout(timer);timer=setTimeout(run,60);}
+            function clearPresets(){$('les-p1').setAttribute('aria-pressed','false');$('les-p2').setAttribute('aria-pressed','false');}
+            function applyPreset(k){
+              var P=PRESETS[k]; clearPresets(); $('les-'+k).setAttribute('aria-pressed','true');
+              $('les-f0').value=P.f[0];$('les-f1').value=P.f[1];$('les-f2').value=P.f[2];
+              $('les-m0').value=P.m[0];$('les-m1').value=P.m[1];$('les-m2').value=P.m[2];
+              $('les-ctl').value=P.c;$('les-ctl-v').textContent=P.c+'%';$('les-tp').value=P.tp;$('les-tt').value=P.tt;
+              seed=SEED0; run();
+            }
+            ['les-f0','les-f1','les-f2','les-m0','les-m1','les-m2'].forEach(function(id){$(id).addEventListener('input',function(){clearPresets();schedule();});});
+            $('les-ctl').addEventListener('input',function(){$('les-ctl-v').textContent=this.value+'%';schedule();});
+            ['les-tp','les-tt'].forEach(function(id){$(id).addEventListener('change',run);});
+            $('les-p1').addEventListener('click',function(){applyPreset('p1');});
+            $('les-p2').addEventListener('click',function(){applyPreset('p2');});
+            $('les-seed').addEventListener('click',function(){seed=(seed*1103515245+12345)>>>0;seed=seed%100000000;run();});
+            var rt=null; window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(draw,30);});
+            run();
+          })();
+          </script>
+
+          <div class="in-practice"><span class="ip-label">&#128270; In practice</span><p>With the default ransomware inputs and a control that prevents 30% of events, the residual curve still crosses the $1M threshold above the 10% line. Brightwater&rsquo;s chief operating officer, the risk owner, did not need a lecture on Monte Carlo. She needed one sentence: &ldquo;There is about a one-in-eight chance this costs us more than $1 million in a given year, and you told us one-in-ten is the most you will accept.&rdquo; Press &ldquo;New random seed&rdquo; a few times: the answer moves by about a point at most, which shows that 5,000 trials are enough for a decision and that the uncertainty that matters is in the input ranges, not the sampling. It also shows why a result within a point of the limit is reported as too close to call.</p></div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>This widget teaches three exam lessons. Risk is evaluated against tolerance, not against a single expected value. The gap between inherent and residual risk is the dependency on controls, so those controls need assurance. And a single-point ALE understates skewed losses, which is why the BEST quantitative answer usually uses ranges and reports the probability of exceeding a threshold.</div>
+        </article>
+
+        <article class="content-section" id="s7">
+          <div class="cs-head"><span class="cs-num">7</span><h3>Faculty Teaching Segment</h3></div>
+          <p>Students often believe quantitative analysis needs special software or perfect data. Rebuilding this simulator in a spreadsheet shows them that it needs neither, only honest ranges and a clear question.</p>
+          <ul class="detail">
+            <li><strong>Signature assignment:</strong> give teams a one-page scenario packet for a fictional regional employer (a ransomware event on a scheduling system, with synthetic incident history and cost data). Teams write a FAIR-style analysis: scenario statement, calibrated ranges for frequency and loss with the source of each estimate, a 1,000-row Monte Carlo in a spreadsheet, a loss exceedance chart, and a one-page memo to the risk owner that compares the result with a stated tolerance.</li>
+            <li><strong>Rubric criteria:</strong> (1) ranges are justified by stated evidence or expert reasoning, not chosen for convenience; (2) the model is mechanically correct, with frequency and magnitude sampled separately and summed per simulated year; (3) the memo evaluates the result against tolerance and names the decision the owner must make; (4) limitations and the single-point comparison are explained in plain business language.</li>
+            <li><strong>Lab idea:</strong> students build the model in Excel or Google Sheets. Each row is a year. A frequency cell uses <code>RAND()</code> with an inverse distribution (a triangular approximation of PERT is acceptable for a first course), a Poisson count via <code>POISSON.DIST</code> lookups or a simple Bernoulli for rare events, and a loss per event from <code>BETA.INV(RAND(), alpha, beta, min, max)</code> with the PERT shape formulas. A <code>COUNTIF</code> over a column of thresholds produces the exceedance curve. Use synthetic data only.</li>
+            <li><strong>Course fit:</strong> an IT risk management, GRC, or business continuity course at the upper-division or graduate level. Supports the CAE-CD Cybersecurity Planning and Management (CPM), Business Continuity and Disaster Recovery (BCD), and IA Compliance (IAC) Knowledge Units.</li>
+          </ul>
+          <div class="tip"><span class="tip-label">&#127891; Teaching note</span>Run the simulator in pairs. One student is the risk practitioner and adjusts only the ranges; the other is the risk owner and adjusts only the control effect and tolerance. Each pair submits a one-page worksheet (provided as a file) that records the inputs, the four tiles, and a two-sentence recommendation. Then ask every pair to narrow the loss range by half and report how much the verdict changed. Students discover that better estimates can change a decision as much as a new control.</div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="emates">
+    <p class="eyebrow">Explore with eMates</p>
+    <h2 class="h2">Interactive refreshers for this lesson</h2>
+    <div class="rule"></div>
+    <p class="lead">Short, self-paced eMates from the myEMATES library. Each opens in a new tab. Concept refreshers support your own exam study. Student-ready modules also work as warm-ups in your own courses.</p>
+    <div class="em-grid">
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 4</span></div><h3>Risk Analysis</h3><p>Qualitative and quantitative analysis, SLE, ARO, and ALE: the arithmetic underneath the Loss Exceedance Simulator.</p><div class="em-foot"><span class="em-level student">Student-ready</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/risk_analysis/risk_analysis.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Risk Analysis (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 1</span></div><h3>Cybersecurity Scenario</h3><p>Trace a scenario from threat to business consequence before estimating its frequency and loss.</p><div class="em-foot"><span class="em-level student">Student-ready</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/cyber_scenario/cyber_scenario.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Cybersecurity Scenario (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 4</span></div><h3>Risk Management</h3><p>The full risk management cycle, a reminder of where analysis sits between identification and response.</p><div class="em-foot"><span class="em-level">Concept refresher</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/risk_management/risk_management.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Risk Management (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Networking</span><span class="em-sec">Section 4</span></div><h3>Digital Media Handling: Backups</h3><p>Backup types and schedules, the practical side of meeting the RPO a business impact analysis sets.</p><div class="em-foot"><span class="em-level">Concept refresher</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/backups/backups.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Digital Media Handling: Backups (opens in a new tab)">Open &#8599;</a></div></article>
+    </div>
+  </section>
+
+  <section class="block" id="practice-this-lesson">
+    <p class="eyebrow">Practice</p>
+    <h2 class="h2">Practice this lesson</h2>
+    <div class="rule"></div>
+    <p class="lead">Self-checking practice for this lesson, ready to use with your own students. Each item ends with a report you can print or save as a PDF. See all items in the <a href="practices.html">CRISC Practices</a> and the <a href="labs.html">CRISC Risk Lab</a>.</p>
+    <div class="pl-grid">
+      <article class="pl-card"><div class="pl-top"><span class="pl-type">CRISC Practices &middot; A5</span><span class="pl-time">&#9201; 40 min</span></div><h3><a href="activity05.html">Analyze and Register Risk</a></h3><p>Calculate SLE, ALE, and control value, pick the right analysis method, and separate inherent, residual, and current risk.</p><div class="pl-foot"><span class="pl-level">Intermediate</span><a class="pl-open" href="activity05.html" aria-label="Open activity A5: Analyze and Register Risk">Open &#8594;</a></div></article>
+      <article class="pl-card pl-lab"><div class="pl-top"><span class="pl-type">CRISC Risk Lab &middot; B3</span><span class="pl-time">&#9201; 75 min</span></div><h3><a href="lab03.html">Quantitative Risk Analysis</a></h3><p>Calibrate ranges from data, run a seeded Monte Carlo, read the loss exceedance curve, and value a proposed control.</p><div class="pl-foot"><span class="pl-level">Advanced</span><a class="pl-open" href="lab03.html" aria-label="Open lab B3: Quantitative Risk Analysis">Open &#8594;</a></div></article>
+    </div>
+  </section>
+
+  <section class="block" id="knowledge-check">
+    <p class="eyebrow">Scored Knowledge Check</p>
+    <h2 class="h2">Test your understanding</h2>
+    <div class="rule"></div>
+    <p class="lead" style="margin-bottom:1.5rem">Select the best answer for each question, then submit for your score and the rationale for every item. Like the exam, several options may be true; choose the best one.</p>
+    <div class="quiz-card">
+      <form id="quiz">
+
+        <div class="q" data-answer="B">
+          <p class="q-stem"><span class="qn">Q1.</span>During a business impact analysis, Brightwater&rsquo;s treasury manager states that wire instructions received in the last 15 minutes before an outage could not be reconstructed and must not be lost. Which recovery objective does this statement set?</p>
+          <fieldset class="options">
+            <legend>Question 1 options</legend>
+            <label class="opt"><input type="radio" name="q1" value="A"><span><span class="opt-letter">A.</span> Recovery time objective</span></label>
+            <label class="opt"><input type="radio" name="q1" value="B"><span><span class="opt-letter">B.</span> Recovery point objective</span></label>
+            <label class="opt"><input type="radio" name="q1" value="C"><span><span class="opt-letter">C.</span> Maximum tolerable downtime</span></label>
+            <label class="opt"><input type="radio" name="q1" value="D"><span><span class="opt-letter">D.</span> Service level objective for the payment gateway</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: B.</b> The RPO is the maximum data loss, measured in time, the business can accept, and it drives backup and replication frequency. RTO and MTD describe how long the process can be down, not how much data can be lost. A gateway service level is a vendor commitment, not a BIA objective.</div>
+        </div>
+
+        <div class="q" data-answer="D">
+          <p class="q-stem"><span class="qn">Q2.</span>The board has seen a ransomware risk rated &ldquo;High&rdquo; on the heat map for three years and now asks how much it should budget for the exposure. Which approach BEST answers the board&rsquo;s question?</p>
+          <fieldset class="options">
+            <legend>Question 2 options</legend>
+            <label class="opt"><input type="radio" name="q2" value="A"><span><span class="opt-letter">A.</span> Re-score the risk on a finer 10-by-10 qualitative matrix</span></label>
+            <label class="opt"><input type="radio" name="q2" value="B"><span><span class="opt-letter">B.</span> Report the CVSS base scores of the vulnerabilities ransomware typically exploits</span></label>
+            <label class="opt"><input type="radio" name="q2" value="C"><span><span class="opt-letter">C.</span> Multiply the likelihood and impact ratings to produce a semi-quantitative score</span></label>
+            <label class="opt"><input type="radio" name="q2" value="D"><span><span class="opt-letter">D.</span> Perform a quantitative analysis with frequency and loss ranges and report the expected and tail losses in dollars</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: D.</b> A budget question needs a monetary answer, and ranges with simulation produce both the expected loss and the probability of large losses. A finer matrix and a multiplied ordinal score are still not dollars. CVSS rates vulnerability severity, not business loss.</div>
+        </div>
+
+        <div class="q" data-answer="A">
+          <p class="q-stem"><span class="qn">Q3.</span>A risk register lists threats and ratings but no names in the &ldquo;owner&rdquo; column; every entry says &ldquo;IT.&rdquo; What is the PRIMARY concern with this register?</p>
+          <fieldset class="options">
+            <legend>Question 3 options</legend>
+            <label class="opt"><input type="radio" name="q3" value="A"><span><span class="opt-letter">A.</span> No individual is accountable for response decisions or for accepting residual risk</span></label>
+            <label class="opt"><input type="radio" name="q3" value="B"><span><span class="opt-letter">B.</span> Internal audit will issue a finding about incomplete documentation</span></label>
+            <label class="opt"><input type="radio" name="q3" value="C"><span><span class="opt-letter">C.</span> The IT department will be overloaded with remediation work</span></label>
+            <label class="opt"><input type="radio" name="q3" value="D"><span><span class="opt-letter">D.</span> The register cannot be exported to the GRC platform</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: A.</b> Risk ownership creates accountability for the response and for accepting what remains. A department is not an owner. An audit finding and workload are symptoms of that gap, and tool compatibility is a minor technical issue.</div>
+        </div>
+
+        <div class="q" data-answer="C">
+          <p class="q-stem"><span class="qn">Q4.</span>A risk was rated Low because a backup control reduces its impact. The latest restore test failed, and the fix will take three months. What should the risk practitioner do FIRST?</p>
+          <fieldset class="options">
+            <legend>Question 4 options</legend>
+            <label class="opt"><input type="radio" name="q4" value="A"><span><span class="opt-letter">A.</span> Keep the Low rating, because the control is planned to be fixed</span></label>
+            <label class="opt"><input type="radio" name="q4" value="B"><span><span class="opt-letter">B.</span> Redesign the backup process with the infrastructure team</span></label>
+            <label class="opt"><input type="radio" name="q4" value="C"><span><span class="opt-letter">C.</span> Reassess the current risk to reflect the failed control and update the register and the risk owner</span></label>
+            <label class="opt"><input type="radio" name="q4" value="D"><span><span class="opt-letter">D.</span> Recommend that the risk owner accept the risk until the fix is complete</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: C.</b> Current risk must reflect how controls actually perform, so the rating is out of date and the owner needs to know. Keeping the planned rating misreports the exposure. Redesigning the process belongs to the control owner. Recommending acceptance comes after the risk is correctly assessed, not before.</div>
+        </div>
+
+        <div class="q" data-answer="A">
+          <p class="q-stem"><span class="qn">Q5.</span>A Monte Carlo analysis shows a mean annual loss of $280,000 and a 12% chance of losing more than $1 million in a year. The enterprise tolerance is no more than a 10% chance of losing over $1 million. The single-point estimate is $126,000. What should the risk practitioner report to the risk owner?</p>
+          <fieldset class="options">
+            <legend>Question 5 options</legend>
+            <label class="opt"><input type="radio" name="q5" value="A"><span><span class="opt-letter">A.</span> The risk exceeds tolerance, shown by the 12% exceedance probability, and a response decision is needed</span></label>
+            <label class="opt"><input type="radio" name="q5" value="B"><span><span class="opt-letter">B.</span> The expected loss is $126,000, because that uses the most likely values</span></label>
+            <label class="opt"><input type="radio" name="q5" value="C"><span><span class="opt-letter">C.</span> The risk is acceptable because the mean annual loss is well below $1 million</span></label>
+            <label class="opt"><input type="radio" name="q5" value="D"><span><span class="opt-letter">D.</span> The simulation should be rerun with more trials until the result falls within tolerance</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: A.</b> Tolerance is stated as a probability of exceeding a loss, so the exceedance probability is the measure to compare. The single point ignores the skewed tail, and the mean says nothing about how often large losses occur. Rerunning a simulation to get a preferred answer is not analysis.</div>
+        </div>
+
+        <div class="q" data-answer="D">
+          <p class="q-stem"><span class="qn">Q6.</span>Three business units each report a Low risk related to the same end-of-support database platform. Each unit plans to accept its risk. What is the BEST next step for the risk practitioner?</p>
+          <fieldset class="options">
+            <legend>Question 6 options</legend>
+            <label class="opt"><input type="radio" name="q6" value="A"><span><span class="opt-letter">A.</span> Approve the three acceptances, since each is within appetite</span></label>
+            <label class="opt"><input type="radio" name="q6" value="B"><span><span class="opt-letter">B.</span> Ask each unit to raise its rating to Medium for consistency</span></label>
+            <label class="opt"><input type="radio" name="q6" value="C"><span><span class="opt-letter">C.</span> Schedule an upgrade of the platform</span></label>
+            <label class="opt"><input type="radio" name="q6" value="D"><span><span class="opt-letter">D.</span> Aggregate the related risks and reassess the combined exposure at the enterprise level</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: D.</b> Risks with a common cause can occur together, so their combined exposure may exceed tolerance even when each is Low. The practitioner does not approve acceptances, changing ratings without analysis is arbitrary, and scheduling an upgrade is a response decision that comes after the combined risk is understood.</div>
+        </div>
+
+        <div class="q" data-answer="B">
+          <p class="q-stem"><span class="qn">Q7.</span>A payment platform is valued at $2,000,000. A specific outage scenario would cost 25% of that value per occurrence and is expected once every five years. What is the annualized loss expectancy?</p>
+          <fieldset class="options">
+            <legend>Question 7 options</legend>
+            <label class="opt"><input type="radio" name="q7" value="A"><span><span class="opt-letter">A.</span> $500,000</span></label>
+            <label class="opt"><input type="radio" name="q7" value="B"><span><span class="opt-letter">B.</span> $100,000</span></label>
+            <label class="opt"><input type="radio" name="q7" value="C"><span><span class="opt-letter">C.</span> $400,000</span></label>
+            <label class="opt"><input type="radio" name="q7" value="D"><span><span class="opt-letter">D.</span> $2,500,000</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: B.</b> SLE = $2,000,000 &times; 0.25 = $500,000. ARO = 1 / 5 = 0.2. ALE = $500,000 &times; 0.2 = $100,000. Option A is the SLE, not the ALE. Option C multiplies by the wrong rate, and D multiplies instead of dividing by the interval.</div>
+        </div>
+
+        <div class="q" data-answer="C">
+          <p class="q-stem"><span class="qn">Q8.</span>Who should determine the maximum tolerable downtime for Brightwater&rsquo;s loan origination process?</p>
+          <fieldset class="options">
+            <legend>Question 8 options</legend>
+            <label class="opt"><input type="radio" name="q8" value="A"><span><span class="opt-letter">A.</span> The disaster recovery manager in IT</span></label>
+            <label class="opt"><input type="radio" name="q8" value="B"><span><span class="opt-letter">B.</span> The risk practitioner who facilitates the BIA</span></label>
+            <label class="opt"><input type="radio" name="q8" value="C"><span><span class="opt-letter">C.</span> The business process owner, based on the impact analysis</span></label>
+            <label class="opt"><input type="radio" name="q8" value="D"><span><span class="opt-letter">D.</span> The SaaS loan platform vendor, based on its service level agreement</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: C.</b> Only the business owner can judge when downtime becomes unacceptable to the business, so the owner sets the MTD using BIA evidence. IT designs a recovery strategy to meet it, the practitioner facilitates and advises, and a vendor SLA is a dependency to compare against the MTD, not the source of it.</div>
+        </div>
+
+        <div class="quiz-actions">
+          <button type="button" class="btn" onclick="gradeQuiz()">Submit Answers</button>
+          <button type="button" class="btn secondary" onclick="resetQuiz()">Reset</button>
+          <span class="score" id="score" aria-live="polite"></span>
+        </div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<nav class="pager" aria-label="Lesson navigation">
+  <div class="pager-inner">
+    <a href="lesson03.html" class="prev"><span class="pager-dir">&#8592; Previous</span><span class="pager-name">Lesson 3: Risk Identification</span></a>
+    <a href="lesson05.html" class="next"><span class="pager-dir">Next &#8594;</span><span class="pager-name">Lesson 5: Risk Response</span></a>
+  </div>
+</nav>
+
+<footer>
+  <div class="footer-logo">CRISC 5-DAY FACULTY WORKSHOP</div>
+  <p class="footer-disclaimer">This workshop is an independent educational resource. It is not affiliated with, endorsed by, or sponsored by ISACA. CRISC&#174; is a registered mark of ISACA. All lesson text, questions, and scenarios are original and do not reproduce the ISACA CRISC Review Manual or question database. eMates are provided by the myEMATES library and open in a new tab. Always verify the current exam content outline at isaca.org before registering.</p>
+</footer>
+
+<script src="crisc-lesson.js"></script>
+</body>
+</html>

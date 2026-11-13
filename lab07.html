@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>B7 AI Use-Case Risk Review | CRISC 5-Day Faculty Workshop</title>
+<link rel="stylesheet" href="crisc-lesson.css">
+<link rel="stylesheet" href="practice.css">
+<style>
+/* ===== Lab B7: AI use-case risk review (scoped b7-) ===== */
+.b7-row { display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-start; }
+.b7-col { flex: 1 1 280px; min-width: 0; }
+.b7-col.wide { flex: 1.7 1 380px; }
+.b7-box { border: 1px solid var(--border); border-radius: 6px; background: var(--card-bg); padding: .9rem 1rem; min-width: 0; margin-bottom: 1rem; }
+.b7-box h4 { font: 700 .7rem Arial, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--navy); margin: 0 0 .6rem; }
+.b7-note { font: .82rem/1.55 Arial, sans-serif; color: var(--text-secondary); margin: 0 0 .7rem; }
+.b7-note b { color: var(--text-primary); }
+.b7-kv { width: 100%; border-collapse: collapse; font: .84rem/1.5 Arial, sans-serif; }
+.b7-kv th, .b7-kv td { border-bottom: 1px solid var(--border); padding: .45rem .5rem; text-align: left; vertical-align: top; }
+.b7-kv th { width: 30%; color: var(--text-primary); background: var(--blue-pale); font-weight: 700; }
+.b7-kv td { color: var(--text-secondary); }
+.b7-st { display: inline-block; font: 700 .66rem Arial, sans-serif; border-radius: 3px; padding: .1rem .4rem; border: 1px solid; white-space: nowrap; letter-spacing: .03em; }
+.b7-st.ok { color: var(--correct); border-color: var(--correct); background: var(--correct-bg); }
+.b7-st.part { color: var(--jade-dark); border-color: var(--jade); background: var(--jade-pale); }
+.b7-st.no { color: var(--wrong); border-color: var(--wrong); background: var(--wrong-bg); }
+.b7-flow { width: 100%; height: auto; display: block; }
+.b7-flow .nd rect { fill: #fff; stroke: #3b1838; stroke-width: 2; }
+.b7-flow .nd.ext rect { fill: #f6edf5; }
+.b7-flow .nd.vend rect { fill: #fdf2e4; stroke: #b45309; }
+.b7-flow .nm { font: 700 13px Arial, sans-serif; fill: #2a1328; }
+.b7-flow .sb { font: 11px Arial, sans-serif; fill: #6c5669; }
+.b7-flow .ar { stroke: #6c5669; stroke-width: 2; fill: none; marker-end: url(#b7-arw); }
+.b7-flow .ar.hot { stroke: #b45309; stroke-dasharray: 6 4; }
+.b7-flow .fl { font: 700 11px Arial, sans-serif; fill: #86198f; }
+.b7-flow .zone { fill: none; stroke: #86198f; stroke-width: 1.5; stroke-dasharray: 8 5; }
+.b7-flow .zl { font: 700 11px Arial, sans-serif; fill: #86198f; letter-spacing: .06em; }
+.b7-flw { overflow-x: auto; }
+.b7-grid { width: 100%; border-collapse: collapse; font: .8rem/1.45 Arial, sans-serif; }
+.b7-grid th, .b7-grid td { border: 1px solid var(--border); padding: .45rem .5rem; vertical-align: top; text-align: left; }
+.b7-grid thead th { background: var(--navy); color: #fff; font-size: .72rem; letter-spacing: .04em; }
+.b7-grid td.c, .b7-grid th.c { text-align: center; white-space: nowrap; }
+.b7-grid td.n { text-align: right; white-space: nowrap; }
+.b7-grid select { font: .78rem Arial, sans-serif; padding: .25rem; border: 1px solid var(--border); border-radius: 3px; background: #fff; color: var(--text-primary); }
+.b7-grid tr.b7-hi td { background: var(--blue-pale); }
+.b7-band { display: inline-block; font: 700 .68rem Arial, sans-serif; border-radius: 3px; padding: .1rem .4rem; border: 1px solid; white-space: nowrap; }
+.b7-band.h { color: var(--wrong); border-color: var(--wrong); background: var(--wrong-bg); }
+.b7-band.m { color: var(--jade-dark); border-color: var(--jade); background: var(--jade-pale); }
+.b7-band.l { color: var(--correct); border-color: var(--correct); background: var(--correct-bg); }
+.b7-band.n { color: var(--text-muted); border-color: var(--border); background: #fff; }
+.b7-heat { border-collapse: collapse; font: .74rem Arial, sans-serif; margin: 0 auto; }
+.b7-heat td, .b7-heat th { width: 3.1rem; height: 2.3rem; border: 1px solid #fff; text-align: center; vertical-align: middle; padding: .1rem; }
+.b7-heat th { background: transparent; color: var(--text-muted); font-weight: 700; width: auto; height: auto; padding: .2rem .35rem; }
+.b7-heat td.h { background: var(--wrong-bg); } .b7-heat td.m { background: var(--jade-pale); } .b7-heat td.l { background: var(--correct-bg); }
+.b7-heat td b { display: inline-block; font: 700 .68rem Arial, sans-serif; color: var(--navy); background: #fff; border: 1px solid var(--navy); border-radius: 3px; padding: 0 .2rem; margin: 1px; }
+.b7-tiles { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0 0 .8rem; }
+.b7-tile { flex: 1 1 120px; min-width: 0; background: var(--blue-pale); border: 1px solid var(--blue-pale-border); border-radius: 5px; padding: .5rem .6rem; }
+.b7-tile .k { font: 700 .62rem Arial, sans-serif; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted); }
+.b7-tile .v { font: 900 1.25rem Arial, sans-serif; color: var(--text-primary); margin-top: .1rem; }
+.b7-tile .s { font: .72rem Arial, sans-serif; color: var(--text-secondary); }
+.b7-q { border: 0; margin: 0 0 .7rem; padding: 0; }
+.b7-q legend { font: 700 .84rem/1.45 Arial, sans-serif; color: var(--text-primary); margin-bottom: .3rem; }
+.b7-q label { display: inline-flex; align-items: center; gap: .3rem; margin-right: 1rem; font: .84rem Arial, sans-serif; color: var(--text-secondary); cursor: pointer; }
+.b7-tier { border: 2px solid var(--navy); border-radius: 6px; padding: .8rem 1rem; background: var(--blue-pale); }
+.b7-tier .t { font: 900 1.15rem Georgia, serif; color: var(--navy); }
+.b7-tier ul { margin: .4rem 0 0; padding-left: 1.1rem; font: .84rem/1.55 Arial, sans-serif; color: var(--text-secondary); }
+.b7-ctl { list-style: none; margin: 0; padding: 0; }
+.b7-ctl li { border: 1px solid var(--border); border-radius: 4px; padding: .5rem .65rem; margin-bottom: .4rem; background: #fff; }
+.b7-ctl label { display: flex; gap: .55rem; align-items: flex-start; cursor: pointer; font: .84rem/1.5 Arial, sans-serif; color: var(--text-secondary); }
+.b7-ctl label b { color: var(--text-primary); }
+.b7-ctl input { margin-top: .25rem; accent-color: #86198f; }
+.b7-ctl li.on { border-color: var(--gold); background: var(--gold-pale); }
+.b7-ctl .fx { display: block; font: .74rem Arial, sans-serif; color: var(--text-muted); margin-top: .15rem; }
+.b7-memo { border: 1px solid var(--border); border-left: 5px solid var(--gold); background: #fff; padding: .8rem 1rem; font: .84rem/1.6 Arial, sans-serif; color: var(--text-secondary); }
+.b7-memo h5 { font: 700 1rem Georgia, serif; color: var(--text-primary); margin: 0 0 .4rem; }
+.b7-memo p { margin: 0 0 .45rem; }
+.b7-memo b { color: var(--text-primary); }
+.b7-seg { display: inline-flex; flex-wrap: wrap; gap: .3rem; }
+.b7-seg button { border: 1px solid var(--border); background: #fff; color: var(--text-secondary); border-radius: 4px; padding: .4rem .7rem; font: 700 .78rem Arial, sans-serif; cursor: pointer; }
+.b7-seg button[aria-pressed="true"] { background: var(--navy); border-color: var(--navy); color: #fff; }
+.b7-grid select:focus-visible, .b7-q input:focus-visible, .b7-ctl input:focus-visible, .b7-seg button:focus-visible, .b7-flw:focus-visible { outline: 3px solid var(--gold); outline-offset: 1px; }
+@media (max-width: 700px) { .b7-flow { min-width: 640px; } .b7-grid { font-size: .74rem; } }
+</style>
+</head>
+<body>
+<div id="app"><noscript><p style="padding:2rem;font-family:Arial">This lab needs JavaScript enabled.</p></noscript></div>
+
+<script>
+/* ===================== Case data (fixed) =====================
+   Halloway Foods, "Ask Halloway" generative AI customer assistant, pre-launch risk review.
+   Answers in the checklist are computed from these arrays where they are numeric. */
+(function () {
+  var TESTS = [
+    { cat: 'Allergen questions', n: 120, f: 7, note: '2 answers said a product “contains no peanuts” when it is made on a shared line that the allergen database marks “may contain peanuts.”' },
+    { cat: 'Order status (B2B portal)', n: 80, f: 3, note: 'All 3 failures happened when the ERP order API timed out. The assistant gave a shipping date that does not exist in the ERP.' },
+    { cat: 'General product and FAQ', n: 150, f: 4, note: 'Minor: outdated pack sizes and one wrong store-locator answer.' },
+    { cat: 'Prompt injection (red team)', n: 50, f: 6, note: '4 attempts made the assistant drop its persona (low impact). 2 attempts returned another customer’s order status through the ERP order tool.' },
+    { cat: 'Toxicity and bias probes', n: 40, f: 0, note: 'No harmful or biased output found.' },
+    { cat: 'AI disclosure at chat start', n: 20, f: 20, note: 'No session told the user that the assistant is an AI. The widget has no disclosure text.' }
+  ];
+  var FINDINGS = [
+    { id: 'F1', fn: 'Govern', t: 'No AI system impact assessment has been completed, although Halloway’s AI policy requires one before any customer-facing AI system goes live. The team plans to do it “after launch.”' },
+    { id: 'F2', fn: 'Map', t: 'The intake form lists consumers in Ireland as users from launch, but nobody has recorded the legal and regulatory context or classified the system under the EU AI Act.' },
+    { id: 'F3', fn: 'Map', t: 'The data flow shows full chat transcripts, which can include allergy and health details, kept for 2 years in the analytics store, and an ERP order tool that uses one shared account able to read every customer’s orders.' },
+    { id: 'F4', fn: 'Measure', t: 'Allergen testing found 7 wrong answers in 120 tests, including 2 that told a customer a shared-line product contains no peanuts.' },
+    { id: 'F5', fn: 'Measure', t: 'Red-team testing found 6 successful prompt injections in 50 attempts; 2 returned another customer’s order status.' },
+    { id: 'F6', fn: 'Manage', t: 'When the ERP order API times out, the assistant invents a shipping date. There is no fallback message, no handoff to a person, and no documented way to switch the assistant off.' },
+    { id: 'F7', fn: 'Manage', t: 'There is no post-deployment monitoring plan: no KRIs, thresholds, owner, or review cycle for error, complaint, handoff, or injection rates.' },
+    { id: 'F8', fn: 'Govern', t: 'The Lumora contract lets the vendor update the model without notice, and the third-party due-diligence review did not address how model changes are announced or retested.' }
+  ];
+  var CONTROLS = [
+    { id: 'K1', req: true, cov: ['F4'], t: 'Allergen guardrail with a human in the loop', d: 'Answer allergen questions only with verbatim text from the allergen database, including “may contain” statements, and hand off to a trained agent when there is no exact match.' },
+    { id: 'K2', req: true, cov: ['F3', 'F5'], t: 'Least-privilege order tool', d: 'Replace the shared service account with a per-customer token, so the tool can read only the signed-in customer’s orders.' },
+    { id: 'K3', req: true, cov: ['F5'], t: 'Prompt-injection guardrails and retest', d: 'Input and output filtering and a fixed instruction hierarchy, with a red-team retest before go-live.' },
+    { id: 'K4', req: true, cov: ['F2'], t: 'AI disclosure', d: 'Tell every user at the start of the chat that they are talking to an AI assistant, with a link to a person.' },
+    { id: 'K5', req: true, cov: ['F7'], t: 'Monitoring with KRIs', d: 'KRIs for allergen errors (zero tolerance), injection detections, complaints, and handoffs, with thresholds, a named owner, and weekly review.' },
+    { id: 'K6', req: true, cov: ['F6'], t: 'Safe fallback and switch-off', d: 'When the ERP API fails, say that status is unavailable and hand off. Document how to switch the assistant off, and name who may do it.' },
+    { id: 'K7', req: true, cov: ['F3'], t: 'Transcript minimization', d: 'Mask allergy and health details before transcripts reach analytics, and purge transcripts after 90 days.' },
+    { id: 'K8', req: false, cov: [], t: 'Human approval of every response', d: 'A customer service agent reviews each answer before it is sent.', fx: 'Side effect: ends 24/7 answers and the call-volume objective. It treats every answer as high risk.' },
+    { id: 'K9', req: false, cov: [], t: 'EU high-risk conformity assessment', d: 'Run a conformity assessment and register the assistant in the EU database for high-risk systems.', fx: 'Side effect: months of work for obligations that apply to a different tier.' },
+    { id: 'K10', req: false, cov: [], t: 'ISO/IEC 42001 certification first', d: 'Delay launch until Halloway’s AI management system is certified to ISO/IEC 42001:2023.', fx: 'Side effect: a voluntary, organization-wide program that takes many months and does not treat these specific findings.' },
+    { id: 'K11', req: false, cov: [], t: 'Replace Lumora with an in-house model', d: 'Build and host Halloway’s own language model before launch.', fx: 'Side effect: new model risk, cost, and delay. Allergen grounding and injection defenses are still needed.' }
+  ];
+  var FNS = ['Govern', 'Map', 'Measure', 'Manage'];
+  var TIERS = {
+    unacceptable: { name: 'Unacceptable risk (prohibited)', ob: ['The practice is banned in the EU, for example social scoring or manipulative techniques that cause significant harm.', 'The system cannot be offered in the EU at all.'] },
+    high: { name: 'High-risk', ob: ['Risk management system, data governance, technical documentation, and logging.', 'Human oversight, accuracy, robustness, and cybersecurity requirements.', 'Conformity assessment and registration in the EU database before use.'] },
+    limited: { name: 'Limited risk (transparency duties)', ob: ['Tell people they are interacting with an AI system, unless it is obvious.', 'Mark AI-generated content where the Act requires it.', 'No conformity assessment. Other law, such as the GDPR and food information rules, still applies.'] },
+    minimal: { name: 'Minimal risk', ob: ['No new obligations under the Act.', 'Voluntary codes of conduct are encouraged.'] }
+  };
+  window.B7 = {
+    TESTS: TESTS, FINDINGS: FINDINGS, CONTROLS: CONTROLS, FNS: FNS, TIERS: TIERS,
+    allergenRate: function () { return Math.round(10000 * TESTS[0].f / TESTS[0].n) / 100; },
+    govern: function () { return FINDINGS.filter(function (f) { return f.fn === 'Govern'; }).map(function (f) { return f.id; }); },
+    required: function () { return CONTROLS.filter(function (c) { return c.req; }).map(function (c) { return c.id; }); }
+  };
+})();
+</script>
+
+<script>
+(function () {
+  var B = window.B7, API = null, ROOT = null;
+  function esc(s) { return API.esc(s); }
+  function n(k, v) { return API.note(k, v); }
+  function band(s) { return !s ? 'n' : s >= 15 ? 'h' : s >= 8 ? 'm' : 'l'; }
+  function bandName(s) { return { h: 'High', m: 'Medium', l: 'Low', n: 'Not rated' }[band(s)]; }
+  function rat() { return n('rat') || {}; }
+  function score(id) { var r = rat()[id] || {}; return r.L && r.I ? r.L * r.I : 0; }
+
+  /* ---------- Artifacts ---------- */
+  function intakeHTML() {
+    function st(c, t) { return '<span class="b7-st ' + c + '">' + t + '</span>'; }
+    return '<div class="lb-doc"><p class="eyebrow">Artifact 1</p><h4>AI use-case intake form AIR-2027-014</h4><table class="b7-kv"><tbody>' +
+      '<tr><th scope="row">Use case</th><td>“Ask Halloway,” a generative AI customer assistant on the Halloway product sites and the B2B customer portal.</td></tr>' +
+      '<tr><th scope="row">Business objective</th><td>Cut contact-center call volume by 30 percent and answer customers 24 hours a day, with customer satisfaction of 85 or higher.</td></tr>' +
+      '<tr><th scope="row">Business owner and risk owner</th><td>Colette Ashdown, VP Customer Experience</td></tr>' +
+      '<tr><th scope="row">Product owner</th><td>Theo Brandt, digital product manager</td></tr>' +
+      '<tr><th scope="row">Users</th><td>Consumers in the United States and Canada; grocery-chain buyers checking order status; consumers in Ireland through the Halloway Ireland site, from launch.</td></tr>' +
+      '<tr><th scope="row">What it does</th><td>Answers product, ingredient, allergen, and store questions from approved content, and gives B2B buyers their order status. It does not make decisions about people, such as credit, employment, or eligibility.</td></tr>' +
+      '<tr><th scope="row">Data used</th><td>Product catalog, allergen database (the source of truth, maintained by Quality), FAQ, ERP order status, and customers’ free-text messages.</td></tr>' +
+      '<tr><th scope="row">Model</th><td>Lumora Assist 4 from Lumora AI, called through its API, with retrieval over approved Halloway content.</td></tr>' +
+      '<tr><th scope="row">Planned go-live</th><td>Six weeks from today</td></tr></tbody></table>' +
+      '<h4 style="margin-top:1rem">Governance artifacts</h4><table class="b7-kv"><tbody>' +
+      '<tr><th scope="row">AI inventory entry</th><td>' + st('ok', 'Complete') + ' AI-0031</td></tr>' +
+      '<tr><th scope="row">AI acceptable use policy</th><td>' + st('ok', 'Approved') + ' Version 1.2</td></tr>' +
+      '<tr><th scope="row">Vendor due diligence</th><td>' + st('part', 'Partial') + ' DPA and EU standard contractual clauses signed; model-change terms not reviewed</td></tr>' +
+      '<tr><th scope="row">AI system impact assessment</th><td>' + st('no', 'Not started') + ' “Planned after launch”</td></tr>' +
+      '<tr><th scope="row">Legal classification</th><td>' + st('no', 'Not recorded') + '</td></tr>' +
+      '<tr><th scope="row">Monitoring plan</th><td>' + st('no', 'Not started') + '</td></tr></tbody></table>' +
+      '<h4 style="margin-top:1rem">Policy and appetite extracts</h4><ul>' +
+      '<li><b>AI policy, section 4:</b> before any customer-facing AI system goes live, the business owner completes an AI system impact assessment and the risk function reviews it.</li>' +
+      '<li><b>AI policy, section 5:</b> each AI system has a named accountable owner, a monitoring plan, and a documented way to switch it off.</li>' +
+      '<li><b>Risk appetite (board, 2026):</b> no tolerance for incorrect allergen information; low tolerance for exposure of customer data; moderate tolerance for minor service errors, with a target below 2 percent wrong answers on general questions.</li></ul></div>';
+  }
+  function cardHTML() {
+    return '<div class="lb-doc"><p class="eyebrow">Artifact 2</p><h4>Vendor model card: Lumora Assist 4 (supplied by Lumora AI)</h4><table class="b7-kv"><tbody>' +
+      '<tr><th scope="row">Intended uses</th><td>Customer support, drafting, and question answering over the customer’s own content.</td></tr>' +
+      '<tr><th scope="row">Out-of-scope uses</th><td>Medical or legal advice; safety-critical information without human verification; decisions about individuals.</td></tr>' +
+      '<tr><th scope="row">Evaluation</th><td>Factual error rate of about 3 percent on Lumora’s general question-answering benchmark. Not measured on customer content.</td></tr>' +
+      '<tr><th scope="row">Known limitations</th><td>May produce confident but incorrect statements (confabulation). Instructions in user input or retrieved content can override the system prompt (prompt injection). Performance can change between model versions.</td></tr>' +
+      '<tr><th scope="row">Data handling</th><td>Enterprise tier: prompts and outputs are not used for training. Retained 30 days for abuse monitoring. Processed in US data centers.</td></tr>' +
+      '<tr><th scope="row">Updates</th><td>“Lumora may update model versions to improve quality.” No notice period is stated.</td></tr>' +
+      '<tr><th scope="row">Safety features</th><td>Toxicity filters on by default. Grounding, tool permissions, and disclosure are the customer’s responsibility.</td></tr></tbody></table></div>';
+  }
+  function flowHTML() {
+    function node(x, y, w, nm, sb, cls) { return '<g class="nd ' + (cls || '') + '"><rect x="' + x + '" y="' + y + '" width="' + w + '" height="52" rx="5"/><text class="nm" x="' + (x + w / 2) + '" y="' + (y + 22) + '" text-anchor="middle">' + nm + '</text><text class="sb" x="' + (x + w / 2) + '" y="' + (y + 39) + '" text-anchor="middle">' + sb + '</text></g>'; }
+    function ar(x1, y1, x2, y2, lab, lx, ly, hot) { return '<line class="ar' + (hot ? ' hot' : '') + '" x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '"/><text class="fl" x="' + lx + '" y="' + ly + '">' + lab + '</text>'; }
+    var svg = '<svg class="b7-flow" viewBox="0 0 760 330" role="img" aria-labelledby="b7-flow-t"><title id="b7-flow-t">Data flow for Ask Halloway. The flows are listed in the table below.</title>' +
+      '<defs><marker id="b7-arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#6c5669"/></marker></defs>' +
+      '<rect class="zone" x="190" y="20" width="355" height="300" rx="8"/><text class="zl" x="200" y="38">HALLOWAY CLOUD</text>' +
+      node(10, 150, 150, 'Customer', 'browser or portal', 'ext') +
+      node(210, 150, 150, 'Orchestrator', 'system prompt, retrieval') +
+      node(405, 48, 125, 'Knowledge base', 'catalog, allergen, FAQ') +
+      node(405, 150, 125, 'ERP order API', 'shared service account') +
+      node(405, 256, 125, 'Analytics store', 'transcripts, 2 years') +
+      node(590, 150, 160, 'Lumora API', 'US region, 30-day log', 'vend') +
+      ar(160, 168, 208, 168, 'D1', 172, 161) + ar(210, 186, 162, 186, '', 0, 0) +
+      ar(360, 160, 403, 82, 'D2', 366, 114) +
+      ar(360, 176, 403, 176, 'D3', 370, 170, true) +
+      ar(360, 194, 403, 272, 'D4', 366, 244, true) +
+      '<path class="ar" d="M300,150 L300,128 L640,128 L640,148"/><text class="fl" x="560" y="122">D5</text>' +
+      '<path class="ar" d="M700,150 L700,112 L270,112 L270,148"/><text class="fl" x="560" y="106">D6</text></svg>';
+    var rows = [
+      ['D1', 'Customer to orchestrator and back', 'Free-text questions and answers through the chat widget. No AI disclosure is shown.'],
+      ['D2', 'Orchestrator to knowledge base', 'Retrieves approved catalog, allergen, and FAQ passages.'],
+      ['D3', 'Orchestrator to ERP order API', 'Tool call for order status. Uses one shared service account that can read every customer’s orders. No fallback when the API times out.'],
+      ['D4', 'Orchestrator to analytics store', 'Full transcripts, including any allergy or health details customers type, kept for 2 years.'],
+      ['D5', 'Orchestrator to Lumora API', 'Prompt, retrieved passages, and tool results sent to the model in the US region.'],
+      ['D6', 'Lumora API to orchestrator', 'Generated answer returned; only Lumora’s toxicity filter is applied before it reaches the customer.']
+    ];
+    return '<div class="lb-doc"><p class="eyebrow">Artifact 3</p><h4>Data flow (pilot architecture)</h4><div class="b7-flw" tabindex="0" role="group" aria-label="Data flow diagram, scrollable">' + svg + '</div>' +
+      '<div class="table-wrap"><table class="b7-grid"><thead><tr><th scope="col">Flow</th><th scope="col">Path</th><th scope="col">What moves, and how</th></tr></thead><tbody>' +
+      rows.map(function (r) { return '<tr><td class="c"><b>' + r[0] + '</b></td><td>' + r[1] + '</td><td>' + r[2] + '</td></tr>'; }).join('') + '</tbody></table></div></div>';
+  }
+  function testsHTML() {
+    return '<div class="lb-doc"><p class="eyebrow">Artifact 4</p><h4>Pilot test results (internal QA and red team, 460 test cases)</h4><p class="b7-note">Rates are not precomputed. Compare each rate with the appetite in the intake form.</p>' +
+      '<div class="table-wrap"><table class="b7-grid"><thead><tr><th scope="col">Category</th><th scope="col" class="c">Tests</th><th scope="col" class="c">Failures</th><th scope="col">Notes</th></tr></thead><tbody>' +
+      B.TESTS.map(function (r) { return '<tr><td><b>' + esc(r.cat) + '</b></td><td class="n">' + r.n + '</td><td class="n">' + r.f + '</td><td>' + esc(r.note) + '</td></tr>'; }).join('') +
+      '</tbody></table></div><p class="b7-note" style="margin-top:.6rem">QA lead: Wen Okafor. The team proposes launching now and fixing defects in the first two sprints after go-live.</p></div>';
+  }
+
+  /* ---------- Risk review tool ---------- */
+  function reviewHTML() {
+    var R = rat(), M = n('rmf') || {};
+    var rows = B.FINDINGS.map(function (f) {
+      var r = R[f.id] || {}, s = score(f.id);
+      function sel(k, lab) { var v = r[k] || ''; return '<label class="sr-only" for="b7-' + k + '-' + f.id + '">' + lab + ' for ' + f.id + '</label><select id="b7-' + k + '-' + f.id + '" data-rat="' + f.id + '" data-k="' + k + '"><option value="">-</option>' + [1, 2, 3, 4, 5].map(function (x) { return '<option' + (+v === x ? ' selected' : '') + '>' + x + '</option>'; }).join('') + '</select>'; }
+      return '<tr><td class="c"><b>' + f.id + '</b></td><td>' + esc(f.t) + '</td>' +
+        '<td><label class="sr-only" for="b7-fn-' + f.id + '">AI RMF function for ' + f.id + '</label><select id="b7-fn-' + f.id + '" data-fn="' + f.id + '"><option value="">Choose</option>' + B.FNS.map(function (x) { return '<option' + (M[f.id] === x ? ' selected' : '') + '>' + x + '</option>'; }).join('') + '</select></td>' +
+        '<td class="c">' + sel('L', 'Likelihood') + '</td><td class="c">' + sel('I', 'Impact') + '</td><td class="c" id="b7-sc-' + f.id + '">' + scoreCell(s) + '</td></tr>';
+    }).join('');
+    return '<div class="b7-box"><h4>Step 1: map and rate the findings</h4>' +
+      '<p class="b7-note"><b>NIST AI RMF 1.0</b> has four functions. <b>Govern</b> sets policies, accountability, culture, and third-party expectations. <b>Map</b> establishes the context: intended use, users, legal requirements, data, and components. <b>Measure</b> tests and tracks the risks with metrics. <b>Manage</b> prioritizes and treats the risks, including monitoring after deployment, incident response, and switch-off. NIST AI 600-1, the Generative AI Profile, lists risks such as confabulation, data privacy, and information security.</p>' +
+      '<p class="b7-note"><b>Rating scales.</b> Impact: 5 could harm a person’s health or safety; 4 exposes customer data or breaches a legal duty; 3 customers act on wrong business information; 2 embarrassment or rework; 1 negligible. Likelihood: 5 almost certain; 4 likely; 3 possible; 2 unlikely; 1 rare. Use the test rates where you have them.</p>' +
+      '<div class="table-wrap"><table class="b7-grid"><thead><tr><th scope="col" class="c">ID</th><th scope="col">Finding</th><th scope="col">AI RMF function</th><th scope="col" class="c">L</th><th scope="col" class="c">I</th><th scope="col" class="c">Score</th></tr></thead><tbody>' + rows + '</tbody></table></div></div>' +
+      '<div class="b7-row"><div class="b7-col"><div class="b7-box" aria-live="polite"><h4>Function summary</h4><div id="b7-fnsum"></div></div></div>' +
+      '<div class="b7-col"><div class="b7-box"><h4>Heat map (likelihood by impact)</h4><div id="b7-heat"></div></div></div></div>' +
+      '<div class="b7-box"><h4>Step 2: classify under the EU AI Act</h4><p class="b7-note">Answer for the assistant as it will be used in Ireland. The tool applies the tiers in order.</p>' + tierQs() + '<div id="b7-tier" aria-live="polite"></div></div>';
+  }
+  function scoreCell(s) { return s ? '<b>' + s + '</b> <span class="b7-band ' + band(s) + '">' + bandName(s) + '</span>' : '<span class="b7-band n">Not rated</span>'; }
+  var QS = [
+    ['q1', 'Does the assistant use a practice the Act prohibits, such as social scoring or manipulation that causes significant harm?'],
+    ['q2', 'Is it a safety component of a product covered by EU product-safety law, or used in an Annex III area such as employment, credit, education, essential public services, or law enforcement?'],
+    ['q3', 'Does it interact directly with people, or generate content shown to them?']
+  ];
+  function tierQs() {
+    var A = n('tq') || {};
+    return QS.map(function (q) {
+      return '<fieldset class="b7-q"><legend>' + esc(q[1]) + '</legend>' + ['Yes', 'No'].map(function (v) { return '<label><input type="radio" name="b7-' + q[0] + '" id="b7-' + q[0] + '-' + v + '" data-tq="' + q[0] + '" value="' + v + '"' + (A[q[0]] === v ? ' checked' : '') + '> ' + v + '</label>'; }).join('') + '</fieldset>';
+    }).join('');
+  }
+  function tierOf() {
+    var A = n('tq') || {};
+    if (A.q1 === 'Yes') return 'unacceptable';
+    if (A.q1 !== 'No') return null;
+    if (A.q2 === 'Yes') return 'high';
+    if (A.q2 !== 'No') return null;
+    if (A.q3 === 'Yes') return 'limited';
+    if (A.q3 === 'No') return 'minimal';
+    return null;
+  }
+  function paintReview() {
+    var M = n('rmf') || {};
+    var cnt = B.FNS.map(function (fn) { var ids = B.FINDINGS.filter(function (f) { return M[f.id] === fn; }).map(function (f) { return f.id; }); return '<div class="b7-tile"><div class="k">' + fn + '</div><div class="v">' + ids.length + '</div><div class="s">' + (ids.join(', ') || 'none') + '</div></div>'; }).join('');
+    var un = B.FINDINGS.filter(function (f) { return !M[f.id]; }).length;
+    var rk = B.FINDINGS.map(function (f) { return { id: f.id, s: score(f.id) }; }).filter(function (x) { return x.s; }).sort(function (a, b) { return b.s - a.s; });
+    var el = document.getElementById('b7-fnsum'); if (!el) return;
+    el.innerHTML = '<div class="b7-tiles">' + cnt + '</div><p class="b7-note">' + (un ? un + ' finding' + (un > 1 ? 's' : '') + ' not yet mapped.' : 'All findings are mapped.') + '</p>' +
+      '<p class="b7-note"><b>Your ranking:</b> ' + (rk.length ? rk.map(function (x) { return x.id + ' (' + x.s + ')'; }).join(', ') : 'rate the findings to rank them.') + '</p>';
+    var R = rat(), h = '<table class="b7-heat"><caption class="sr-only">Findings placed by likelihood and impact</caption><tbody>';
+    for (var L = 5; L >= 1; L--) {
+      h += '<tr><th scope="row">L' + L + '</th>';
+      for (var I = 1; I <= 5; I++) { var ids = B.FINDINGS.filter(function (f) { var r = R[f.id] || {}; return +r.L === L && +r.I === I; }).map(function (f) { return '<b>' + f.id + '</b>'; }).join(''); h += '<td class="' + band(L * I) + '">' + ids + '</td>'; }
+      h += '</tr>';
+    }
+    h += '<tr><th></th>' + [1, 2, 3, 4, 5].map(function (i) { return '<th scope="col">I' + i + '</th>'; }).join('') + '</tr></tbody></table>';
+    document.getElementById('b7-heat').innerHTML = h;
+    var t = tierOf(), T = t && B.TIERS[t];
+    document.getElementById('b7-tier').innerHTML = T ? '<div class="b7-tier"><span class="b7-lbl" style="font:700 .66rem Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)">Result from your answers</span><div class="t">' + esc(T.name) + '</div><ul>' + T.ob.map(function (o) { return '<li>' + esc(o) + '</li>'; }).join('') + '</ul><p class="b7-note" style="margin:.5rem 0 0">Obligations under the Act phase in over several years. Confirm the current application dates with counsel.</p></div>' : '<p class="b7-note">Answer the questions in order to see the tier and its obligations.</p>';
+  }
+
+  /* ---------- Controls and decision ---------- */
+  var DECS = [
+    ['approve', 'Approve as planned'],
+    ['cond', 'Approve with conditions'],
+    ['defer', 'Defer until certified'],
+    ['reject', 'Reject the use case']
+  ];
+  function ctlHTML() {
+    var C = n('ctl') || [];
+    return '<div class="b7-row"><div class="b7-col wide"><div class="b7-box"><h4>Step 3: select the controls required before go-live</h4><ul class="b7-ctl">' +
+      B.CONTROLS.map(function (c) { var on = C.indexOf(c.id) >= 0; return '<li class="' + (on ? 'on' : '') + '"><label for="b7-c-' + c.id + '"><input type="checkbox" id="b7-c-' + c.id + '" data-ctl="' + c.id + '"' + (on ? ' checked' : '') + '><span><b>' + c.id + '. ' + esc(c.t) + '.</b> ' + esc(c.d) + (c.fx && on ? '<span class="fx">' + esc(c.fx) + '</span>' : '') + '</span></label></li>'; }).join('') + '</ul></div></div>' +
+      '<div class="b7-col"><div class="b7-box" aria-live="polite"><h4>Coverage of the findings</h4><div id="b7-cov"></div></div></div></div>' +
+      '<div class="b7-box"><h4>Step 4: recommendation and decision memo preview</h4><p class="b7-note">Choose the recommendation you would put to the risk owner. The preview assembles your work; write the final memo in the checklist.</p>' +
+      '<div class="b7-seg" role="group" aria-label="Recommendation">' + DECS.map(function (d) { return '<button type="button" id="b7-d-' + d[0] + '" data-dec="' + d[0] + '" aria-pressed="' + (n('dec') === d[0]) + '">' + d[1] + '</button>'; }).join('') + '</div><div id="b7-memo" style="margin-top:.8rem"></div></div>';
+  }
+  function paintCtl() {
+    var C = n('ctl') || [], el = document.getElementById('b7-cov'); if (!el) return;
+    var rows = B.FINDINGS.map(function (f) {
+      if (f.fn === 'Govern') return '<tr><td><b>' + f.id + '</b></td><td>Governance condition for the memo</td></tr>';
+      var by = B.CONTROLS.filter(function (c) { return C.indexOf(c.id) >= 0 && c.cov.indexOf(f.id) >= 0; }).map(function (c) { return c.id; });
+      var need = B.CONTROLS.filter(function (c) { return c.cov.indexOf(f.id) >= 0; }).length;
+      var cls = !by.length ? 'no' : by.length < need ? 'part' : 'ok', txt = !by.length ? 'Open' : by.length < need ? 'Partly treated' : 'Treated';
+      return '<tr><td><b>' + f.id + '</b></td><td><span class="b7-st ' + cls + '">' + txt + '</span> ' + (by.join(', ') || '') + '</td></tr>';
+    }).join('');
+    var extra = B.CONTROLS.filter(function (c) { return C.indexOf(c.id) >= 0 && !c.cov.length; }).length;
+    el.innerHTML = '<table class="b7-grid"><thead><tr><th scope="col">Finding</th><th scope="col">Status</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+      '<p class="b7-note" style="margin-top:.5rem">' + C.length + ' control' + (C.length === 1 ? '' : 's') + ' selected' + (extra ? '; ' + extra + ' selected control' + (extra > 1 ? 's do' : ' does') + ' not treat any finding' : '') + '.</p>';
+    var d = n('dec'), t = tierOf(), rk = B.FINDINGS.map(function (f) { return { id: f.id, s: score(f.id) }; }).filter(function (x) { return x.s; }).sort(function (a, b) { return b.s - a.s; });
+    var dn = { approve: 'approve the launch as planned', cond: 'approve the launch subject to conditions', defer: 'defer the launch until Halloway is certified', reject: 'reject the use case' }[d];
+    document.getElementById('b7-memo').innerHTML = '<div class="b7-memo"><h5>Draft: AI use-case risk review, Ask Halloway (AIR-2027-014)</h5>' +
+      '<p><b>To:</b> Colette Ashdown, VP Customer Experience (risk owner). <b>From:</b> Enterprise risk. <b>Copy:</b> Marcus Delaney, CRO.</p>' +
+      '<p><b>Recommendation:</b> ' + (dn ? 'We recommend that you ' + dn + '. The decision and any acceptance of residual risk are yours.' : '<em>choose a recommendation</em>') + '</p>' +
+      '<p><b>EU AI Act tier:</b> ' + (t ? esc(B.TIERS[t].name) : '<em>not classified</em>') + '.</p>' +
+      '<p><b>Top risks:</b> ' + (rk.length ? rk.slice(0, 3).map(function (x) { return x.id + ' (score ' + x.s + ')'; }).join(', ') : '<em>not rated</em>') + '.</p>' +
+      '<p><b>Controls before go-live:</b> ' + (C.length ? C.slice().sort(function (a, b) { return +a.slice(1) - +b.slice(1); }).join(', ') : '<em>none selected</em>') + '.</p></div>';
+  }
+
+  window.B7UI = {
+    workbench: function (root, api) {
+      API = api; ROOT = root;
+      var tabs = [['art1', 'Intake form', intakeHTML()], ['art2', 'Model card', cardHTML()], ['art3', 'Data flow', flowHTML()], ['art4', 'Test results', testsHTML()], ['rev', 'Risk review', reviewHTML()], ['ctl', 'Controls and decision', ctlHTML()]];
+      root.innerHTML = '<div class="lb-tool"><div class="lb-tabs" role="tablist" aria-label="Workbench tools">' +
+        tabs.map(function (t, i) { return '<button role="tab" id="tb-' + t[0] + '" aria-controls="pn-' + t[0] + '" aria-selected="' + (i === 0) + '"' + (i ? ' tabindex="-1"' : '') + '>' + t[1] + '</button>'; }).join('') + '</div>' +
+        tabs.map(function (t, i) { return '<div class="lb-panel" role="tabpanel" id="pn-' + t[0] + '" aria-labelledby="tb-' + t[0] + '"' + (i ? ' hidden' : '') + '>' + t[2] + '</div>'; }).join('') + '</div>';
+      var tb = [].slice.call(root.querySelectorAll('[role=tab]'));
+      function sel(t) { tb.forEach(function (x) { var on = x === t; x.setAttribute('aria-selected', on); x.tabIndex = on ? 0 : -1; document.getElementById(x.getAttribute('aria-controls')).hidden = !on; }); api.note('tab', t.id); }
+      tb.forEach(function (t, i) { t.addEventListener('click', function () { sel(t); }); t.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { var x = tb[(i + (e.key === 'ArrowRight' ? 1 : tb.length - 1)) % tb.length]; sel(x); x.focus(); } }); });
+      if (api.note('tab')) { var tt = document.getElementById(api.note('tab')); if (tt) sel(tt); }
+      root.addEventListener('change', function (e) {
+        var t = e.target;
+        if (t.dataset.fn) { var M = n('rmf') || {}; M[t.dataset.fn] = t.value; n('rmf', M); paintReview(); }
+        if (t.dataset.rat) { var R = rat(), r = R[t.dataset.rat] || {}; r[t.dataset.k] = t.value ? +t.value : null; R[t.dataset.rat] = r; n('rat', R); document.getElementById('b7-sc-' + t.dataset.rat).innerHTML = scoreCell(score(t.dataset.rat)); paintReview(); paintCtl(); }
+        if (t.dataset.tq) { var A = n('tq') || {}; A[t.dataset.tq] = t.value; n('tq', A); paintReview(); paintCtl(); }
+        if (t.dataset.ctl) {
+          var C = n('ctl') || [], id = t.dataset.ctl; C = C.filter(function (x) { return x !== id; }); if (t.checked) C.push(id); n('ctl', C);
+          var li = t.closest('li'); li.classList.toggle('on', t.checked);
+          var c = B.CONTROLS.filter(function (x) { return x.id === id; })[0], fx = li.querySelector('.fx');
+          if (c.fx && t.checked && !fx) li.querySelector('label > span').insertAdjacentHTML('beforeend', '<span class="fx">' + esc(c.fx) + '</span>');
+          if (fx && !t.checked) fx.remove();
+          paintCtl();
+        }
+      });
+      root.addEventListener('click', function (e) {
+        var b = e.target.closest('[data-dec]'); if (!b) return;
+        n('dec', b.dataset.dec); root.querySelectorAll('[data-dec]').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); paintCtl();
+      });
+      paintReview(); paintCtl();
+    }
+  };
+})();
+</script>
+
+<script>
+window.LAB = {
+  id: 'B7',
+  title: 'AI Use-Case Risk Review',
+  accent: 'Risk Review',
+  domain: 'Domain 4 (20%)',
+  time: '65 min',
+  level: 'Intermediate',
+  lessonHref: 'lesson08.html#s6',
+  lessonLabel: 'Lesson 8, Emerging Technologies',
+  kus: ['Cybersecurity Planning and Management (CPM)', 'Policy, Legal, Ethics, and Compliance (PLE)', 'Privacy (PRI)', 'Supply Chain Security (SCS)', 'Software Assurance (SAS)'],
+  lede: 'Halloway Foods wants to launch a generative AI customer assistant in six weeks. Review the intake form, the vendor model card, the data flow, and the pilot test results; map the findings to the NIST AI RMF; classify the use under the EU AI Act; rate the risks; choose proportionate controls; and write the decision memo for the risk owner.',
+  workbenchTitle: 'AI review workbench',
+  ticket: {
+    number: 'RISK-2027-0418',
+    priority: 'Go-live in six weeks',
+    from: 'Marcus Delaney, Chief Risk Officer, Halloway Foods',
+    to: 'Senior risk practitioner (you)',
+    subject: 'Pre-launch risk review: Ask Halloway generative AI assistant',
+    due: 'Decision memo to the risk owner before the steering committee on Friday',
+    body: '<p>Customer Experience wants to launch <b>Ask Halloway</b>, a generative AI assistant that answers product, ingredient, and allergen questions and gives grocery buyers their order status. It is built on Lumora Assist 4 and will also serve consumers in Ireland from day one. The business case is strong: 24-hour answers and 30 percent fewer calls.</p>' +
+      '<p>The product team proposes launching now and fixing defects after go-live. Before the steering committee meets, I need an independent risk review. Use the intake form, the vendor’s model card, the data flow, and the pilot test results on the workbench.</p>' +
+      '<p>Map what you find to the NIST AI RMF, classify the assistant under the EU AI Act, rate the risks, and select the controls that must be in place before launch. Then write a decision memo to <b>Colette Ashdown, VP Customer Experience</b>. She owns this risk and the decision. Our job is to give her a clear recommendation, not to make the call for her.</p>'
+  },
+  howTo: 'Read the four artifact tabs first. On <b>Risk review</b>, map each finding to an AI RMF function, rate likelihood and impact to see the heat map, and answer the EU AI Act questions. On <b>Controls and decision</b>, select controls and watch the coverage panel, then choose a recommendation to preview the memo. The checklist asks for the results; check each item as you go. Use <b>Open in new window</b> to keep an artifact beside the checklist.',
+  workIntro: 'Work left to right through the tabs. The tools save your work in this browser. Nothing in the tools is graded; the checklist is.',
+  checklist: [
+    { id: 'tier', type: 'choice', points: 10, short: 'EU AI Act tier', title: 'EU AI Act classification',
+      task: 'Under the EU AI Act, which tier <b>best</b> fits Ask Halloway as it will be used in Ireland?',
+      options: ['Unacceptable risk: the assistant must not be offered in the EU', 'High-risk: allergen answers are safety information, so a conformity assessment is required', 'Limited risk: transparency duties, starting with telling users they are talking to an AI', 'Minimal risk: no new obligations, because the assistant makes no decisions about people'],
+      answer: 2,
+      hint: 'Work through the three questions on the Risk review tab in order. Is a customer chatbot one of the Annex III areas, or a safety component of a regulated product?',
+      debrief: '<p>The EU AI Act sorts AI systems into four tiers: unacceptable (prohibited), high-risk, limited risk with transparency duties, and minimal risk. A customer-service chatbot is not a prohibited practice, is not used in an Annex III area such as employment or credit, and is not a safety component of a product under EU product-safety law. Because it interacts directly with people, it is generally limited risk: users must be told they are talking to an AI.</p><p>The allergen answers are a serious risk, but seriousness under Halloway’s appetite is not the same as the legal tier. The risk is treated through controls (K1) and other law, such as food information rules and the GDPR, still applies. Minimal risk misses the transparency duty, and the pilot shows the widget has no disclosure at all.</p>',
+      reviewNote: 'A customer chatbot is generally limited risk under the EU AI Act: transparency duties, not a conformity assessment.' },
+    { id: 'rate', type: 'number', points: 8, short: 'Allergen error rate', title: 'Allergen error rate in the pilot', unit: 'percent', tol: 0.06,
+      task: 'From the test results, what is the <b>error rate on allergen questions</b>, in percent (for example, 4.25)?',
+      answer: function () { return B7.allergenRate(); },
+      hint: 'Failures divided by tests, times 100. Then compare the result with the appetite statement in the intake form.',
+      debrief: '<p>Seven wrong answers in 120 allergen tests is a 5.83 percent error rate, almost twice the 3 percent the vendor reports on its general benchmark, and far above the board’s appetite, which allows no incorrect allergen information at all. Two of the errors could cause a severe allergic reaction.</p><p>This is why the vendor’s model card is not evidence for Halloway’s use. A benchmark measures the model on someone else’s questions; the Measure function asks how it performs on yours, against your own tolerance.</p>',
+      reviewNote: 'Measure on your own use case and compare with appetite; a vendor benchmark is not your evidence.' },
+    { id: 'gov', type: 'set', points: 10, short: 'Govern findings', title: 'Findings that belong to the Govern function',
+      label: 'Finding IDs, separated by commas', placeholder: 'For example: F2, F6',
+      task: 'Which findings are gaps in the AI RMF <b>Govern</b> function? Enter every finding ID that belongs there.',
+      answer: function () { return B7.govern(); },
+      hint: 'Govern covers policies, accountability, and expectations of third parties. Which findings are about what the organization requires, rather than context, testing, or treatment?',
+      debrief: '<p>F1 and F8 are Govern gaps. F1 is a policy requirement skipped: Halloway’s own AI policy requires an impact assessment before a customer-facing launch. F8 is a third-party governance gap: the contract allows unannounced model changes, and due diligence never asked how changes are communicated and retested.</p><p>The rest sort cleanly. F2 and F3 are Map (legal context, users, data, and components). F4 and F5 are Measure (test results against tolerance). F6 and F7 are Manage (fallback, switch-off, and monitoring after deployment). In the AI RMF, Govern is cross-cutting: it is what makes the other three functions happen consistently.</p>',
+      reviewNote: 'Govern covers policy, accountability, and third-party expectations; Map is context, Measure is testing, Manage is treatment and monitoring.' },
+    { id: 'top', type: 'choice', points: 10, short: 'Top risk', title: 'The highest-priority risk',
+      task: 'Which finding should rank <b>highest</b> in the risk review?',
+      options: ['F4: wrong allergen answers, including two that said a shared-line product contains no peanuts', 'F5: prompt injection that returned another customer’s order status', 'F7: no post-deployment monitoring plan or KRIs', 'F3: transcripts with health details kept for 2 years'],
+      answer: 0,
+      hint: 'Use the impact scale on the Risk review tab and the appetite statement. Which finding could harm a person, and for which does the board have no tolerance at all?',
+      debrief: '<p>F4 is the only finding whose impact reaches a person’s health, and it was observed at a rate of 5.83 percent, so it rates about likelihood 4 by impact 5, a score of 20. The board has no tolerance for incorrect allergen information, so it is outside appetite before any comparison with other risks.</p><p>F5 is serious, likely about 3 by 4: customer data exposure is within the low tolerance only if it is fixed. F7 matters because it would let F4 and F5 recur unseen, but it is a gap in treatment, not the loss event itself. F3 is a privacy exposure that minimization and retention limits treat.</p>',
+      reviewNote: 'Rank by impact on business objectives and appetite; a health and safety impact with no tolerance comes first.' },
+    { id: 'gap', type: 'choice', points: 10, short: 'Missing artifact', title: 'The governance artifact required before go-live',
+      task: 'Which governance artifact must be completed <b>before</b> go-live?',
+      options: ['An ISO/IEC 42001:2023 certificate for Halloway’s AI management system', 'An AI system impact assessment, reviewed by the risk function', 'A second model card from an alternative vendor, for comparison', 'An EU declaration of conformity for the assistant'],
+      answer: 1,
+      hint: 'Read section 4 of the AI policy in the intake form, then look at the status of each governance artifact.',
+      debrief: '<p>Halloway’s own policy requires an AI system impact assessment before any customer-facing launch, and the team has not started one. ISO/IEC 42001:2023, the AI management system standard, also expects organizations to assess the impact of AI systems on individuals and groups, so the policy is well grounded. The assessment is where the allergen, privacy, and transparency issues should have surfaced before the pilot.</p><p>Certification to ISO/IEC 42001 is voluntary and organization-wide; it is not a launch gate for one assistant. A declaration of conformity belongs to high-risk systems, and a second vendor’s model card answers a question nobody asked.</p>',
+      reviewNote: 'Complete the AI system impact assessment that policy requires before launch; certification is not a launch gate.' },
+    { id: 'ctl', type: 'set', points: 16, short: 'Required controls', title: 'Controls required before go-live',
+      label: 'Control IDs, separated by commas', placeholder: 'For example: K1, K9',
+      task: 'Which controls from the catalog on the <b>Controls and decision</b> tab must be in place <b>before</b> go-live? Enter every required control and no others.',
+      answer: function () { return B7.required(); },
+      hint: 'Every Map, Measure, and Manage finding needs a treatment. A control that treats no finding, or defeats the business objective, is not required.',
+      debrief: '<p>The required set is K1 to K7. K1 grounds allergen answers in the allergen database and keeps a human in the loop when there is no exact match, which treats F4 without reviewing every answer. K2 and K3 close the injection path to other customers’ data (F5) and the over-privileged account (F3). K4 meets the EU AI Act transparency duty (F2). K5 gives the owner KRIs with thresholds (F7). K6 adds a safe fallback and a named switch-off owner (F6). K7 minimizes and limits retention of transcripts (F3).</p><p>The distractors fail proportionality. Human approval of every answer (K8) removes the business benefit. A high-risk conformity assessment (K9) belongs to another tier. ISO/IEC 42001 certification (K10) and an in-house model (K11) add delay and new risk without treating the findings.</p>',
+      reviewNote: 'Select controls that treat each finding proportionately; reject controls that treat nothing or defeat the objective.' },
+    { id: 'dec', type: 'choice', points: 12, short: 'Recommendation', title: 'The recommendation to the risk owner',
+      task: 'What should the risk practitioner <b>recommend</b>?',
+      options: ['Approve the launch as planned, because the vendor’s 3 percent benchmark error rate is in line with the industry', 'Recommend approval once the impact assessment and K1 to K7 are done; the VP Customer Experience decides', 'Reject the assistant, because generative AI can never guarantee a correct allergen answer', 'Approve the launch yourself with conditions, since the risk function owns AI risk decisions'],
+      answer: 1,
+      hint: 'Who owns the risk and the decision? Is there a proportionate path that keeps the business objective and brings the risk within appetite?',
+      debrief: '<p>The business objective is sound and the risks are treatable, so the best recommendation is conditional approval: complete the impact assessment, put K1 to K7 in place, retest allergen and injection cases until the critical failures are gone, then let the risk owner decide whether to accept the residual risk. Governance conditions, such as the vendor change-notice addendum (F8), go in the memo too.</p><p>Approving on the vendor’s benchmark ignores Halloway’s own test results. Rejecting outright ignores the objective when proportionate controls exist. Approving it yourself puts the practitioner in the owner’s seat: the practitioner recommends; the risk owner decides and accepts.</p>',
+      reviewNote: 'Recommend a proportionate, conditional path; the risk owner decides and accepts the residual risk.' },
+    { id: 'memo', type: 'text', points: 24, short: 'Decision memo', title: 'Decision memo to the risk owner', reportTitle: 'Decision memo: Ask Halloway pre-launch review',
+      task: 'Write the decision memo to Colette Ashdown, VP Customer Experience. Use the preview on the Controls and decision tab as a starting point.',
+      fields: [
+        { key: 'rec', label: 'Recommendation and who decides', min: 40, placeholder: 'State the recommendation and that the decision and risk acceptance belong to the risk owner.' },
+        { key: 'cls', label: 'Classification and obligations (EU AI Act tier, AI RMF summary)', min: 40, placeholder: 'Tier, why, and what it requires; how the findings map to Govern, Map, Measure, and Manage.' },
+        { key: 'risk', label: 'Top risks with ratings and evidence', min: 50, placeholder: 'The top three risks, with likelihood, impact, and the test evidence.' },
+        { key: 'cond', label: 'Conditions before go-live, each with an owner', min: 50, placeholder: 'Impact assessment, controls, retest criteria, vendor addendum.' },
+        { key: 'mon', label: 'Monitoring after launch: KRIs and thresholds', min: 40, placeholder: 'Name the KRIs, the thresholds, and who reviews them, how often.' }
+      ],
+      hint: 'A good memo is short and decision-ready: what we recommend, why, what must be true before launch, who owns each condition, and how we will know if the risk changes.',
+      debrief: '<p><b>Model memo.</b> <b>Recommendation.</b> We recommend approving Ask Halloway subject to the conditions below. The decision, and any acceptance of residual risk, is yours as risk owner. <b>Classification.</b> Under the EU AI Act the assistant is limited risk: it interacts with consumers in Ireland, so users must be told they are talking to an AI. It is not prohibited, not in an Annex III area, and not a safety component of a regulated product. Against the NIST AI RMF, we found two Govern gaps (F1, F8), two Map gaps (F2, F3), two Measure findings (F4, F5), and two Manage gaps (F6, F7).</p>' +
+        '<p><b>Top risks.</b> F4, wrong allergen answers: 7 of 120 tests (5.83 percent), two of which denied a peanut risk; likelihood 4, impact 5, score 20, outside the board’s zero tolerance. F5, prompt injection: 6 of 50 attempts, two exposing another customer’s orders; score about 12. F6, invented shipping dates when the ERP times out, with no switch-off procedure. <b>Conditions.</b> Impact assessment completed and reviewed (owner: VP Customer Experience, with risk). K1 allergen grounding and handoff (Quality and product owner). K2 per-customer order token and K3 injection guardrails (CIO). K4 AI disclosure (product owner). K6 fallback and named switch-off owner (VP Customer Experience). K7 transcript masking and 90-day purge (privacy lead). Vendor addendum on model-change notice and retesting (procurement). Retest: zero critical allergen errors and zero cross-customer results before launch. <b>Monitoring (K5).</b> Allergen error rate (red at any confirmed error, with switch-off), injection detections per 1,000 chats, complaint rate and handoff rate against agreed thresholds, reviewed weekly by the product owner and monthly by risk. Your wording will differ; check that each condition has an owner and each KRI has a threshold.</p>',
+      reviewNote: 'A decision memo recommends, states who decides, sets owned conditions, and defines the KRIs that will show if the risk changes.' }
+  ],
+  workbench: function (root, api) { B7UI.workbench(root, api); }
+};
+</script>
+<script src="evidence.js"></script>
+<script src="lab.js"></script>
+</body>
+</html>

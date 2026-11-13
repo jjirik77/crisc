@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>A2 Governance, Strategy, and Policy | CRISC 5-Day Faculty Workshop</title>
+<link rel="stylesheet" href="crisc-lesson.css">
+<link rel="stylesheet" href="practice.css">
+</head>
+<body>
+<div id="app"><noscript><p style="padding:2rem;font-family:Arial">This activity needs JavaScript enabled.</p></noscript></div>
+
+<script>
+window.ACTIVITY = {
+  id: 'A2',
+  title: 'Governance, Strategy, and Policy',
+  accent: 'Strategy, and Policy',
+  domain: 'Domain 1A, Governance (26%)',
+  time: '35 min',
+  level: 'Foundational',
+  lessonHref: 'lesson01.html#s1',
+  lessonLabel: 'Lesson 1, Organizational Governance',
+  lede: 'Context comes before controls. Ashcombe Regional Transit runs buses, paratransit vans, and a new mobile fare app across three counties. Practice telling governance from management, placing documents in the policy hierarchy, testing initiatives against the goals cascade, sequencing continuity planning from the BIA, and giving every asset an owner.',
+  concepts: [
+    { key: 'govmgmt', name: 'Governance vs. management', review: 'Lesson 1, Governance vs. Management' },
+    { key: 'policy', name: 'The policy hierarchy', review: 'Lesson 1, Policies and Standards' },
+    { key: 'align', name: 'Goals cascade and alignment', review: 'Lesson 1, Strategy, Goals, Objectives, and the Goals Cascade' },
+    { key: 'resil', name: 'BIA, BCP, and DRP sequence', review: 'Lesson 1, Business Processes and Resilience' },
+    { key: 'asset', name: 'Asset ownership and classification', review: 'Lesson 1, Organizational Asset Management' }
+  ],
+  stations: [
+    {
+      type: 'sort', short: 'Govern or manage?', title: 'Governance or management?', concept: 'govmgmt',
+      instr: 'Each activity happens somewhere at Ashcombe Regional Transit. Decide whether it is <b>governance</b> (evaluate, direct, and monitor: deciding what the organization should achieve and whether it is achieving it) or <b>management</b> (planning, building, running, and monitoring the work). Then select <b>Check answers</b>.',
+      hint: 'COBIT 2019 puts one domain on the governance side (EDM: Evaluate, Direct and Monitor) and four on the management side (APO, BAI, DSS, MEA). The board and its committees govern. Executives, steering committees, and teams manage, even when they monitor.',
+      buckets: ['Governance', 'Management'],
+      review: { href: 'lesson01.html#s1', label: 'Lesson 1, Governance vs. Management' },
+      items: [
+        { text: 'The board approves Ashcombe’s risk appetite for passenger safety and service reliability.', answer: 0, why: 'Setting appetite is direction setting. It is an EDM activity and belongs to the board.' },
+        { text: 'The IT steering committee ranks the fare system upgrade against the scheduling project and approves one for this year.', answer: 1, why: 'The steering committee is a management body. It prioritizes and approves projects within the direction the board has set.' },
+        { text: 'The CIO builds a three-year technology budget and workforce plan.', answer: 1, why: 'Planning budgets and people is Align, Plan and Organize (APO), a management domain.' },
+        { text: 'The operations center runs nightly backups and handles incidents on the dispatch system.', answer: 1, why: 'Running services and handling incidents is Deliver, Service and Support (DSS).' },
+        { text: 'The board evaluates options for account-based fare collection and directs management to pursue one.', answer: 0, why: 'Evaluating strategic options and setting direction is the core of EDM.' },
+        { text: 'A board-level IT strategy committee advises the board on how technology supports the 10-year transit plan.', answer: 0, why: 'The IT strategy committee sits at board level and advises on strategy. It is part of governance, unlike the steering committee.' },
+        { text: 'The app project team builds security requirements into the real-time bus tracker.', answer: 1, why: 'Building solutions and their requirements is Build, Acquire and Implement (BAI).' },
+        { text: 'Management tracks whether staff comply with the fare card security standard and reports exceptions.', answer: 1, why: 'Monitoring internal control and compliance is Monitor, Evaluate and Assess (MEA), which is still management.' },
+        { text: 'The board reviews performance against enterprise goals each quarter and directs corrective action.', answer: 0, why: 'Monitoring results against direction and redirecting is the M in EDM. It is the governance feedback loop.' },
+        { text: 'The board’s risk committee reviews whether the risk profile stays within the approved appetite.', answer: 0, why: 'Oversight of the risk profile against appetite is a governance function performed by a board committee.' }
+      ]
+    },
+    {
+      type: 'sort', short: 'Policy hierarchy', title: 'Policy, standard, procedure, or guideline?', concept: 'policy',
+      instr: 'Each excerpt comes from an Ashcombe document. Place it in the hierarchy. A <b>policy</b> states intent and direction. A <b>standard</b> sets specific, measurable, mandatory requirements. A <b>procedure</b> gives step-by-step instructions. A <b>guideline</b> recommends but does not require.',
+      hint: 'Ask two questions. Is it mandatory? If not, it is a guideline. If it is, is it broad intent (policy), a measurable requirement (standard), or a sequence of steps (procedure)?',
+      buckets: ['Policy', 'Standard', 'Procedure', 'Guideline'],
+      review: { href: 'lesson01.html#s5', label: 'Lesson 1, Policies and Standards' },
+      items: [
+        { text: 'Ashcombe protects the personal data of its riders in line with the law and the board’s risk appetite.', answer: 0, why: 'A high-level statement of intent, approved by the board or senior management, is a policy.' },
+        { text: 'All fare system administrator accounts must use phishing-resistant multifactor authentication.', answer: 1, why: 'A specific, mandatory, measurable requirement that supports a policy is a standard.' },
+        { text: '1. Open the access request in the service portal. 2. Confirm the manager’s approval. 3. Assign the role. 4. Close the ticket with the approval attached.', answer: 2, why: 'Numbered steps for the people performing a task make it a procedure.' },
+        { text: 'Staff may find it helpful to use a password manager for their personal accounts too.', answer: 3, why: '“May find it helpful” is advice, not a requirement. That is a guideline.' },
+        { text: 'Laptops must use full-disk encryption with AES-256 before they leave the depot.', answer: 1, why: 'A measurable, mandatory technical requirement is a standard.' },
+        { text: 'To revoke a departing driver’s badge, disable it in the badge system, collect the card, and record both steps in the HR ticket.', answer: 2, why: 'A sequence of actions that meets a standard is a procedure.' },
+        { text: 'Ashcombe manages information risk within the board’s appetite and assigns a named owner to every significant risk.', answer: 0, why: 'A statement of direction that governance approves is a policy. Standards and procedures make it concrete.' },
+        { text: 'Including the bus number and route in an incident ticket usually speeds up triage.', answer: 3, why: 'Good advice that no one is required to follow is a guideline.' },
+        { text: 'The dispatch database must be backed up every 15 minutes, and backups must be kept for 35 days.', answer: 1, why: 'Specific frequency and retention values make this a standard. It turns an RPO into a rule.' },
+        { text: 'Before the training session, staff might watch the vendor’s short videos on the new scheduling tool.', answer: 3, why: 'An optional suggestion is a guideline.' },
+        { text: 'Ashcombe expects every employee and contractor to protect transit systems and report security concerns promptly.', answer: 0, why: 'A broad statement of expected behavior from leadership is a policy.' },
+        { text: 'Monthly: export the role report, send each manager their list, record each sign-off, and remove access that is not confirmed within 10 days.', answer: 2, why: 'Step-by-step instructions for performing the access review are a procedure.' }
+      ]
+    },
+    {
+      type: 'scenario', short: 'Goals cascade', title: 'Test the portfolio against the goals cascade', concept: 'align',
+      instr: 'Ashcombe’s board set three enterprise goals for the next three years: <b>grow ridership</b>, <b>improve on-time performance</b>, and <b>meet federal transit safety reporting requirements</b>. The IT steering committee has the portfolio below. Use the goals cascade to answer each question.',
+      hint: 'Every initiative should name an enterprise goal it serves. An initiative with no goal is unaligned spend. A goal with no initiative is a strategic gap. Unaligned spend is a finding for the steering committee, not a verdict for the practitioner.',
+      review: { href: 'lesson01.html#s2', label: 'Lesson 1, The Goals Cascade' },
+      table: {
+        caption: 'Ashcombe Regional Transit: proposed technology portfolio',
+        head: ['Initiative', 'Annual cost', 'Enterprise goal named in the business case'],
+        rows: [
+          ['Real-time bus location feed for riders', '$620,000', 'Grow ridership; improve on-time performance'],
+          ['Mobile fare app security hardening', '$180,000', 'Grow ridership'],
+          ['Intranet redesign with a custom theme engine', '$410,000', 'None stated'],
+          ['Transit signal priority at 40 intersections', '$950,000', 'Improve on-time performance']
+        ]
+      },
+      items: [
+        {
+          title: 'Case 1: Reading the portfolio', text: 'The CIO champions the intranet redesign. Its business case lists features and a vendor quote, but no enterprise goal, benefits, or risks.',
+          parts: [
+            { q: 'What does the goals cascade reveal about the intranet redesign?', options: ['It is a strategic gap', 'It is unaligned spend', 'It is a governance objective', 'It is an alignment goal'], answer: 1, why: 'An initiative that cannot name the enterprise goal it serves is unaligned spend. Bottom up, the cascade lets anyone ask that question of a project.' },
+            { q: 'What should the risk practitioner do?', options: ['Cancel the project, since it is unaligned', 'Report the finding to the steering committee and ask for a complete business case', 'Approve it, because the CIO sponsors it', 'Ignore it, because intranet projects carry little risk'], answer: 1, why: 'Unaligned spend is a finding, not a verdict. The practitioner reports it and asks for a business case. Whether the project continues is a management decision.' }
+          ]
+        },
+        {
+          title: 'Case 2: The missing initiative', text: 'None of the four initiatives addresses the goal of meeting federal transit safety reporting requirements. The safety office still compiles reports by hand from three systems.',
+          parts: [
+            { q: 'What does this indicate?', options: ['Unaligned spend', 'A strategic gap that governance should hear about', 'A control failure that internal audit must test', 'Nothing, since reporting is a business task'], answer: 1, why: 'A goal with no supporting initiative is a strategic gap. Top down, the cascade shows what IT should prioritize.' },
+            { q: 'At which level of the COBIT 2019 goals cascade would “IT compliance with external laws and regulations” sit?', options: ['Stakeholder drivers and needs', 'Enterprise goals', 'Alignment goals', 'Governance and management objectives'], answer: 2, why: 'Alignment goals state what information and technology must deliver to support enterprise goals. Compliance of IT with external requirements is one of them.' }
+          ]
+        },
+        {
+          title: 'Case 3: The board’s question', text: 'A board member asks why the steering committee bothers aligning technology projects with enterprise goals at all.',
+          parts: [
+            { q: 'What is the PRIMARY reason?', options: ['To lower the total IT budget', 'To make sure IT investments deliver value toward enterprise goals', 'To improve security on every project', 'To speed up project delivery'], answer: 1, why: 'Alignment exists so technology spending creates value for the enterprise. Lower cost, better security, or speed may follow, but they are not the primary purpose.' }
+          ]
+        }
+      ]
+    },
+    {
+      type: 'order', short: 'BIA to DRP', title: 'From the BIA to tested plans', concept: 'resil',
+      instr: 'Ashcombe’s board wants continuity plans for dispatch, fare collection, and paratransit scheduling. Put the planning steps in order, from the first step of the business impact analysis to a tested set of plans.',
+      hint: 'Start with what matters: which processes are critical, and how harm grows when they stop. The business owner sets MTD before anyone picks a recovery strategy. Plans come after strategies, and plans that are never tested are assumptions.',
+      topLabel: 'First step',
+      bottomLabel: 'Last step',
+      review: { href: 'lesson01.html#s6', label: 'Lesson 1, Business Processes and Resilience' },
+      items: [
+        { text: 'Select continuity and recovery strategies that can meet the RTO and RPO', rank: 5, why: 'Strategies such as a warm site, cloud failover, or manual workarounds are chosen to meet objectives that already exist.' },
+        { text: 'Identify the critical business processes from Ashcombe’s objectives', rank: 0, why: 'The BIA starts with the processes that deliver the objectives. If everything is critical, nothing is.' },
+        { text: 'Have senior management validate and approve recovery priorities', rank: 4, why: 'Recovery capacity is funded from these priorities, so leadership confirms them before strategies are chosen.' },
+        { text: 'Test the plans with tabletop and recovery exercises, then update them', rank: 7, why: 'Testing turns assumptions into evidence. Tabletop exercises are the cheapest way to find gaps.' },
+        { text: 'Estimate how financial, safety, and reputational impact grows over time for each process', rank: 1, why: 'Impact over time is what tells the owner how long the process can be down.' },
+        { text: 'Write the BCP for business processes and the DRP for the technology that supports them', rank: 6, why: 'The BCP keeps the business running. The DRP restores the technology that the BCP depends on.' },
+        { text: 'Map dependencies: applications, data, people, facilities, and suppliers', rank: 3, why: 'A process is only as recoverable as its slowest dependency, so the map must exist before strategies are chosen.' },
+        { text: 'The business owner sets the MTD, then the RTO and RPO that fit inside it', rank: 2, why: 'Recovery objectives come from the impact analysis and are set by the business owner, with IT input.' }
+      ]
+    },
+    {
+      type: 'scenario', short: 'Asset ownership', title: 'Owners, custodians, and classification', concept: 'asset',
+      instr: 'A discovery scan before Ashcombe’s cloud migration found 23 assets that were not in the CMDB. Answer each question as the risk practitioner.',
+      hint: 'You cannot rate impact on an asset you have not identified and valued. Owners decide classification and access. Custodians operate the controls. A system takes the classification of the most sensitive data it holds.',
+      review: { href: 'lesson01.html#s7', label: 'Lesson 1, Organizational Asset Management' },
+      items: [
+        {
+          title: 'Case 1: The unlisted storage account', text: 'One of the 23 assets is a cloud storage account holding 14 months of on-board camera footage. A contractor set it up during a pilot, and no one at Ashcombe is listed as its owner.',
+          parts: [
+            { q: 'What should be done FIRST?', options: ['Delete the footage, since the pilot is over', 'Add the account to the inventory and assign an owner who can decide its classification and retention', 'Run a penetration test against the account', 'Encrypt the account and move on'], answer: 1, why: 'An unowned asset has no one to accept its risk or decide its handling. Inventory and ownership come before controls or deletion.' },
+            { q: 'Who should decide who may access the footage?', options: ['The cloud administrator who manages the account', 'The director of safety and security, as the data owner', 'The risk practitioner', 'The contractor who created the account'], answer: 1, why: 'Data owners decide classification and access for the assets they are accountable for. The cloud administrator is a custodian who operates the controls.' }
+          ]
+        },
+        {
+          title: 'Case 2: Mixed data on one system', text: 'The paratransit scheduling system holds public route timetables, internal driver rosters, and riders’ disability and medical eligibility records.',
+          parts: [
+            { q: 'How should the scheduling system be classified?', options: ['Public, because most of its records are timetables', 'Internal, as an average of its contents', 'At the level of its most sensitive data, the medical eligibility records', 'Each table separately, with no system classification'], answer: 2, why: 'A system takes the classification of the most sensitive data it holds. The medical records drive the protection the whole system needs.' }
+          ]
+        },
+        {
+          title: 'Case 3: End of support', text: 'The operating system on 60 fare vending machines reaches end of support in four months. A replacement is budgeted for next year.',
+          parts: [
+            { q: 'What is the BEST approach?', options: ['Keep running them; the machines are on a private network', 'Document the risk, add compensating controls such as network isolation, and have the fare revenue owner formally accept the residual risk until replacement', 'Have the IT manager accept the risk, since IT runs the machines', 'Turn off the machines on the end-of-support date'], answer: 1, why: 'End-of-support assets need replacement or documented risk acceptance. The owner of the fare revenue process accepts, with compensating controls and a date, not IT by default.' }
+          ]
+        }
+      ]
+    },
+    {
+      type: 'reflect', short: 'Reflect', title: 'Reflect on your readiness',
+      instr: 'Rate your confidence on each concept, then answer the prompts. Your responses appear in the summary report.',
+      prompts: [
+        { key: 'cascade', label: 'Pick one technology initiative at your own institution. Which enterprise goal does it serve, and how would you know if it stopped serving it?' },
+        { key: 'next', label: 'Which concept from this activity will you review before the next lesson, and how?' }
+      ]
+    }
+  ]
+};
+</script>
+<script src="practice.js"></script>
+</body>
+</html>

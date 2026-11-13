@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lesson 2: Risk Governance | CRISC Workshop</title>
+<link rel="stylesheet" href="crisc-lesson.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-seal">CRISC<br>PREP</div>
+    <span class="nav-title">5-Day Faculty Workshop</span>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#lessons">Lessons</a></li>
+      <li><a href="index.html#practice">Practice</a></li>
+      <li><a href="index.html#schedule">Schedule</a></li>
+      <li><a href="index.html#domains">Domains</a></li>
+      <li><a href="index.html#exam-prep">Exam Prep</a></li>
+      <li><a href="index.html#faculty-tools">Faculty Tools</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="lesson-hero">
+  <div class="lesson-hero-inner">
+    <p class="breadcrumb"><a href="index.html">Workshop</a> &nbsp;&rsaquo;&nbsp; <a href="index.html#lessons">Lessons</a> &nbsp;&rsaquo;&nbsp; <span>Lesson 2</span></p>
+    <span class="lesson-badge-lg">Day 2, Morning &bull; Domain 1B</span>
+    <h1>Risk <span>Governance</span></h1>
+    <p class="lesson-lede">Organizational governance sets direction. Risk governance decides how much uncertainty the enterprise will carry on the way there, who watches it, and which rules it cannot break. This lesson covers enterprise risk management, the Three Lines Model, the risk profile and risk culture, appetite, tolerance, and capacity, the major risk frameworks, and the legal, regulatory, and contractual requirements that bound every IT risk decision.</p>
+    <div class="meta-chips">
+      <span class="meta-chip">Session: <strong>Day 2, 9:00 to 12:00</strong></span>
+      <span class="meta-chip">Duration: <strong>~3 hrs</strong></span>
+      <span class="meta-chip">Exam Weight: <strong>26%</strong></span>
+      <span class="meta-chip">Knowledge Check: <strong>8 Questions</strong></span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="block">
+    <p class="eyebrow">Overview</p>
+    <h2 class="h2">Set the boundaries before you take the risk</h2>
+    <div class="rule"></div>
+    <p class="lead">Risk governance answers four questions. How does the enterprise manage risk as a whole? Who does what, from the board to the front line to internal audit? How much risk is acceptable, and how much is too much? Which external obligations limit the choices? IT risk is one part of enterprise risk, so the answers come from the enterprise, not from the IT department.</p>
+    <p class="lead">The CRISC exam tests this domain through ownership and escalation. A practitioner who knows the appetite statement, the tolerance limits, and the reporting lines can tell at once whether a risk needs a decision, an action plan, or nothing more than monitoring.</p>
+    <div class="mindset"><span class="tip-label">&#9878;&#65039; Think like a risk practitioner</span>The board sets the appetite. Management works within it. The risk practitioner measures risk against it and reports. When a question asks who decides how much risk the enterprise will accept, the answer is senior leadership and the board, not the risk function and not IT.</div>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Learning Objectives</p>
+    <h2 class="h2">By the end of this lesson you will be able to&hellip;</h2>
+    <div class="rule"></div>
+    <ul class="objectives">
+      <li><span><strong>Explain</strong> how ERM frameworks (COSO ERM 2017, ISO 31000:2018, and the ISACA Risk IT Framework) place IT risk inside enterprise risk. <em class="bloom-tag">Bloom: Understand</em></span></li>
+      <li><span><strong>Assign</strong> risk activities to the governing body and to first-line, second-line, and third-line roles under the Three Lines Model. <em class="bloom-tag">Bloom: Apply</em></span></li>
+      <li><span><strong>Distinguish</strong> risk appetite, risk tolerance, and risk capacity, and decide which governance action a given risk level requires. <em class="bloom-tag">Bloom: Analyze</em></span></li>
+      <li><span><strong>Compare</strong> NIST SP 800-37, 800-39, 800-30, CSF 2.0, and ISO/IEC 27005:2022 and select one for a stated need. <em class="bloom-tag">Bloom: Evaluate</em></span></li>
+      <li><span><strong>Identify</strong> the legal, regulatory, and contractual requirements that apply to an IT risk scenario. <em class="bloom-tag">Bloom: Apply</em></span></li>
+      <li><span><strong>Design</strong> a risk appetite statement workshop in which students draft qualitative and quantitative statements for a college. <em class="bloom-tag">Bloom: Create</em></span></li>
+    </ul>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Key Terms</p>
+    <h2 class="h2">Vocabulary flashcards</h2>
+    <div class="rule"></div>
+    <p class="flip-hint-top">&#128072; Read the term, recall the definition, then click or press Enter to check yourself.</p>
+    <div class="vocab-grid">
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Enterprise Risk Management (ERM)</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">A coordinated, enterprise-wide approach to identifying, assessing, responding to, and reporting risk in support of strategy and objectives.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Risk Appetite</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">The broad amount of risk the enterprise is willing to accept in pursuit of value. The board sets it.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Risk Tolerance</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">The acceptable variation around a specific objective or performance measure. Narrower and more operational than appetite.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Risk Capacity</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">The most risk the enterprise can absorb before it can no longer survive or meet its core obligations. Appetite must sit below it.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Risk Profile</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">A point-in-time view of the risks the enterprise currently carries, compared with its appetite and tolerance.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Risk Culture</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">The shared values and behaviors that decide how people actually treat risk: whether they raise it, hide it, or ignore it.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Three Lines Model</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">The IIA&rsquo;s 2020 model of governing body, management (first- and second-line roles), and independent internal audit (third line).</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Risk Owner</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">The person with the accountability and authority to manage a risk, including the decision to accept it.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Risk Management Framework (RMF)</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">NIST SP 800-37 Rev. 2: seven steps (Prepare, Categorize, Select, Implement, Assess, Authorize, Monitor) for managing system risk.</div></div>
+        </div>
+      </button>
+
+      <button type="button" class="flip-card" aria-pressed="false">
+        <div class="flip-inner">
+          <div class="flip-face flip-front"><span class="vocab-label">Term</span><div class="vocab-term">Compliance Risk</div><span class="flip-hint">&#8634; Definition</span></div>
+          <div class="flip-face flip-back"><span class="vocab-label">Definition</span><div class="vocab-def">The risk of legal penalties, financial loss, or reputational harm from failing to meet laws, regulations, or contractual obligations.</div></div>
+        </div>
+      </button>
+
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Lesson Content</p>
+    <h2 class="h2">Study the material</h2>
+    <div class="rule"></div>
+    <div class="lesson-content">
+      <nav class="toc" aria-label="On this page">
+        <div class="toc-title">On this page</div>
+        <ul>
+          <li><a href="#s1">1. Enterprise Risk Management</a></li>
+          <li><a href="#s2">2. Lines of Defense and the Three Lines Model</a></li>
+          <li><a href="#s3">3. Risk Profile and Risk Culture</a></li>
+          <li><a href="#s4">4. Appetite, Tolerance, and Capacity</a></li>
+          <li><a href="#s5">5. Risk Frameworks</a></li>
+          <li><a href="#s6">6. Legal, Regulatory, and Contractual Requirements</a></li>
+          <li><a href="#s7">7. Interactive: Appetite and Tolerance Map</a></li>
+          <li><a href="#s8">8. Faculty Teaching Segment</a></li>
+        </ul>
+      </nav>
+      <div class="content-main">
+
+        <article class="content-section" id="s1">
+          <div class="cs-head"><span class="cs-num">1</span><h3>Enterprise Risk Management</h3></div>
+          <p>Enterprise risk management treats risk as one portfolio. Credit risk, operational risk, compliance risk, strategic risk, and IT risk are managed with a shared language, shared scales, and one view at the top. The alternative is a set of silos, each with its own heat map, that the board cannot compare or add up.</p>
+          <p>IT risk is a subset of enterprise risk. A ransomware outage is not only an IT event. It is a failure to deliver services, a possible privacy breach, a financial loss, and a reputational event. ERM makes sure the IT risk register uses the same likelihood and impact scales as the rest of the business, so that IT risks can be ranked against every other risk the enterprise carries.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Framework</th><th>Focus</th><th>What CRISC candidates should know</th></tr></thead>
+            <tbody>
+              <tr><td class="term">COSO ERM 2017</td><td>Enterprise Risk Management: Integrating with Strategy and Performance</td><td>Five components (Governance and Culture; Strategy and Objective-Setting; Performance; Review and Revision; Information, Communication, and Reporting) and 20 principles. Ties risk to strategy and value, not only to loss.</td></tr>
+              <tr><td class="term">ISO 31000:2018</td><td>Risk management guidelines for any organization</td><td>Principles, a framework, and a process: scope, context, and criteria; risk assessment (identification, analysis, evaluation); treatment; monitoring and review; communication and consultation; recording and reporting.</td></tr>
+              <tr><td class="term">ISACA Risk IT Framework, 2nd ed.</td><td>IT risk in business terms, aligned with COBIT 2019</td><td>Connects IT risk to enterprise objectives and appetite. It builds on the original Risk IT domains of risk governance, risk evaluation, and risk response. CRISC thinking follows this framework closely.</td></tr>
+              <tr><td class="term">COBIT 2019</td><td>Governance and management of enterprise information and technology</td><td>The governance objective EDM03 (Ensured Risk Optimization) and the management objective APO12 (Managed Risk) place IT risk in the governance system.</td></tr>
+            </tbody>
+          </table></div>
+          <h4>What every ERM program needs</h4>
+          <ul class="detail">
+            <li><strong>A mandate from the top:</strong> the board approves the ERM policy and the appetite, and senior management owns its execution.</li>
+            <li><strong>A common risk taxonomy:</strong> shared categories and definitions, so &ldquo;high impact&rdquo; means the same thing in finance and in IT.</li>
+            <li><strong>Common scales and criteria:</strong> one set of likelihood and impact definitions, tied to money, people, and service levels.</li>
+            <li><strong>Named owners:</strong> every risk on the register has an owner with authority to act on it.</li>
+            <li><strong>A reporting cycle:</strong> aggregated risk reaches the board on a schedule, with escalation paths for anything that breaches tolerance in between.</li>
+          </ul>
+          <div class="resource-link">
+            <span class="rl-icon" aria-hidden="true">&#128202;</span>
+            <div class="rl-body"><span class="rl-label">Explore with an eMate</span><span class="rl-text"><strong>Risk Management</strong>: walk through the risk management cycle from identification to monitoring.</span></div>
+            <div class="rl-actions"><a class="btn secondary" href="https://d2hie3dpn9wvbb.cloudfront.net/risk_management/risk_management.html" target="_blank" rel="noopener noreferrer">Risk Management <span class="ext">&#8599;</span></a></div>
+          </div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a question asks for the PRIMARY benefit of integrating IT risk into ERM, look for the answer about comparing and prioritizing IT risk alongside other enterprise risks. Tool consolidation and cost savings are secondary.</div>
+        </article>
+
+        <article class="content-section" id="s2">
+          <div class="cs-head"><span class="cs-num">2</span><h3>Lines of Defense and the Three Lines Model</h3></div>
+          <p>The CRISC outline still uses the phrase &ldquo;lines of defense.&rdquo; The Institute of Internal Auditors replaced its 2013 &ldquo;Three Lines of Defense&rdquo; position paper with the <strong>Three Lines Model</strong> in 2020. The newer model drops the word &ldquo;defense&rdquo; because risk management is about creating and protecting value, not only about blocking loss. It also stresses collaboration among the lines rather than rigid walls between them. Learn both names. Exam items may use either.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Role</th><th>Who</th><th>Responsibility for IT risk</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Governing body</td><td>Board and its committees</td><td>Accountable to stakeholders. Sets appetite, approves the risk policy, oversees management, and ensures internal audit is independent.</td></tr>
+              <tr><td class="term">First line</td><td>Operating management: business units, IT operations, system and process owners</td><td>Owns and manages risk day to day. Runs the controls, keeps the risk register current for its area, and acts on findings.</td></tr>
+              <tr><td class="term">Second line</td><td>Risk management, compliance, information security, privacy</td><td>Provides expertise, frameworks, monitoring, and challenge. Aggregates and reports risk. Does not own the first line&rsquo;s risks.</td></tr>
+              <tr><td class="term">Third line</td><td>Internal audit</td><td>Independent and objective assurance to the governing body on whether governance, risk management, and control work. Reports functionally to the audit committee.</td></tr>
+              <tr><td class="term">External assurance</td><td>External auditors, regulators, certification bodies</td><td>Additional assurance outside the three lines, often required by law or contract.</td></tr>
+            </tbody>
+          </table></div>
+          <div class="compare-2col">
+            <div><b>Three Lines of Defense (2013)</b>Three separate lines with a defensive framing. Emphasized segregation between operating management, oversight functions, and audit.</div>
+            <div><b>Three Lines Model (2020)</b>Six principles, first-line and second-line &ldquo;roles&rdquo; that both sit within management, and a stronger focus on value creation, collaboration, and the governing body&rsquo;s accountability.</div>
+          </div>
+          <h4>Where the risk practitioner sits</h4>
+          <p>A CRISC holder usually works in a second-line role: building the risk framework, facilitating assessments, challenging the first line&rsquo;s ratings, and reporting aggregated risk. Some practitioners sit in the first line, embedded in IT or a business unit. Either way, the practitioner advises and the risk owner decides.</p>
+          <div class="in-practice"><span class="ip-label">&#128270; In practice</span><p><em>Larchmont Community Health</em>, a regional clinic network, is moving its electronic health record (EHR) to a cloud provider. The CIO&rsquo;s team owns migration risk (first line). The enterprise risk office and the privacy officer set assessment criteria and challenge the CIO&rsquo;s ratings (second line). Internal audit plans a readiness review of the migration controls and reports to the audit committee (third line). The board&rsquo;s risk committee approves the appetite the program must stay within.</p></div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>If internal audit is asked to design or run a control, its independence is impaired. When a question asks who should implement a control, the answer is first-line management. When it asks who gives independent assurance, the answer is internal audit.</div>
+        </article>
+
+        <article class="content-section" id="s3">
+          <div class="cs-head"><span class="cs-num">3</span><h3>Risk Profile and Risk Culture</h3></div>
+          <p>The <strong>risk profile</strong> is the enterprise&rsquo;s current risk picture: which risks it carries, how large each one is, and how the total compares with appetite. The profile changes whenever the business changes. A new cloud provider, an acquisition, a new regulation, or a new threat campaign can all move it. A practitioner keeps the profile current and reports when it drifts toward or past tolerance.</p>
+          <h4>What a risk profile contains</h4>
+          <ul class="detail">
+            <li><strong>Current risk levels</strong> for each significant risk, usually residual risk after existing controls.</li>
+            <li><strong>Aggregated views</strong> by business unit, objective, or risk category, so concentrations become visible.</li>
+            <li><strong>Trend:</strong> whether each risk is rising, stable, or falling since the last report.</li>
+            <li><strong>Comparison to appetite and tolerance:</strong> which risks are acceptable, which need action, and which need escalation.</li>
+            <li><strong>Key risk indicators</strong> that warn when the profile is about to change. Lesson 7 covers KRIs in depth.</li>
+          </ul>
+          <h4>Risk culture</h4>
+          <p>Policies describe intended behavior. Culture decides actual behavior. In a healthy risk culture, people report incidents and near misses without fear, managers raise bad news early, and risk is part of ordinary decisions rather than a compliance exercise at year end. In a weak culture, risks are hidden, ratings are softened before reports reach the board, and exceptions become permanent.</p>
+          <div class="compare-2col">
+            <div><b>Signs of a strong risk culture</b>Leaders talk about risk in strategy meetings. Near misses are reported and studied. Exceptions have owners and expiry dates. People can name the appetite for their area.</div>
+            <div><b>Signs of a weak risk culture</b>Risk reports are always green. Staff fear blame for reporting problems. Risk is &ldquo;IT&rsquo;s job&rdquo; or &ldquo;audit&rsquo;s job.&rdquo; Exceptions renew automatically every year.</div>
+          </div>
+          <div class="tip jade"><span class="tip-label">&#129517; Culture comes from the top</span>Tone at the top sets risk culture, but tone in the middle decides whether staff believe it. Training helps, yet the strongest signal is what happens to the person who reports a problem.</div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a question asks for the BEST indicator of a mature risk culture, prefer an answer about behavior (open reporting, risk discussed in decisions) over one about documents (a published policy, a completed training course).</div>
+        </article>
+
+        <article class="content-section" id="s4">
+          <div class="cs-head"><span class="cs-num">4</span><h3>Risk Appetite, Tolerance, and Capacity</h3></div>
+          <p>These three terms are related but distinct, and the exam expects you to keep them apart.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Concept</th><th>Question it answers</th><th>Who sets it</th><th>Level</th></tr></thead>
+            <tbody>
+              <tr><td class="term">Risk capacity</td><td>How much risk can we absorb before we fail or break our core obligations?</td><td>A fact about the enterprise: its capital, liquidity, legal limits, and resilience. The board must know it.</td><td>Enterprise ceiling</td></tr>
+              <tr><td class="term">Risk appetite</td><td>How much risk are we willing to accept in pursuit of value?</td><td>The board, with senior management</td><td>Strategic and broad</td></tr>
+              <tr><td class="term">Risk tolerance</td><td>How far may performance vary from a specific objective before we must act?</td><td>Senior management, within the appetite</td><td>Operational, per objective or metric</td></tr>
+            </tbody>
+          </table></div>
+          <p>The usual order is <strong>appetite &lt; tolerance limits &lt; capacity</strong>. Appetite is the target zone. Tolerance is the acceptable variation around objectives, so a risk can sit slightly outside the appetite and still be tolerated while an action plan brings it back. Capacity is the hard ceiling. Setting appetite or tolerance above capacity means the enterprise has agreed to accept risk it cannot survive, which is a governance failure.</p>
+          <h4>Writing appetite and tolerance statements</h4>
+          <ul class="detail">
+            <li><strong>Qualitative appetite:</strong> &ldquo;Larchmont has a low appetite for risks that could compromise patient safety or the confidentiality of health records, and a moderate appetite for technology risk taken on to improve patient access.&rdquo;</li>
+            <li><strong>Quantitative appetite:</strong> &ldquo;No single IT risk with a residual rating above 9 on the enterprise 5&times;5 scale may be accepted without risk committee approval.&rdquo;</li>
+            <li><strong>Tolerance tied to an objective:</strong> &ldquo;EHR availability objective is 99.9% per month. Tolerance: no more than 4 hours of unplanned downtime per month and no single outage longer than 2 hours during clinic hours.&rdquo;</li>
+            <li><strong>Capacity:</strong> stated in terms the enterprise cannot exceed, such as the maximum loss reserves can absorb or the regulatory limit on unavailable patient care services.</li>
+          </ul>
+          <div class="in-practice"><span class="ip-label">&#128270; In practice</span><p>Larchmont&rsquo;s board approves a low appetite for privacy risk. During the cloud EHR migration, a data-mapping risk is rated 10, one point above the appetite threshold of 9 but within the tolerance band. The migration director, as risk owner, must submit an action plan with a date. When a second risk, a misconfigured storage bucket holding test data with real patient records, is rated 16, it falls beyond tolerance and is escalated to the risk committee the same week.</p></div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a residual risk exceeds the appetite, the BEST next step is usually to inform the risk owner and require a response or a formal escalation, not for the practitioner to accept it or to implement a control alone. Appetite decisions belong to the board and senior management.</div>
+          <div class="warn tip"><span class="tip-label">&#9888;&#65039; Common mistake</span>Using &ldquo;appetite&rdquo; and &ldquo;tolerance&rdquo; as synonyms. Appetite is the broad, strategic amount of risk the board will accept. Tolerance is the acceptable deviation for a specific objective. One appetite statement can produce many tolerance limits.</div>
+        </article>
+
+        <article class="content-section" id="s5">
+          <div class="cs-head"><span class="cs-num">5</span><h3>Risk Frameworks</h3></div>
+          <p>Frameworks give structure, shared vocabulary, and evidence that the process is sound. The CRISC exam does not test framework trivia in depth, but it expects you to know what each one is for and to choose the right one for a stated need.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Framework</th><th>Purpose</th><th>Key structure</th></tr></thead>
+            <tbody>
+              <tr><td class="term">NIST SP 800-39</td><td>Organization-wide information security risk management</td><td>Three tiers (organization; mission and business process; information system) and four components (frame, assess, respond, monitor).</td></tr>
+              <tr><td class="term">NIST SP 800-37 Rev. 2</td><td>Risk Management Framework for systems and organizations</td><td>Seven steps: Prepare, Categorize, Select, Implement, Assess, Authorize, Monitor. Authorization is a senior official&rsquo;s explicit acceptance of residual risk.</td></tr>
+              <tr><td class="term">NIST SP 800-30 Rev. 1</td><td>Guide for conducting risk assessments</td><td>Prepare, conduct, communicate, and maintain the assessment. Threat sources, threat events, vulnerabilities, likelihood, and impact.</td></tr>
+              <tr><td class="term">NIST CSF 2.0 (2024)</td><td>Cybersecurity outcomes for any organization</td><td>Six functions: Govern, Identify, Protect, Detect, Respond, Recover. Govern is new in 2.0 and includes risk management strategy, with appetite and tolerance statements.</td></tr>
+              <tr><td class="term">ISO/IEC 27005:2022</td><td>Information security risk management guidance</td><td>Supports ISO/IEC 27001:2022. Describes event-based and asset-based approaches to risk identification and links to the ISO 31000 process.</td></tr>
+              <tr><td class="term">ISACA Risk IT 2nd ed. and COBIT 2019</td><td>IT risk in business terms</td><td>Risk scenarios, risk ownership, and governance objectives such as EDM03 and APO12.</td></tr>
+            </tbody>
+          </table></div>
+          <h4>Choosing a framework</h4>
+          <ul class="detail">
+            <li><strong>Regulatory driver:</strong> U.S. federal agencies and many of their contractors follow the NIST RMF. A certifiable management system points to ISO/IEC 27001 with 27005 for risk.</li>
+            <li><strong>Audience:</strong> CSF 2.0 outcomes communicate well to boards and partners. SP 800-30 is a practitioner&rsquo;s method.</li>
+            <li><strong>Existing governance:</strong> an enterprise already using COBIT or COSO should align its IT risk method with them rather than start a parallel system.</li>
+            <li><strong>Fit, not purity:</strong> most enterprises blend frameworks and map controls across them. What matters is a consistent, documented, repeatable process.</li>
+          </ul>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>When a question asks what to do FIRST when adopting a risk framework, look for understanding business objectives, context, and requirements. Picking the framework comes after you know what it must support.</div>
+        </article>
+
+        <article class="content-section" id="s6">
+          <div class="cs-head"><span class="cs-num">6</span><h3>Legal, Regulatory, and Contractual Requirements</h3></div>
+          <p>External obligations narrow the choices. Some risks cannot be accepted, no matter what the appetite says, because a law requires a control. The practitioner&rsquo;s job is to know which obligations apply, map them to controls and owners, and report compliance risk in the same register as other risks.</p>
+          <div class="table-wrap"><table class="data">
+            <thead><tr><th>Requirement</th><th>Applies to</th><th>IT risk relevance</th></tr></thead>
+            <tbody>
+              <tr><td class="term">SOX (Sarbanes-Oxley Act, 2002)</td><td>U.S. public companies</td><td>Section 404 requires management to assess internal control over financial reporting, including IT general controls over financial systems.</td></tr>
+              <tr><td class="term">GLBA</td><td>U.S. financial institutions</td><td>Requires safeguards for customer financial information, with regulator-specific rules such as the FTC Safeguards Rule.</td></tr>
+              <tr><td class="term">HIPAA</td><td>U.S. covered entities and business associates</td><td>The Security Rule requires risk analysis and safeguards for electronic protected health information, and business associate agreements with vendors.</td></tr>
+              <tr><td class="term">GDPR</td><td>Processing of personal data of people in the EU</td><td>Security appropriate to the risk, data protection impact assessments for high-risk processing, and breach notification to the supervisory authority within 72 hours where required.</td></tr>
+              <tr><td class="term">PCI DSS v4.0</td><td>Entities that store, process, or transmit payment card data</td><td>A contractual standard enforced through card brands and acquirers. Version 4.0 added a targeted risk analysis for some requirements.</td></tr>
+              <tr><td class="term">SEC cybersecurity disclosure rules (2023)</td><td>U.S. public companies</td><td>Disclose material cybersecurity incidents on Form 8-K within four business days of determining materiality, and describe cyber risk management, strategy, and governance in annual reports.</td></tr>
+              <tr><td class="term">Contracts and SLAs</td><td>Any enterprise with customers or vendors</td><td>Availability commitments, security clauses, right-to-audit terms, breach notification duties, and liability caps.</td></tr>
+            </tbody>
+          </table></div>
+          <h4>Managing compliance risk</h4>
+          <ul class="detail">
+            <li><strong>Maintain an obligations register:</strong> each law, regulation, standard, and key contract, mapped to controls and named owners.</li>
+            <li><strong>Watch for change:</strong> legal and compliance teams track new rules. The risk practitioner assesses what each change does to the risk profile.</li>
+            <li><strong>Read contracts as risk documents:</strong> an SLA with a 99.5% availability commitment sets a tolerance the enterprise must plan for, and a vendor contract without audit rights limits assurance.</li>
+            <li><strong>Treat conflicts openly:</strong> when obligations conflict, such as data residency in one country and a provider&rsquo;s global support model, document the decision and its owner.</li>
+          </ul>
+          <div class="resource-link">
+            <span class="rl-icon" aria-hidden="true">&#128274;</span>
+            <div class="rl-body"><span class="rl-label">Explore with an eMate</span><span class="rl-text"><strong>Privacy Tenets</strong>: review the privacy principles that sit behind HIPAA, GDPR, and most privacy laws.</span></div>
+            <div class="rl-actions"><a class="btn secondary" href="https://d2hie3dpn9wvbb.cloudfront.net/privacy/privacy.html" target="_blank" rel="noopener noreferrer">Privacy Tenets <span class="ext">&#8599;</span></a></div>
+          </div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>Legal and regulatory requirements usually override risk appetite. If a control is mandated, the question is not whether to implement it, but how. Watch for distractors that propose accepting a compliance gap because it is &ldquo;within appetite.&rdquo;</div>
+        </article>
+
+        <article class="content-section" id="s7">
+          <div class="cs-head"><span class="cs-num">7</span><h3>Interactive: Appetite and Tolerance Map</h3></div>
+          <p>The map plots eight risks from Larchmont Community Health&rsquo;s register on a 5&times;5 likelihood and impact grid. Each cell&rsquo;s score is likelihood times impact (1 to 25). Set the board&rsquo;s appetite threshold, the width of the tolerance band above it, and the enterprise&rsquo;s capacity. The cells shade into zones, and the register list shows the governance action each risk now requires. Try the three board presets and notice what changes and what does not.</p>
+
+          <style>
+            .atm-modes{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.7rem;}
+            .atm-wrap{display:flex;flex-wrap:wrap;gap:1rem;align-items:flex-start;}
+            .atm-in{flex:1 1 260px;min-width:0;}
+            .atm-out{flex:1.4 1 320px;min-width:0;}
+            .atm-field{margin-bottom:.55rem;}
+            .atm-field label{display:flex;justify-content:space-between;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.15rem;}
+            .atm-field label output{color:var(--gold);font-size:.8rem;letter-spacing:0;}
+            .atm-list{list-style:none;margin:.3rem 0 0;padding:0;font-family:Arial,sans-serif;font-size:.74rem;}
+            .atm-list li{display:flex;align-items:center;gap:.4rem;padding:.2rem 0;border-bottom:1px dotted var(--border);color:var(--text-secondary);}
+            .atm-list li:last-child{border-bottom:none;}
+            .atm-id{font-weight:700;color:var(--text-primary);min-width:1.6rem;}
+            .atm-nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+            .atm-sc{font-weight:700;color:var(--text-primary);min-width:1.3rem;text-align:right;}
+            .atm-act{font-size:.64rem;font-weight:700;text-transform:uppercase;letter-spacing:.03em;padding:.1rem .35rem;border-radius:3px;color:#fff;white-space:nowrap;}
+            .atm-act.z0{background:var(--correct);} .atm-act.z1{background:var(--amber);} .atm-act.z2{background:var(--wrong);} .atm-act.z3{background:var(--navy);}
+            .atm-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.45rem;margin-bottom:.55rem;}
+            .atm-tile{background:var(--card-bg);border:1px solid var(--border);border-top:3px solid var(--border);border-radius:5px;padding:.35rem .55rem;font-family:Arial,sans-serif;}
+            .atm-tile b{display:block;font-size:1.25rem;color:var(--text-primary);line-height:1.1;}
+            .atm-tile span{font-size:.66rem;text-transform:uppercase;letter-spacing:.04em;color:var(--text-muted);}
+            .atm-tile.t0{border-top-color:var(--correct);} .atm-tile.t1{border-top-color:var(--amber);} .atm-tile.t2{border-top-color:var(--wrong);} .atm-tile.t3{border-top-color:var(--navy);}
+            .atm-legend{display:flex;flex-wrap:wrap;gap:.25rem .6rem;font-family:Arial,sans-serif;font-size:.68rem;color:var(--text-muted);margin-top:.35rem;}
+            .atm-legend i{display:inline-block;width:.75rem;height:.75rem;border-radius:2px;vertical-align:-1px;margin-right:.25rem;border:1px solid var(--border);}
+            .atm-cvwrap{position:relative;}
+            .iw.is-expanded .atm-list li{padding:.28rem 0;}
+          </style>
+
+          <div class="iw" id="atm-root">
+            <div class="iw-card">
+              <div class="iw-topbar">
+                <span class="iw-eyebrow">Interactive &middot; Larchmont Community Health risk register</span>
+                <button type="button" class="iw-expand" aria-expanded="false" title="Open a larger view">&#10530; Expand</button>
+              </div>
+              <div class="atm-wrap">
+                <div class="iw-panel atm-in">
+                  <h5 class="iw-h5">Board stance (presets)</h5>
+                  <div class="atm-modes" role="group" aria-label="Board stance preset">
+                    <button type="button" class="iw-btn" id="atm-p1" aria-pressed="false">Risk-averse</button>
+                    <button type="button" class="iw-btn" id="atm-p2" aria-pressed="true">Balanced</button>
+                    <button type="button" class="iw-btn" id="atm-p3" aria-pressed="false">Risk-seeking</button>
+                  </div>
+                  <div class="atm-field"><label for="atm-app">Risk appetite threshold <output id="atm-app-o" for="atm-app">8</output></label>
+                    <input type="range" id="atm-app" min="1" max="20" step="1" value="8"></div>
+                  <div class="atm-field"><label for="atm-tol">Tolerance band above appetite <output id="atm-tol-o" for="atm-tol">+4</output></label>
+                    <input type="range" id="atm-tol" min="0" max="10" step="1" value="4"></div>
+                  <div class="atm-field"><label for="atm-cap">Risk capacity <output id="atm-cap-o" for="atm-cap">16</output></label>
+                    <input type="range" id="atm-cap" min="6" max="25" step="1" value="16"></div>
+                  <h5 class="iw-h5">Register: required action</h5>
+                  <ul class="atm-list" id="atm-list"></ul>
+                </div>
+                <div class="iw-panel atm-out">
+                  <div class="atm-tiles">
+                    <div class="atm-tile t0"><b id="atm-n0">0</b><span>Within appetite</span></div>
+                    <div class="atm-tile t1"><b id="atm-n1">0</b><span>Within tolerance</span></div>
+                    <div class="atm-tile t2"><b id="atm-n2">0</b><span>Beyond tolerance</span></div>
+                    <div class="atm-tile t3"><b id="atm-n3">0</b><span>Beyond capacity</span></div>
+                  </div>
+                  <div aria-live="polite"><div class="iw-verdict" id="atm-verdict"><span class="iw-pill" id="atm-pill">Ready</span><span id="atm-coach"></span></div></div>
+                  <div class="atm-cvwrap"><canvas id="atm-cv" role="img" aria-label="Five by five heat map of likelihood and impact with eight plotted risks shaded by appetite, tolerance, and capacity zones"></canvas></div>
+                  <div class="atm-legend"><span><i style="background:#dcefe2"></i>Within appetite: accept and monitor</span><span><i style="background:#f8e3c6"></i>Within tolerance: owner action plan</span><span><i style="background:#f6d0d0"></i>Beyond tolerance: escalate</span><span><i style="background:#fff;border:2px solid #3b1838"></i>Beyond capacity</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <script>
+          (function(){
+            var root=document.getElementById('atm-root'); if(!root) return;
+            var $=function(id){return root.querySelector('#'+id);};
+            var cv=$('atm-cv'), ctx=cv.getContext('2d');
+            var RISKS=[
+              {id:'R1',n:'Cloud EHR outage in clinic hours',l:3,i:4},
+              {id:'R2',n:'Ransomware on workstations',l:3,i:5},
+              {id:'R3',n:'Phishing credential theft',l:4,i:3},
+              {id:'R4',n:'EHR vendor data breach',l:2,i:5},
+              {id:'R5',n:'Unpatched imaging server',l:3,i:3},
+              {id:'R6',n:'Unencrypted laptop lost',l:2,i:3},
+              {id:'R7',n:'Access reviews missed',l:4,i:2},
+              {id:'R8',n:'Telehealth scheduling bug',l:2,i:2}
+            ];
+            var PRESET={p1:{a:4,t:3},p2:{a:8,t:4},p3:{a:12,t:6}};
+            var ACT=['Accept, monitor','Action plan','Escalate','Board now'];
+            function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()||'#888';}
+            function st(){var a=+$('atm-app').value,t=+$('atm-tol').value,c=+$('atm-cap').value;return {a:a,t:t,tl:a+t,c:c};}
+            function zone(s,S){ if(s>S.c) return 3; if(s<=S.a) return 0; if(s<=S.tl) return 1; return 2; }
+            function size(){
+              var w=cv.parentElement.clientWidth||400, dpr=window.devicePixelRatio||1, h;
+              if(root.classList.contains('is-expanded')){ var top=cv.getBoundingClientRect().top; h=Math.min(w*0.62, window.innerHeight-top-96); h=Math.max(h,220); }
+              else h=Math.min(Math.max(w*0.55,230),290);
+              cv.width=Math.round(w*dpr); cv.height=Math.round(h*dpr); cv.style.width=w+'px'; cv.style.height=h+'px';
+              ctx.setTransform(dpr,0,0,dpr,0,0); return {w:w,h:h};
+            }
+            var ZF=['#dcefe2','#f8e3c6','#f6d0d0','#f6d0d0'];
+            function draw(S){
+              var d=size(), W=d.w, H=d.h;
+              ctx.clearRect(0,0,W,H);
+              var padL=46, padB=34, padT=8, padR=8;
+              var gw=W-padL-padR, gh=H-padT-padB, cw=gw/5, ch=gh/5;
+              var navy=css('--navy'), muted=css('--text-muted'), txt=css('--text-primary'), gold=css('--gold');
+              ctx.font='11px Arial'; ctx.textBaseline='middle';
+              for(var L=1;L<=5;L++) for(var I=1;I<=5;I++){
+                var s=L*I, z=zone(s,S), x=padL+(L-1)*cw, y=padT+(5-I)*ch;
+                ctx.fillStyle=ZF[z]; ctx.fillRect(x,y,cw,ch);
+                ctx.strokeStyle='#ffffff'; ctx.lineWidth=2; ctx.strokeRect(x,y,cw,ch);
+                if(z===3){ ctx.strokeStyle=navy; ctx.lineWidth=2.5; ctx.strokeRect(x+2.5,y+2.5,cw-5,ch-5); }
+                ctx.fillStyle=muted; ctx.textAlign='right'; ctx.fillText(String(s),x+cw-5,y+9);
+              }
+              // axes
+              ctx.fillStyle=txt; ctx.textAlign='center'; ctx.font='11px Arial';
+              for(var k=1;k<=5;k++){ ctx.fillText(String(k),padL+(k-0.5)*cw,padT+gh+11); ctx.fillText(String(k),padL-12,padT+(5-k+0.5)*ch); }
+              ctx.font='bold 11px Arial'; ctx.fillText('Likelihood →',padL+gw/2,H-8);
+              ctx.save(); ctx.translate(12,padT+gh/2); ctx.rotate(-Math.PI/2); ctx.fillText('Impact →',0,0); ctx.restore();
+              // risks
+              var r=Math.max(9,Math.min(14,cw*0.16));
+              RISKS.forEach(function(k){
+                var cx=padL+(k.l-0.5)*cw, cy=padT+(5-k.i+0.5)*ch+3;
+                var z=zone(k.l*k.i,S);
+                ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2);
+                ctx.fillStyle=z===0?css('--correct'):z===1?css('--amber'):z===2?css('--wrong'):navy; ctx.fill();
+                ctx.lineWidth=2; ctx.strokeStyle='#fff'; ctx.stroke();
+                ctx.fillStyle='#fff'; ctx.font='bold '+(r>11?11:10)+'px Arial'; ctx.textAlign='center'; ctx.fillText(k.id,cx,cy+0.5);
+              });
+              ctx.strokeStyle=gold; ctx.lineWidth=1; ctx.strokeRect(padL,padT,gw,gh);
+            }
+            function verdict(cls,pill,msg){$('atm-verdict').className='iw-verdict '+cls;$('atm-pill').className='iw-pill '+cls;$('atm-pill').textContent=pill;$('atm-coach').innerHTML=msg;}
+            function update(){
+              var S=st();
+              $('atm-app-o').textContent=S.a; $('atm-tol-o').textContent='+'+S.t; $('atm-cap-o').textContent=S.c;
+              var n=[0,0,0,0], rows=[], names={0:[],1:[],2:[],3:[]};
+              RISKS.slice().sort(function(x,y){return y.l*y.i-x.l*x.i;}).forEach(function(k){
+                var s=k.l*k.i, z=zone(s,S); n[z]++; names[z].push(k.id);
+                rows.push('<li><span class="atm-id">'+k.id+'</span><span class="atm-nm" title="'+k.n+'">'+k.n+'</span><span class="atm-sc">'+s+'</span><span class="atm-act z'+z+'">'+ACT[z]+'</span></li>');
+              });
+              $('atm-list').innerHTML=rows.join('');
+              for(var i=0;i<4;i++) $('atm-n'+i).textContent=n[i];
+              ['p1','p2','p3'].forEach(function(p){ $('atm-'+p).setAttribute('aria-pressed', PRESET[p].a===S.a && PRESET[p].t===S.t ? 'true':'false'); });
+              if(S.a>=S.c){
+                verdict('bad','Appetite above capacity','The appetite ('+S.a+') is at or above capacity ('+S.c+'). The board would be willing to accept risk the enterprise cannot absorb. Appetite must sit well below capacity, with tolerance between them.');
+              } else if(S.tl>S.c){
+                verdict('bad','Tolerance exceeds capacity','The tolerance limit ('+S.tl+') is above capacity ('+S.c+'). Management could tolerate a deviation the enterprise cannot survive. Narrow the band so that appetite &lt; tolerance limit &le; capacity.'+(n[3]?' '+names[3].join(', ')+' already exceed capacity and need board attention now.':''));
+              } else if(n[3]>0){
+                verdict('bad','Beyond capacity',names[3].join(', ')+' exceed what the enterprise can absorb. This is not a tolerance question any more: report to the board immediately and treat the risk as a priority.');
+              } else if(n[2]>0){
+                verdict('warn','Escalate '+n[2],names[2].join(', ')+' '+(n[2]>1?'sit':'sits')+' beyond tolerance, so the risk owner cannot simply carry '+(n[2]>1?'them':'it')+'. Escalate to senior management for a response decision. '+(n[1]?names[1].join(', ')+' are inside tolerance but above appetite: each owner needs a dated action plan.':''));
+              } else if(n[1]>0){
+                verdict('good','Within tolerance','No risk breaches tolerance. '+names[1].join(', ')+' sit above appetite but inside the acceptable variation, so each owner needs a dated action plan to bring the risk back within appetite.');
+              } else {
+                verdict('warn','All accepted','Every risk falls within appetite, so nothing needs action. Check that this reflects a deliberate board decision. An appetite of '+S.a+' accepts ransomware and vendor breach risks that a clinic network with a low stated appetite for privacy harm would not.');
+              }
+              var p=PRESET.p1.a===S.a&&PRESET.p1.t===S.t?'averse':PRESET.p3.a===S.a&&PRESET.p3.t===S.t?'seeking':'';
+              if(p) $('atm-coach').innerHTML+=' <em>Notice that the '+(p==='averse'?'risk-averse':'risk-seeking')+' preset moved appetite and tolerance but not capacity. Capacity is a fact about the enterprise, not a preference.</em>';
+              draw(S);
+            }
+            function preset(p){ $('atm-app').value=PRESET[p].a; $('atm-tol').value=PRESET[p].t; update(); }
+            ['p1','p2','p3'].forEach(function(p){ $('atm-'+p).addEventListener('click',function(){preset(p);}); });
+            ['atm-app','atm-tol','atm-cap'].forEach(function(id){ $(id).addEventListener('input',update); });
+            window.addEventListener('resize',function(){ draw(st()); });
+            update();
+          })();
+          </script>
+
+          <div class="in-practice"><span class="ip-label">&#128270; In practice</span><p>The heat map turns an appetite statement into a routing rule. Green risks are accepted and monitored by their owners. Amber risks stay with the owner but need a dated action plan. Red risks leave the owner&rsquo;s desk and go to senior management for a decision. Anything past capacity goes to the board. A practitioner who can show this map at the risk committee turns a debate about scores into a decision about actions.</p></div>
+          <div class="tip"><span class="tip-label">&#128161; Exam Tip</span>The widget teaches the exam&rsquo;s core escalation rule: a risk above appetite is not automatically a crisis, and a risk above tolerance is never the practitioner&rsquo;s to accept. Real tolerance is set per objective, not as one band on a heat map, so read the band as a simplification of many objective-level limits.</div>
+        </article>
+
+        <article class="content-section" id="s8">
+          <div class="cs-head"><span class="cs-num">8</span><h3>Faculty Teaching Segment</h3></div>
+          <p>Students often learn appetite as a definition and never write one. A short workshop where they draft, test, and defend an appetite statement makes the difference between appetite, tolerance, and capacity concrete.</p>
+          <ul class="detail">
+            <li><strong>Signature assignment:</strong> teams receive a two-page profile of a fictional community college (enrollment, budget, strategic plan, a planned move of the student information system to a cloud provider). They draft a qualitative appetite statement for three risk categories (student data privacy, service availability, and innovation in online learning), convert each into a quantitative threshold on a 5&times;5 scale, write two tolerance limits tied to specific objectives, and state the college&rsquo;s capacity in one sentence. They then place six supplied risks on a heat map and name the required governance action for each.</li>
+            <li><strong>Rubric criteria:</strong> appetite statements are clearly owned by the board and linked to strategic objectives; tolerance limits are measurable and tied to a named objective; capacity is stated separately and sits above tolerance; each risk is routed to the correct action and owner with a one-line justification.</li>
+            <li><strong>Lab idea:</strong> give students a synthetic risk register of 15 risks in a spreadsheet. They build a conditional-format heat map driven by appetite and tolerance cells, then change the board stance and record how many risks change route. Use only the synthetic register you supply.</li>
+            <li><strong>Course fit:</strong> this lesson fits an IT risk management, GRC, or security management course. It supports the CAE-CD Cybersecurity Planning and Management (CPM), Policy, Legal, Ethics, and Compliance (PLE), and IA Compliance (IAC) Knowledge Units.</li>
+          </ul>
+          <div class="tip"><span class="tip-label">&#127891; Teaching note</span>Run the Appetite and Tolerance Map in pairs. Give each pair a printed worksheet with the eight Larchmont risks and three board stances. Pairs record the action for each risk under each stance and then write one sentence explaining why capacity did not move. Collect the worksheets as an exit ticket.</div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="emates">
+    <p class="eyebrow">Explore with eMates</p>
+    <h2 class="h2">Interactive refreshers for this lesson</h2>
+    <div class="rule"></div>
+    <p class="lead">Short, self-paced eMates from the myEMATES library. Each opens in a new tab. Concept refreshers support your own exam study. Student-ready modules also work as warm-ups in your own courses.</p>
+    <div class="em-grid">
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 4</span></div><h3>Risk Management</h3><p>The risk management cycle that ERM, ISO 31000, and NIST SP 800-39 all formalize.</p><div class="em-foot"><span class="em-level">Concept refresher</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/risk_management/risk_management.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Risk Management (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 3</span></div><h3>Privacy Tenets</h3><p>Privacy principles behind HIPAA and GDPR, the obligations that limit appetite for privacy risk.</p><div class="em-foot"><span class="em-level student">Student-ready</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/privacy/privacy.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Privacy Tenets (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 3</span></div><h3>Policies, Standards, Procedures, Guidelines</h3><p>How an approved risk policy flows down into standards and procedures that the first line follows.</p><div class="em-foot"><span class="em-level">Concept refresher</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/PSPG/PSPG.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: Policies, Standards, Procedures, Guidelines (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 1</span></div><h3>What&rsquo;s my Crime?</h3><p>Match cyber incidents to the laws they break, a warm-up for the legal and regulatory requirements section.</p><div class="em-foot"><span class="em-level student">Student-ready</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/crime/crime.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: What's my Crime? (opens in a new tab)">Open &#8599;</a></div></article>
+      <article class="em-card"><div class="em-top"><span class="em-lib">Cybersecurity</span><span class="em-sec">Section 5</span></div><h3>The Cube</h3><p>The McCumber Cube relates security goals, data states, and safeguards, useful for framing risk categories.</p><div class="em-foot"><span class="em-level">Concept refresher</span><a class="em-open" href="https://d2hie3dpn9wvbb.cloudfront.net/cube/cube.html" target="_blank" rel="noopener noreferrer" aria-label="Open eMate: The Cube (opens in a new tab)">Open &#8599;</a></div></article>
+    </div>
+  </section>
+
+  <section class="block" id="practice-this-lesson">
+    <p class="eyebrow">Practice</p>
+    <h2 class="h2">Practice this lesson</h2>
+    <div class="rule"></div>
+    <p class="lead">Self-checking practice for this lesson, ready to use with your own students. Each item ends with a report you can print or save as a PDF. See all items in the <a href="practices.html">CRISC Practices</a> and the <a href="labs.html">CRISC Risk Lab</a>.</p>
+    <div class="pl-grid">
+      <article class="pl-card"><div class="pl-top"><span class="pl-type">CRISC Practices &middot; A3</span><span class="pl-time">&#9201; 35 min</span></div><h3><a href="activity03.html">Appetite, Lines, and Frameworks</a></h3><p>Place activities on the three lines, tell appetite from tolerance and capacity, and match legal, regulatory, and contractual drivers.</p><div class="pl-foot"><span class="pl-level">Foundational</span><a class="pl-open" href="activity03.html" aria-label="Open activity A3: Appetite, Lines, and Frameworks">Open &#8594;</a></div></article>
+      <article class="pl-card pl-lab"><div class="pl-top"><span class="pl-type">CRISC Risk Lab &middot; B1</span><span class="pl-time">&#9201; 60 min</span></div><h3><a href="lab01.html">Risk Governance Charter</a></h3><p>Build a RACI for risk activities with live conflict checks, draft the appetite statement, and set tolerance thresholds for Larchmont Community Health.</p><div class="pl-foot"><span class="pl-level">Intermediate</span><a class="pl-open" href="lab01.html" aria-label="Open lab B1: Risk Governance Charter">Open &#8594;</a></div></article>
+    </div>
+  </section>
+
+  <section class="block" id="knowledge-check">
+    <p class="eyebrow">Scored Knowledge Check</p>
+    <h2 class="h2">Test your understanding</h2>
+    <div class="rule"></div>
+    <p class="lead" style="margin-bottom:1.5rem">Select the best answer for each question, then submit for your score and the rationale for every item. Like the exam, several options may be true; choose the best one.</p>
+    <div class="quiz-card">
+      <form id="quiz">
+
+        <div class="q" data-answer="B">
+          <p class="q-stem"><span class="qn">Q1.</span>A clinic network is drafting its first enterprise risk appetite statement. Who should approve it?</p>
+          <fieldset class="options">
+            <legend>Question 1 options</legend>
+            <label class="opt"><input type="radio" name="q1" value="A"><span><span class="opt-letter">A.</span> The chief information security officer</span></label>
+            <label class="opt"><input type="radio" name="q1" value="B"><span><span class="opt-letter">B.</span> The board of directors, on senior management&rsquo;s recommendation</span></label>
+            <label class="opt"><input type="radio" name="q1" value="C"><span><span class="opt-letter">C.</span> The enterprise risk management function</span></label>
+            <label class="opt"><input type="radio" name="q1" value="D"><span><span class="opt-letter">D.</span> Internal audit</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: B.</b> Appetite is a strategic decision that the board sets with senior management. The CISO and the ERM function help develop and apply it but do not own it. Internal audit would lose independence if it approved the appetite it later audits against.</div>
+        </div>
+
+        <div class="q" data-answer="D">
+          <p class="q-stem"><span class="qn">Q2.</span>A residual IT risk is rated above the enterprise risk appetite but inside the approved tolerance. What should the risk practitioner do NEXT?</p>
+          <fieldset class="options">
+            <legend>Question 2 options</legend>
+            <label class="opt"><input type="radio" name="q2" value="A"><span><span class="opt-letter">A.</span> Escalate the risk immediately to the board</span></label>
+            <label class="opt"><input type="radio" name="q2" value="B"><span><span class="opt-letter">B.</span> Accept the risk on behalf of the business because it is within tolerance</span></label>
+            <label class="opt"><input type="radio" name="q2" value="C"><span><span class="opt-letter">C.</span> Implement an additional control to lower the rating</span></label>
+            <label class="opt"><input type="radio" name="q2" value="D"><span><span class="opt-letter">D.</span> Ensure the risk owner has a dated action plan to bring the risk within appetite</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: D.</b> Inside tolerance but above appetite means the owner must act, but the risk does not need board escalation. The practitioner never accepts risk for the business, and implementing controls is a first-line task chosen by the owner.</div>
+        </div>
+
+        <div class="q" data-answer="A">
+          <p class="q-stem"><span class="qn">Q3.</span>Under the IIA Three Lines Model, which function provides independent assurance to the governing body on the effectiveness of IT risk management?</p>
+          <fieldset class="options">
+            <legend>Question 3 options</legend>
+            <label class="opt"><input type="radio" name="q3" value="A"><span><span class="opt-letter">A.</span> Internal audit</span></label>
+            <label class="opt"><input type="radio" name="q3" value="B"><span><span class="opt-letter">B.</span> The enterprise risk management function</span></label>
+            <label class="opt"><input type="radio" name="q3" value="C"><span><span class="opt-letter">C.</span> The information security team</span></label>
+            <label class="opt"><input type="radio" name="q3" value="D"><span><span class="opt-letter">D.</span> IT operations management</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: A.</b> Internal audit is the third line and gives independent, objective assurance. Risk management and information security are second-line roles that monitor and challenge but sit within management. IT operations is first line and owns the risk.</div>
+        </div>
+
+        <div class="q" data-answer="C">
+          <p class="q-stem"><span class="qn">Q4.</span>An enterprise&rsquo;s reserves could absorb a single loss of about US$20 million. The board has stated it will accept losses up to US$5 million from any one technology initiative. What does the US$20 million figure represent?</p>
+          <fieldset class="options">
+            <legend>Question 4 options</legend>
+            <label class="opt"><input type="radio" name="q4" value="A"><span><span class="opt-letter">A.</span> Risk appetite</span></label>
+            <label class="opt"><input type="radio" name="q4" value="B"><span><span class="opt-letter">B.</span> Risk tolerance</span></label>
+            <label class="opt"><input type="radio" name="q4" value="C"><span><span class="opt-letter">C.</span> Risk capacity</span></label>
+            <label class="opt"><input type="radio" name="q4" value="D"><span><span class="opt-letter">D.</span> Residual risk</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: C.</b> Capacity is the most risk the enterprise can absorb. The US$5 million figure is the appetite the board chose, which sits well below capacity. Tolerance is the acceptable variation around a specific objective, and residual risk is the risk that remains after controls.</div>
+        </div>
+
+        <div class="q" data-answer="A">
+          <p class="q-stem"><span class="qn">Q5.</span>A team wants a framework that defines organization-wide risk management across three tiers: organization, mission and business process, and information system. Which source BEST fits?</p>
+          <fieldset class="options">
+            <legend>Question 5 options</legend>
+            <label class="opt"><input type="radio" name="q5" value="A"><span><span class="opt-letter">A.</span> NIST SP 800-39</span></label>
+            <label class="opt"><input type="radio" name="q5" value="B"><span><span class="opt-letter">B.</span> NIST SP 800-53 Rev. 5</span></label>
+            <label class="opt"><input type="radio" name="q5" value="C"><span><span class="opt-letter">C.</span> PCI DSS v4.0</span></label>
+            <label class="opt"><input type="radio" name="q5" value="D"><span><span class="opt-letter">D.</span> ISO/IEC 27002:2022</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: A.</b> SP 800-39 defines the three-tier approach and the frame, assess, respond, monitor components. SP 800-53 and ISO/IEC 27002 are control catalogs, and PCI DSS is a contractual standard for card data.</div>
+        </div>
+
+        <div class="q" data-answer="D">
+          <p class="q-stem"><span class="qn">Q6.</span>Risk reports at a company have shown every IT risk as green for three years, yet two significant incidents occurred. What is the MOST likely underlying issue?</p>
+          <fieldset class="options">
+            <legend>Question 6 options</legend>
+            <label class="opt"><input type="radio" name="q6" value="A"><span><span class="opt-letter">A.</span> The heat map uses the wrong colors</span></label>
+            <label class="opt"><input type="radio" name="q6" value="B"><span><span class="opt-letter">B.</span> The risk appetite is set too low</span></label>
+            <label class="opt"><input type="radio" name="q6" value="C"><span><span class="opt-letter">C.</span> The company has not adopted a recognized framework</span></label>
+            <label class="opt"><input type="radio" name="q6" value="D"><span><span class="opt-letter">D.</span> A weak risk culture in which bad news is softened before it reaches leadership</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: D.</b> Reports that are always green while incidents occur suggest risks are being hidden or understated, a culture problem. A low appetite would make more risks red, not fewer. Adopting a framework or changing colors would not fix behavior.</div>
+        </div>
+
+        <div class="q" data-answer="B">
+          <p class="q-stem"><span class="qn">Q7.</span>A business unit proposes accepting a gap in encryption of payment card data because the residual risk rating falls within appetite. What is the BEST response from the risk practitioner?</p>
+          <fieldset class="options">
+            <legend>Question 7 options</legend>
+            <label class="opt"><input type="radio" name="q7" value="A"><span><span class="opt-letter">A.</span> Approve the acceptance because the rating is within appetite</span></label>
+            <label class="opt"><input type="radio" name="q7" value="B"><span><span class="opt-letter">B.</span> Advise that PCI DSS requires the control, so the gap must be remediated or covered by a validated compensating control</span></label>
+            <label class="opt"><input type="radio" name="q7" value="C"><span><span class="opt-letter">C.</span> Ask internal audit to approve the exception</span></label>
+            <label class="opt"><input type="radio" name="q7" value="D"><span><span class="opt-letter">D.</span> Transfer the risk by purchasing cyber insurance</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: B.</b> Contractual and regulatory obligations constrain appetite. PCI DSS requires protection of stored cardholder data, and only a documented compensating control can stand in. The practitioner does not approve acceptance, audit should not approve exceptions it will review, and insurance does not satisfy the requirement.</div>
+        </div>
+
+        <div class="q" data-answer="C">
+          <p class="q-stem"><span class="qn">Q8.</span>What is the PRIMARY reason to integrate the IT risk register into the enterprise risk management program?</p>
+          <fieldset class="options">
+            <legend>Question 8 options</legend>
+            <label class="opt"><input type="radio" name="q8" value="A"><span><span class="opt-letter">A.</span> To reduce the number of risk tools the enterprise licenses</span></label>
+            <label class="opt"><input type="radio" name="q8" value="B"><span><span class="opt-letter">B.</span> To transfer ownership of IT risks to the ERM function</span></label>
+            <label class="opt"><input type="radio" name="q8" value="C"><span><span class="opt-letter">C.</span> To let leadership compare and prioritize IT risks against other enterprise risks using common criteria</span></label>
+            <label class="opt"><input type="radio" name="q8" value="D"><span><span class="opt-letter">D.</span> To satisfy the external auditor&rsquo;s documentation request</span></label>
+          </fieldset>
+          <div class="rationale"><b>Correct: C.</b> ERM&rsquo;s main value is a single, comparable view of risk tied to objectives and appetite. Tool savings and audit documentation are side benefits. Ownership stays with the business, not with the ERM function.</div>
+        </div>
+
+        <div class="quiz-actions">
+          <button type="button" class="btn" onclick="gradeQuiz()">Submit Answers</button>
+          <button type="button" class="btn secondary" onclick="resetQuiz()">Reset</button>
+          <span class="score" id="score" aria-live="polite"></span>
+        </div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<nav class="pager" aria-label="Lesson navigation">
+  <div class="pager-inner">
+    <a href="lesson01.html" class="prev"><span class="pager-dir">&#8592; Previous</span><span class="pager-name">Lesson 1: Organizational Governance</span></a>
+    <a href="lesson03.html" class="next"><span class="pager-dir">Next &#8594;</span><span class="pager-name">Lesson 3: Risk Identification</span></a>
+  </div>
+</nav>
+
+<footer>
+  <div class="footer-logo">CRISC 5-DAY FACULTY WORKSHOP</div>
+  <p class="footer-disclaimer">This workshop is an independent educational resource. It is not affiliated with, endorsed by, or sponsored by ISACA. CRISC&#174; is a registered mark of ISACA. All lesson text, questions, and scenarios are original and do not reproduce the ISACA CRISC Review Manual or question database. eMates are provided by the myEMATES library and open in a new tab. Always verify the current exam content outline at isaca.org before registering.</p>
+</footer>
+
+<script src="crisc-lesson.js"></script>
+</body>
+</html>

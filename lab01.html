@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>B1 Risk Governance Charter | CRISC 5-Day Faculty Workshop</title>
+<link rel="stylesheet" href="crisc-lesson.css">
+<link rel="stylesheet" href="practice.css">
+<style>
+.b1-row { display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-start; }
+.b1-col { flex: 1 1 260px; min-width: 0; }
+.b1-col.wide { flex: 1.7 1 380px; }
+.b1-box { border: 1px solid var(--border); border-radius: 6px; background: var(--white); padding: .9rem 1rem; min-width: 0; margin-bottom: 1rem; }
+.b1-box h4 { font: 700 .7rem Arial, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--navy); margin: 0 0 .6rem; }
+.b1-sum { font: .82rem/1.5 Arial, sans-serif; color: var(--text-secondary); margin: .5rem 0 0; }
+.b1-sum b { color: var(--text-primary); }
+.b1-btn { border: 1px solid var(--navy); background: var(--white); color: var(--navy); font: 700 .72rem Arial, sans-serif; padding: .4rem .7rem; border-radius: 3px; cursor: pointer; margin: .5rem .4rem 0 0; }
+.b1-btn:hover { background: var(--blue-pale); }
+.b1-tiles { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0 0 .8rem; }
+.b1-tile { flex: 1 1 140px; min-width: 0; background: var(--blue-pale); border: 1px solid var(--blue-pale-border); border-radius: 5px; padding: .55rem .65rem; }
+.b1-tile.bad { background: var(--wrong-bg); border-color: var(--wrong); }
+.b1-tile.good { background: var(--correct-bg); border-color: var(--correct); }
+.b1-tile .k { font: 700 .6rem Arial, sans-serif; letter-spacing: .05em; text-transform: uppercase; color: var(--text-muted); }
+.b1-tile .v { font: 900 1.15rem Arial, sans-serif; color: var(--text-primary); margin-top: .15rem; }
+/* RACI matrix */
+.b1-raci { border-collapse: collapse; font: .8rem Arial, sans-serif; min-width: 780px; width: 100%; }
+.b1-raci th, .b1-raci td { border: 1px solid var(--border); padding: .4rem .45rem; text-align: center; vertical-align: middle; }
+.b1-raci thead th { background: var(--navy); color: var(--white); font-size: .74rem; }
+.b1-raci thead th small { display: block; font-weight: 400; font-size: .64rem; opacity: .9; }
+.b1-raci th[scope=row] { text-align: left; font-weight: 700; color: var(--text-primary); background: var(--blue-pale); min-width: 11rem; }
+.b1-raci th[scope=row] .id { display: inline-block; font: 700 .66rem Arial, sans-serif; background: var(--navy); color: var(--white); border-radius: 3px; padding: .05rem .3rem; margin-right: .35rem; }
+.b1-raci select { font: 700 .78rem Arial, sans-serif; padding: .2rem .1rem; width: 3.4rem; border: 1px solid var(--border); border-radius: 3px; background: var(--white); color: var(--text-primary); }
+.b1-raci select.vA { border-color: var(--gold); background: var(--gold-pale); }
+.b1-raci select.vR { border-color: var(--jade); background: var(--jade-pale); }
+.b1-raci td.chk { text-align: left; font-size: .72rem; line-height: 1.35; min-width: 9.5rem; }
+.b1-ok { color: var(--correct); font-weight: 700; }
+.b1-bad { color: var(--wrong); font-weight: 700; }
+.b1-key { font: .76rem/1.5 Arial, sans-serif; color: var(--text-secondary); margin: 0 0 .6rem; }
+.b1-key b { color: var(--text-primary); }
+/* lines */
+.b1-lines { display: flex; flex-wrap: wrap; gap: .6rem; }
+.b1-lane { flex: 1 1 150px; min-width: 0; border: 1px dashed var(--blue-pale-border); border-radius: 6px; padding: .6rem; background: var(--section-alt); min-height: 7rem; }
+.b1-lane h5 { margin: 0 0 .5rem; font: 700 .66rem Arial, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--navy); }
+.b1-chip { display: block; background: var(--white); border: 1px solid var(--gold); color: var(--text-primary); border-radius: 4px; padding: .3rem .45rem; font: 700 .74rem Arial, sans-serif; margin-bottom: .35rem; }
+.b1-chip small { display: block; font-weight: 400; color: var(--text-muted); font-size: .66rem; }
+.b1-rolesel { display: flex; flex-wrap: wrap; gap: .6rem 1rem; margin-bottom: 1rem; }
+.b1-rolesel .px-field { flex: 1 1 210px; min-width: 0; margin: 0; }
+.b1-rolesel select, .b1-tol input { font: .82rem Arial, sans-serif; padding: .35rem; border: 1px solid var(--border); border-radius: 3px; background: var(--white); color: var(--text-primary); }
+.b1-rolesel select { width: 100%; }
+/* appetite builder */
+.b1-blocks fieldset { border: 1px solid var(--border); border-radius: 6px; padding: .6rem .8rem .4rem; margin: 0 0 .7rem; background: var(--white); }
+.b1-blocks legend { font: 700 .72rem Arial, sans-serif; letter-spacing: .06em; text-transform: uppercase; color: var(--navy); padding: 0 .3rem; }
+.b1-blocks label { display: flex; gap: .5rem; align-items: flex-start; font: .82rem/1.45 Arial, sans-serif; color: var(--text-secondary); margin: 0 0 .4rem; cursor: pointer; }
+.b1-blocks input { margin-top: .2rem; accent-color: var(--gold); }
+.b1-blocks .bid { font-weight: 700; color: var(--gold); min-width: 1.6rem; }
+.b1-stmt { font: 1rem/1.6 Georgia, serif; color: var(--text-primary); background: var(--gold-pale); border-left: 4px solid var(--gold); padding: .8rem 1rem; border-radius: 0 4px 4px 0; margin: 0 0 .6rem; }
+.b1-stmt .gap { color: var(--text-muted); font-style: italic; }
+.b1-crit { list-style: none; margin: 0; padding: 0; font: .8rem/1.5 Arial, sans-serif; color: var(--text-secondary); }
+.b1-crit li { margin: 0 0 .25rem; }
+/* tolerance */
+.b1-tol { border-collapse: collapse; font: .8rem Arial, sans-serif; width: 100%; min-width: 720px; }
+.b1-tol th, .b1-tol td { border: 1px solid var(--border); padding: .45rem .5rem; vertical-align: middle; text-align: left; }
+.b1-tol thead th { background: var(--navy); color: var(--white); }
+.b1-tol input { width: 5.2rem; }
+.b1-rag { display: inline-block; font: 700 .68rem Arial, sans-serif; border-radius: 3px; padding: .15rem .4rem; border: 1px solid; white-space: nowrap; }
+.b1-rag.g { color: var(--correct); border-color: var(--correct); background: var(--correct-bg); }
+.b1-rag.a { color: var(--jade-dark); border-color: var(--jade); background: var(--jade-pale); }
+.b1-rag.r { color: var(--wrong); border-color: var(--wrong); background: var(--wrong-bg); }
+.b1-rag.n { color: var(--text-muted); border-color: var(--border); background: var(--white); }
+.b1-gauge { position: relative; height: 12px; background: var(--section-alt); border-radius: 6px; margin-top: .35rem; min-width: 9rem; overflow: hidden; }
+.b1-gauge i { position: absolute; top: 0; bottom: 0; }
+.b1-gauge i.ga { background: var(--correct-bg); left: 0; }
+.b1-gauge i.ta { background: var(--jade-pale); }
+.b1-gauge i.mk { width: 3px; background: var(--navy); }
+.b1-note { font: .72rem Arial, sans-serif; color: var(--text-muted); display: block; margin-top: .2rem; }
+.b1-doc td, .b1-doc th { vertical-align: top; font-size: .8rem; }
+.b1-raci select:focus-visible, .b1-btn:focus-visible, .b1-blocks input:focus-visible, .b1-tol input:focus-visible, .b1-rolesel select:focus-visible { outline: 3px solid var(--gold); outline-offset: 1px; }
+</style>
+</head>
+<body>
+<div id="app"><noscript><p style="padding:2rem;font-family:Arial">This lab needs JavaScript enabled.</p></noscript></div>
+
+<script>
+/* ===================== Model data (fixed) =====================
+   Larchmont Community Health, cloud EHR migration program, risk governance charter.
+   Answers below are computed from these objects. */
+(function () {
+  var ROLES = [
+    { k: 'BRD', nm: 'Board', sub: 'Quality and Risk Committee', who: 'Dr. Helena Voss, committee chair', line: 'gov' },
+    { k: 'CRO', nm: 'CRO / ERM', sub: 'Enterprise Risk Office', who: 'Theo Brannigan, Chief Risk Officer', line: '2' },
+    { k: 'CISO', nm: 'CISO', sub: 'Information Security', who: 'Priya Raman, Chief Information Security Officer', line: '2' },
+    { k: 'RO', nm: 'Risk owner', sub: 'EHR Migration Program', who: 'Marcus Delgado, Director, EHR Migration Program', line: '1' },
+    { k: 'CO', nm: 'Control owner', sub: 'Clinical Applications', who: 'Aisha Kowalczyk, Manager, Clinical Applications', line: '1' },
+    { k: 'IA', nm: 'Internal audit', sub: 'Reports to audit committee', who: 'Gwen Sorensen, Chief Audit Executive', line: '3' }
+  ];
+  var ACTS = [
+    { id: 'R1', t: 'Approve the risk appetite statement' },
+    { id: 'R2', t: 'Set tolerance limits for EHR program metrics, within the appetite' },
+    { id: 'R3', t: 'Maintain the enterprise risk framework and assessment method' },
+    { id: 'R4', t: 'Identify and assess EHR migration risks' },
+    { id: 'R5', t: 'Accept a residual EHR risk that sits within the appetite' },
+    { id: 'R6', t: 'Perform the quarterly EHR user access review' },
+    { id: 'R7', t: 'Report the aggregated risk profile to the board' },
+    { id: 'R8', t: 'Independently assess EHR controls and report to the audit committee', assure: true }
+  ];
+  /* The IT steering committee's draft, as received. */
+  var DRAFT = {
+    R1: { BRD: 'A', CRO: 'A', CISO: 'C', RO: 'C', CO: 'I', IA: 'I' },
+    R2: { BRD: 'I', CRO: 'A/R', CISO: 'C', RO: 'C', CO: 'I', IA: 'I' },
+    R3: { BRD: 'I', CRO: 'A/R', CISO: 'C', RO: 'I', CO: 'I', IA: 'I' },
+    R4: { BRD: '', CRO: 'R', CISO: 'C', RO: 'A', CO: 'C', IA: 'I' },
+    R5: { BRD: 'I', CRO: 'C', CISO: 'A', RO: 'R', CO: 'I', IA: '' },
+    R6: { BRD: '', CRO: 'I', CISO: 'C', RO: 'I', CO: 'R', IA: 'A' },
+    R7: { BRD: 'I', CRO: 'R', CISO: 'C', RO: 'C', CO: '', IA: 'I' },
+    R8: { BRD: 'I', CRO: 'I', CISO: 'I', RO: 'I', CO: 'C', IA: 'A/R' }
+  };
+  /* Policy conflicts in the draft. R5 passes the structural checks but breaks policy 3.3. */
+  var POLICY = { R5: 'Only the risk owner may accept a residual risk (policy 3.3). The CISO advises; the CISO does not own business risk.' };
+
+  var BLOCKS = [
+    { g: 'A', nm: 'Scope: which risks the statement covers', opts: [
+      ['A1', 'For all risks of every kind, Larchmont Community Health has'],
+      ['A2', 'For risks that could compromise patient safety or the confidentiality of health records, Larchmont Community Health has'],
+      ['A3', 'For IT risks during the EHR migration only, Larchmont Community Health has']] },
+    { g: 'B', nm: 'Stance', opts: [
+      ['B1', 'a zero appetite,'],
+      ['B2', 'a low appetite,'],
+      ['B3', 'a moderate appetite,']] },
+    { g: 'C', nm: 'Where the board will take more risk', opts: [
+      ['C1', 'and a moderate appetite for technology risk taken on to expand telehealth access.'],
+      ['C2', 'and no appetite for any technology change until the migration is complete.'],
+      ['C3', 'and a high appetite for cost savings in security operations.']] },
+    { g: 'D', nm: 'Measurable limit', opts: [
+      ['D1', 'No residual IT risk rated above 9 on the enterprise 5x5 scale may be accepted without Quality and Risk Committee approval.'],
+      ['D2', 'Residual IT risks rated up to 16 on the enterprise 5x5 scale may be accepted by the CISO.'],
+      ['D3', 'All risks should be kept as low as reasonably possible.']] },
+    { g: 'E', nm: 'Approval and review', opts: [
+      ['E1', 'The Board Quality and Risk Committee approves this statement and reviews it at least annually and after any major change.'],
+      ['E2', 'The IT steering committee approves this statement and reviews it when the EHR migration ends.'],
+      ['E3', 'The Chief Risk Officer approves this statement and reviews it every three years.']] }
+  ];
+  var METRICS = [
+    { id: 'M1', nm: 'EHR unplanned downtime', unit: 'hours per month', cur: 4.2, curTxt: '4.2 hours (October)', basis: 'Availability objective 99.5% in a 30-day month (720 hours). Appetite: no more than half of the downtime the objective allows. Tolerance: the full downtime the objective allows.', app: 1.8, tol: 3.6, step: '0.1' },
+    { id: 'M2', nm: 'Patient records exposed in privacy incidents', unit: 'records per quarter', cur: 3, curTxt: '3 records (Q3)', basis: 'Appetite: 0 records. Tolerance: 10 records per quarter, the point at which the privacy officer must notify the committee.', app: 0, tol: 10, step: '1' },
+    { id: 'M3', nm: 'Critical vulnerabilities on EHR-connected systems open past the 14-day SLA', unit: 'open items', cur: 1, curTxt: '1 item (month end)', basis: 'Appetite: 2 overdue items. Tolerance: 5 overdue items.', app: 2, tol: 5, step: '1' },
+    { id: 'M4', nm: 'Phishing simulation click rate', unit: '% of workforce', cur: 9.4, curTxt: '9.4% (October campaign)', basis: 'Appetite: the health care industry median of 6%. Tolerance: 1.5 times the appetite.', app: 6, tol: 9, step: '0.1' }
+  ];
+  var LINES = [['gov', 'Governing body'], ['1', 'First line'], ['2', 'Second line'], ['3', 'Third line'], ['ext', 'External assurance']];
+
+  function isA(v) { return v === 'A' || v === 'A/R'; }
+  function isR(v) { return v === 'R' || v === 'A/R'; }
+  function rowIssues(act, row) {
+    var out = [], a = 0, r = 0;
+    ROLES.forEach(function (ro) { var v = row[ro.k] || ''; if (isA(v)) a++; if (isR(v)) r++; });
+    if (a !== 1) out.push(a === 0 ? 'No role is Accountable.' : a + ' roles are Accountable; there must be exactly one.');
+    if (r < 1) out.push('No role is Responsible for doing the work.');
+    var ia = row.IA || '';
+    if (!act.assure && (isA(ia) || isR(ia))) out.push('Internal audit holds ' + ia + ' on a management activity, which impairs its independence.');
+    return out;
+  }
+  var draftConf = ACTS.filter(function (a) { return rowIssues(a, DRAFT[a.id]).length || POLICY[a.id]; }).map(function (a) { return a.id; });
+  var beyond = METRICS.filter(function (m) { return m.cur > m.tol; }).map(function (m) { return m.id; });
+  window.B1DATA = {
+    ROLES: ROLES, ACTS: ACTS, DRAFT: DRAFT, BLOCKS: BLOCKS, METRICS: METRICS, LINES: LINES, rowIssues: rowIssues, isA: isA, isR: isR,
+    answers: {
+      conflicts: draftConf,
+      blocks: ['A2', 'B2', 'C1', 'D1', 'E1'],
+      m1tol: 3.6,
+      beyond: beyond,
+      second: ROLES.filter(function (r) { return r.line === '2'; }).map(function (r) { return r.k; })
+    }
+  };
+})();
+</script>
+
+<script>
+(function () {
+  var X = window.B1DATA;
+  function A(k) { return function () { return X.answers[k]; }; }
+  window.LAB = {
+    id: 'B1',
+    title: 'Risk Governance Charter',
+    accent: 'Governance Charter',
+    domain: 'Domain 1 (26%)',
+    time: '70 min',
+    level: 'Intermediate',
+    lessonHref: 'lesson02.html#s4',
+    lessonLabel: 'Lesson 2, Risk Appetite, Tolerance, and Capacity',
+    lede: 'Governance decides who decides. Untangle a draft RACI matrix for a cloud EHR migration, place each role in the right line, build the board’s appetite statement from its own guidance, and set tolerance limits that show which metrics need escalation today.',
+    workbenchTitle: 'Charter workbench',
+    kus: ['Cybersecurity Planning and Management (CPM)', 'Policy, Legal, Ethics, and Compliance (PLE)'],
+    ticket: {
+      number: 'ERM-2026-0412',
+      priority: 'High priority',
+      from: 'Theo Brannigan, Chief Risk Officer, Larchmont Community Health',
+      to: 'Risk practitioner, Enterprise Risk Office (you)',
+      subject: 'Risk governance charter for the cloud EHR program',
+      due: 'Before the Quality and Risk Committee meets on the 18th',
+      body: '<p>Larchmont Community Health runs eleven clinics and moves its electronic health record (EHR) to a cloud provider next spring. The board&rsquo;s Quality and Risk Committee wants a short risk governance charter for the program before it releases the next phase of funding.</p>' +
+        '<p>The IT steering committee sent me a draft RACI matrix. I am not comfortable with it. Please check it against our Enterprise Risk Policy, find every conflict, and fix the matrix. Then confirm which line each role sits in, assemble the appetite statement from the building blocks using the notes from the board retreat, and set the tolerance limits for the four program metrics on the metric sheet.</p>' +
+        '<p>Two of those metrics may already be outside tolerance. If so, I need to know before the committee meets, along with who has to act. Close with a short charter summary I can put in the committee pack.</p>'
+    },
+    howTo: 'Read the <b>Policy and guidance</b> tab first. In the <b>RACI matrix</b>, the draft is loaded; each cell is a menu. The live checks flag structural problems as you edit, but one conflict in the draft only shows up when you read the policy. In <b>Lines</b>, place each role. In <b>Appetite statement</b>, choose one block from each group and read the statement it builds. In <b>Tolerance limits</b>, enter the appetite and tolerance limits; the status of each metric updates live.',
+    workIntro: 'The matrix uses R (does the work), A (answers for the outcome), C (consulted), I (informed), and A/R when one role does both. Each activity needs exactly one A.',
+    checklist: [
+      { id: 'approver', type: 'choice', points: 10, short: 'Appetite approver', title: 'Who approves the risk appetite',
+        task: 'The draft gives two roles an A for approving the appetite statement. Under the policy, who approves it?',
+        options: ['The IT steering committee, because it oversees the EHR program', 'The Chief Risk Officer, because the Enterprise Risk Office writes the statement', 'The Board, through its Quality and Risk Committee; the CRO drafts and facilitates', 'The CISO, because most EHR risks are information security risks'],
+        answer: 2,
+        hint: 'Appetite is a governance decision, not a management one. Read policy 3.1 and the role of the governing body in the Three Lines Model.',
+        debrief: '<p><b>The board approves the appetite</b>, here through its Quality and Risk Committee (policy 3.1). The CRO and the Enterprise Risk Office draft the statement and facilitate the discussion, so the CRO is R, not A. A steering committee is a management body. It works within the appetite; it does not set it.</p><p>This is the most tested governance point in Domain 1: the risk practitioner advises and drafts, and the governing body decides how much risk the enterprise will take. See <a href="lesson01.html#s3">Lesson 1, Roles and Responsibilities</a>.</p>',
+        reviewNote: 'The board approves appetite; the CRO drafts and facilitates.' },
+      { id: 'conflicts', type: 'set', points: 15, short: 'Draft conflicts', title: 'Activities with a conflict in the draft',
+        task: 'Which activities in the steering committee&rsquo;s <b>draft</b> break a rule? Use the live checks and the policy. Enter the activity IDs. (Use <b>Reload the draft</b> if you have already edited the matrix.)',
+        label: 'Activity IDs', placeholder: 'e.g., R2, R3',
+        answer: A('conflicts'),
+        hint: 'The live checks catch three. The fourth passes every structural check: one A, one R, no audit role. Ask who is allowed to accept a residual risk.',
+        debrief: '<p>Four rows conflict. <b>R1</b> has two As (Board and CRO), so no one truly answers for the appetite. <b>R6</b> makes internal audit Accountable for a control that management operates, which impairs audit&rsquo;s independence. <b>R7</b> has no A, so nobody answers for what the board is told. <b>R5</b> is the subtle one: it is structurally clean, but it makes the CISO accountable for accepting a business risk. Policy 3.3 gives risk acceptance to the risk owner, the executive accountable for the objective.</p><p>A practitioner who relies only on the mechanical checks misses R5. Structure tells you whether a matrix is well formed; policy tells you whether it is right.</p>',
+        reviewNote: 'Check every RACI row for one A, at least one R, audit independence, and the policy on who accepts risk.' },
+      { id: 'fix6', type: 'choice', points: 10, short: 'Fix R6', title: 'The right fix for the access review row (R6)',
+        task: 'Internal audit is Accountable for the quarterly EHR user access review in the draft. What is the best correction?',
+        options: ['Keep internal audit as A and add the CISO as R, so a second line role does the work', 'Make the control owner A/R, change internal audit to I, and let audit test the review independently under R8', 'Make the CISO A, because access reviews are a security control', 'Remove the row, because audit already reviews access every year'],
+        answer: 1,
+        hint: 'Who operates the control, and who should later give assurance that it works? One role cannot do both.',
+        debrief: '<p>The <b>control owner</b> (the Manager of Clinical Applications) runs the review and answers for it, so the row becomes A/R for the control owner. Internal audit drops to I, and it tests the review as part of R8, where its independence is intact. If audit performed or owned the control, it would later be auditing its own work.</p><p>Making the CISO accountable moves ownership to the second line, which should set the standard and monitor, not run first-line controls. Removing the row loses a key control entirely.</p>',
+        reviewNote: 'First-line control owners run controls; internal audit tests them and does not own them.' },
+      { id: 'second', type: 'set', points: 10, short: 'Second line', title: 'Roles in the second line',
+        task: 'Place each role in the <b>Lines</b> tab. Which roles sit in the <b>second line</b>? Enter the role codes (BRD, CRO, CISO, RO, CO, IA).',
+        label: 'Role codes', placeholder: 'e.g., RO',
+        answer: A('second'),
+        hint: 'The second line provides expertise, frameworks, monitoring, and challenge. It does not own the first line&rsquo;s risks.',
+        debrief: '<p>The <b>CRO and the Enterprise Risk Office</b> and the <b>CISO</b> are second line: they set frameworks and standards, monitor, and challenge the first line&rsquo;s ratings. The risk owner (EHR program director) and the control owner are <b>first line</b>, because they own and manage the risk and run the controls. Internal audit is the <b>third line</b>, reporting to the audit committee. The board is the governing body, above the lines.</p><p>The CISO is the role most often misplaced. A CISO who runs security operations may hold some first-line duties, but at Larchmont the CISO sets standards and advises, which is a second-line role. See <a href="lesson02.html#s2">Lesson 2, the Three Lines Model</a>.</p>',
+        reviewNote: 'Second line: risk management, security, compliance, privacy. First line: owners. Third line: internal audit.' },
+      { id: 'blocks', type: 'set', points: 15, short: 'Appetite blocks', title: 'Building blocks for the appetite statement',
+        task: 'Build the appetite statement in the <b>Appetite statement</b> tab from the board retreat notes. Enter the five block IDs you chose.',
+        label: 'Block IDs', placeholder: 'e.g., A1, B1, C1, D1, E1',
+        answer: A('blocks'),
+        hint: 'A good statement names the risks it covers, takes a realistic stance, says where the board will take more risk, gives a measurable limit, and names who approves and how often it is reviewed. Zero appetite is rarely realistic for a clinic network that must operate.',
+        debrief: '<p>The statement is <b>A2, B2, C1, D1, E1</b>: &ldquo;For risks that could compromise patient safety or the confidentiality of health records, Larchmont Community Health has a low appetite, and a moderate appetite for technology risk taken on to expand telehealth access. No residual IT risk rated above 9 on the enterprise 5x5 scale may be accepted without Quality and Risk Committee approval. The Board Quality and Risk Committee approves this statement and reviews it at least annually and after any major change.&rdquo;</p><p>Each wrong block fails a test. A1 is too broad to guide a decision. B1 (zero) is not achievable for a care provider and invites hidden risk. C2 contradicts the growth strategy, and C3 trades away security for savings the board never endorsed. D2 hands acceptance of high risks to the CISO, and D3 is not measurable. E2 and E3 put approval with management, not the board.</p>',
+        reviewNote: 'An appetite statement covers scope, stance, balance, a measurable limit, and board approval with a review cycle.' },
+      { id: 'm1tol', type: 'number', points: 10, short: 'M1 tolerance', title: 'Tolerance limit for EHR unplanned downtime',
+        task: 'Using the metric sheet, what is the tolerance limit for <b>M1, EHR unplanned downtime</b>, in hours per month?',
+        answer: A('m1tol'), tol: 0.05, unit: 'hours per month',
+        hint: 'A 99.5% availability objective allows 0.5% of a 720-hour month as downtime.',
+        debrief: '<p>A 99.5% objective allows 0.5% of 720 hours, which is <b>3.6 hours per month</b>. That is the tolerance limit. The appetite limit is half of it, 1.8 hours. October&rsquo;s 4.2 hours is beyond tolerance.</p><p>Tolerance is tied to a specific objective and stated in that objective&rsquo;s units. That is what lets the program director act on it without asking the board each month.</p>',
+        reviewNote: 'Tolerance is the acceptable variation from a specific objective; derive it from the objective.' },
+      { id: 'beyond', type: 'set', points: 10, short: 'Beyond tolerance', title: 'Metrics beyond tolerance today',
+        task: 'With the correct limits entered, which metrics are <b>beyond tolerance</b> right now? Enter the metric IDs.',
+        label: 'Metric IDs', placeholder: 'e.g., M2',
+        answer: A('beyond'),
+        hint: 'Compute M4&rsquo;s tolerance from its basis first. Above appetite but within tolerance is amber, not red.',
+        debrief: '<p><b>M1 and M4</b> are beyond tolerance. M1 is 4.2 hours against a 3.6-hour limit. M4 is a 9.4% click rate against a 9% limit (1.5 times the 6% appetite). Under policy 3.7, both go to the Quality and Risk Committee, and each risk owner brings a response plan with a date.</p><p>M2 (3 records) is above its zero appetite but within the 10-record tolerance, so it is amber: the privacy officer as owner needs an action plan, but it is not an escalation. M3 is within appetite. Escalating everything above appetite would flood the committee and blur the line between appetite and tolerance.</p>',
+        reviewNote: 'Beyond tolerance escalates; above appetite but within tolerance needs an owner action plan.' },
+      { id: 'memo', type: 'text', points: 20, short: 'Charter summary', title: 'Write the charter summary for the committee pack', reportTitle: 'Risk governance charter summary',
+        task: 'Write the summary Theo will put in the Quality and Risk Committee pack. Use the activity, role, block, and metric IDs.',
+        fields: [
+          { key: 'rights', label: 'Decision rights: who approves, owns, accepts, and assures', min: 40, placeholder: 'Board, CRO, risk owner, control owner, internal audit.' },
+          { key: 'raci', label: 'Conflicts found in the draft and how you fixed them', min: 50, placeholder: 'Row IDs, the rule each broke, and the correction.' },
+          { key: 'limits', label: 'Appetite statement and tolerance limits', min: 40, placeholder: 'The statement in brief and the four limits.' },
+          { key: 'esc', label: 'Breaches and escalation', min: 40, placeholder: 'Which metrics are beyond tolerance, who must act, and by when.' }
+        ],
+        hint: 'Lead with what the committee must decide. It should see in a minute who owns what and which two items need its attention now.',
+        debrief: '<p><b>Model summary.</b> <b>Decision rights:</b> the Board Quality and Risk Committee approves the appetite and any acceptance above it; the CRO drafts the appetite, sets tolerance limits, maintains the framework, and reports the aggregated profile; the EHR program director is the risk owner and accepts residual risk within appetite; the Manager of Clinical Applications owns and runs the access review; internal audit gives independent assurance to the audit committee. <b>Draft conflicts:</b> R1 had two As (the CRO becomes R); R5 gave acceptance to the CISO (moved to the risk owner, CISO consulted); R6 made audit accountable for a management control (control owner A/R, audit informed and testing under R8); R7 had no A (the CRO becomes A/R). <b>Limits:</b> appetite statement A2, B2, C1, D1, E1; M1 1.8 and 3.6 hours, M2 0 and 10 records, M3 2 and 5 items, M4 6% and 9%. <b>Escalation:</b> M1 (4.2 hours) and M4 (9.4%) are beyond tolerance and go to the committee on the 18th, with response plans from the EHR program director and the CISO as owner of the awareness program. M2 is amber and needs a privacy action plan.</p>',
+        reviewNote: 'A charter states decision rights, the limits, and what goes to the board now.' }
+    ],
+
+    workbench: function (root, api) {
+      var esc = api.esc;
+      root.innerHTML = '<div class="lb-tool"><div class="lb-tabs" role="tablist" aria-label="Workbench tools">' +
+        '<button role="tab" id="tb-pg" aria-controls="pn-pg" aria-selected="true">Policy and guidance</button>' +
+        '<button role="tab" id="tb-rc" aria-controls="pn-rc" aria-selected="false" tabindex="-1">RACI matrix</button>' +
+        '<button role="tab" id="tb-ln" aria-controls="pn-ln" aria-selected="false" tabindex="-1">Lines</button>' +
+        '<button role="tab" id="tb-ap" aria-controls="pn-ap" aria-selected="false" tabindex="-1">Appetite statement</button>' +
+        '<button role="tab" id="tb-tl" aria-controls="pn-tl" aria-selected="false" tabindex="-1">Tolerance limits</button></div>' +
+        '<div class="lb-panel" role="tabpanel" id="pn-pg" aria-labelledby="tb-pg">' + DOCS() + '</div>' +
+        '<div class="lb-panel" role="tabpanel" id="pn-rc" aria-labelledby="tb-rc" hidden></div>' +
+        '<div class="lb-panel" role="tabpanel" id="pn-ln" aria-labelledby="tb-ln" hidden></div>' +
+        '<div class="lb-panel" role="tabpanel" id="pn-ap" aria-labelledby="tb-ap" hidden></div>' +
+        '<div class="lb-panel" role="tabpanel" id="pn-tl" aria-labelledby="tb-tl" hidden></div></div>';
+      var tabs = [].slice.call(root.querySelectorAll('[role=tab]'));
+      function sel(t) { tabs.forEach(function (x) { var on = x === t; x.setAttribute('aria-selected', on); x.tabIndex = on ? 0 : -1; document.getElementById(x.getAttribute('aria-controls')).hidden = !on; }); api.note('tab', t.id); }
+      tabs.forEach(function (t, i) { t.addEventListener('click', function () { sel(t); }); t.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { var n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length]; sel(n); n.focus(); } }); });
+      if (api.note('tab')) { var tt = document.getElementById(api.note('tab')); if (tt) sel(tt); }
+      function refocus(id) { if (!id) return; var f = document.getElementById(id); if (f) f.focus(); }
+
+      /* ---------- RACI matrix ---------- */
+      function copyDraft() { return JSON.parse(JSON.stringify(X.DRAFT)); }
+      function raci() { var m = api.note('raci'); if (!m) { m = copyDraft(); api.note('raci', m); } return m; }
+      var VALS = ['', 'R', 'A', 'C', 'I', 'A/R'];
+      function drawRC(focusId) {
+        var m = raci(), pn = document.getElementById('pn-rc');
+        var oneA = 0, hasR = 0, ia = 0;
+        var rows = X.ACTS.map(function (a) {
+          var row = m[a.id] || {}, iss = X.rowIssues(a, row), cnt = 0, rr = 0;
+          X.ROLES.forEach(function (r) { if (X.isA(row[r.k])) cnt++; if (X.isR(row[r.k])) rr++; });
+          if (cnt === 1) oneA++; if (rr) hasR++;
+          if (iss.some(function (s) { return s.indexOf('Internal audit') === 0; })) ia++;
+          return '<tr><th scope="row"><span class="id">' + a.id + '</span>' + esc(a.t) + '</th>' + X.ROLES.map(function (r) {
+            var v = row[r.k] || '', id = 'b1-c-' + a.id + '-' + r.k;
+            return '<td><select id="' + id + '" class="' + (X.isA(v) ? 'vA' : X.isR(v) ? 'vR' : '') + '" data-a="' + a.id + '" data-r="' + r.k + '" aria-label="' + esc(a.id + ' ' + a.t + ': ' + r.nm) + '">' +
+              VALS.map(function (x) { return '<option value="' + x + '"' + (x === v ? ' selected' : '') + '>' + (x || '&middot;') + '</option>'; }).join('') + '</select></td>';
+          }).join('') + '<td class="chk">' + (iss.length ? iss.map(function (s) { return '<span class="b1-bad">&#10007;</span> ' + esc(s); }).join('<br>') : '<span class="b1-ok">&#10003; Passes the live checks</span>') + '</td></tr>';
+        }).join('');
+        var allOk = oneA === 8 && hasR === 8 && ia === 0;
+        pn.innerHTML = '<p class="b1-key">The draft from the IT steering committee is loaded. <b>Live checks</b> test each row for exactly one A, at least one R, and internal audit independence. They test structure only, so also read each row against the policy.</p>' +
+          '<div class="b1-tiles"><div class="b1-tile ' + (oneA === 8 ? 'good' : 'bad') + '"><div class="k">Rows with exactly one A</div><div class="v">' + oneA + ' of 8</div></div>' +
+          '<div class="b1-tile ' + (hasR === 8 ? 'good' : 'bad') + '"><div class="k">Rows with an R</div><div class="v">' + hasR + ' of 8</div></div>' +
+          '<div class="b1-tile ' + (ia ? 'bad' : 'good') + '"><div class="k">Audit independence issues</div><div class="v">' + ia + '</div></div>' +
+          '<div class="b1-tile"><div class="k">Matrix status</div><div class="v" style="font-size:.9rem">' + (allOk ? 'Structure passes' : 'Needs work') + '</div></div></div>' +
+          '<div class="table-wrap" data-popout="RACI matrix"><table class="b1-raci"><caption class="sr-only">EHR program RACI matrix with live checks</caption><thead><tr><th scope="col">Activity</th>' +
+          X.ROLES.map(function (r) { return '<th scope="col">' + r.k + '<small>' + esc(r.nm) + '</small></th>'; }).join('') + '<th scope="col">Live checks</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
+          '<button type="button" class="b1-btn" id="b1-reload">Reload the draft</button><button type="button" class="b1-btn" id="b1-clear">Clear all cells</button>' +
+          '<p class="b1-sum">Role codes: ' + X.ROLES.map(function (r) { return '<b>' + r.k + '</b> ' + esc(r.who); }).join('; ') + '.</p>';
+        pn.querySelectorAll('select').forEach(function (s) { s.addEventListener('change', function () { var mm = JSON.parse(JSON.stringify(raci())); mm[s.dataset.a][s.dataset.r] = s.value; api.note('raci', mm); drawRC(s.id); }); });
+        pn.querySelector('#b1-reload').addEventListener('click', function () { api.note('raci', copyDraft()); drawRC('b1-reload'); });
+        pn.querySelector('#b1-clear').addEventListener('click', function () { var mm = {}; X.ACTS.forEach(function (a) { mm[a.id] = {}; }); api.note('raci', mm); drawRC('b1-clear'); });
+        refocus(focusId);
+      }
+      drawRC();
+
+      /* ---------- Lines ---------- */
+      function drawLN(focusId) {
+        var L = api.note('lines') || {}, pn = document.getElementById('pn-ln');
+        pn.innerHTML = '<p class="b1-key">Place each role in the IIA Three Lines Model. The lanes update as you choose.</p><div class="b1-rolesel">' +
+          X.ROLES.map(function (r) { return '<div class="px-field"><label for="b1-l-' + r.k + '"><b>' + r.k + '</b> ' + esc(r.nm) + ' (' + esc(r.who) + ')</label><select id="b1-l-' + r.k + '" data-r="' + r.k + '"><option value="">Choose a line</option>' +
+            X.LINES.map(function (l) { return '<option value="' + l[0] + '"' + (L[r.k] === l[0] ? ' selected' : '') + '>' + l[1] + '</option>'; }).join('') + '</select></div>'; }).join('') + '</div>' +
+          '<div class="b1-lines" data-popout="Three lines placement">' + X.LINES.map(function (l) {
+            var inl = X.ROLES.filter(function (r) { return L[r.k] === l[0]; });
+            return '<div class="b1-lane"><h5>' + l[1] + '</h5>' + (inl.length ? inl.map(function (r) { return '<span class="b1-chip">' + r.k + '<small>' + esc(r.nm) + '</small></span>'; }).join('') : '<span class="b1-note">No roles placed</span>') + '</div>';
+          }).join('') + '</div>' +
+          '<p class="b1-sum">Second line, as placed: <b>' + (X.ROLES.filter(function (r) { return L[r.k] === '2'; }).map(function (r) { return r.k; }).join(', ') || 'none yet') + '</b>. Unplaced: ' + (X.ROLES.filter(function (r) { return !L[r.k]; }).map(function (r) { return r.k; }).join(', ') || 'none') + '.</p>';
+        pn.querySelectorAll('select').forEach(function (s) { s.addEventListener('change', function () { var o = Object.assign({}, api.note('lines') || {}); if (s.value) o[s.dataset.r] = s.value; else delete o[s.dataset.r]; api.note('lines', o); drawLN(s.id); }); });
+        refocus(focusId);
+      }
+      drawLN();
+
+      /* ---------- Appetite statement ---------- */
+      function drawAP(focusId) {
+        var B = api.note('blk') || {}, pn = document.getElementById('pn-ap');
+        var text = X.BLOCKS.map(function (g) { var c = B[g.g]; var o = c && g.opts.filter(function (x) { return x[0] === c; })[0]; return o ? esc(o[1]) : '<span class="gap">[' + esc(g.nm.split(':')[0].toLowerCase()) + ']</span>'; }).join(' ');
+        var chosen = X.BLOCKS.map(function (g) { return B[g.g]; }).filter(Boolean);
+        var crit = [['A', 'Names the risks it covers'], ['B', 'States a stance'], ['C', 'Says where more risk is acceptable'], ['D', 'Gives a limit someone can apply'], ['E', 'Names the approver and a review cycle']];
+        pn.innerHTML = '<div class="b1-row"><div class="b1-col wide b1-blocks">' + X.BLOCKS.map(function (g) {
+            return '<fieldset><legend>' + g.g + '. ' + esc(g.nm) + '</legend>' + g.opts.map(function (o) {
+              return '<label><input type="radio" name="b1-blk-' + g.g + '" id="b1-b-' + o[0] + '" value="' + o[0] + '"' + (B[g.g] === o[0] ? ' checked' : '') + '><span><span class="bid">' + o[0] + '</span> ' + esc(o[1]) + '</span></label>';
+            }).join('') + '</fieldset>';
+          }).join('') + '</div>' +
+          '<div class="b1-col"><div class="b1-box" data-popout="Appetite statement draft"><h4>Statement as built</h4><p class="b1-stmt">' + text + '</p>' +
+          '<p class="b1-sum">Blocks chosen: <b>' + (chosen.join(', ') || 'none yet') + '</b></p>' +
+          '<h4 style="margin-top:.8rem">Completeness</h4><ul class="b1-crit">' + crit.map(function (c) { return '<li>' + (B[c[0]] ? '<span class="b1-ok">&#10003;</span> ' : '<span class="b1-bad">&#9675;</span> ') + c[1] + '</li>'; }).join('') + '</ul>' +
+          '<p class="b1-note">Completeness shows that each part is present. Whether each part is right depends on the board retreat notes.</p></div></div></div>';
+        pn.querySelectorAll('input[type=radio]').forEach(function (r) { r.addEventListener('change', function () { var o = Object.assign({}, api.note('blk') || {}); o[r.name.slice(-1)] = r.value; api.note('blk', o); drawAP(r.id); }); });
+        refocus(focusId);
+      }
+      drawAP();
+
+      /* ---------- Tolerance limits ---------- */
+      function drawTL(focusId) {
+        var T = api.note('tl') || {}, pn = document.getElementById('pn-tl');
+        var cnt = { g: 0, a: 0, r: 0, n: 0 };
+        var rows = X.METRICS.map(function (m) {
+          var v = T[m.id] || {}, ap = v.app === '' || v.app == null ? null : +v.app, to = v.tol === '' || v.tol == null ? null : +v.tol;
+          var st = 'n', msg = 'Enter both limits', warn = '';
+          if (ap != null && to != null && !isNaN(ap) && !isNaN(to)) {
+            if (to < ap) { warn = 'Tolerance cannot be below appetite.'; }
+            else if (m.cur <= ap) { st = 'g'; msg = 'Within appetite'; }
+            else if (m.cur <= to) { st = 'a'; msg = 'Above appetite, within tolerance: owner action plan'; }
+            else { st = 'r'; msg = 'Beyond tolerance: escalate to the committee'; }
+          }
+          cnt[st]++;
+          var max = Math.max(m.cur, to || 0, ap || 0) * 1.25 || 1;
+          var gauge = st === 'n' ? '' : '<div class="b1-gauge" aria-hidden="true"><i class="ga" style="width:' + (100 * ap / max).toFixed(1) + '%"></i><i class="ta" style="left:' + (100 * ap / max).toFixed(1) + '%;width:' + (100 * (to - ap) / max).toFixed(1) + '%"></i><i class="mk" style="left:' + Math.min(99, 100 * m.cur / max).toFixed(1) + '%"></i></div>';
+          return '<tr><th scope="row"><b>' + m.id + '</b> ' + esc(m.nm) + '<span class="b1-note">' + esc(m.unit) + '</span></th>' +
+            '<td>' + esc(m.curTxt) + '</td>' +
+            '<td><label class="sr-only" for="b1-ap-' + m.id + '">' + m.id + ' appetite limit</label><input type="number" step="' + m.step + '" min="0" id="b1-ap-' + m.id + '" data-m="' + m.id + '" data-k="app" value="' + esc(v.app == null ? '' : v.app) + '"></td>' +
+            '<td><label class="sr-only" for="b1-to-' + m.id + '">' + m.id + ' tolerance limit</label><input type="number" step="' + m.step + '" min="0" id="b1-to-' + m.id + '" data-m="' + m.id + '" data-k="tol" value="' + esc(v.tol == null ? '' : v.tol) + '"></td>' +
+            '<td><span class="b1-rag ' + st + '">' + (st === 'g' ? 'Green' : st === 'a' ? 'Amber' : st === 'r' ? 'Red' : 'Not set') + '</span><span class="b1-note">' + esc(warn || msg) + '</span>' + gauge + '</td></tr>';
+        }).join('');
+        pn.innerHTML = '<p class="b1-key">Enter the <b>appetite limit</b> (green up to this value) and the <b>tolerance limit</b> (amber up to this value; red above it) for each metric, from the metric sheet in the Policy and guidance tab. Higher values are worse for all four metrics.</p>' +
+          '<div class="b1-tiles"><div class="b1-tile"><div class="k">Green</div><div class="v">' + cnt.g + '</div></div><div class="b1-tile"><div class="k">Amber</div><div class="v">' + cnt.a + '</div></div><div class="b1-tile ' + (cnt.r ? 'bad' : '') + '"><div class="k">Red, beyond tolerance</div><div class="v">' + cnt.r + '</div></div><div class="b1-tile"><div class="k">Not set</div><div class="v">' + cnt.n + '</div></div></div>' +
+          '<div class="table-wrap" data-popout="Tolerance dashboard"><table class="b1-tol"><caption class="sr-only">Tolerance limits and live status for four EHR program metrics</caption><thead><tr><th scope="col">Metric</th><th scope="col">Current value</th><th scope="col">Appetite limit</th><th scope="col">Tolerance limit</th><th scope="col">Status</th></tr></thead><tbody>' + rows + '</tbody></table></div>';
+        pn.querySelectorAll('input').forEach(function (inp) {
+          inp.addEventListener('change', function () { var o = JSON.parse(JSON.stringify(api.note('tl') || {})); o[inp.dataset.m] = o[inp.dataset.m] || {}; o[inp.dataset.m][inp.dataset.k] = inp.value; api.note('tl', o); drawTL(inp.id); });
+        });
+        refocus(focusId);
+      }
+      drawTL();
+    },
+    onReset: function () { }
+  };
+
+  function DOCS() {
+    var X = window.B1DATA;
+    return '<div class="lb-doc"><h4>Larchmont Enterprise Risk Policy, section 3 (excerpt)</h4><ul>' +
+      '<li><b>3.1</b> The Board, through its Quality and Risk Committee, approves the risk appetite statement at least annually and after any major change in strategy. The Chief Risk Officer drafts the statement and facilitates the discussion.</li>' +
+      '<li><b>3.2</b> Senior management, led by the CRO, sets tolerance limits for key metrics within the approved appetite.</li>' +
+      '<li><b>3.3</b> The risk owner is the executive accountable for the business objective at risk. Only the risk owner may accept a residual risk within appetite. Acceptance of a risk above appetite needs Quality and Risk Committee approval.</li>' +
+      '<li><b>3.4</b> Control owners operate their controls and answer for how well they perform. The CISO sets security standards, monitors, and advises. The CISO does not own business risks.</li>' +
+      '<li><b>3.5</b> Internal audit gives independent assurance and reports functionally to the audit committee. It does not perform, own, or approve management activities.</li>' +
+      '<li><b>3.6</b> Every activity in a RACI matrix has exactly one Accountable role and at least one Responsible role.</li>' +
+      '<li><b>3.7</b> A metric beyond its tolerance limit is reported to the Quality and Risk Committee at its next meeting, with a response plan and date from the risk owner. A metric above appetite but within tolerance needs an action plan from the risk owner.</li></ul></div>' +
+      '<div class="lb-doc"><h4>Board retreat notes, Quality and Risk Committee (summary)</h4><ul>' +
+      '<li>&ldquo;Patient safety and the privacy of health records are where we take the least risk. We are not naive enough to call it zero; clinics have to run.&rdquo;</li>' +
+      '<li>&ldquo;Telehealth growth is the strategy. We will accept more technology risk to widen access, within reason.&rdquo;</li>' +
+      '<li>&ldquo;Keep the 5x5 scale. Anything above 9 after controls comes to this committee before anyone accepts it.&rdquo;</li>' +
+      '<li>&ldquo;This committee owns the statement. Bring it back every year, and sooner if the strategy changes.&rdquo;</li>' +
+      '<li>Capacity, noted by the CFO: reserves could absorb a one-time loss of about $6 million; any outage that stops patient care across more than three clinics for a day would breach the state license conditions.</li></ul></div>' +
+      '<div class="lb-doc"><h4>Metric sheet: EHR program metrics</h4><div class="table-wrap"><table class="data b1-doc"><thead><tr><th scope="col">Metric</th><th scope="col">Basis for the limits</th><th scope="col">Current</th><th scope="col">Owner</th></tr></thead><tbody>' +
+      X.METRICS.map(function (m, i) { return '<tr><th scope="row">' + m.id + ' ' + m.nm + ' (' + m.unit + ')</th><td>' + m.basis + '</td><td>' + m.curTxt + '</td><td>' + ['EHR program director (risk owner)', 'Privacy officer', 'Manager, Clinical Applications', 'CISO (awareness program)'][i] + '</td></tr>'; }).join('') +
+      '</tbody></table></div></div>' +
+      '<div class="lb-doc"><h4>Who is who</h4><div class="table-wrap"><table class="data b1-doc"><thead><tr><th scope="col">Code</th><th scope="col">Role</th><th scope="col">Person</th></tr></thead><tbody>' +
+      X.ROLES.map(function (r) { return '<tr><th scope="row">' + r.k + '</th><td>' + r.nm + ' (' + r.sub + ')</td><td>' + r.who + '</td></tr>'; }).join('') +
+      '</tbody></table></div></div>';
+  }
+})();
+</script>
+<script src="evidence.js"></script>
+<script src="lab.js"></script>
+</body>
+</html>
