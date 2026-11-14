@@ -195,6 +195,8 @@
   .resource-card .card-footer { border-top: 1px solid var(--border); padding-top: 0.65rem; margin-top: auto; }
 
   /* SCHEDULE */
+  .day-lesson.day-build { border-left-style: dashed; background: var(--card-bg); }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } html { scroll-behavior: auto !important; } }
   .schedule-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; grid-auto-rows: 1fr; }
   .day-col { background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; }
   .day-header { background: var(--navy); color: var(--white); font-family: 'Arial Narrow', Arial, sans-serif; font-weight: 900; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.65rem 1rem; text-align: center; }
@@ -312,6 +314,7 @@
       <li><a href="#schedule">Schedule</a></li>
       <li><a href="#domains">Domains</a></li>
       <li><a href="#exam-prep">Exam Prep</a></li>
+      <li><a href="teaching-kit.html">Teaching Kit</a></li>
       <li><a href="#faculty-tools">Faculty Tools</a></li>
       <li><a href="#about">About</a></li>
     </ul>
@@ -322,7 +325,7 @@
 <section class="hero" aria-label="Workshop introduction">
   <p class="hero-eyebrow">ISACA CRISC &bull; Current Exam Content Outline &bull; Faculty Development</p>
   <h1>Think Like a <span>Risk Practitioner</span> in Five Days</h1>
-  <p class="hero-subtitle">A hands-on workshop for faculty preparing for the CRISC exam and teaching IT risk management. Ten lessons cover governance, risk assessment, risk response and reporting, and technology and security. Each lesson has an interactive model, eMates, a faculty teaching segment, and a scored knowledge check.</p>
+  <p class="hero-subtitle">A hands-on workshop for faculty preparing for the CRISC exam and teaching IT risk management. Ten lessons cover governance, risk assessment, risk response and reporting, and technology and security. Each lesson has an interactive model, eMates, a faculty teaching segment, and a self-check quiz. Each afternoon ends with a Teaching Kit build block, so you leave with assignments for your own courses.</p>
   <a href="#lessons" class="hero-cta">Begin the Workshop &#9660;</a>
 </section>
 
@@ -349,7 +352,7 @@
     <p class="section-eyebrow">Course Content</p>
     <h2 class="section-title" id="lessons-heading">Ten Lessons. Four Domains.</h2>
     <div class="rule"></div>
-    <p class="section-desc">Each lesson covers one part of the current CRISC Exam Content Outline. Every lesson has objectives, vocabulary flashcards, numbered content with exam tips, an interactive model, eMates, a faculty teaching segment, and a scored knowledge check. Begin with Lesson 0 for the exam and the mindset.</p>
+    <p class="section-desc">Each lesson covers one part of the current CRISC Exam Content Outline. Every lesson has objectives, vocabulary flashcards, numbered content with exam tips, an interactive model, eMates, a faculty teaching segment with a model assignment for your Teaching Kit, and a self-check quiz. Begin with Lesson 0 for the exam and the mindset.</p>
 
     <div class="card-grid">
 
@@ -443,20 +446,20 @@
     <p class="section-eyebrow">Practice</p>
     <h2 class="section-title">Practice Every Lesson</h2>
     <div class="rule"></div>
-    <p class="section-desc">Read a lesson, then practice it. The CRISC Practices build risk practitioner judgment with self-checking activities. The CRISC Risk Lab puts you in the practitioner&rsquo;s seat with browser-based tools. Every item ends with a report you can print or save as a PDF.</p>
+    <p class="section-desc">Read a lesson, then practice it. The CRISC Practices build risk practitioner judgment with self-checking activities. The CRISC Risk Lab puts you in the practitioner&rsquo;s seat with browser-based tools. Every item ends with a practice record you can print or save as a PDF, and every item is a model you can reuse with your own students.</p>
     <div class="resource-grid" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr))">
       <article class="resource-card">
         <span class="rc-type">Concept Practice</span>
         <div class="rc-icon-title"><span class="rc-icon">&#127919;</span><div class="rc-title">CRISC Practices</div></div>
-        <p class="rc-desc">Nine self-checking activities, at least two for every domain. Separate the practitioner&rsquo;s role from the owner&rsquo;s, sort risks, controls, and metrics, calculate exposure and control value, order response and testing steps, and watch a mastery meter track each concept. Every activity ends with a summary report you can print or save as a PDF.</p>
-        <p class="rc-covers"><strong>Covers:</strong> All Four Domains &middot; Practitioner Judgment &middot; Concept Mastery &middot; PDF Reports</p>
+        <p class="rc-desc">Nine self-checking activities, at least two for every domain. Separate the practitioner&rsquo;s role from the owner&rsquo;s, sort risks, controls, and metrics, calculate exposure and control value, order response and testing steps, and watch a mastery meter track each concept. Every activity ends with a practice record you can print or save as a PDF.</p>
+        <p class="rc-covers"><strong>Covers:</strong> All Four Domains &middot; Practitioner Judgment &middot; Concept Self-Check &middot; Practice Records</p>
         <div class="card-footer"><a href="practices.html" class="launch-btn">Open Practices <span class="arrow">&#8594;</span></a></div>
       </article>
       <article class="resource-card">
         <span class="rc-type">Hands-On Lab</span>
         <div class="rc-icon-title"><span class="rc-icon">&#128300;</span><div class="rc-title">CRISC Risk Lab</div></div>
-        <p class="rc-desc">Eight browser-based labs in the risk practitioner&rsquo;s seat: a governance charter and RACI, a risk register with a live heat map, a Monte Carlo analysis, a third-party review, control testing workpapers, a KRI dashboard and board report, an AI use-case review, and a ransomware tabletop with team mode. Each lab is scored out of 100 with a printable report.</p>
-        <p class="rc-covers"><strong>Covers:</strong> CAE Knowledge Units &middot; Monte Carlo &middot; Team Mode &middot; Graded Lab Reports</p>
+        <p class="rc-desc">Eight browser-based labs in the risk practitioner&rsquo;s seat: a governance charter and RACI, a risk register with a live heat map, a Monte Carlo analysis, a third-party review, control testing workpapers, a KRI dashboard and board report, an AI use-case review, and a ransomware tabletop with team mode. Each lab gives feedback and a practitioner&rsquo;s debrief on every step, and ends with a printable practice record.</p>
+        <p class="rc-covers"><strong>Covers:</strong> CAE Knowledge Units &middot; Monte Carlo &middot; Team Mode &middot; Practice Records</p>
         <div class="card-footer"><a href="labs.html" class="launch-btn">Open the Risk Lab <span class="arrow">&#8594;</span></a></div>
       </article>
     </div>
@@ -469,7 +472,7 @@
     <p class="section-eyebrow">Workshop Schedule</p>
     <h2 class="section-title">Five Days to Exam-Ready and Teaching-Ready</h2>
     <div class="rule"></div>
-    <p class="section-desc">Each day runs 9:00 to 5:00 with two lessons. Mornings build concepts and exam judgment. Afternoons apply them through interactives, practice, and faculty design discussions about how to teach and assess each domain.</p>
+    <p class="section-desc">Each day runs 9:00 to 5:00 with two lessons. Mornings build concepts and exam judgment. Afternoons apply them through interactives and practice. Each day ends with a Teaching Kit build block: you adapt one of the day&rsquo;s model assignments for a course you teach, then trade drafts with a partner. By Day 5 you have at least three assignments with rubrics and a curriculum map. <a href="teaching-kit.html">Open your Teaching Kit &#8594;</a></p>
     <div class="schedule-grid">
       <div class="day-col">
         <div class="day-header">Day 1</div>
@@ -478,6 +481,7 @@
         <div class="day-lessons">
           <a class="day-lesson" href="lesson00.html"><span class="day-lesson-num">Lesson 0, 9:00</span><span class="day-lesson-name">Orientation</span><span class="day-lesson-time">&#128336; ~1.5 hrs</span></a>
           <a class="day-lesson" href="lesson01.html"><span class="day-lesson-num">Lesson 1, 10:30</span><span class="day-lesson-name">Organizational Governance</span><span class="day-lesson-time">&#128336; ~5 hrs &bull; D1</span></a>
+          <a class="day-lesson day-build" href="teaching-kit.html#day1"><span class="day-lesson-num">End of day</span><span class="day-lesson-name">Teaching Kit build block and peer swap</span><span class="day-lesson-time">&#128336; 45 to 60 min</span></a>
         </div>
       </div>
       <div class="day-col">
@@ -487,6 +491,7 @@
         <div class="day-lessons">
           <a class="day-lesson" href="lesson02.html"><span class="day-lesson-num">Lesson 2, 9:00</span><span class="day-lesson-name">Risk Governance</span><span class="day-lesson-time">&#128336; ~3 hrs &bull; D1</span></a>
           <a class="day-lesson" href="lesson03.html"><span class="day-lesson-num">Lesson 3, 1:00</span><span class="day-lesson-name">Risk Identification</span><span class="day-lesson-time">&#128336; ~3.5 hrs &bull; D2</span></a>
+          <a class="day-lesson day-build" href="teaching-kit.html#day2"><span class="day-lesson-num">End of day</span><span class="day-lesson-name">Teaching Kit build block and peer swap</span><span class="day-lesson-time">&#128336; 45 to 60 min</span></a>
         </div>
       </div>
       <div class="day-col">
@@ -496,6 +501,7 @@
         <div class="day-lessons">
           <a class="day-lesson" href="lesson04.html"><span class="day-lesson-num">Lesson 4, 9:00</span><span class="day-lesson-name">Risk Analysis</span><span class="day-lesson-time">&#128336; ~3.5 hrs &bull; D2</span></a>
           <a class="day-lesson" href="lesson05.html"><span class="day-lesson-num">Lesson 5, 1:00</span><span class="day-lesson-name">Risk Response</span><span class="day-lesson-time">&#128336; ~3 hrs &bull; D3</span></a>
+          <a class="day-lesson day-build" href="teaching-kit.html#day3"><span class="day-lesson-num">End of day</span><span class="day-lesson-name">Teaching Kit build block and peer swap</span><span class="day-lesson-time">&#128336; 45 to 60 min</span></a>
         </div>
       </div>
       <div class="day-col">
@@ -505,6 +511,7 @@
         <div class="day-lessons">
           <a class="day-lesson" href="lesson06.html"><span class="day-lesson-num">Lesson 6, 9:00</span><span class="day-lesson-name">Control Design and Implementation</span><span class="day-lesson-time">&#128336; ~3.5 hrs &bull; D3</span></a>
           <a class="day-lesson" href="lesson07.html"><span class="day-lesson-num">Lesson 7, 1:00</span><span class="day-lesson-name">Risk Monitoring and Reporting</span><span class="day-lesson-time">&#128336; ~3 hrs &bull; D3</span></a>
+          <a class="day-lesson day-build" href="teaching-kit.html#day4"><span class="day-lesson-num">End of day</span><span class="day-lesson-name">Teaching Kit build block and peer swap</span><span class="day-lesson-time">&#128336; 45 to 60 min</span></a>
         </div>
       </div>
       <div class="day-col">
@@ -514,6 +521,7 @@
         <div class="day-lessons">
           <a class="day-lesson" href="lesson08.html"><span class="day-lesson-num">Lesson 8, 9:00</span><span class="day-lesson-name">Technology and Security</span><span class="day-lesson-time">&#128336; ~3 hrs &bull; D4</span></a>
           <a class="day-lesson" href="lesson09.html"><span class="day-lesson-num">Lesson 9, 1:00</span><span class="day-lesson-name">InfoSec Principles and Capstone</span><span class="day-lesson-time">&#128336; ~3.5 hrs &bull; D4</span></a>
+          <a class="day-lesson day-build" href="teaching-kit.html#day5"><span class="day-lesson-num">End of day</span><span class="day-lesson-name">Teaching Kit build block and peer swap</span><span class="day-lesson-time">&#128336; 45 to 60 min</span></a>
         </div>
       </div>
     </div>
@@ -549,7 +557,7 @@
         <span class="rc-type">Practice Exam</span>
         <div class="rc-icon-title"><span class="rc-icon">&#128221;</span><div class="rc-title">CRISC Practice Exam</div></div>
         <p class="rc-desc">Domain-weighted, scenario-based questions with a timer, a question navigator, a domain score breakdown, and a full review with rationale.</p>
-        <p class="rc-covers"><strong>Covers:</strong> All 4 Domains &middot; Timed &middot; Scored &middot; Rationale &middot; Review Mode</p>
+        <p class="rc-covers"><strong>Covers:</strong> All 4 Domains &middot; Timed or Untimed &middot; Self-Scored &middot; Rationale &middot; Review Mode</p>
         <div class="card-footer"><a href="gen-test.html" class="launch-btn">Start Practice Exam <span class="arrow">&#8594;</span></a></div>
       </article>
       <article class="resource-card">
@@ -577,6 +585,15 @@
     <h2 class="section-title">Content Development Tools</h2>
     <div class="rule"></div>
     <p class="section-desc">AI-assisted prompt builders for faculty who teach IT risk: generate activities, graphics, lesson content, and case studies aligned to the CRISC domains. Lesson 9 shows how to map them to your curriculum.</p>
+    <div class="resource-grid" style="margin-bottom:1.25rem;grid-template-columns:1fr">
+      <article class="resource-card">
+        <span class="rc-type">Workshop Product</span>
+        <div class="rc-icon-title"><span class="rc-icon">&#129520;</span><div class="rc-title">Your Teaching Kit</div></div>
+        <p class="rc-desc">The place where the workshop becomes your course material. Each day, pick one of the day&rsquo;s two model assignments, adapt the prompt and rubric for a course you teach, pair it with a lab or activity, and record your partner&rsquo;s feedback. On Day 5, map CRISC to your program and print a portfolio. Goal: at least three assignments from at least two domains.</p>
+        <p class="rc-covers"><strong>Covers:</strong> Model Assignments &middot; Rubrics &middot; Peer Swap &middot; Curriculum Map &middot; Printable Portfolio</p>
+        <div class="card-footer"><a href="teaching-kit.html" class="launch-btn">Open the Teaching Kit <span class="arrow">&#8594;</span></a></div>
+      </article>
+    </div>
     <div class="resource-grid">
       <article class="resource-card"><span class="rc-type">Prompt Builder</span><div class="rc-icon-title"><span class="rc-icon">&#129513;</span><div class="rc-title">Activity Builder</div></div><p class="rc-desc">Pick a domain, an interaction, and a flow, and build a prompt that generates a self-contained interactive HTML activity.</p><div class="card-footer"><a href="gen-activity.html" class="launch-btn">Open Tool <span class="arrow">&#8594;</span></a></div></article>
       <article class="resource-card"><span class="rc-type">Prompt Builder</span><div class="rc-icon-title"><span class="rc-icon">&#128444;&#65039;</span><div class="rc-title">Graphics Generation</div></div><p class="rc-desc">Prompts for instructional diagrams: heat maps, the Three Lines Model, bow-tie diagrams, and loss exceedance curves.</p><div class="card-footer"><a href="gen-graphics.html" class="launch-btn">Open Tool <span class="arrow">&#8594;</span></a></div></article>
@@ -635,6 +652,5 @@
     bars.forEach(function (b) { observer.observe(b); });
   } else { bars.forEach(function (b) { b.style.width = b.dataset.width; }); }
 </script>
-<script src="assistant.js" defer></script>
 </body>
 </html>

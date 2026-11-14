@@ -174,10 +174,10 @@
       { id: 'rec', type: 'choice', points: 16, short: 'Recommendation', title: 'Recommend a response',
         task: 'What should you, as the risk analyst, put in front of the Risk Committee?',
         options: [
-          'Approve the control and start procurement now, because its value exceeds its cost and the analysis is complete',
-          'Recommend the control to Priya Raman as risk owner: it brings the chance of a year over $1,000,000 from about ' + Math.round(B.answers.over) + '% to about ' + Math.max(1, Math.round(B.answers.proOver)) + '%, inside the 10% tolerance, at a positive net value. She decides, and she accepts the residual risk',
-          'Recommend accepting the current risk, because the ALE is below the $1,000,000 tolerance amount',
-          'Recommend crime insurance with a $1,000,000 limit instead, because transferring the risk is cheaper than mitigating it'
+          'Approve the control and start procurement now, because its value exceeds its cost, it meets tolerance, and the analysis is complete',
+          'Recommend the control to Priya Raman as risk owner: it cuts the chance of a year over $1,000,000 from about ' + Math.round(B.answers.over) + '% to about ' + Math.max(1, Math.round(B.answers.proOver)) + '%, inside the 10% tolerance, at a positive net value',
+          'Recommend that Priya Raman accept the current risk, because the ALE is below the $1,000,000 tolerance amount',
+          'Recommend crime insurance with a $1,000,000 limit to Priya Raman instead, because transferring the risk is cheaper than mitigating it and she can accept the rest'
         ],
         answer: 1,
         hint: 'Who owns the decision? And which result tests the tolerance statement: the mean, or the probability of exceeding $1,000,000?',
@@ -413,6 +413,5 @@
 })();
 </script>
 <script src="lab.js"></script>
-<script src="assistant.js" defer></script>
 </body>
 </html>

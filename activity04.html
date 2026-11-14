@@ -121,13 +121,13 @@ window.ACTIVITY = {
         {
           title: 'Draft 1', text: '“Hackers attack our systems.”',
           parts: [
-            { q: 'What is the MOST significant problem with this draft?', options: ['It names an external actor', 'It lacks a specific event, asset, time, and business consequence, so no one can estimate frequency or impact', 'It is too long', 'It does not name a control'], answer: 1, why: 'A scenario must be specific enough to estimate. This one names only a vague actor. It cannot be owned, analyzed, or tested against controls.' }
+            { q: 'What is the MOST significant problem with this draft?', options: ['It names an external actor instead of a threat community with known capabilities', 'It lacks an event, asset, time, and consequence, so no one can estimate it', 'It is too long', 'It does not name a control, so no one can test whether the risk is mitigated'], answer: 1, why: 'A scenario must be specific enough to estimate. This one names only a vague actor. It cannot be owned, analyzed, or tested against controls.' }
           ]
         },
         {
           title: 'Draft 2', text: '“A cybercriminal group steals design files for the next-generation pump from the engineering file server, threatening Dovemarsh’s product launch.”',
           parts: [
-            { q: 'Which component is missing?', options: ['Actor', 'Event', 'Asset or resource', 'Time: when it happens, how long it lasts, and how fast it is detected'], answer: 3, why: 'The actor, event, and asset are present, and the objective is named. Without the time element, analysts cannot judge detection lag or how loss grows.' }
+            { q: 'Which component is missing?', options: ['Actor', 'Event: what the actor does, such as encrypting or stealing data', 'Asset or resource', 'Time: when it happens, how long it lasts, how fast it is found'], answer: 3, why: 'The actor, event, and asset are present, and the objective is named. Without the time element, analysts cannot judge detection lag or how loss grows.' }
           ]
         },
         {
@@ -139,14 +139,14 @@ window.ACTIVITY = {
         {
           title: 'The workshop method', text: 'The workshop began with Dovemarsh’s objective, “keep FDA clearance and ship the new pump on schedule,” and asked what events could make it fail.',
           parts: [
-            { q: 'Which approach is this, and what is its main weakness?', options: ['Bottom-up; it may produce long lists with no business link', 'Top-down; it may miss technical paths no one in the room knows about', 'Top-down; it cannot gain executive support', 'Bottom-up; it ignores threat intelligence'], answer: 1, why: 'Starting from objectives is top-down. It is strong on relevance but can miss technical paths, so mature programs reconcile it with a bottom-up list from threat models and scan data.' },
-            { q: 'Who should validate that the final scenarios are realistic and relevant?', options: ['The risk practitioner who wrote them', 'The business owners, such as the VP of manufacturing and the head of product', 'The scanning vendor', 'Internal audit'], answer: 1, why: 'The owner knows the process and will own the risk. The practitioner facilitates and challenges; the owner validates.' }
+            { q: 'Which approach is this, and what is its main weakness?', options: ['Bottom-up; it may produce long lists with no business link', 'Top-down; it may miss technical paths no one in the room knows about', 'Top-down; it cannot gain executive support', 'Bottom-up; it ignores threat intelligence and the attack paths it describes'], answer: 1, why: 'Starting from objectives is top-down. It is strong on relevance but can miss technical paths, so mature programs reconcile it with a bottom-up list from threat models and scan data.' },
+            { q: 'Who should validate that the final scenarios are realistic and relevant?', options: ['The risk practitioner who wrote them, since they know the method best', 'The business owners, such as the VP of manufacturing and head of product', 'The scanning vendor', 'Internal audit, which gives independent assurance on the scenario set'], answer: 1, why: 'The owner knows the process and will own the risk. The practitioner facilitates and challenges; the owner validates.' }
           ]
         },
         {
           title: 'Starting point', text: 'A new risk analyst asks what to gather before writing any scenarios for the cloud console.',
           parts: [
-            { q: 'What is the MOST important input?', options: ['The latest CVSS scores for the console', 'The business objectives the console supports and the information and processes that depend on it', 'A list of security tools in use', 'Last year’s audit report'], answer: 1, why: 'Scenarios that are not tied to objectives cannot be prioritized. Technical inputs come in, but the objectives anchor the set.' }
+            { q: 'What is the MOST important input?', options: ['The latest CVSS scores for the console and its known exploited vulnerabilities', 'The business objectives the console supports and what depends on it', 'A list of security tools in use', 'Last year’s audit report and the findings still open against the console'], answer: 1, why: 'Scenarios that are not tied to objectives cannot be prioritized. Technical inputs come in, but the objectives anchor the set.' }
           ]
         }
       ]
@@ -163,6 +163,5 @@ window.ACTIVITY = {
 };
 </script>
 <script src="practice.js"></script>
-<script src="assistant.js" defer></script>
 </body>
 </html>

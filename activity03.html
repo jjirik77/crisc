@@ -76,19 +76,19 @@ window.ACTIVITY = {
         {
           title: 'Case 2: A rough month', text: 'In March the claims portal had 5 hours of unplanned downtime, in three outages of less than 2 hours each. A 99.5% target allows about 3.6 hours in a 30-day month.',
           parts: [
-            { q: 'What is the BEST reading of March?', options: ['Within appetite and objective, so no action is needed', 'The objective was missed but performance stayed within tolerance, so the owner monitors it and plans action if the trend continues', 'Tolerance was breached, so the board must be told at once', 'Capacity was exceeded'], answer: 1, why: 'Tolerance is the acceptable variation around the objective. Five hours missed the 99.5% target but stayed inside the 6-hour band, so it is watched, not escalated.' }
+            { q: 'What is the BEST reading of March?', options: ['Within appetite and objective, so no action is needed until the next quarterly review', 'The target was missed but within tolerance, so the owner monitors the trend', 'Tolerance was breached, so the board must be told at once through the risk committee', 'Capacity was exceeded'], answer: 1, why: 'Tolerance is the acceptable variation around the objective. Five hours missed the 99.5% target but stayed inside the 6-hour band, so it is watched, not escalated.' }
           ]
         },
         {
           title: 'Case 3: The pricing pipeline', text: 'A residual risk on the pricing model data pipeline is rated 14. The head of underwriting, who owns it, wants to accept it so the new rating engine can launch on time.',
           parts: [
-            { q: 'What should the risk practitioner do?', options: ['Accept it, since the owner has decided', 'Lower the rating to 12 so the launch can proceed', 'Tell the owner that a rating above 12 needs risk committee approval, and help prepare the escalation with response options', 'Block the launch until the rating falls'], answer: 2, why: 'Under S2, a residual risk above 12 is beyond the owner’s authority to accept alone. The practitioner informs and supports the escalation; the committee decides.' }
+            { q: 'What should the risk practitioner do?', options: ['Accept it, since the owner has decided, and record the decision and its rationale in the register', 'Lower the rating to 12 so the launch can proceed, and log the planned controls', 'Tell the owner a rating above 12 needs committee approval, and help prepare the escalation', 'Block the launch until the rating falls to 12 or below'], answer: 2, why: 'Under S2, a residual risk above 12 is beyond the owner’s authority to accept alone. The practitioner informs and supports the escalation; the committee decides.' }
           ]
         },
         {
           title: 'Case 4: The acquisition', text: 'The board is considering buying a small insurtech. Analysis shows one plausible scenario, a mass breach of the insurtech’s customer data, could cost up to $55 million in a single event.',
           parts: [
-            { q: 'What is the GREATEST concern?', options: ['The scenario exceeds risk capacity, so it must be reduced, transferred, or avoided before the board can proceed', 'The scenario exceeds tolerance for the claims portal', 'The insurtech uses a different risk framework', 'The scenario has not yet been entered in the register'], answer: 0, why: 'A loss above capacity threatens the enterprise’s survival. Agreeing to carry it would be a governance failure, whatever the appetite statement says.' },
+            { q: 'What is the GREATEST concern?', options: ['The loss exceeds risk capacity, so it must be reduced, transferred, or avoided', 'The scenario exceeds the tolerance senior management set for the claims portal', 'The insurtech uses a different risk framework', 'The scenario has not yet been entered in the register, so no owner tracks it'], answer: 0, why: 'A loss above capacity threatens the enterprise’s survival. Agreeing to carry it would be a governance failure, whatever the appetite statement says.' },
             { q: 'Who sets Kestrelmoor’s risk appetite?', options: ['The CRO', 'The board, with senior management', 'The risk committee of management', 'Internal audit'], answer: 1, why: 'Appetite is set by the board, with senior management. Senior management then sets tolerances within it.' }
           ]
         }
@@ -124,37 +124,37 @@ window.ACTIVITY = {
         {
           title: 'Case 1: The federal contract', text: 'A Kestrelmoor subsidiary will operate an information system on behalf of a U.S. federal agency. The contract requires a formal authorization to operate before go-live.',
           parts: [
-            { q: 'Which framework fits BEST?', options: ['NIST SP 800-37 Rev. 2, the Risk Management Framework', 'ISO 31000:2018', 'COSO ERM 2017', 'NIST CSF 2.0 alone'], answer: 0, why: 'The RMF’s seven steps end in authorization, a senior official’s explicit acceptance of residual risk. Federal agencies and many contractors follow it.' }
+            { q: 'Which framework fits BEST?', options: ['NIST SP 800-37 Rev. 2, the Risk Management Framework', 'ISO 31000:2018, the risk management guidelines', 'COSO ERM 2017, Integrating with Strategy and Performance', 'NIST CSF 2.0 alone'], answer: 0, why: 'The RMF’s seven steps end in authorization, a senior official’s explicit acceptance of residual risk. Federal agencies and many contractors follow it.' }
           ]
         },
         {
           title: 'Case 2: The European reinsurers', text: 'Kestrelmoor’s European reinsurers ask for evidence of a certifiable information security management system.',
           parts: [
-            { q: 'Which approach fits BEST?', options: ['NIST SP 800-30 Rev. 1', 'ISO/IEC 27001:2022, with ISO/IEC 27005:2022 guiding risk management', 'COBIT 2019 design factors', 'A custom framework written by the CISO'], answer: 1, why: 'ISO/IEC 27001 is the certifiable management system standard. ISO/IEC 27005 supports its risk management requirements.' }
+            { q: 'Which approach fits BEST?', options: ['NIST SP 800-30 Rev. 1, the Guide for Conducting Risk Assessments', 'ISO/IEC 27001:2022, with ISO/IEC 27005:2022 guiding risk management', 'COBIT 2019, tailored with its design factors', 'A custom framework written by the CISO'], answer: 1, why: 'ISO/IEC 27001 is the certifiable management system standard. ISO/IEC 27005 supports its risk management requirements.' }
           ]
         },
         {
           title: 'Case 3: The board conversation', text: 'The board wants a plain, outcome-based picture of cybersecurity posture that includes how risk strategy, appetite, and tolerance are governed.',
           parts: [
-            { q: 'Which framework communicates this BEST?', options: ['NIST CSF 2.0, using its Govern function and the other five functions', 'NIST SP 800-30 Rev. 1', 'MITRE ATT&CK', 'ISO/IEC 27002 control list'], answer: 0, why: 'CSF 2.0 outcomes read well for boards and partners, and its Govern function covers risk management strategy, including appetite and tolerance statements.' }
+            { q: 'Which framework communicates this BEST?', options: ['NIST CSF 2.0, using Govern and the other five functions', 'NIST SP 800-30 Rev. 1, with its likelihood and impact tables', 'MITRE ATT&CK, mapped to the techniques that target Kestrelmoor', 'ISO/IEC 27002 control list'], answer: 0, why: 'CSF 2.0 outcomes read well for boards and partners, and its Govern function covers risk management strategy, including appetite and tolerance statements.' }
           ]
         },
         {
           title: 'Case 4: Building on what exists', text: 'Kestrelmoor already uses COBIT 2019 for IT governance and COSO for internal control. The CIO proposes buying a separate IT risk method from a consultant.',
           parts: [
-            { q: 'What is the BEST recommendation?', options: ['Adopt the consultant’s method so IT risk has its own system', 'Align the IT risk method with COBIT 2019 and ISACA Risk IT, using objectives such as EDM03 and APO12', 'Replace COBIT with NIST CSF 2.0', 'Wait until internal audit chooses a method'], answer: 1, why: 'An enterprise already using COBIT should extend it rather than run a parallel system. EDM03 and APO12 place IT risk in the existing governance system.' }
+            { q: 'What is the BEST recommendation?', options: ['Adopt the consultant’s method so IT risk has its own system and its own reporting line', 'Align the IT risk method with COBIT 2019 and ISACA Risk IT (EDM03, APO12)', 'Replace COBIT with NIST CSF 2.0, which business leaders find easier to read', 'Wait until internal audit chooses a method'], answer: 1, why: 'An enterprise already using COBIT should extend it rather than run a parallel system. EDM03 and APO12 place IT risk in the existing governance system.' }
           ]
         },
         {
           title: 'Case 5: Where to begin', text: 'The CRO wants to adopt a single risk framework for the whole company next year.',
           parts: [
-            { q: 'What should be done FIRST?', options: ['Pick the most widely used framework', 'Buy a governance, risk, and compliance tool', 'Understand Kestrelmoor’s business objectives, context, and legal and contractual requirements', 'Map every existing control to ISO/IEC 27002'], answer: 2, why: 'Picking a framework comes after you know what it must support. Context and requirements come first.' }
+            { q: 'What should be done FIRST?', options: ['Pick the most widely used framework, so auditors and partners will recognize it', 'Buy a governance, risk, and compliance tool', 'Understand Kestrelmoor’s objectives, context, and legal and contractual requirements', 'Map every existing control to ISO/IEC 27002 to see where the gaps are'], answer: 2, why: 'Picking a framework comes after you know what it must support. Context and requirements come first.' }
           ]
         },
         {
           title: 'Case 6: “Within appetite”', text: 'The card payments team fails a PCI DSS requirement. The business unit head says the gap is small and within appetite, so he will simply accept it.',
           parts: [
-            { q: 'What is the BEST response?', concept: 'drivers', options: ['Agree, since the risk is within appetite', 'Explain that the obligation is mandatory under Kestrelmoor’s card agreements, so the question is how to meet it, then help build the remediation plan', 'Report the business unit head to the card brands', 'Fix the configuration yourself'], answer: 1, why: 'Mandated requirements usually override appetite. A contractual obligation cannot be waived by internal acceptance; the response is how to comply, not whether.' }
+            { q: 'What is the BEST response?', concept: 'drivers', options: ['Agree, since the risk is within appetite and the business unit head owns the decision', 'Explain that the card agreements make it mandatory, then help build the remediation plan', 'Report the business unit head to the card brands', 'Fix the configuration yourself so the obligation is met before the next assessment'], answer: 1, why: 'Mandated requirements usually override appetite. A contractual obligation cannot be waived by internal acceptance; the response is how to comply, not whether.' }
           ]
         }
       ]
@@ -171,6 +171,5 @@ window.ACTIVITY = {
 };
 </script>
 <script src="practice.js"></script>
-<script src="assistant.js" defer></script>
 </body>
 </html>

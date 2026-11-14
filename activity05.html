@@ -64,31 +64,31 @@ window.ACTIVITY = {
         {
           title: 'Request 1: The long list', text: 'A workshop produced 85 candidate scenarios. The risk committee wants a first ranking in two weeks, and loss data exist for only a handful of them.',
           parts: [
-            { q: 'Which method fits BEST?', options: ['Quantitative, with a Monte Carlo model for each scenario', 'Qualitative ratings to screen the list, then deeper analysis of the top few', 'Wait until loss data exist for all 85', 'Rank them by the CVSS scores of related vulnerabilities'], answer: 1, why: 'Qualitative analysis is fast and good for screening many risks with limited data. The few that matter most can then be analyzed in depth.' }
+            { q: 'Which method fits BEST?', options: ['Quantitative, with a Monte Carlo model for each scenario, so all 85 are in dollars', 'Qualitative ratings to screen the list, then deeper analysis of the top few', 'Wait until loss data exist for all 85', 'Rank them by the CVSS scores of related vulnerabilities and fix the highest first'], answer: 1, why: 'Qualitative analysis is fast and good for screening many risks with limited data. The few that matter most can then be analyzed in depth.' }
           ]
         },
         {
           title: 'Request 2: The CFO’s question', text: 'The CFO must decide whether to spend $1.8 million over three years on a fraud analytics platform. She asks how much loss it would avoid each year.',
           parts: [
-            { q: 'Which method BEST supports this decision?', options: ['Qualitative', 'Semi-quantitative', 'Quantitative, in dollars per year', 'A peer survey'], answer: 2, why: 'A cost-benefit decision needs money on both sides of the comparison. Only quantitative analysis gives the avoided loss in dollars.' }
+            { q: 'Which method BEST supports this decision?', options: ['Qualitative, with a 5×5 heat map', 'Semi-quantitative, with scores from 1 to 25', 'Quantitative, in dollars per year', 'A peer survey'], answer: 2, why: 'A cost-benefit decision needs money on both sides of the comparison. Only quantitative analysis gives the avoided loss in dollars.' }
           ]
         },
         {
           title: 'Request 3: Twice as bad?', text: 'Quillfield’s register uses 1 to 5 likelihood times 1 to 5 impact. A manager argues that a risk scored 20 is exactly twice as bad as one scored 10, so it deserves twice the budget.',
           parts: [
-            { q: 'What is the flaw in the argument?', options: ['The scores are ordinal labels, so multiplying them does not produce a true ratio', 'The scale should run from 1 to 10', 'Impact should be weighted twice as heavily as likelihood', 'There is no flaw; the arithmetic is correct'], answer: 0, why: 'Semi-quantitative numbers rank risks but are labels, not measurements. A 20 is not twice a 10 in loss terms.' }
+            { q: 'What is the flaw in the argument?', options: ['The scores are ordinal labels, so their product is not a true ratio', 'The scale should run from 1 to 10 so the scores spread out more', 'Impact should be weighted twice as heavily as likelihood before multiplying', 'There is no flaw; the arithmetic is correct'], answer: 0, why: 'Semi-quantitative numbers rank risks but are labels, not measurements. A 20 is not twice a 10 in loss terms.' }
           ]
         },
         {
           title: 'Request 4: The board’s tail question', text: 'The board asks for the probability that wire fraud losses exceed $5 million in any one year.',
           parts: [
-            { q: 'Which approach answers this BEST?', options: ['A heat map rating', 'A single-point ALE', 'A quantitative model with Monte Carlo simulation and a loss exceedance curve', 'A survey of other banks'], answer: 2, why: 'A single ALE hides uncertainty. Simulation produces a distribution, from which you read the probability of exceeding any amount.' }
+            { q: 'Which approach answers this BEST?', options: ['A heat map rating reviewed by the risk committee', 'A single-point ALE built from the bank’s own loss history', 'A Monte Carlo model with a loss exceedance curve', 'A survey of other banks'], answer: 2, why: 'A single ALE hides uncertainty. Simulation produces a distribution, from which you read the probability of exceeding any amount.' }
           ]
         },
         {
           title: 'Request 5: Before the numbers', text: 'A new analyst is eager to start rating Quillfield’s mortgage platform risks today.',
           parts: [
-            { q: 'What should the analyst confirm FIRST?', options: ['Which software will run the simulation', 'The business context and the agreed criteria: appetite, tolerance, and impact scales', 'The CVSS score of every server', 'The audit committee’s calendar'], answer: 1, why: 'Analysis without agreed criteria cannot be evaluated. Context and criteria come first.' }
+            { q: 'What should the analyst confirm FIRST?', options: ['Which simulation software to use, and whether its random number generator is validated', 'The business context and agreed criteria, such as appetite and impact scales', 'The CVSS score of every server', 'The audit committee’s calendar'], answer: 1, why: 'Analysis without agreed criteria cannot be evaluated. Context and criteria come first.' }
           ]
         }
       ]
@@ -177,17 +177,17 @@ window.ACTIVITY = {
             ]
           },
           parts: [
-            { q: 'Which defect is the GREATEST concern?', options: ['The title is only one word', 'The owner is “IT” rather than a named person with authority over the affected process', 'No KRIs are listed', 'The inherent rating is qualitative'], answer: 1, why: 'Without a named owner, no one can choose a response or accept residual risk. Every other defect needs an owner to fix it.' },
-            { q: 'Which rewrite of the scenario is BEST?', options: ['Ransomware is a major threat to banks.', 'A criminal group encrypts the core banking platform and its backups during month-end close, stopping member transactions for up to three days before detection and recovery, and threatening the objective of continuous customer service.', 'Hackers deploy ransomware.', 'EDR may fail to stop ransomware on some endpoints.'], answer: 1, why: 'The rewrite names the actor, event, asset, timing, duration, and the objective at stake. It can be owned, analyzed, and tested against controls.' },
-            { q: 'What is wrong with the action plan “Mitigate: improve security”?', options: ['Mitigation is never an acceptable response to ransomware', 'It lacks specific tasks, a task owner, a due date, and status', 'It should name a vendor', 'It should be written by internal audit'], answer: 1, why: 'An action plan needs tasks, owners, dates, and status so it can be tracked. A slogan cannot be monitored.' },
-            { q: 'The current rating shows Low, but the entry has not been reviewed in 19 months and the backups were never restore-tested. What is the BEST action?', concept: 'ratings', options: ['Keep Low, since nothing has gone wrong', 'Reassess the current rating against actual control performance and report the true level', 'Change the inherent rating to Low as well', 'Remove the entry until the next audit'], answer: 1, why: 'Reporting planned or assumed residual risk as current risk is a common mistake. If controls are untested, current risk may sit closer to inherent.' }
+            { q: 'Which defect is the GREATEST concern?', options: ['The title is only one word', 'The owner is “IT” rather than a named person', 'No KRIs are listed, so no one would see the exposure change', 'The inherent rating is qualitative'], answer: 1, why: 'Without a named owner, no one can choose a response or accept residual risk. Every other defect needs an owner to fix it.' },
+            { q: 'Which rewrite of the scenario is BEST?', options: ['Ransomware is a major threat to banks and could cause serious operational, financial, and reputational damage to the business and its members.', 'A criminal group encrypts the core banking platform and backups at month-end close, halting member transactions for up to three days and breaking continuous service.', 'Hackers deploy ransomware.', 'EDR may fail to stop ransomware on some endpoints, leaving workstations exposed if staff open malicious attachments.'], answer: 1, why: 'The rewrite names the actor, event, asset, timing, duration, and the objective at stake. It can be owned, analyzed, and tested against controls.' },
+            { q: 'What is wrong with the action plan “Mitigate: improve security”?', options: ['Mitigation is never an acceptable response to ransomware', 'It lacks specific tasks, a task owner, a due date, and status', 'It should name a vendor', 'It should be written by internal audit, which will later test whether it worked'], answer: 1, why: 'An action plan needs tasks, owners, dates, and status so it can be tracked. A slogan cannot be monitored.' },
+            { q: 'The current rating shows Low, but the entry has not been reviewed in 19 months and the backups were never restore-tested. What is the BEST action?', concept: 'ratings', options: ['Keep Low, since nothing has gone wrong and the backups run every night', 'Reassess the rating against actual control performance and report the true level', 'Change the inherent rating to Low as well', 'Remove the entry until the next audit confirms the backups can be restored'], answer: 1, why: 'Reporting planned or assumed residual risk as current risk is a common mistake. If controls are untested, current risk may sit closer to inherent.' }
           ]
         },
         {
           title: 'Three small risks', text: 'The card, mortgage, and wire teams each recorded a low-rated risk that depends on the same single identity provider for sign-in.',
           parts: [
-            { q: 'What is the BEST next step?', options: ['Accept each risk separately, since each is low', 'Aggregate them and reassess the shared cause at the enterprise level', 'Delete two of them as duplicates', 'Ask each team to buy its own identity provider'], answer: 1, why: 'Risks with a common cause can occur together, so their losses are correlated. Aggregation shows an exposure that no single entry does.' },
-            { q: 'What is the PRIMARY benefit of a well-maintained risk register?', options: ['It satisfies external auditors', 'It puts owners, responses, and status in one place, supporting accountability and informed decisions', 'It reduces insurance premiums', 'It replaces the need for KRIs'], answer: 1, why: 'The register is the working record of the risk program. Satisfying auditors is a side benefit, not the purpose.' }
+            { q: 'What is the BEST next step?', options: ['Accept each risk separately, since each is low and has a named owner', 'Aggregate them and reassess the shared cause at the enterprise level', 'Delete two of them as duplicates and keep the one with the highest rating', 'Ask each team to buy its own identity provider'], answer: 1, why: 'Risks with a common cause can occur together, so their losses are correlated. Aggregation shows an exposure that no single entry does.' },
+            { q: 'What is the PRIMARY benefit of a well-maintained risk register?', options: ['It satisfies external auditors and regulators, who expect a documented register', 'It puts owners, responses, and status in one place for accountability and decisions', 'It reduces insurance premiums', 'It replaces the need for KRIs, since each entry already shows the current rating'], answer: 1, why: 'The register is the working record of the risk program. Satisfying auditors is a side benefit, not the purpose.' }
           ]
         }
       ]
@@ -204,6 +204,5 @@ window.ACTIVITY = {
 };
 </script>
 <script src="practice.js"></script>
-<script src="assistant.js" defer></script>
 </body>
 </html>

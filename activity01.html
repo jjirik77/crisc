@@ -59,32 +59,32 @@ window.ACTIVITY = {
         {
           title: 'Case 1: The sector advisory', text: 'The water sector information sharing center warns that a ransomware group is targeting utility billing service providers. Fernhollow outsources bill printing and payment processing to one such provider. The security team wants to buy a new endpoint product this week.',
           parts: [
-            { q: 'What should the risk practitioner do FIRST?', options: ['Approve the endpoint purchase so protection is in place quickly', 'Assess how the threat affects Fernhollow’s risk profile, including its dependence on the billing provider', 'Instruct the billing provider to patch every system within 48 hours', 'Accept the risk, since the provider is responsible for its own security'], answer: 1, why: 'Assess before you respond. The practitioner updates the scenario and estimates exposure first, then brings options to the owner. Buying a tool first is the classic wrong answer.' }
+            { q: 'What should the risk practitioner do FIRST?', options: ['Approve the endpoint purchase this week so protection is in place before the group reaches Fernhollow', 'Assess how the threat changes Fernhollow’s exposure through the billing provider', 'Require the billing provider to patch every system within 48 hours and send evidence of completion', 'Accept the risk, since the provider is responsible for its own security'], answer: 1, why: 'Assess before you respond. The practitioner updates the scenario and estimates exposure first, then brings options to the owner. Buying a tool first is the classic wrong answer.' }
           ]
         },
         {
           title: 'Case 2: Above appetite', text: 'An assessment rates unauthorized changes to water treatment setpoints at 18 on Fernhollow’s 5×5 scale. The board’s appetite statement says no residual risk above 12 may be accepted without risk committee approval. The VP of Water Operations owns the treatment process.',
           parts: [
-            { q: 'What is the BEST next step for the risk practitioner?', options: ['Deploy application allowlisting on the treatment workstations right away', 'Lower the rating to 12 because new controls are planned for next year', 'Inform the VP of Water Operations and require a response plan or a formal escalation to the risk committee', 'Accept the risk temporarily on the VP’s behalf until the next committee meeting'], answer: 2, why: 'When residual risk exceeds appetite, the practitioner informs the owner and requires a response or escalation. Changing the rating or accepting on someone’s behalf takes a decision that belongs to others.' },
-            { q: 'If the VP wants to keep the risk at 18 with no further response, who must approve that?', concept: 'roles', options: ['The risk practitioner, who rated it', 'The risk committee, because the risk is above the board’s appetite', 'The CISO, because the setpoints are controlled by computers', 'Internal audit, which will test the controls later'], answer: 1, why: 'Risk above appetite is beyond the owner’s authority to accept alone. The appetite statement routes it to the risk committee.' }
+            { q: 'What is the BEST next step for the risk practitioner?', options: ['Deploy application allowlisting on the treatment workstations right away, then re-rate the risk', 'Lower the rating to 12 because the controls planned for next year will bring it inside appetite', 'Inform the VP and require a response plan or a formal escalation to the risk committee', 'Accept the risk temporarily on the VP’s behalf until the next committee meeting'], answer: 2, why: 'When residual risk exceeds appetite, the practitioner informs the owner and requires a response or escalation. Changing the rating or accepting on someone’s behalf takes a decision that belongs to others.' },
+            { q: 'If the VP wants to keep the risk at 18 with no further response, who must approve that?', concept: 'roles', options: ['The risk practitioner, because the practitioner rated it and maintains the register', 'The risk committee, because the risk is above the board’s appetite', 'The CISO, because the setpoints are controlled by computers', 'Internal audit, which will test the controls later'], answer: 1, why: 'Risk above appetite is beyond the owner’s authority to accept alone. The appetite statement routes it to the risk committee.' }
           ]
         },
         {
           title: 'Case 3: The register review', text: 'Fernhollow’s IT risk register has 40 entries. Of these, 11 list the owner as “IT Department,” 6 have no KRIs, 3 have ratings more than 18 months old, and 2 are duplicates.',
           parts: [
-            { q: 'Which is the GREATEST concern?', options: ['The 2 duplicate entries', 'The 6 entries with no KRIs', 'The 11 entries with no named individual owner', 'The 3 entries with old ratings'], answer: 2, why: 'A department cannot decide or accept. With no named owner, no one is accountable for a response, and the other defects cannot be fixed until someone owns the risk.' }
+            { q: 'Which is the GREATEST concern?', options: ['The 2 duplicate entries', 'The 6 entries with no KRIs to signal a change in exposure', 'The 11 entries with no named individual owner', 'The 3 entries with ratings more than 18 months old'], answer: 2, why: 'A department cannot decide or accept. With no named owner, no one is accountable for a response, and the other defects cannot be fixed until someone owns the risk.' }
           ]
         },
         {
           title: 'Case 4: The board’s question', text: 'A new board member asks why every IT risk on Fernhollow’s register must name the business objective it affects.',
           parts: [
-            { q: 'What is the PRIMARY reason?', options: ['So that risks can be prioritized by their effect on what the utility must achieve', 'So that external auditors can trace each risk to a control', 'So that IT can justify a larger security budget', 'So that the register matches the vendor’s template'], answer: 0, why: 'Risk is the effect of uncertainty on objectives. Linking each risk to an objective lets leaders compare and prioritize risks in business terms. The other benefits are secondary.' }
+            { q: 'What is the PRIMARY reason?', options: ['So risks can be ranked by their effect on what the utility must achieve', 'So that external auditors can trace each risk to a specific control and test whether it works', 'So that IT can justify a larger security budget', 'So that the register matches the vendor’s template'], answer: 0, why: 'Risk is the effect of uncertainty on objectives. Linking each risk to an objective lets leaders compare and prioritize risks in business terms. The other benefits are secondary.' }
           ]
         },
         {
           title: 'Case 5: Choosing a response', text: 'Three responses are on the table for the risk of a meter data platform outage: a hot standby site, a vendor-managed cloud failover, and a manual workaround with paper reads.',
           parts: [
-            { q: 'What is MOST important when the risk owner chooses among them?', options: ['Which option uses the most advanced technology', 'Which option the platform vendor recommends', 'Which option brings the risk within appetite at a cost the risk reduction justifies', 'Which option has the lowest up-front cost'], answer: 2, why: 'A response is judged by whether it brings risk within appetite, supports the business objective, and costs less than the risk it removes. Technology, vendor preference, and price alone are not the test.' }
+            { q: 'What is MOST important when the risk owner chooses among them?', options: ['Which option uses the most advanced technology and so will stay effective longest', 'Which option the platform vendor recommends', 'Which option brings the risk within appetite at a cost the risk reduction justifies', 'Which option has the lowest up-front cost, so funds stay free for other risks'], answer: 2, why: 'A response is judged by whether it brings risk within appetite, supports the business objective, and costs less than the risk it removes. Technology, vendor preference, and price alone are not the test.' }
           ]
         }
       ]
@@ -116,32 +116,32 @@ window.ACTIVITY = {
         {
           title: 'Case 1: The green report', text: 'Before a public rate hearing, the CFO asks you to show overdue patching on the SCADA historian as “on track” in the quarterly risk report. She says the patches will be done by the end of next month.',
           parts: [
-            { q: 'What should you do?', options: ['Show it as “on track,” since a plan exists', 'Report it as overdue, include the CFO’s remediation date, and note her view', 'Leave the item out of this quarter’s report', 'Send the details to the state utility commission yourself'], answer: 1, why: 'Report results fully. The board sees the true status and the plan, so the CFO still gets credit for a fix. Suppression is wrong, and going straight to a regulator skips the governance path.' },
-            { q: 'Which theme of the Code does this case test MOST directly?', options: ['Support professional education', 'Maintain competence', 'Report results fully, including significant unwelcome facts', 'Protect privacy and confidentiality'], answer: 2, why: 'The request is to hide a significant fact from the people accountable for it. Full and accurate reporting is the theme at stake.' }
+            { q: 'What should you do?', options: ['Show it as “on track,” since a plan exists and the CFO has committed to a fix date', 'Report it as overdue, include the CFO’s remediation date, and note her view', 'Leave the item out of this quarter’s report', 'Send the details to the state utility commission yourself'], answer: 1, why: 'Report results fully. The board sees the true status and the plan, so the CFO still gets credit for a fix. Suppression is wrong, and going straight to a regulator skips the governance path.' },
+            { q: 'Which theme of the Code does this case test MOST directly?', options: ['Support professional education', 'Maintain competence', 'Report results fully, including significant unwelcome facts', 'Protect the confidentiality of information obtained in the course of your duties'], answer: 2, why: 'The request is to hide a significant fact from the people accountable for it. Full and accurate reporting is the theme at stake.' }
           ]
         },
         {
           title: 'Case 2: The bidder', text: 'You are asked to rate the third-party risk of three vendors bidding on Fernhollow’s new meter data management system. Your spouse is a sales director at one of the bidders.',
           parts: [
-            { q: 'What is the BEST response?', options: ['Rate all three carefully; your professionalism will keep you objective', 'Rate only the two vendors your spouse does not work for', 'Disclose the conflict to your manager and ask that someone else rate the vendors', 'Mark your spouse’s company down slightly so no one can accuse you of favoritism'], answer: 2, why: 'Objectivity requires disclosing conflicts of interest. Stepping back protects the evaluation and you. Adjusting a rating in either direction is not objective.' }
+            { q: 'What is the BEST response?', options: ['Rate all three carefully; your professionalism will keep you objective', 'Rate only the two vendors your spouse does not work for', 'Disclose the conflict to your manager and ask someone else to rate the vendors', 'Mark your spouse’s company down slightly so no one can accuse you of favoritism'], answer: 2, why: 'Objectivity requires disclosing conflicts of interest. Stepping back protects the evaluation and you. Adjusting a rating in either direction is not objective.' }
           ]
         },
         {
           title: 'Case 3: Outside your field', text: 'The COO asks you to assess the risk of a new substation automation system by Friday. You have never worked with operational technology, and the safety stakes are high.',
           parts: [
-            { q: 'What should you do FIRST?', options: ['Tell the COO about the gap and bring in qualified OT engineering expertise while you facilitate the assessment', 'Complete the assessment alone using an IT checklist, then note your limits in an appendix', 'Decline the work and leave the assessment unassigned', 'Ask the vendor to perform the assessment of its own system'], answer: 0, why: 'Maintain competence means accepting work you can do well. The practitioner can still facilitate while qualified experts supply the OT judgment. A vendor assessing its own system is not objective.' }
+            { q: 'What should you do FIRST?', options: ['Tell the COO about the gap and bring in OT engineering expertise while you facilitate', 'Complete the assessment alone using an IT checklist, then note your limits in an appendix', 'Decline the work and leave the assessment unassigned', 'Ask the vendor to perform the assessment of its own system'], answer: 0, why: 'Maintain competence means accepting work you can do well. The practitioner can still facilitate while qualified experts supply the OT judgment. A vendor assessing its own system is not objective.' }
           ]
         },
         {
           title: 'Case 4: The benchmarking request', text: 'A friend who manages risk at another utility asks you to email him Fernhollow’s latest penetration test report so he can compare results.',
           parts: [
-            { q: 'What is the BEST response?', options: ['Send it, because sharing helps the whole sector', 'Send it with the IP addresses removed', 'Decline, and suggest sharing sanitized lessons through the sector ISAC if management approves', 'Read the key findings to him over the phone instead of sending the file'], answer: 2, why: 'Assessment results are confidential and must be used only for their purpose. Sector sharing is valuable, but it goes through authorized channels with management approval.' }
+            { q: 'What is the BEST response?', options: ['Send it, because sharing helps the whole sector', 'Send it with the IP addresses and asset names removed, since the sector benefits from sharing', 'Decline, and suggest sharing sanitized lessons through the ISAC with management approval', 'Read the key findings to him over the phone instead of sending the file'], answer: 2, why: 'Assessment results are confidential and must be used only for their purpose. Sector sharing is valuable, but it goes through authorized channels with management approval.' }
           ]
         },
         {
           title: 'Case 5: The rejected finding', text: 'Your analysis shows that chemical dosing alarms at the main treatment plant are routinely silenced during night shifts. The plant manager disagrees with the rating and refuses to put it on the register.',
           parts: [
-            { q: 'What is the BEST next step?', options: ['Drop the finding, because the plant manager owns the process', 'Document the disagreement and escalate it through the risk governance structure, such as the CRO or risk committee', 'Report the plant to the state drinking water regulator', 'Reconfigure the alarms so they cannot be silenced'], answer: 1, why: 'The finding stays on the record and goes up the governance path. Dropping it suppresses a significant fact, reporting externally skips governance, and changing the alarms takes the owner’s decision.' }
+            { q: 'What is the BEST next step?', options: ['Drop the finding, because the plant manager owns the process and decides on it', 'Document the disagreement and escalate it through risk governance, such as to the CRO', 'Report the plant to the state drinking water regulator', 'Reconfigure the alarms so they cannot be silenced, then document the change'], answer: 1, why: 'The finding stays on the record and goes up the governance path. Dropping it suppresses a significant fact, reporting externally skips governance, and changing the alarms takes the owner’s decision.' }
           ]
         }
       ]
@@ -158,6 +158,5 @@ window.ACTIVITY = {
 };
 </script>
 <script src="practice.js"></script>
-<script src="assistant.js" defer></script>
 </body>
 </html>

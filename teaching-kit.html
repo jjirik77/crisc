@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teaching Kit | CRISC Workshop</title>
+<link rel="stylesheet" href="crisc-lesson.css">
+<style>
+  /* Teaching Kit page. Light only. Builds on crisc-lesson.css tokens. */
+  :root { --focus: #c2410c; --field-border: #8f7a8d; }
+  .kit-shell { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 2rem; max-width: 1240px; margin: 0 auto; padding: 1.5rem 1.5rem 3rem; align-items: start; }
+  .kit-side { position: sticky; top: 74px; background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 1rem; font-family: Arial, sans-serif; }
+  .kit-side-title { font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); margin-bottom: .6rem; font-family: Arial, sans-serif; }
+  .kit-menu { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+  .kit-menu button { width: 100%; text-align: left; background: none; border: 0; border-radius: 8px; padding: .55rem .7rem; font: 600 .9rem/1.3 Arial, sans-serif; color: var(--text-secondary); cursor: pointer; display: flex; justify-content: space-between; gap: .5rem; min-height: 40px; align-items: center; }
+  .kit-menu button:hover { background: var(--section-alt); }
+  .kit-menu button[aria-current="step"] { background: var(--gold-pale); color: var(--gold); box-shadow: inset 3px 0 0 var(--gold); }
+  .kit-menu .mk { font-weight: 400; font-size: .78rem; color: var(--text-muted); white-space: nowrap; }
+  .kit-progress { margin-top: 1rem; padding-top: .9rem; border-top: 1px solid var(--border); font-size: .84rem; color: var(--text-secondary); line-height: 1.5; }
+  .kit-progress b { color: var(--text-primary); }
+  .bar { height: 8px; background: var(--section-alt); border-radius: 99px; overflow: hidden; margin: .35rem 0 .6rem; }
+  .bar > span { display: block; height: 100%; background: var(--gold); }
+  .kit-save { margin-top: .6rem; font-size: .78rem; color: var(--text-muted); }
+  .menu-toggle { display: none; }
+
+  .kit-main { min-width: 0; }
+  .panel { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 1.75rem 1.75rem 1.5rem; }
+  .panel[hidden] { display: none; }
+  .panel h1 { font-family: Georgia, serif; font-size: 1.6rem; line-height: 1.2; margin-bottom: .4rem; }
+  .panel h1:focus { outline: none; }
+  .panel h2.k2 { font-family: Georgia, serif; font-size: 1.2rem; margin: 1.6rem 0 .5rem; }
+  .panel h3.k3 { font-family: Arial, sans-serif; font-size: .95rem; margin: 1.1rem 0 .4rem; color: var(--text-primary); }
+  .panel p, .panel li { font-family: Arial, sans-serif; font-size: .95rem; color: var(--text-secondary); line-height: 1.65; }
+  .panel p + p { margin-top: .6rem; }
+  .panel ul.plain { margin: .4rem 0 .4rem 1.2rem; }
+  .eyebrow { margin-bottom: .3rem; }
+
+  .field { margin: .9rem 0; }
+  .field label, .field .lbl { display: block; font: 700 .86rem/1.4 Arial, sans-serif; color: var(--text-primary); margin-bottom: .3rem; }
+  .field .help { display: block; font: 400 .82rem/1.45 Arial, sans-serif; color: var(--text-muted); margin-bottom: .35rem; }
+  .field input[type=text], .field input[type=number], .field select, .field textarea { width: 100%; font: .95rem/1.5 Arial, sans-serif; color: var(--text-primary); background: #fff; border: 1.5px solid var(--field-border); border-radius: 8px; padding: .55rem .7rem; }
+  .field textarea { min-height: 96px; resize: vertical; }
+  .field textarea.tall { min-height: 170px; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1rem; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+  .btn, .kbtn { min-height: 40px; }
+  .kbtn { display: inline-flex; align-items: center; gap: .4rem; font: 700 .82rem/1 Arial, sans-serif; letter-spacing: .03em; border-radius: 8px; padding: .6rem 1rem; cursor: pointer; border: 1.5px solid var(--gold); background: #fff; color: var(--gold); }
+  .kbtn:hover { background: var(--gold-pale); }
+  .kbtn.primary { background: var(--gold); color: #fff; }
+  .kbtn.primary:hover { background: var(--gold-light); }
+  .kbtn.danger { border-color: var(--wrong); color: var(--wrong); }
+  .kbtn.small { padding: .4rem .7rem; font-size: .76rem; min-height: 32px; }
+  .actions { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1rem; align-items: center; }
+
+  .model { border: 1px solid var(--blue-pale-border); background: var(--blue-pale); border-radius: 12px; padding: 1.1rem 1.2rem; margin: 1rem 0; }
+  .model h2 { margin-top: 0; }
+  .model .tag { display: inline-block; font: 700 .7rem/1 Arial, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); background: #fff; border: 1px solid var(--blue-pale-border); border-radius: 99px; padding: .3rem .55rem; margin-right: .3rem; }
+  .model details { margin-top: .6rem; font-family: Arial, sans-serif; }
+  .model summary { cursor: pointer; font: 700 .88rem Arial, sans-serif; color: var(--gold); padding: .3rem 0; }
+  .model dl { margin: .4rem 0 0; }
+  .model dt { font: 700 .82rem Arial, sans-serif; color: var(--text-primary); margin-top: .6rem; }
+  .model dd { font: .9rem/1.6 Arial, sans-serif; color: var(--text-secondary); }
+
+  .asg { border: 1.5px solid var(--border); border-radius: 12px; padding: 1.2rem 1.25rem; margin: 1.2rem 0; background: #fff; }
+  .asg-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .6rem; align-items: baseline; border-bottom: 1px solid var(--border); padding-bottom: .6rem; margin-bottom: .4rem; }
+  .asg-head h2 { margin: 0; font-size: 1.1rem; }
+  .status { font: 700 .8rem Arial, sans-serif; border-radius: 99px; padding: .3rem .65rem; white-space: nowrap; }
+  .status.done { background: var(--correct-bg); color: #166534; }
+  .status.draft { background: #fff4db; color: #7a4f00; }
+  .rubric { width: 100%; border-collapse: collapse; margin: .4rem 0; font-family: Arial, sans-serif; }
+  .rubric th { text-align: left; font-size: .8rem; color: var(--text-muted); font-weight: 700; padding: .3rem .4rem; border-bottom: 1px solid var(--border); }
+  .rubric td { vertical-align: top; padding: .35rem .4rem; border-bottom: 1px solid var(--border); }
+  .rubric textarea { width: 100%; min-height: 64px; font: .88rem/1.45 Arial, sans-serif; border: 1.5px solid var(--field-border); border-radius: 6px; padding: .4rem .5rem; resize: vertical; }
+  .rubric td.n { width: 2rem; font-weight: 700; color: var(--text-muted); padding-top: .7rem; }
+  .rubric td.x { width: 3rem; }
+  .checks { list-style: none; margin: .3rem 0; }
+  .checks li { margin: .35rem 0; }
+  .checks label { display: flex; gap: .55rem; align-items: flex-start; font: .92rem/1.5 Arial, sans-serif; color: var(--text-secondary); cursor: pointer; }
+  .checks input { margin-top: .3rem; width: 18px; height: 18px; flex-shrink: 0; }
+  fieldset.fs { border: 0; margin: 1rem 0; }
+  fieldset.fs legend { font: 700 .86rem Arial, sans-serif; color: var(--text-primary); margin-bottom: .3rem; }
+  .missing { font: .85rem/1.5 Arial, sans-serif; color: #7a4f00; background: #fff4db; border-radius: 8px; padding: .5rem .75rem; margin-top: .6rem; }
+
+  .mapwrap { overflow-x: auto; margin: .8rem 0; border: 1px solid var(--border); border-radius: 8px; }
+  table.map { border-collapse: collapse; width: 100%; min-width: 560px; font-family: Arial, sans-serif; font-size: .88rem; }
+  table.map th, table.map td { border-bottom: 1px solid var(--border); padding: .45rem .5rem; text-align: left; vertical-align: middle; }
+  table.map thead th { background: var(--section-alt); font-size: .8rem; }
+  table.map select { font: .85rem Arial, sans-serif; border: 1.5px solid var(--field-border); border-radius: 6px; padding: .3rem; background: #fff; }
+
+  .pager2 { display: flex; justify-content: space-between; gap: 1rem; margin-top: 1.6rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+  .pager2 .spacer { flex: 1; }
+  .confirm { display: inline-flex; gap: .5rem; align-items: center; font: .88rem Arial, sans-serif; color: var(--wrong); }
+  .note { font: .85rem/1.5 Arial, sans-serif; color: var(--text-muted); }
+
+  .pf-asg { border-top: 2px solid var(--gold); padding-top: .8rem; margin-top: 1.4rem; }
+  .pf-asg h2 { margin-top: 0; }
+  .pf-asg .pre { white-space: pre-wrap; font: .92rem/1.6 Arial, sans-serif; color: var(--text-secondary); }
+  .print-only { display: none; }
+
+  @media (max-width: 900px) {
+    .kit-shell { grid-template-columns: 1fr; padding: 1rem; gap: 1rem; }
+    .kit-side { position: static; }
+    .menu-toggle { display: inline-flex; }
+    .kit-side.collapsed .kit-menu, .kit-side.collapsed .kit-progress { display: none; }
+    .row2 { grid-template-columns: 1fr; }
+    .panel { padding: 1.2rem 1rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }
+  @media print {
+    .topnav, .kit-side, .pager2, .actions, footer, .no-print { display: none !important; }
+    .kit-shell { display: block; padding: 0; }
+    .panel { border: 0; padding: 0; }
+    .panel[hidden] { display: none !important; }
+    .print-only { display: block; }
+    body { background: #fff; }
+    .pf-asg { break-inside: avoid-page; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="nav-brand">
+    <div class="nav-seal">CRISC<br>PREP</div>
+    <span class="nav-title">5-Day Faculty Workshop</span>
+  </a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#lessons">Lessons</a></li>
+      <li><a href="index.html#practice">Practice</a></li>
+      <li><a href="index.html#schedule">Schedule</a></li>
+      <li><a href="teaching-kit.html" aria-current="page">Teaching Kit</a></li>
+      <li><a href="index.html#faculty-tools">Faculty Tools</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="kit-shell">
+  <aside class="kit-side collapsed" aria-label="Teaching Kit sections">
+    <button type="button" class="kbtn small menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="kitMenu">&#9776; Menu</button>
+    <p class="kit-side-title">Your Teaching Kit</p>
+    <ul class="kit-menu" id="kitMenu"></ul>
+    <div class="kit-progress" id="kitProgress"></div>
+  </aside>
+
+  <main class="kit-main" id="main">
+    <div id="panels"></div>
+  </main>
+</div>
+
+<div class="sr-only" id="announce" aria-live="polite"></div>
+
+<footer>
+  <div class="footer-logo">CRISC 5-DAY FACULTY WORKSHOP</div>
+  <p class="footer-disclaimer">This workshop is an independent educational resource. It is not affiliated with, endorsed by, or sponsored by ISACA. CRISC&#174; is a registered mark of ISACA. Your Teaching Kit is saved only in this browser on this device. Use Export to keep a copy.</p>
+</footer>
+
+<script>
+/* ============ CONTENT: model assignments, pulled from each lesson's Faculty Teaching Segment ============ */
+var MODELS = [{"assignment": "give students a one-page profile of a fictional college (Penmore Technical College) and a list of fifteen risk decisions, from approving the appetite statement to running backups and testing access reviews. Students build a RACI matrix that names who is Responsible, Accountable, Consulted, and Informed for each, then write a one-paragraph memo explaining the three placements they found hardest.", "rubric": ["Exactly one Accountable party per decision", "Acceptance and appetite placed with authority (risk owner or board), not with IT or the practitioner", "Independence preserved (internal audit not responsible for operating controls it tests)", "A memo that justifies hard calls with governance reasoning rather than job titles"], "lab": "students load a synthetic risk register of twenty entries into a spreadsheet, add owner and control-owner columns, and use filters to flag entries with no owner, the same person as risk owner and tester, or acceptance recorded by the practitioner. Use only synthetic data you supply.", "fit": "an introductory GRC, security management, or IT risk course. It supports the CAE-CD Cybersecurity Planning and Management (CPM), Policy, Legal, Ethics, and Compliance (PLE), and Cybersecurity Principles (CSP) Knowledge Units.", "lesson": 0, "day": "Day 1", "domain": "D1", "title": "Orientation and the practitioner mindset"}, {"assignment": "give students a one-page IT roadmap for a fictional organization (eight initiatives with budgets) and a strategic plan with four enterprise goals. Students write a two-page board brief that maps each initiative to a goal, flags unaligned spend and uncovered goals, and recommends what the steering committee should ask the sponsors. They submit the mapping as a spreadsheet and the brief as a document.", "rubric": ["Each initiative mapped to a goal with evidence from its business case", "Unaligned spend and coverage gaps identified and quantified", "Recommendations that keep decisions with the steering committee and sponsors rather than the analyst", "Plain business language a board member could act on, with no unexplained technical terms"], "lab": "students build the mapping in a spreadsheet with a pivot table or chart that totals budget by goal, then change two assumptions (a cancelled project and a new regulation) and report how the alignment picture shifts. Use only the synthetic roadmap you supply.", "fit": "a GRC, IT management, or security management course, or the governance unit of a capstone. It supports the CAE-CD Cybersecurity Planning and Management (CPM), Policy, Legal, Ethics, and Compliance (PLE), and Business Continuity and Disaster Recovery (BCD) Knowledge Units.", "lesson": 1, "day": "Day 1", "domain": "D1", "title": "Organizational Governance"}, {"assignment": "teams receive a two-page profile of a fictional community college (enrollment, budget, strategic plan, a planned move of the student information system to a cloud provider). They draft a qualitative appetite statement for three risk categories (student data privacy, service availability, and innovation in online learning), convert each into a quantitative threshold on a 5×5 scale, write two tolerance limits tied to specific objectives, and state the college’s capacity in one sentence. They then place six supplied risks on a heat map and name the required governance action for each.", "rubric": ["Appetite statements are clearly owned by the board and linked to strategic objectives", "Tolerance limits are measurable and tied to a named objective", "Capacity is stated separately and sits above tolerance", "Each risk is routed to the correct action and owner with a one-line justification"], "lab": "give students a synthetic risk register of 15 risks in a spreadsheet. They build a conditional-format heat map driven by appetite and tolerance cells, then change the board stance and record how many risks change route. Use only the synthetic register you supply.", "fit": "this lesson fits an IT risk management, GRC, or security management course. It supports the CAE-CD Cybersecurity Planning and Management (CPM), Policy, Legal, Ethics, and Compliance (PLE), and IA Compliance (IAC) Knowledge Units.", "lesson": 2, "day": "Day 2", "domain": "D1", "title": "Risk Governance"}, {"assignment": "split the class into top-down and bottom-up teams, each with a case packet on a fictional credit union. Top-down teams receive the strategic plan and objectives. Bottom-up teams receive an asset list, a synthetic vulnerability scan summary, and two threat advisories. Each team writes eight scenarios using the five components. The teams then meet, reconcile the lists into a single set of ten, and submit a one-page memo explaining what each method found that the other missed.", "rubric": ["Every scenario has all five components and a plausible combination", "Each is tied to a named business objective", "The reconciled set is distinct, with duplicates merged and the reasons documented", "The memo explains the strengths and blind spots of both methods with specific examples"], "lab": "students take a synthetic list of 25 vulnerabilities with CVSS v4.0 scores, EPSS probabilities, KEV flags, and asset criticality, all supplied by the instructor. They rank the list by CVSS alone, then by a combined rule, and explain the three biggest changes in rank. Use only the synthetic data set you supply.", "fit": "this lesson fits an IT risk management, threat intelligence, or vulnerability management course. It supports the CAE-CD Cyber Threats (CTH), Vulnerability Analysis (VLA), and Cybersecurity Planning and Management (CPM) Knowledge Units.", "lesson": 3, "day": "Day 2", "domain": "D2", "title": "Risk Identification"}, {"assignment": "give teams a one-page scenario packet for a fictional regional employer (a ransomware event on a scheduling system, with synthetic incident history and cost data). Teams write a FAIR-style analysis: scenario statement, calibrated ranges for frequency and loss with the source of each estimate, a 1,000-row Monte Carlo in a spreadsheet, a loss exceedance chart, and a one-page memo to the risk owner that compares the result with a stated tolerance.", "rubric": ["Ranges are justified by stated evidence or expert reasoning, not chosen for convenience", "The model is mechanically correct, with frequency and magnitude sampled separately and summed per simulated year", "The memo evaluates the result against tolerance and names the decision the owner must make", "Limitations and the single-point comparison are explained in plain business language"], "lab": "students build the model in Excel or Google Sheets. Each row is a year. A frequency cell uses RAND() with an inverse distribution (a triangular approximation of PERT is acceptable for a first course), a Poisson count via POISSON.DIST lookups or a simple Bernoulli for rare events, and a loss per event from BETA.INV(RAND(), alpha, beta, min, max) with the PERT shape formulas. A COUNTIF over a column of thresholds produces the exceedance curve. Use synthetic data only.", "fit": "an IT risk management, GRC, or business continuity course at the upper-division or graduate level. Supports the CAE-CD Cybersecurity Planning and Management (CPM), Business Continuity and Disaster Recovery (BCD), and IA Compliance (IAC) Knowledge Units.", "lesson": 4, "day": "Day 3", "domain": "D2", "title": "Risk Analysis"}, {"assignment": "in round one, each team writes a three-page SOC 2-style summary for a fictional SaaS vendor: system description, scope and period, five control descriptions, two exceptions with management responses, three CUECs, and one carved-out subservice organization. In round two, teams swap summaries and act as the customer’s risk practitioner. They tier the vendor, evaluate each exception and CUEC against the customer’s risk, recommend a response (with contract clauses), and write a one-page memo to the vendor relationship owner.", "rubric": ["The vendor tier is justified by criticality and data sensitivity", "Each exception is evaluated for impact on the customer’s own risk, not just restated", "The recommended response is cost-justified, keeps accountability with the customer, and names specific contract clauses", "CUECs and fourth parties are identified and assigned to an owner on the customer side"], "lab": "students rebuild the Decision Console in a spreadsheet using synthetic figures for a fictional college’s learning platform vendor, then add a sixth column for a combined response (mitigate plus insure) and show whether it beats every single option. They finish by drafting a time-boxed exception request, with compensating controls and an expiry date, for one control the vendor cannot meet this term.", "fit": "an IT risk management, GRC, or IT audit course, or a supply chain security elective. Supports the CAE-CD Supply Chain Security (SCS), Cybersecurity Planning and Management (CPM), and Policy, Legal, Ethics, and Compliance (PLE) Knowledge Units.", "lesson": 5, "day": "Day 3", "domain": "D3", "title": "Risk Response"}, {"assignment": "provide a control test workpaper template and an evidence packet for three Penmore controls: MFA enforcement, quarterly access recertification, and the account lockout setting. For each, students state the control objective, judge design effectiveness, choose and justify a test method (inquiry, observation, inspection, or reperformance), test a sample of 10 items from a synthetic population of 60, record exceptions, and conclude whether the control is operating effectively.", "rubric": ["Design and operating effectiveness are assessed separately and in the right order", "The test method fits the control and is stronger than inquiry alone", "The sample is drawn from a population confirmed to be complete, and exceptions are counted correctly", "The conclusion follows from the evidence and names the deficiency type and a remediation owner"], "lab": "build a spreadsheet of 60 synthetic access-review records and an HR roster with a handful of leavers planted in it. Students reperform the recertification by matching the two lists, find the leavers the reviewer missed, and calculate the exception rate. Use only data you generate.", "fit": "an IT audit, GRC, or security management course. It supports the CAE-CD IA Compliance (IAC), Cybersecurity Planning and Management (CPM), and Cybersecurity Principles (CSP) Knowledge Units.", "lesson": 6, "day": "Day 4", "domain": "D3", "title": "Control Design and Implementation"}, {"assignment": "provide a synthetic risk register for a fictional college (fifteen risks with likelihood, impact, owner, KRI values for four quarters, and action-plan status) as a spreadsheet file. Students produce a one-page board risk report: a heat map of the top five risks, a trend arrow for each, three KRIs with thresholds and current status, overdue actions, and two decisions the board must make. They also write a half-page memo explaining which KRI is leading, which is lagging, and why.", "rubric": ["The top risks are chosen by exposure against appetite, not by alphabet or by IT system", "KRIs, KCIs, and KPIs are classified correctly, and at least two KRIs are leading", "Thresholds are justified by the appetite statement and data, and overdue actions are escalated with owners named", "The page uses business language, states the data date and limitations, and ends with clear decisions"], "lab": "give students twelve months of synthetic indicator data with one incident and ask them to set thresholds that would have warned in time, as in the tuner. Then give them a second year of data and ask whether their thresholds still work. Use only data you generate.", "fit": "a GRC, security management, or IT audit course. It supports the CAE-CD Cybersecurity Planning and Management (CPM), IA Compliance (IAC), and Policy, Legal, Ethics, and Compliance (PLE) Knowledge Units.", "lesson": 7, "day": "Day 4", "domain": "D3", "title": "Risk Monitoring and Reporting"}, {"assignment": "an AI use-case risk review for a college department. Teams receive a one-page proposal from a fictional department (for example, an admissions office that wants a GenAI assistant to draft replies to applicants). They classify the use under the EU AI Act tiers, map it to the four NIST AI RMF functions, rate the six profiler factors with a written reason for each, name the risk owner, and recommend a governance tier with three controls and two KRIs.", "rubric": ["Risk factors rated with evidence from the proposal, not assumptions", "Framework use accurate, including correct AI RMF functions and a defensible EU AI Act tier", "Controls matched to the top drivers and feasible for the department", "Ownership and escalation clear, with the business owner deciding and the risk function advising"], "lab": "give students a synthetic prompt log of 200 entries from a fictional help-desk assistant, some containing fake student ID numbers and account details. Students write a simple filter rule, measure how many sensitive entries it catches and misses, and turn the miss rate into a KRI with thresholds. Use only synthetic data.", "fit": "an IT risk management or emerging technology course, or the technology module of a GRC course. It supports the CAE-CD Knowledge Units Cybersecurity Planning and Management (CPM); Policy, Legal, Ethics, and Compliance (PLE); Privacy (PRI); and Supply Chain Security (SCS).", "lesson": 8, "day": "Day 5", "domain": "D4", "title": "Technology and Security"}, {"assignment": "teams design and run a tabletop exercise for a fictional organization from this workshop (Larchmont Community Health, Brightwater Credit Union, Corveth Logistics, Penmore Technical College, or Halloway Foods). The package includes objectives, a scenario, at least five injects, role cards, an evaluator checklist, and the after-action report from their own run.", "rubric": ["Objectives are specific and testable", "Injects escalate realistically and each tests a named decision", "Roles separate decision owners from advisors and the facilitator", "The after-action report links each gap to a corrective action with an owner, a due date, and a risk register update"], "lab": "build a simple exercise tracker in a spreadsheet: inject times, decisions logged by the scribe, time taken per decision, and objective status. Students run a second team’s exercise and compare decision times against the MTD in the scenario. Use only synthetic scenario data.", "fit": "a GRC or IT risk capstone, or the final module of a security management course. It supports the CAE-CD Knowledge Units Cybersecurity Planning and Management (CPM); Business Continuity and Disaster Recovery (BCD); Policy, Legal, Ethics, and Compliance (PLE); and IA Compliance (IAC).", "lesson": 9, "day": "Day 5", "domain": "D4", "title": "Information Security Principles and Capstone"}];
+
+var DOMAINS = { D1: 'Domain 1: Governance', D2: 'Domain 2: Risk Assessment', D3: 'Domain 3: Risk Response and Reporting', D4: 'Domain 4: Technology and Security' };
+var DAYS = [
+  { id: 'day1', label: 'Day 1', title: 'Mindset and Governance', lessons: [0, 1] },
+  { id: 'day2', label: 'Day 2', title: 'Risk Governance and Identification', lessons: [2, 3] },
+  { id: 'day3', label: 'Day 3', title: 'Analysis and Response', lessons: [4, 5] },
+  { id: 'day4', label: 'Day 4', title: 'Controls and Monitoring', lessons: [6, 7] },
+  { id: 'day5', label: 'Day 5', title: 'Technology and Capstone', lessons: [8, 9] }
+];
+var OUTLINE = [
+  ['1A', 'Organizational Governance'], ['1B', 'Risk Governance'], ['2A', 'Risk Identification'], ['2B', 'Risk Analysis'],
+  ['3A', 'Risk Response'], ['3B', 'Control Design and Implementation'], ['3C', 'Risk Monitoring and Reporting'],
+  ['4A', 'Technology and Security'], ['4B', 'Information Security Principles']
+];
+var PAIRINGS = [
+  ['', 'None yet'],
+  ['L0', 'Lesson 0 interactive: Decision Owner Sorter'], ['L1', 'Lesson 1 interactive: Goals Cascade Aligner'],
+  ['L2', 'Lesson 2 interactive: Appetite and Tolerance Map'], ['L3', 'Lesson 3 interactive: Risk Scenario Builder'],
+  ['L4', 'Lesson 4 interactive: Loss Exceedance Simulator'], ['L5', 'Lesson 5 interactive: Risk Response Decision Console'],
+  ['L6', 'Lesson 6 interactive: Control Portfolio Designer'], ['L7', 'Lesson 7 interactive: KRI Threshold Tuner'],
+  ['L8', 'Lesson 8 interactive: Emerging Technology Risk Profiler'], ['L9', 'Lesson 9 interactive: Readiness and Study Planner'],
+  ['A1', 'Practice A1: Think Like a Risk Practitioner'], ['A2', 'Practice A2: Governance, Strategy and Policy'],
+  ['A3', 'Practice A3: Appetite, Lines and Frameworks'], ['A4', 'Practice A4: Threats, Vulnerabilities and Scenarios'],
+  ['A5', 'Practice A5: Analyze and Register Risk'], ['A6', 'Practice A6: Respond, Own and Manage Third Parties'],
+  ['A7', 'Practice A7: Design and Test Controls'], ['A8', 'Practice A8: Metrics, Monitoring and Reporting'],
+  ['A9', 'Practice A9: Technology, Security and Privacy'],
+  ['B1', 'Lab B1: Risk Governance Charter'], ['B2', 'Lab B2: Risk Scenario and Register Workshop'],
+  ['B3', 'Lab B3: Quantitative Risk Analysis'], ['B4', 'Lab B4: Third-Party Risk Review'],
+  ['B5', 'Lab B5: Control Testing Workpapers'], ['B6', 'Lab B6: KRI Dashboard and Board Report'],
+  ['B7', 'Lab B7: AI Use-Case Risk Review'], ['B8', 'Lab B8: Ransomware Tabletop Facilitation'],
+  ['EM', 'An eMate from the lesson'], ['OWN', 'Something of my own']
+];
+var SELF_CHECK = [
+  'The student outcome names something students do that I can see or check.',
+  'The rubric rewards reasoning (who decides and why), not job titles or length.',
+  'Every organization and data set is fictional or synthetic, and I will label it that way.',
+  'The task fits the time and the level of my students.',
+  'Students with disabilities can complete it (readable files, no color-only cues, no drag-only tools).'
+];
+var PEER_QUESTIONS = [
+  'Could a student tell, from the prompt alone, what to produce and how it will be judged?',
+  'Does the rubric separate a strong answer from a weak one on the CRISC point that matters (ownership, appetite, assess-before-respond)?',
+  'Is there one place where students are most likely to go wrong? Does the rubric or the debrief catch it?',
+  'What would you cut to make it fit the time?',
+  'What is one thing you would borrow for your own course?'
+];
+var FAC_ANCHOR = ["s8", "s9", "s8", "s8", "s7", "s7", "s8", "s8", "s8", "s8"];
+var TARGET = 3, TARGET_DOMAINS = 2;
+
+/* ============ STATE ============ */
+var KEY = 'crisc-teaching-kit-v1';
+function blank() { return { courses: [{ name: '', level: '', notes: '' }], asg: [], map: {}, plan: '', v: 1 }; }
+var S = blank(), storageOK = true;
+try { var raw = localStorage.getItem(KEY); if (raw) { var p = JSON.parse(raw); if (p && Array.isArray(p.asg)) S = Object.assign(blank(), p); } } catch (e) { storageOK = false; }
+var saveTimer = null, lastSaved = null;
+function save(now) {
+  clearTimeout(saveTimer);
+  var go = function () { try { localStorage.setItem(KEY, JSON.stringify(S)); lastSaved = new Date(); storageOK = true; } catch (e) { storageOK = false; } renderSaveNote(); };
+  if (now) go(); else saveTimer = setTimeout(go, 400);
+}
+function announce(msg) { var a = document.getElementById('announce'); a.textContent = ''; setTimeout(function () { a.textContent = msg; }, 50); }
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+function uid() { return 'a' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+function model(n) { return MODELS.filter(function (m) { return m.lesson === n; })[0]; }
+
+function isComplete(a) {
+  var rub = (a.rubric || []).filter(function (r) { return (r.c || '').trim() && (r.p || '').trim(); });
+  return !!(String(a.course || '').trim() && String(a.outcome || '').trim() && String(a.prompt || '').trim().length > 40 && rub.length >= 3);
+}
+function missing(a) {
+  var m = [];
+  if (!String(a.course || '').trim()) m.push('choose the course');
+  if (!String(a.outcome || '').trim()) m.push('write the student outcome');
+  if (String(a.prompt || '').trim().length <= 40) m.push('write the student-facing prompt');
+  var rub = (a.rubric || []).filter(function (r) { return (r.c || '').trim() && (r.p || '').trim(); });
+  if (rub.length < 3) m.push('describe "proficient" for at least 3 rubric criteria (' + rub.length + ' so far)');
+  return m;
+}
+function progress() {
+  var done = S.asg.filter(isComplete), doms = {};
+  done.forEach(function (a) { doms[model(a.lesson).domain] = 1; });
+  return { done: done.length, total: S.asg.length, domains: Object.keys(doms).sort() };
+}
+
+/* ============ SECTIONS ============ */
+var SECTIONS = [{ id: 'start', label: 'Start here' }]
+  .concat(DAYS.map(function (d) { return { id: d.id, label: d.label + ': ' + d.title.split(' and ')[0] }; }))
+  .concat([{ id: 'swap', label: 'Peer swap' }, { id: 'map', label: 'Curriculum map' }, { id: 'portfolio', label: 'Portfolio' }]);
+var cur = 'start';
+try { var h = (location.hash || '').slice(1); if (SECTIONS.some(function (s) { return s.id === h; })) cur = h; } catch (e) {}
+
+function renderMenu() {
+  var ul = document.getElementById('kitMenu');
+  ul.innerHTML = SECTIONS.map(function (s) {
+    var mk = '';
+    var day = DAYS.filter(function (d) { return d.id === s.id; })[0];
+    if (day) {
+      var n = S.asg.filter(function (a) { return day.lessons.indexOf(a.lesson) > -1; }), c = n.filter(isComplete).length;
+      if (n.length) mk = c === n.length ? '&#10003; ' + c + ' done' : c + ' of ' + n.length + ' done';
+    }
+    return '<li><button type="button" data-go="' + s.id + '"' + (s.id === cur ? ' aria-current="step"' : '') + '><span>' + esc(s.label) + '</span>' + (mk ? '<span class="mk">' + mk + '</span>' : '') + '</button></li>';
+  }).join('');
+  var pr = progress(), pct = Math.min(100, Math.round(100 * Math.min(pr.done, TARGET) / TARGET));
+  document.getElementById('kitProgress').innerHTML =
+    '<b>Goal:</b> adapt at least ' + TARGET + ' assignments from at least ' + TARGET_DOMAINS + ' domains.' +
+    '<div class="bar" aria-hidden="true"><span style="width:' + pct + '%"></span></div>' +
+    '<div>Complete: <b>' + pr.done + ' of ' + TARGET + '</b>' + (pr.done >= TARGET ? ' &#10003;' : '') + '</div>' +
+    '<div>Domains: <b>' + (pr.domains.length ? pr.domains.join(', ') : 'none yet') + '</b> (' + Math.min(pr.domains.length, TARGET_DOMAINS) + ' of ' + TARGET_DOMAINS + ')' + (pr.domains.length >= TARGET_DOMAINS ? ' &#10003;' : '') + '</div>' +
+    '<div class="kit-save" id="saveNote"></div>';
+  renderSaveNote();
+}
+function renderSaveNote() {
+  var n = document.getElementById('saveNote'); if (!n) return;
+  n.textContent = !storageOK ? 'This browser is not saving your work. Use Export on the Portfolio page before you close it.' :
+    lastSaved ? 'Saved in this browser at ' + lastSaved.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) + '.' : 'Saves automatically in this browser.';
+}
+
+function pager(id) {
+  var i = SECTIONS.map(function (s) { return s.id; }).indexOf(id), prev = SECTIONS[i - 1], next = SECTIONS[i + 1];
+  return '<nav class="pager2" aria-label="Kit section navigation">' +
+    (prev ? '<button type="button" class="kbtn" data-go="' + prev.id + '">&#8592; ' + esc(prev.label) + '</button>' : '<span class="spacer"></span>') +
+    (next ? '<button type="button" class="kbtn primary" data-go="' + next.id + '">' + esc(next.label) + ' &#8594;</button>' : '') +
+    '</nav>';
+}
+
+function courseOptions(sel) {
+  var opts = S.courses.filter(function (c) { return c.name.trim(); });
+  return '<option value="">Choose a course</option>' + opts.map(function (c) { return '<option' + (c.name === sel ? ' selected' : '') + '>' + esc(c.name) + '</option>'; }).join('') +
+    (sel && !opts.some(function (c) { return c.name === sel; }) ? '<option selected>' + esc(sel) + '</option>' : '');
+}
+
+function panelStart() {
+  return '<section class="panel" id="p-start" aria-labelledby="h-start">' +
+    '<p class="eyebrow">Teaching Kit</p><h1 id="h-start" tabindex="-1">Leave the workshop with assignments you will use</h1>' +
+    '<p>Each lesson ends with a model assignment, rubric, and lab idea. In this kit you adapt them for <strong>your</strong> courses. You will not do all ten. The goal for the week is:</p>' +
+    '<div class="tip"><span class="tip-label">&#127919; Workshop goal</span>Adapt at least <b>three</b> CRISC-aligned assignments with rubrics, from at least <b>two</b> domains, for courses you teach, and map them to your program.</div>' +
+    '<h2 class="k2">How the week works</h2><ul class="plain">' +
+    '<li><b>Each afternoon (30 to 45 minutes):</b> open that day\'s page, pick one of the day\'s two models, and adapt it.</li>' +
+    '<li><b>Then a peer swap (10 to 15 minutes):</b> trade drafts with a partner and use the questions on the Peer swap page.</li>' +
+    '<li><b>Day 5:</b> finish your curriculum map and print your portfolio, or save it as a PDF.</li></ul>' +
+    '<p class="note">Your work saves in this browser only. Do not enter student names or other student information. Use Export on the Portfolio page to keep a copy or move it to another computer.</p>' +
+    '<h2 class="k2">Your courses</h2><p>List the courses where you might use this material. You can add more later.</p>' +
+    '<div id="courseList">' + S.courses.map(function (c, i) {
+      return '<div class="asg" data-course="' + i + '"><div class="row2">' +
+        '<div class="field"><label for="cn-' + i + '">Course name or number</label><input type="text" id="cn-' + i + '" data-cf="name" data-ci="' + i + '" value="' + esc(c.name) + '" placeholder="For example: CIS 215 Security Policy and Compliance"></div>' +
+        '<div class="field"><label for="cl-' + i + '">Level</label><select id="cl-' + i + '" data-cf="level" data-ci="' + i + '">' +
+        ['', 'Introductory (first year)', 'Intermediate (second year)', 'Upper division', 'Graduate', 'Certificate or non-credit'].map(function (o) { return '<option' + (o === c.level ? ' selected' : '') + ' value="' + esc(o) + '">' + (o || 'Choose a level') + '</option>'; }).join('') + '</select></div></div>' +
+        '<div class="field"><label for="cnn-' + i + '">What your students already know</label><input type="text" id="cnn-' + i + '" data-cf="notes" data-ci="' + i + '" value="' + esc(c.notes) + '" placeholder="For example: Security+ level basics, no audit background"></div>' +
+        (S.courses.length > 1 ? '<button type="button" class="kbtn small danger" data-delcourse="' + i + '">Remove this course</button>' : '') + '</div>';
+    }).join('') + '</div>' +
+    '<div class="actions"><button type="button" class="kbtn" id="addCourse">+ Add another course</button></div>' +
+    pager('start') + '</section>';
+}
+
+function rubricRows(a) {
+  return '<table class="rubric"><caption class="sr-only">Rubric for this assignment</caption><thead><tr><th scope="col">#</th><th scope="col">Criterion</th><th scope="col">What proficient work looks like</th><th scope="col">Common miss to watch for</th><th scope="col"><span class="sr-only">Remove</span></th></tr></thead><tbody>' +
+    a.rubric.map(function (r, k) {
+      var base = a.id + '-r' + k;
+      return '<tr><td class="n">' + (k + 1) + '</td>' +
+        '<td><label class="sr-only" for="' + base + 'c">Criterion ' + (k + 1) + '</label><textarea id="' + base + 'c" data-a="' + a.id + '" data-rk="' + k + '" data-rf="c">' + esc(r.c) + '</textarea></td>' +
+        '<td><label class="sr-only" for="' + base + 'p">What proficient looks like, criterion ' + (k + 1) + '</label><textarea id="' + base + 'p" data-a="' + a.id + '" data-rk="' + k + '" data-rf="p" placeholder="Describe what you would see in strong work">' + esc(r.p) + '</textarea></td>' +
+        '<td><label class="sr-only" for="' + base + 'm">Common miss, criterion ' + (k + 1) + '</label><textarea id="' + base + 'm" data-a="' + a.id + '" data-rk="' + k + '" data-rf="m" placeholder="The mistake most students make">' + esc(r.m) + '</textarea></td>' +
+        '<td class="x"><button type="button" class="kbtn small" data-delrow="' + k + '" data-a="' + a.id + '" aria-label="Remove criterion ' + (k + 1) + '">&#10005;</button></td></tr>';
+    }).join('') + '</tbody></table>' +
+    '<button type="button" class="kbtn small" data-addrow="' + a.id + '">+ Add a criterion</button>';
+}
+
+function asgEditor(a) {
+  var m = model(a.lesson), done = isComplete(a), miss = missing(a);
+  return '<div class="asg" id="asg-' + a.id + '">' +
+    '<div class="asg-head"><h2 class="k2">Your adaptation: Lesson ' + a.lesson + ', ' + esc(m.title) + '</h2>' +
+    '<span class="status ' + (done ? 'done' : 'draft') + '" id="st-' + a.id + '">' + (done ? '&#10003; Complete' : '&#9998; Draft') + '</span></div>' +
+    '<div class="row2"><div class="field"><label for="' + a.id + '-course">Course</label><select id="' + a.id + '-course" data-a="' + a.id + '" data-f="course">' + courseOptions(a.course) + '</select>' +
+    '<span class="help">Add courses on the Start here page.</span></div>' +
+    '<div class="field"><label for="' + a.id + '-format">Format and time</label><input type="text" id="' + a.id + '-format" data-a="' + a.id + '" data-f="format" value="' + esc(a.format) + '" placeholder="For example: teams of 3, two class sessions plus 2 hours outside"></div></div>' +
+    '<div class="field"><label for="' + a.id + '-outcome">Student outcome</label><span class="help">What will students be able to do? Start with a verb you can see or check, such as build, rank, justify, or recommend.</span>' +
+    '<input type="text" id="' + a.id + '-outcome" data-a="' + a.id + '" data-f="outcome" value="' + esc(a.outcome) + '"></div>' +
+    '<div class="field"><label for="' + a.id + '-prompt">Assignment prompt, written to your students</label><span class="help">Rewrite the model in your own words for your course. Name the product, the audience, and the length.</span>' +
+    '<textarea class="tall" id="' + a.id + '-prompt" data-a="' + a.id + '" data-f="prompt">' + esc(a.prompt) + '</textarea>' +
+    '<button type="button" class="kbtn small no-print" data-seed="' + a.id + '">Paste the model text to edit</button></div>' +
+    '<div class="field"><label for="' + a.id + '-case">Fictional case and synthetic data you will supply</label><input type="text" id="' + a.id + '-case" data-a="' + a.id + '" data-f="case" value="' + esc(a.case) + '" placeholder="For example: Penmore Technical College profile + 15-row synthetic register"></div>' +
+    '<h3 class="k3">Rubric</h3><p class="note">The model\'s criteria are filled in. Edit them, then describe what proficient work looks like for each.</p>' + rubricRows(a) +
+    '<div class="row2" style="margin-top:.6rem"><div class="field"><label for="' + a.id + '-pair">Warm-up or practice to pair with it</label><select id="' + a.id + '-pair" data-a="' + a.id + '" data-f="pair">' +
+    PAIRINGS.map(function (p) { return '<option value="' + p[0] + '"' + (p[0] === (a.pair || '') ? ' selected' : '') + '>' + esc(p[1]) + '</option>'; }).join('') + '</select></div>' +
+    '<div class="field"><label for="' + a.id + '-when">When you will use it</label><input type="text" id="' + a.id + '-when" data-a="' + a.id + '" data-f="when" value="' + esc(a.when) + '" placeholder="For example: Spring 2027, week 6"></div></div>' +
+    '<fieldset class="fs"><legend>Quality self-check</legend><ul class="checks">' + SELF_CHECK.map(function (q, k) {
+      return '<li><label><input type="checkbox" data-a="' + a.id + '" data-chk="' + k + '"' + ((a.checks || [])[k] ? ' checked' : '') + '> <span>' + esc(q) + '</span></label></li>';
+    }).join('') + '</ul></fieldset>' +
+    '<div class="field"><label for="' + a.id + '-peer">Peer feedback you received</label><textarea id="' + a.id + '-peer" data-a="' + a.id + '" data-f="peer" placeholder="Notes from your peer swap">' + esc(a.peer) + '</textarea></div>' +
+    '<div class="field"><label for="' + a.id + '-change">What you will change because of it</label><input type="text" id="' + a.id + '-change" data-a="' + a.id + '" data-f="change" value="' + esc(a.change) + '"></div>' +
+    '<div id="miss-' + a.id + '">' + (miss.length ? '<p class="missing">To mark this complete: ' + esc(miss.join('; ')) + '.</p>' : '') + '</div>' +
+    '<div class="actions"><span id="delwrap-' + a.id + '"><button type="button" class="kbtn small danger" data-del="' + a.id + '">Remove this adaptation</button></span></div>' +
+    '</div>';
+}
+
+function panelDay(day) {
+  var h = '<section class="panel" id="p-' + day.id + '" aria-labelledby="h-' + day.id + '">' +
+    '<p class="eyebrow">' + day.label + ' build block &middot; 30 to 45 minutes</p><h1 id="h-' + day.id + '" tabindex="-1">' + esc(day.title) + '</h1>' +
+    '<p>Pick <b>one</b> of today\'s two models that fits a course you teach. Read the model, then adapt it. If neither fits, skip today and adapt two tomorrow.</p>';
+  day.lessons.forEach(function (n) {
+    var m = model(n), mine = S.asg.filter(function (a) { return a.lesson === n; });
+    h += '<div class="model"><span class="tag">Lesson ' + n + '</span><span class="tag">' + esc(n === 0 ? 'All domains (counts as D1)' : DOMAINS[m.domain]) + '</span>' +
+      '<h2 class="k2">' + esc(m.title) + '</h2>' +
+      '<p>' + esc(m.assignment.charAt(0).toUpperCase() + m.assignment.slice(1)) + '</p>' +
+      '<details><summary>Model rubric, lab idea, and course fit</summary><dl>' +
+      '<dt>Rubric criteria</dt><dd><ol style="margin-left:1.2rem">' + m.rubric.map(function (r) { return '<li>' + esc(r) + '</li>'; }).join('') + '</ol></dd>' +
+      '<dt>Lab idea</dt><dd>' + esc(m.lab) + '</dd><dt>Course fit</dt><dd>' + esc(m.fit) + '</dd></dl>' +
+      '<p class="note">Full context: <a href="lesson0' + n + '.html#' + FAC_ANCHOR[n] + '">Lesson ' + n + ', Faculty Teaching Segment</a>.</p></details>' +
+      '<div class="actions"><button type="button" class="kbtn primary" data-adapt="' + n + '">' + (mine.length ? 'Start another adaptation of this model' : 'Adapt this model') + '</button></div></div>';
+    mine.forEach(function (a) { h += asgEditor(a); });
+  });
+  if (day.id === 'day5') h += '<div class="tip"><span class="tip-label">&#128203; Finish the week</span>When today\'s adaptation is done, complete your <button type="button" class="kbtn small" data-go="map">Curriculum map</button> and print your <button type="button" class="kbtn small" data-go="portfolio">Portfolio</button>.</div>';
+  return h + pager(day.id) + '</section>';
+}
+
+function panelSwap() {
+  return '<section class="panel" id="p-swap" aria-labelledby="h-swap">' +
+    '<p class="eyebrow">Peer swap &middot; 10 to 15 minutes</p><h1 id="h-swap" tabindex="-1">Trade drafts with a partner</h1>' +
+    '<p>Swap screens or printed drafts. Read your partner\'s prompt and rubric as if you were one of their students, then as a colleague. Spend about five minutes each way. Give your partner short answers to these questions. They record your feedback in their kit.</p>' +
+    '<ol style="margin:.6rem 0 0 1.3rem">' + PEER_QUESTIONS.map(function (q) { return '<li>' + esc(q) + '</li>'; }).join('') + '</ol>' +
+    '<div class="tip"><span class="tip-label">&#129309; Ground rules</span>Comment on the assignment, not the person. Name one strength before one change. If a point is CRISC content you are unsure about, flag it for the whole group rather than guessing.</div>' +
+    '<div class="actions"><button type="button" class="kbtn" id="printSwap">&#128424; Print these questions</button></div>' +
+    pager('swap') + '</section>';
+}
+
+function panelMap() {
+  var cs = S.courses.filter(function (c) { return c.name.trim(); });
+  var h = '<section class="panel" id="p-map" aria-labelledby="h-map">' +
+    '<p class="eyebrow">Day 5</p><h1 id="h-map" tabindex="-1">Map CRISC to your program</h1>' +
+    '<p>For each part of the CRISC outline, mark where your courses <b>I</b>ntroduce it, <b>R</b>einforce it, or ask students to show <b>M</b>astery. Lesson 9 has a <a href="lesson09.html#s8">starting template</a>. Gaps are useful. They show where your new assignments belong.</p>';
+  if (!cs.length) h += '<p class="missing">Add at least one course on the <button type="button" class="kbtn small" data-go="start">Start here</button> page to build your map.</p>';
+  else {
+    h += '<div class="mapwrap"><table class="map"><caption class="sr-only">Curriculum map: CRISC outline parts by course</caption><thead><tr><th scope="col">CRISC outline part</th>' +
+      cs.map(function (c) { return '<th scope="col">' + esc(c.name) + '</th>'; }).join('') + '<th scope="col">My kit assignments</th></tr></thead><tbody>';
+    OUTLINE.forEach(function (o) {
+      var mine = S.asg.filter(function (a) { var m = model(a.lesson); return m.domain === 'D' + o[0].charAt(0); });
+      h += '<tr><th scope="row">' + o[0] + ' ' + esc(o[1]) + '</th>' + cs.map(function (c, k) {
+        var key = o[0] + '|' + c.name, v = S.map[key] || '';
+        return '<td><label class="sr-only" for="mp-' + o[0] + '-' + k + '">' + esc(o[0] + ' ' + o[1] + ' in ' + c.name) + '</label><select id="mp-' + o[0] + '-' + k + '" data-map="' + esc(key) + '">' +
+          [['', '—'], ['I', 'I Introduce'], ['R', 'R Reinforce'], ['M', 'M Mastery']].map(function (x) { return '<option value="' + x[0] + '"' + (x[0] === v ? ' selected' : '') + '>' + x[1] + '</option>'; }).join('') + '</select></td>';
+      }).join('') + '<td>' + (mine.length ? mine.map(function (a) { return 'L' + a.lesson + (a.course ? ' in ' + esc(a.course) : ''); }).join('<br>') : '<span class="note">none</span>') + '</td></tr>';
+    });
+    h += '</tbody></table></div><p class="note">The last column lists every adaptation in that domain, so it may repeat across rows of the same domain.</p>';
+  }
+  h += '<div class="field"><label for="planNext">Your next step after the workshop</label><span class="help">One or two sentences: which assignment you will run first, in which course and term, and what you need to prepare.</span><textarea id="planNext" data-plan="1">' + esc(S.plan) + '</textarea></div>';
+  return h + pager('map') + '</section>';
+}
+
+function panelPortfolio() {
+  var pr = progress(), cs = S.courses.filter(function (c) { return c.name.trim(); });
+  var h = '<section class="panel" id="p-portfolio" aria-labelledby="h-portfolio">' +
+    '<p class="eyebrow">Day 5</p><h1 id="h-portfolio" tabindex="-1">Your Teaching Kit portfolio</h1>' +
+    '<p class="print-only">CRISC 5-Day Faculty Workshop &middot; printed ' + esc(new Date().toLocaleDateString()) + '</p>' +
+    '<p><b>' + pr.done + '</b> complete adaptation' + (pr.done === 1 ? '' : 's') + (pr.total > pr.done ? ' and ' + (pr.total - pr.done) + ' draft' + (pr.total - pr.done === 1 ? '' : 's') : '') +
+    ', covering ' + (pr.domains.length ? pr.domains.map(function (d) { return esc(DOMAINS[d]); }).join('; ') : 'no domains yet') + '.</p>' +
+    (pr.done >= TARGET && pr.domains.length >= TARGET_DOMAINS ? '<p>&#10003; You met the workshop goal.</p>' : '<p class="missing no-print">The workshop goal is ' + TARGET + ' complete adaptations from ' + TARGET_DOMAINS + ' domains. You can still print a partial portfolio.</p>') +
+    '<div class="actions"><button type="button" class="kbtn primary" id="printPf">&#128424; Print or save as PDF</button>' +
+    '<button type="button" class="kbtn" id="exportBtn">&#11015; Export kit (JSON)</button>' +
+    '<label class="kbtn" for="importFile" style="cursor:pointer">&#11014; Import kit</label><input type="file" id="importFile" accept="application/json,.json" class="sr-only">' +
+    '<span id="resetWrap"><button type="button" class="kbtn danger" id="resetBtn">Clear my kit</button></span></div>' +
+    '<p class="note no-print">Export saves a file you can import on another computer. Clear removes everything from this browser.</p>';
+  if (cs.length) h += '<h2 class="k2">Courses</h2><ul class="plain">' + cs.map(function (c) { return '<li><b>' + esc(c.name) + '</b>' + (c.level ? ', ' + esc(c.level) : '') + (c.notes ? '. Students: ' + esc(c.notes) : '') + '</li>'; }).join('') + '</ul>';
+  S.asg.forEach(function (a) {
+    var m = model(a.lesson), pair = PAIRINGS.filter(function (p) { return p[0] === (a.pair || ''); })[0];
+    h += '<div class="pf-asg"><h2 class="k2">' + (isComplete(a) ? '&#10003; ' : '&#9998; Draft: ') + 'Lesson ' + a.lesson + ', ' + esc(m.title) + (a.course ? ' &middot; ' + esc(a.course) : '') + '</h2>' +
+      '<p><b>Domain:</b> ' + esc(DOMAINS[m.domain]) + (a.format ? ' &middot; <b>Format:</b> ' + esc(a.format) : '') + (a.when ? ' &middot; <b>When:</b> ' + esc(a.when) : '') + '</p>' +
+      (a.outcome ? '<p><b>Students will be able to:</b> ' + esc(a.outcome) + '</p>' : '') +
+      (a.prompt ? '<h3 class="k3">Prompt</h3><div class="pre">' + esc(a.prompt) + '</div>' : '') +
+      (a.case ? '<p><b>Case and data (fictional):</b> ' + esc(a.case) + '</p>' : '') +
+      '<h3 class="k3">Rubric</h3><table class="rubric"><thead><tr><th>Criterion</th><th>Proficient</th><th>Common miss</th></tr></thead><tbody>' +
+      a.rubric.filter(function (r) { return (r.c || '').trim(); }).map(function (r) { return '<tr><td>' + esc(r.c) + '</td><td>' + esc(r.p) + '</td><td>' + esc(r.m) + '</td></tr>'; }).join('') + '</tbody></table>' +
+      (pair && pair[0] ? '<p><b>Pair with:</b> ' + esc(pair[1]) + '</p>' : '') +
+      (a.change ? '<p><b>Change after peer review:</b> ' + esc(a.change) + '</p>' : '') + '</div>';
+  });
+  if (S.plan) h += '<h2 class="k2">Next step</h2><p>' + esc(S.plan) + '</p>';
+  if (cs.length && Object.keys(S.map).some(function (k) { return S.map[k]; })) {
+    h += '<h2 class="k2">Curriculum map</h2><div class="mapwrap"><table class="map"><thead><tr><th>CRISC part</th>' + cs.map(function (c) { return '<th>' + esc(c.name) + '</th>'; }).join('') + '</tr></thead><tbody>' +
+      OUTLINE.map(function (o) { return '<tr><th scope="row">' + o[0] + ' ' + esc(o[1]) + '</th>' + cs.map(function (c) { return '<td>' + esc(S.map[o[0] + '|' + c.name] || '—') + '</td>'; }).join('') + '</tr>'; }).join('') + '</tbody></table></div>';
+  }
+  return h + pager('portfolio') + '</section>';
+}
+
+function render(focusHeading) {
+  var p = document.getElementById('panels');
+  var html = '';
+  if (cur === 'start') html = panelStart();
+  else if (cur === 'swap') html = panelSwap();
+  else if (cur === 'map') html = panelMap();
+  else if (cur === 'portfolio') html = panelPortfolio();
+  else html = panelDay(DAYS.filter(function (d) { return d.id === cur; })[0]);
+  p.innerHTML = html;
+  renderMenu();
+  if (focusHeading) { var hd = document.getElementById('h-' + cur); if (hd) hd.focus(); window.scrollTo(0, 0); }
+}
+function go(id) {
+  cur = id;
+  try { history.replaceState(null, '', '#' + id); } catch (e) {}
+  var side = document.querySelector('.kit-side'); side.classList.add('collapsed'); document.getElementById('menuToggle').setAttribute('aria-expanded', 'false');
+  render(true);
+}
+function findA(id) { return S.asg.filter(function (a) { return a.id === id; })[0]; }
+function refreshStatus(a) {
+  var st = document.getElementById('st-' + a.id), done = isComplete(a);
+  if (st) { st.className = 'status ' + (done ? 'done' : 'draft'); st.innerHTML = done ? '&#10003; Complete' : '&#9998; Draft'; }
+  var mm = document.getElementById('miss-' + a.id), miss = missing(a);
+  if (mm) mm.innerHTML = miss.length ? '<p class="missing">To mark this complete: ' + esc(miss.join('; ')) + '.</p>' : '';
+  var was = a._done; a._done = done;
+  if (done && !was) announce('Adaptation marked complete.');
+  renderMenu();
+}
+
+/* ============ EVENTS ============ */
+document.addEventListener('click', function (e) {
+  var t = e.target.closest('button'); if (!t) return;
+  if (t.dataset.go) return go(t.dataset.go);
+  if (t.id === 'menuToggle') { var side = t.closest('.kit-side'), open = side.classList.toggle('collapsed') === false; t.setAttribute('aria-expanded', open); return; }
+  if (t.id === 'addCourse') { S.courses.push({ name: '', level: '', notes: '' }); save(true); render(); var n = document.getElementById('cn-' + (S.courses.length - 1)); if (n) n.focus(); return; }
+  if (t.dataset.delcourse != null) { S.courses.splice(+t.dataset.delcourse, 1); save(true); render(); announce('Course removed.'); document.getElementById('addCourse').focus(); return; }
+  if (t.dataset.adapt != null) {
+    var n2 = +t.dataset.adapt, m = model(n2);
+    var a = { id: uid(), lesson: n2, course: (S.courses.filter(function (c) { return c.name.trim(); })[0] || {}).name || '', outcome: '', prompt: '', case: '', format: '', when: '', pair: '', peer: '', change: '', checks: [],
+      rubric: m.rubric.map(function (r) { return { c: r, p: '', m: '' }; }) };
+    S.asg.push(a); save(true); render();
+    var f = document.getElementById(a.id + '-outcome'); if (f) { f.focus(); }
+    announce('New adaptation added for Lesson ' + n2 + '.');
+    return;
+  }
+  if (t.dataset.seed) { var a2 = findA(t.dataset.seed), m2 = model(a2.lesson), ta = document.getElementById(a2.id + '-prompt');
+    if (a2.prompt.trim()) { a2.prompt = a2.prompt.trim() + '\n\n[Model] ' + m2.assignment; } else { a2.prompt = 'Model to adapt: ' + m2.assignment; }
+    ta.value = a2.prompt; save(); refreshStatus(a2); ta.focus(); return; }
+  if (t.dataset.addrow) { var a3 = findA(t.dataset.addrow); a3.rubric.push({ c: '', p: '', m: '' }); save(true); render(); var nr = document.getElementById(a3.id + '-r' + (a3.rubric.length - 1) + 'c'); if (nr) nr.focus(); return; }
+  if (t.dataset.delrow != null) { var a4 = findA(t.dataset.a); a4.rubric.splice(+t.dataset.delrow, 1); save(true); render(); announce('Criterion removed.'); var ad = document.querySelector('[data-addrow="' + a4.id + '"]'); if (ad) ad.focus(); return; }
+  if (t.dataset.del) {
+    var wrap = document.getElementById('delwrap-' + t.dataset.del);
+    wrap.innerHTML = '<span class="confirm">Remove this adaptation? <button type="button" class="kbtn small danger" data-delyes="' + t.dataset.del + '">Yes, remove</button> <button type="button" class="kbtn small" data-delno="' + t.dataset.del + '">Keep it</button></span>';
+    wrap.querySelector('[data-delno]').focus(); return;
+  }
+  if (t.dataset.delno) { document.getElementById('delwrap-' + t.dataset.delno).innerHTML = '<button type="button" class="kbtn small danger" data-del="' + t.dataset.delno + '">Remove this adaptation</button>'; document.querySelector('[data-del="' + t.dataset.delno + '"]').focus(); return; }
+  if (t.dataset.delyes) { S.asg = S.asg.filter(function (a) { return a.id !== t.dataset.delyes; }); save(true); render(); announce('Adaptation removed.'); var hd = document.getElementById('h-' + cur); if (hd) hd.focus(); return; }
+  if (t.id === 'printPf' || t.id === 'printSwap') { window.print(); return; }
+  if (t.id === 'exportBtn') {
+    try { var blob = new Blob([JSON.stringify(S, null, 2)], { type: 'application/json' }), url = URL.createObjectURL(blob), dl = document.createElement('a');
+      dl.href = url; dl.download = 'crisc-teaching-kit.json'; document.body.appendChild(dl); dl.click(); dl.remove(); setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+      announce('Kit exported as crisc-teaching-kit.json.'); } catch (er) { announce('Export did not work in this browser. Print to PDF instead.'); }
+    return;
+  }
+  if (t.id === 'resetBtn') { var rw = document.getElementById('resetWrap'); rw.innerHTML = '<span class="confirm">Clear everything? This cannot be undone. <button type="button" class="kbtn small danger" id="resetYes">Yes, clear</button> <button type="button" class="kbtn small" id="resetNo">Cancel</button></span>'; document.getElementById('resetNo').focus(); return; }
+  if (t.id === 'resetNo') { render(); document.getElementById('resetBtn').focus(); return; }
+  if (t.id === 'resetYes') { S = blank(); try { localStorage.removeItem(KEY); } catch (er) {} cur = 'start'; render(true); announce('Your kit was cleared.'); return; }
+});
+
+document.addEventListener('input', function (e) {
+  var t = e.target;
+  if (t.dataset.cf) { S.courses[+t.dataset.ci][t.dataset.cf] = t.value; save(); return; }
+  if (t.dataset.plan) { S.plan = t.value; save(); return; }
+  if (t.dataset.map) { S.map[t.dataset.map] = t.value; save(); return; }
+  if (t.dataset.a && t.dataset.rf) { var a = findA(t.dataset.a); a.rubric[+t.dataset.rk][t.dataset.rf] = t.value; save(); refreshStatus(a); return; }
+  if (t.dataset.a && t.dataset.f) { var a2 = findA(t.dataset.a); a2[t.dataset.f] = t.value; save(); refreshStatus(a2); return; }
+});
+document.addEventListener('change', function (e) {
+  var t = e.target;
+  if (t.dataset.cf && t.tagName === 'SELECT') { S.courses[+t.dataset.ci][t.dataset.cf] = t.value; save(); return; }
+  if (t.dataset.chk != null) { var a = findA(t.dataset.a); a.checks = a.checks || []; a.checks[+t.dataset.chk] = t.checked; save(); return; }
+  if (t.id === 'importFile' && t.files && t.files[0]) {
+    var r = new FileReader();
+    r.onload = function () {
+      try { var p = JSON.parse(r.result); if (!p || !Array.isArray(p.asg) || !Array.isArray(p.courses)) throw new Error('shape');
+        p.asg = p.asg.filter(function (a) { return a && typeof a.lesson === 'number' && model(a.lesson) && Array.isArray(a.rubric); });
+        S = Object.assign(blank(), p); save(true); render(true); announce('Kit imported.');
+      } catch (er) { announce('That file is not a Teaching Kit export. Nothing was changed.'); }
+    };
+    r.readAsText(t.files[0]); t.value = '';
+  }
+});
+/* Courses: rename updates selects without a full redraw while typing */
+document.addEventListener('focusout', function (e) { if (e.target.dataset && e.target.dataset.cf === 'name') renderMenu(); });
+
+S.asg.forEach(function (a) { a._done = isComplete(a); });
+render(false);
+</script>
+</body>
+</html>

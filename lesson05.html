@@ -62,8 +62,8 @@
       <li><span><strong>Assign</strong> risk ownership and control ownership, and document a risk acceptance at the right level of authority. <em class="bloom-tag">Bloom: Apply</em></span></li>
       <li><span><strong>Evaluate</strong> third-party risk across the vendor lifecycle, including SOC 2 reports, contract clauses, fourth parties, and SBOMs. <em class="bloom-tag">Bloom: Evaluate</em></span></li>
       <li><span><strong>Differentiate</strong> issues, findings, exceptions, and exemptions, and route each through the correct process. <em class="bloom-tag">Bloom: Analyze</em></span></li>
-      <li><span><strong>Design</strong> a third-party due-diligence assignment built on a student-written SOC 2-style summary. <em class="bloom-tag">Bloom: Create</em></span></li>
     </ul>
+    <div class="tip"><span class="tip-label">&#129520; Teaching Kit</span>This lesson&rsquo;s Faculty Teaching Segment ends with a model assignment and rubric. It is one of your two options in the <a href="teaching-kit.html#day3">Day 3 build block</a>. Workshop goal: adapt at least three model assignments, from at least two domains, for courses you teach.</div>
   </section>
 
   <section class="block">
@@ -322,7 +322,7 @@
             .rrd-opts{display:flex;flex-wrap:wrap;gap:.35rem;margin:.35rem 0 .55rem;}
             .rrd-opts .iw-btn{padding:.38rem .6rem;}
             .rrd-params{background:var(--section-alt);border:1px solid var(--border);border-radius:5px;padding:.55rem .65rem;}
-            .rrd-params h6{font-family:Arial,sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--jade-dark);margin:0 0 .4rem;}
+            .rrd-params h5.h6x{font-family:Arial,sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--jade-dark);margin:0 0 .4rem;}
             .rrd-chk{display:flex;align-items:flex-start;gap:.45rem;font-size:.78rem;color:var(--text-secondary);margin:.25rem 0;line-height:1.35;cursor:pointer;}
             .rrd-chk input{margin-top:.15rem;accent-color:var(--gold);}
             .rrd-chk em{font-style:normal;color:var(--text-muted);}
@@ -346,12 +346,12 @@
               </div>
               <div class="rrd-row">
                 <div class="iw-panel rrd-in">
-                  <h5 class="iw-h5">Scenario: telematics vendor breach</h5>
+                  <h4 class="iw-h5">Scenario: telematics vendor breach</h4>
                   <div class="rrd-sl"><label for="rrd-aro"><span>Breaches per year</span><b id="rrd-aro-v"></b></label><input type="range" id="rrd-aro" min="0.05" max="1" step="0.05" value="0.4"></div>
                   <div class="rrd-sl"><label for="rrd-fin"><span>Financial loss per event</span><b id="rrd-fin-v"></b></label><input type="range" id="rrd-fin" min="250" max="5000" step="50" value="2000"></div>
                   <div class="rrd-sl"><label for="rrd-rep"><span>Reputational loss per event</span><b id="rrd-rep-v"></b></label><input type="range" id="rrd-rep" min="0" max="2000" step="50" value="750"></div>
                   <div class="rrd-sl"><label for="rrd-app"><span>Appetite: max residual ALE</span><b id="rrd-app-v"></b></label><input type="range" id="rrd-app" min="100" max="1200" step="25" value="400"></div>
-                  <h5 class="iw-h5" style="margin-top:.55rem">Choose a response</h5>
+                  <h4 class="iw-h5" style="margin-top:.55rem">Choose a response</h4>
                   <div class="rrd-opts" role="group" aria-label="Response option">
                     <button type="button" class="iw-btn" data-o="accept" aria-pressed="false">Accept</button>
                     <button type="button" class="iw-btn" data-o="mitigate" aria-pressed="false">Mitigate</button>
@@ -360,30 +360,30 @@
                     <button type="button" class="iw-btn" data-o="share" aria-pressed="false">Share</button>
                   </div>
                   <div class="rrd-params" id="rrd-pp-accept">
-                    <h6>Accept: retain the risk</h6>
+                    <h5 class="h6x">Accept: retain the risk</h5>
                     <label class="rrd-chk"><input type="checkbox" id="rrd-own"> <span>Risk owner (VP Operations) signs the acceptance with a review date</span></label>
                     <label class="rrd-chk"><input type="checkbox" id="rrd-snr"> <span>Senior management approves <em>(required when residual risk is above appetite)</em></span></label>
                     <p class="rrd-p">Response cost: $10k a year for monitoring and the annual re-review.</p>
                   </div>
                   <div class="rrd-params" id="rrd-pp-mitigate">
-                    <h6>Mitigate: select up to three controls</h6>
+                    <h5 class="h6x">Mitigate: select up to three controls</h5>
                     <label class="rrd-chk"><input type="checkbox" id="rrd-c1" checked> <span>Phishing-resistant MFA and token rotation on the vendor portal <em>($70k/yr, &minus;40% frequency)</em></span></label>
                     <label class="rrd-chk"><input type="checkbox" id="rrd-c2" checked> <span>Anomaly monitoring on the telematics data feed <em>($90k/yr, &minus;30% frequency)</em></span></label>
                     <label class="rrd-chk"><input type="checkbox" id="rrd-c3"> <span>Contractual security requirements with an annual vendor assessment <em>($40k/yr, &minus;20% frequency)</em></span></label>
                     <p class="rrd-p">Reductions combine multiplicatively: two 50% controls leave 25%, not 0%.</p>
                   </div>
                   <div class="rrd-params" id="rrd-pp-transfer">
-                    <h6>Transfer: cyber insurance (per event)</h6>
+                    <h5 class="h6x">Transfer: cyber insurance (per event)</h5>
                     <div class="rrd-sl"><label for="rrd-prem"><span>Annual premium</span><b id="rrd-prem-v"></b></label><input type="range" id="rrd-prem" min="25" max="250" step="5" value="85"></div>
                     <div class="rrd-sl"><label for="rrd-ded"><span>Deductible</span><b id="rrd-ded-v"></b></label><input type="range" id="rrd-ded" min="0" max="1000" step="25" value="250"></div>
                     <div class="rrd-sl"><label for="rrd-lim"><span>Policy limit</span><b id="rrd-lim-v"></b></label><input type="range" id="rrd-lim" min="250" max="5000" step="250" value="1500"></div>
                   </div>
                   <div class="rrd-params" id="rrd-pp-avoid">
-                    <h6>Avoid: exit the telematics service</h6>
+                    <h5 class="h6x">Avoid: exit the telematics service</h5>
                     <div class="rrd-sl"><label for="rrd-ben"><span>Lost annual benefit (routing and fuel savings)</span><b id="rrd-ben-v"></b></label><input type="range" id="rrd-ben" min="0" max="2000" step="25" value="650"></div>
                   </div>
                   <div class="rrd-params" id="rrd-pp-share">
-                    <h6>Share: contract indemnity from the vendor</h6>
+                    <h5 class="h6x">Share: contract indemnity from the vendor</h5>
                     <div class="rrd-sl"><label for="rrd-cap"><span>Indemnity cap per event</span><b id="rrd-cap-v"></b></label><input type="range" id="rrd-cap" min="0" max="3000" step="100" value="1000"></div>
                     <div class="rrd-sl"><label for="rrd-upl"><span>Annual contract price increase</span><b id="rrd-upl-v"></b></label><input type="range" id="rrd-upl" min="0" max="200" step="5" value="60"></div>
                   </div>
@@ -530,6 +530,7 @@
             <li><strong>Course fit:</strong> an IT risk management, GRC, or IT audit course, or a supply chain security elective. Supports the CAE-CD Supply Chain Security (SCS), Cybersecurity Planning and Management (CPM), and Policy, Legal, Ethics, and Compliance (PLE) Knowledge Units.</li>
           </ul>
           <div class="tip"><span class="tip-label">&#127891; Teaching note</span>Give each pair a one-page decision worksheet (as a file or printed handout) with a row for each of the five responses and columns for residual ALE, response cost, total cost of risk, within appetite, and approver. Pairs fill it from the console with the default settings, then again after changing one assumption you assign (a higher reputational loss, a larger deductible, a lower appetite). Debrief by asking which assumption changed the best answer and why.</div>
+                  <div class="tip"><span class="tip-label">&#129520; Build it in your Teaching Kit</span>In today&rsquo;s build block, adapt this model for a course you teach: rewrite the prompt for your students, edit the rubric, and pair it with a lab or activity. <a href="teaching-kit.html#day3">Open the Day 3 build block &#8594;</a></div>
         </article>
 
       </div>
@@ -561,7 +562,7 @@
   </section>
 
   <section class="block" id="knowledge-check">
-    <p class="eyebrow">Scored Knowledge Check</p>
+    <p class="eyebrow">Knowledge Check (self-check)</p>
     <h2 class="h2">Test your understanding</h2>
     <div class="rule"></div>
     <p class="lead" style="margin-bottom:1.5rem">Select the best answer for each question, then submit for your score and the rationale for every item. Like the exam, several options may be true; choose the best one.</p>
@@ -688,6 +689,5 @@
 </footer>
 
 <script src="crisc-lesson.js"></script>
-<script src="assistant.js" defer></script>
 </body>
 </html>

@@ -90,7 +90,7 @@ window.ACTIVITY = {
           title: 'Case 1: Reading the portfolio', text: 'The CIO champions the intranet redesign. Its business case lists features and a vendor quote, but no enterprise goal, benefits, or risks.',
           parts: [
             { q: 'What does the goals cascade reveal about the intranet redesign?', options: ['It is a strategic gap', 'It is unaligned spend', 'It is a governance objective', 'It is an alignment goal'], answer: 1, why: 'An initiative that cannot name the enterprise goal it serves is unaligned spend. Bottom up, the cascade lets anyone ask that question of a project.' },
-            { q: 'What should the risk practitioner do?', options: ['Cancel the project, since it is unaligned', 'Report the finding to the steering committee and ask for a complete business case', 'Approve it, because the CIO sponsors it', 'Ignore it, because intranet projects carry little risk'], answer: 1, why: 'Unaligned spend is a finding, not a verdict. The practitioner reports it and asks for a business case. Whether the project continues is a management decision.' }
+            { q: 'What should the risk practitioner do?', options: ['Cancel the project, since unaligned spend wastes funds the strategy needs', 'Report the finding to the steering committee and ask for a business case', 'Approve it, because the CIO sponsors it', 'Ignore it, because intranet projects carry little risk to enterprise objectives'], answer: 1, why: 'Unaligned spend is a finding, not a verdict. The practitioner reports it and asks for a business case. Whether the project continues is a management decision.' }
           ]
         },
         {
@@ -103,7 +103,7 @@ window.ACTIVITY = {
         {
           title: 'Case 3: The board’s question', text: 'A board member asks why the steering committee bothers aligning technology projects with enterprise goals at all.',
           parts: [
-            { q: 'What is the PRIMARY reason?', options: ['To lower the total IT budget', 'To make sure IT investments deliver value toward enterprise goals', 'To improve security on every project', 'To speed up project delivery'], answer: 1, why: 'Alignment exists so technology spending creates value for the enterprise. Lower cost, better security, or speed may follow, but they are not the primary purpose.' }
+            { q: 'What is the PRIMARY reason?', options: ['To lower the total IT budget by cutting projects that lack a sponsor', 'To make IT investments deliver value toward enterprise goals', 'To improve security on every project before it reaches production', 'To speed up project delivery'], answer: 1, why: 'Alignment exists so technology spending creates value for the enterprise. Lower cost, better security, or speed may follow, but they are not the primary purpose.' }
           ]
         }
       ]
@@ -135,20 +135,20 @@ window.ACTIVITY = {
         {
           title: 'Case 1: The unlisted storage account', text: 'One of the 23 assets is a cloud storage account holding 14 months of on-board camera footage. A contractor set it up during a pilot, and no one at Ashcombe is listed as its owner.',
           parts: [
-            { q: 'What should be done FIRST?', options: ['Delete the footage, since the pilot is over', 'Add the account to the inventory and assign an owner who can decide its classification and retention', 'Run a penetration test against the account', 'Encrypt the account and move on'], answer: 1, why: 'An unowned asset has no one to accept its risk or decide its handling. Inventory and ownership come before controls or deletion.' },
+            { q: 'What should be done FIRST?', options: ['Delete the footage, since the pilot is over and keeping it only adds exposure', 'Add the account to the inventory and assign an owner to decide its handling', 'Run a penetration test against the account', 'Move the footage into the security team’s storage and let IT manage it from now on'], answer: 1, why: 'An unowned asset has no one to accept its risk or decide its handling. Inventory and ownership come before controls or deletion.' },
             { q: 'Who should decide who may access the footage?', options: ['The cloud administrator who manages the account', 'The director of safety and security, as the data owner', 'The risk practitioner', 'The contractor who created the account'], answer: 1, why: 'Data owners decide classification and access for the assets they are accountable for. The cloud administrator is a custodian who operates the controls.' }
           ]
         },
         {
           title: 'Case 2: Mixed data on one system', text: 'The paratransit scheduling system holds public route timetables, internal driver rosters, and riders’ disability and medical eligibility records.',
           parts: [
-            { q: 'How should the scheduling system be classified?', options: ['Public, because most of its records are timetables', 'Internal, as an average of its contents', 'At the level of its most sensitive data, the medical eligibility records', 'Each table separately, with no system classification'], answer: 2, why: 'A system takes the classification of the most sensitive data it holds. The medical records drive the protection the whole system needs.' }
+            { q: 'How should the scheduling system be classified?', options: ['Public, because most of its records are timetables', 'Internal, as an average of the sensitivity of its contents', 'At the level of its most sensitive data, the medical eligibility records', 'Each table separately, with no system classification, so controls match each table'], answer: 2, why: 'A system takes the classification of the most sensitive data it holds. The medical records drive the protection the whole system needs.' }
           ]
         },
         {
           title: 'Case 3: End of support', text: 'The operating system on 60 fare vending machines reaches end of support in four months. A replacement is budgeted for next year.',
           parts: [
-            { q: 'What is the BEST approach?', options: ['Keep running them; the machines are on a private network', 'Document the risk, add compensating controls such as network isolation, and have the fare revenue owner formally accept the residual risk until replacement', 'Have the IT manager accept the risk, since IT runs the machines', 'Turn off the machines on the end-of-support date'], answer: 1, why: 'End-of-support assets need replacement or documented risk acceptance. The owner of the fare revenue process accepts, with compensating controls and a date, not IT by default.' }
+            { q: 'What is the BEST approach?', options: ['Keep running them without changes; the machines are on a private network, which limits exposure', 'Isolate the machines and have the fare revenue owner formally accept the residual risk until replacement', 'Have the IT manager accept the risk with compensating controls, since IT runs and patches the machines', 'Turn off the machines on the end-of-support date'], answer: 1, why: 'End-of-support assets need replacement or documented risk acceptance. The owner of the fare revenue process accepts, with compensating controls and a date, not IT by default.' }
           ]
         }
       ]
@@ -165,6 +165,5 @@ window.ACTIVITY = {
 };
 </script>
 <script src="practice.js"></script>
-<script src="assistant.js" defer></script>
 </body>
 </html>

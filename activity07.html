@@ -106,8 +106,8 @@ window.ACTIVITY = {
         {
           title: 'Case 1: The signed reviews', text: 'Principals sign a quarterly access review for the student information system, and every quarter has a signed review on file. The reports they receive list only names, not roles or permissions. A clerk who moved from the front office to transportation kept her ability to edit attendance records for a year.',
           parts: [
-            { q: 'What kind of deficiency is this?', options: ['Operating deficiency: the principals skipped the review', 'Design deficiency: the review ran as described but could not detect excess access', 'No deficiency, because every review was signed', 'A finding against the clerk'], answer: 1, why: 'The control was performed every time, and the risk still got through. Without roles and permissions on the report, the review cannot meet its objective. That is a design deficiency.' },
-            { q: 'What should happen before more operating-effectiveness testing of this review?', options: ['Test a larger sample of quarters', 'Redesign the review so the report shows roles and permissions, then test it', 'Ask the principals to sign faster', 'Report the control as effective with a note'], answer: 1, why: 'Testing the operation of a poorly designed control wastes effort. Fix the design first, then test operation.' }
+            { q: 'What kind of deficiency is this?', options: ['Operating deficiency: the principals did not perform the review as written', 'Design deficiency: the review ran but could not detect excess access', 'No deficiency, because every review was signed', 'A finding against the clerk'], answer: 1, why: 'The control was performed every time, and the risk still got through. Without roles and permissions on the report, the review cannot meet its objective. That is a design deficiency.' },
+            { q: 'What should happen before more operating-effectiveness testing of this review?', options: ['Test a larger sample of quarters to confirm whether the review operated', 'Redesign the report to show roles and permissions, then test it', 'Ask the principals to sign faster', 'Report the control as effective with a note'], answer: 1, why: 'Testing the operation of a poorly designed control wastes effort. Fix the design first, then test operation.' }
           ]
         },
         {
@@ -119,14 +119,14 @@ window.ACTIVITY = {
         {
           title: 'Case 3: The lockout setting', text: 'The identity platform locks an account after five failed sign-ins. The tester confirms the setting in the configuration and reperforms the lockout once on a test account.',
           parts: [
-            { q: 'What else must be true for that single test to support the whole year?', concept: 'testing', options: ['The help desk confirms the lockout has always worked', 'IT general controls over changes to that configuration were effective for the year', 'The test was repeated 25 times on the same day', 'The setting appears in the security policy'], answer: 1, why: 'An automated control can be tested once, provided change controls over its configuration were effective for the period. Otherwise someone could have changed it unnoticed.' },
-            { q: 'The identity manager says, “It has never been changed.” What kind of evidence is that?', concept: 'testing', options: ['Reperformance', 'Inspection', 'Inquiry, which is not sufficient on its own', 'Observation'], answer: 2, why: 'A statement from the control owner is inquiry. It must be supported by stronger evidence, such as inspecting the configuration change log.' }
+            { q: 'What else must be true for that single test to support the whole year?', concept: 'testing', options: ['The help desk confirms the lockout has always worked and no one has complained', 'IT general controls over changes to the setting were effective all year', 'The test was repeated 25 times on the same day', 'The setting appears in the security policy approved by management'], answer: 1, why: 'An automated control can be tested once, provided change controls over its configuration were effective for the period. Otherwise someone could have changed it unnoticed.' },
+            { q: 'The identity manager says, “It has never been changed.” What kind of evidence is that?', concept: 'testing', options: ['Reperformance', 'Inspection', 'Inquiry', 'Observation'], answer: 2, why: 'A statement from the control owner is inquiry. It must be supported by stronger evidence, such as inspecting the configuration change log.' }
           ]
         },
         {
           title: 'Case 4: The walkthrough', text: 'An auditor follows one new-hire ticket from HR approval to account creation and confirms each step matches the narrative.',
           parts: [
-            { q: 'What does this walkthrough support?', options: ['Operating effectiveness for the whole year', 'Design effectiveness and implementation, but not operation over the period', 'Nothing, because only one ticket was checked', 'Reperformance of the provisioning control'], answer: 1, why: 'A walkthrough traces one transaction to confirm the design and that it was implemented. It is not, by itself, a test of operation over a period.' }
+            { q: 'What does this walkthrough support?', options: ['Operating effectiveness for the whole year, since the ticket matched the procedure', 'Design and implementation, but not operation over the period', 'Nothing, because only one ticket was checked', 'Reperformance of the provisioning control'], answer: 1, why: 'A walkthrough traces one transaction to confirm the design and that it was implemented. It is not, by itself, a test of operation over a period.' }
           ]
         }
       ]
@@ -168,6 +168,5 @@ window.ACTIVITY = {
 };
 </script>
 <script src="practice.js"></script>
-<script src="assistant.js" defer></script>
 </body>
 </html>

@@ -216,7 +216,7 @@ window.LAB = {
       reviewNote: 'Board reports show the top risks against appetite, not every operational metric.' },
     { id: 'escalate', type: 'choice', points: 14, short: 'Escalation decision', title: 'Decide the escalation',
       task: 'M1 is outside tolerance. What does the escalation policy require of you as the risk practitioner?',
-      options: ['Ask IT to raise the M1 red threshold to 10 for the rest of the year, since remediation is already underway', 'Notify the CIO as risk owner and the CRO now, obtain the CIO’s risk action plan with dates, and have the CRO report the tolerance breach to the Board Risk Committee with the decision required', 'Direct the infrastructure team to take the affected internet-facing systems offline until they are patched', 'Wait one more month to confirm the trend before escalating, to avoid alarming the board'],
+      options: ['Ask IT to raise the M1 red threshold to 10 for the rest of the year, since remediation is already underway', 'Notify the CIO and the CRO, get the CIO’s dated action plan, and have the CRO report the breach to the board', 'Direct the infrastructure team to take the affected internet-facing systems offline until they are patched', 'Wait one more month to confirm the trend before escalating, so the board sees reliable data rather than noise'],
       answer: 1,
       hint: 'Who owns the risk, who decides the response, and who reports to the board? What role does the practitioner play?',
       debrief: '<p>The policy is explicit: a red KRI is a tolerance breach. The practitioner notifies the risk owner (the CIO) and the CRO within 2 business days, the CIO submits a dated risk action plan, and the CRO reports the breach to the Board Risk Committee with the decision it needs, such as approving funding to accelerate patching or accepting a time-bound exception.</p><p>Changing the threshold hides the breach. Ordering systems offline is the risk owner’s call, not the practitioner’s. Waiting another month ignores a leading indicator that has already been beyond tolerance for a quarter.</p>',
@@ -412,6 +412,5 @@ window.LAB = {
 })();
 </script>
 <script src="lab.js"></script>
-<script src="assistant.js" defer></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-/* CRISC 5-Day Faculty Workshop: shared evidence workbench for hands-on labs (B4, B6, B8).
+/* CRISC 5-Day Faculty Workshop: shared evidence workbench for hands-on labs (loaded by B1, B2, B4, B5, B7).
    Dependency-free. Load before the lab's LAB script runs its workbench, then call:
      EV.create(root, {
        id: 'chg',                         // unique per instance (state key)
@@ -32,7 +32,7 @@
     '.ev-slot{border:1px solid var(--border);border-radius:4px;background:#fff;min-width:0}' +
     '.ev-slot-head{display:flex;flex-wrap:wrap;gap:.4rem .8rem;align-items:center;padding:.6rem .8rem;background:var(--blue-pale);border-bottom:1px solid var(--border);border-radius:4px 4px 0 0}' +
     '.ev-tag{font:900 .7rem Arial,sans-serif;letter-spacing:.08em;background:var(--navy);color:#fff;border-radius:3px;padding:.15rem .45rem}' +
-    '.ev select,.ev input[type=search],.ev input[type=number]{font:.84rem Arial,sans-serif;padding:.38rem .5rem;border:1px solid var(--border);border-radius:4px;background:#fff;color:var(--text-primary);max-width:100%}' +
+    '.ev select,.ev input[type=search],.ev input[type=number]{font:.84rem Arial,sans-serif;padding:.38rem .5rem;border:1px solid var(--field-border,#8f7a8d);border-radius:4px;background:#fff;color:var(--text-primary);max-width:100%}' +
     '.ev-src{font-size:.76rem;color:var(--text-muted);flex-basis:100%;line-height:1.45}' +
     '.ev-ctl{display:flex;flex-wrap:wrap;gap:.4rem .9rem;align-items:center;padding:.55rem .8rem}' +
     '.ev-ctl input[type=search]{flex:1 1 220px;min-width:0}' +
@@ -227,7 +227,7 @@
               (p.source ? '<span class="ev-src">' + p.source + '</span>' : '') + '</div>' +
             '<div class="ev-ctl"><label class="ev-sr" for="' + uid + '-f' + s + '">Filter pane ' + L + '</label><input type="search" id="' + uid + '-f' + s + '" data-filter="' + s + '" value="' + esc(st.filter[s + p.id] || '') + '" placeholder="Filter rows: words, &quot;exact phrase&quot;, -exclude" autocomplete="off" spellcheck="false">' +
               (fl ? '<label class="ev-chk"><input type="checkbox" data-only="' + s + '"' + (st.only[s + p.id] ? ' checked' : '') + '> Flagged only</label>' : '') +
-              '<span class="ev-count" role="status" id="' + uid + '-c' + s + '">' + t.shown + ' of ' + p.rows.length + ' rows' + (fl ? ', ' + t.flagged + ' flagged' : '') + '</span></div>' +
+              '<span class="ev-count" id="' + uid + '-c' + s + '">' + t.shown + ' of ' + p.rows.length + ' rows' + (fl ? ', ' + t.flagged + ' flagged' : '') + '</span></div>' +
             '<div class="ev-scroll" tabindex="0" role="region" aria-label="' + esc(p.title) + ' table, pane ' + L + '" id="' + uid + '-t' + s + '">' + t.html + '</div></section>';
         }).join('') + '</div>' +
         '<div class="ev-tools" role="group" aria-labelledby="' + uid + '-th"><h4 id="' + uid + '-th">Match and compare tools</h4>' +

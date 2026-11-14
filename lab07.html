@@ -376,7 +376,7 @@ window.LAB = {
       '<p>Map what you find to the NIST AI RMF, classify the assistant under the EU AI Act, rate the risks, and select the controls that must be in place before launch. Then write a decision memo to <b>Colette Ashdown, VP Customer Experience</b>. She owns this risk and the decision. Our job is to give her a clear recommendation, not to make the call for her.</p>'
   },
   howTo: 'Read the four artifact tabs first. On <b>Risk review</b>, map each finding to an AI RMF function, rate likelihood and impact to see the heat map, and answer the EU AI Act questions. On <b>Controls and decision</b>, select controls and watch the coverage panel, then choose a recommendation to preview the memo. The checklist asks for the results; check each item as you go. Use <b>Open in new window</b> to keep an artifact beside the checklist.',
-  workIntro: 'Work left to right through the tabs. The tools save your work in this browser. Nothing in the tools is graded; the checklist is.',
+  workIntro: 'Work left to right through the tabs. The tools save your work in this browser. The checklist gives feedback on each step.',
   checklist: [
     { id: 'tier', type: 'choice', points: 10, short: 'EU AI Act tier', title: 'EU AI Act classification',
       task: 'Under the EU AI Act, which tier <b>best</b> fits Ask Halloway as it will be used in Ireland?',
@@ -400,7 +400,7 @@ window.LAB = {
       reviewNote: 'Govern covers policy, accountability, and third-party expectations; Map is context, Measure is testing, Manage is treatment and monitoring.' },
     { id: 'top', type: 'choice', points: 10, short: 'Top risk', title: 'The highest-priority risk',
       task: 'Which finding should rank <b>highest</b> in the risk review?',
-      options: ['F4: wrong allergen answers, including two that said a shared-line product contains no peanuts', 'F5: prompt injection that returned another customer’s order status', 'F7: no post-deployment monitoring plan or KRIs', 'F3: transcripts with health details kept for 2 years'],
+      options: ['F4: wrong allergen answers, two saying a shared-line product had no peanuts', 'F5: prompt injection that returned another customer’s order status', 'F7: no post-deployment monitoring plan or KRIs, so failures could recur unseen', 'F3: transcripts with health details kept for 2 years'],
       answer: 0,
       hint: 'Use the impact scale on the Risk review tab and the appetite statement. Which finding could harm a person, and for which does the board have no tolerance at all?',
       debrief: '<p>F4 is the only finding whose impact reaches a person’s health, and it was observed at a rate of 5.83 percent, so it rates about likelihood 4 by impact 5, a score of 20. The board has no tolerance for incorrect allergen information, so it is outside appetite before any comparison with other risks.</p><p>F5 is serious, likely about 3 by 4: customer data exposure is within the low tolerance only if it is fixed. F7 matters because it would let F4 and F5 recur unseen, but it is a gap in treatment, not the loss event itself. F3 is a privacy exposure that minimization and retention limits treat.</p>',
@@ -445,6 +445,5 @@ window.LAB = {
 </script>
 <script src="evidence.js"></script>
 <script src="lab.js"></script>
-<script src="assistant.js" defer></script>
 </body>
 </html>

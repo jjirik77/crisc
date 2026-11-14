@@ -323,3 +323,14 @@ table.data td.weight { color: var(--gold); }
 .iw label { font-family: Arial, sans-serif; }
 .iw canvas { width: 100%; height: auto; display: block; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ---- Quiz marks: text + glyph so status is not shown by color alone ---- */
+.opt-mark { display: block; margin-top: .3rem; font-family: Arial, sans-serif; font-size: .8rem; font-weight: 700; }
+.opt-mark.correct { color: #166534; }
+.opt-mark.wrong { color: var(--wrong); }
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+  html { scroll-behavior: auto !important; }
+}

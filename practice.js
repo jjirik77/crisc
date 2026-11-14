@@ -2,8 +2,11 @@
    Each activity page sets window.ACTIVITY = { ... } and loads this file.
    Station types: "sort" (assign each item to a bucket), "scenario" (one or more
    multiple-choice parts per case), "reflect" (confidence ratings + written prompts).
-   Self-checking practice: answers are checked on demand, stations can be retried,
-   and progress is kept in this browser. The summary report prints or saves as PDF. */
+   Self-checking practice only: answers are checked on demand, stations can be
+   retried, and progress is kept in this browser. The concept meter is a self-check, not a score.
+   Scenario options are shown in a random order on each page load and each retry (checked against
+   the original index), except when the options are IDs or an ordered scale, or the station or part
+   sets shuffle: false. The practice record prints or saves as PDF. */
 (function () {
   'use strict';
 
@@ -54,6 +57,24 @@
   function ans(s) { return S.ans[s] || (S.ans[s] = {}); }
   var stations = cfg.stations;
   var REPORT = stations.length; // index of the report step
+  /* ---------- Answer order: shuffle scenario options, but never IDs or ordered scales ---------- */
+  var ORDER_SCALE = /^(unacceptable|high|limited|minimal|low|medium|moderate|critical|minor|major|severe|negligible|catastrophic|rare|unlikely|possible|likely|almost|very|none|always|never|often|sometimes)\b/i;
+  var ORDER_ID = /^\s*(\$?\d[\d.,]*%?|[A-Z]{1,4}-?\d+[a-z]?|(tier|level|step|phase|stage|option|scenario|rank)\s*[\dA-Z]\b)/i;
+  function keepOrder(opts) {
+    if (!opts || opts.length < 3) return true;
+    var ids = opts.filter(function (o) { return ORDER_ID.test(String(o)); }).length;
+    var rest = opts.filter(function (o) { return !ORDER_ID.test(String(o)); });
+    if (ids === opts.length || (ids === opts.length - 1 && /^(none|all|both|neither)\b/i.test(String(rest[0]).trim()))) return true;
+    return opts.every(function (o) { return ORDER_SCALE.test(String(o).trim()); });
+  }
+  function shuffled(n) { var a = []; for (var i = 0; i < n; i++) a.push(i); for (var j = n - 1; j > 0; j--) { var k = Math.floor(Math.random() * (j + 1)), t = a[j]; a[j] = a[k]; a[k] = t; } return a; }
+  var PERM = {}; // display order per station part; cleared on retry, rebuilt on each page load
+  function perm(si, key, pt) {
+    var id = si + ':' + key;
+    if (!PERM[id]) PERM[id] = (pt.shuffle === false || stations[si].shuffle === false || cfg.shuffle === false || keepOrder(pt.options)) ? pt.options.map(function (_, k) { return k; }) : shuffled(pt.options.length);
+    return PERM[id];
+  }
+  function mark(ok, label) { return ' <span class="px-mark" aria-hidden="true">' + (ok ? '&#10003;' : '&#10005;') + '</span><span class="sr-only"> (' + label + ')</span>'; }
   function conceptName(k) { for (var i = 0; i < cfg.concepts.length; i++) if (cfg.concepts[i].key === k) return cfg.concepts[i].name; return k; }
 
   // Flatten a station into gradable units: {key, concept, ok, answered, prompt, given, correct, why}
@@ -132,7 +153,7 @@
       '<div class="px-layout">' +
         '<aside class="px-rail" aria-label="Activity navigation">' +
           '<p class="eyebrow">Stations</p><ol class="px-steps" id="px-steps"></ol>' +
-          '<section class="px-mastery" id="px-mastery" aria-live="polite"></section>' +
+          '<section class="px-mastery" id="px-mastery"></section>' +
           '<div class="px-more"><details><summary>All activities</summary>' + catalogList(CATALOG.activities) + '</details>' +
           '<details><summary>All labs</summary>' + catalogList(CATALOG.labs) + '</details>' +
           '<a class="px-hub" href="practices.html">CRISC Practices home &rarr;</a><a class="px-hub" href="labs.html">CRISC Risk Lab home &rarr;</a></div>' +
@@ -144,7 +165,7 @@
 
   function renderSteps() {
     var ol = document.getElementById('px-steps'); ol.innerHTML = '';
-    stations.concat([{ title: 'Summary report' }]).forEach(function (st, i) {
+    stations.concat([{ title: 'Practice record' }]).forEach(function (st, i) {
       var li = document.createElement('li'), b = document.createElement('button');
       var done = i < REPORT && isDone(i);
       b.className = 'px-step' + (done ? ' done' : '');
@@ -157,11 +178,11 @@
 
   function renderMastery() {
     var m = mastery(), box = document.getElementById('px-mastery');
-    box.innerHTML = '<p class="eyebrow">Concept mastery</p>' + cfg.concepts.map(function (c) {
+    box.innerHTML = '<p class="eyebrow">Self-check by concept</p><p class="px-m-note">A quick self-check, not a score.</p>' + cfg.concepts.map(function (c) {
       var v = m[c.key], pct = v.n ? Math.round(100 * v.c / v.n) : 0;
       var cls = !v.n ? '' : (pct >= 80 ? 'hi' : (pct < 60 ? 'lo' : ''));
-      return '<div class="px-m-item"><div class="px-m-row"><span>' + esc(c.name) + '</span><b>' + (v.n ? pct + '%' : '&ndash;') + '</b></div>' +
-        '<div class="px-bar ' + cls + '" role="img" aria-label="' + esc(c.name) + ': ' + (v.n ? pct + ' percent' : 'not yet attempted') + '"><i style="width:' + pct + '%"></i></div></div>';
+      return '<div class="px-m-item"><div class="px-m-row"><span>' + esc(c.name) + '</span><b>' + (v.n ? v.c + ' of ' + v.n : '&ndash;') + '</b></div>' +
+        '<div class="px-bar ' + cls + '" role="img" aria-label="' + esc(c.name) + ': ' + (v.n ? v.c + ' of ' + v.n + ' right' : 'not tried yet') + '"><i style="width:' + pct + '%"></i></div></div>';
     }).join('');
   }
 
@@ -241,8 +262,8 @@
   }
   function actionsRow(si, canCheck, label) {
     var done = isDone(si), st = stations[si], sc = stationScore(si), res = '';
-    if (done && st.type !== 'reflect') res = '<span class="score ' + (sc.c === sc.n ? 'ok' : 'bad') + '">' + sc.c + ' of ' + sc.n + ' correct' + (S.attempts[si] > 1 ? ' &middot; attempt ' + S.attempts[si] : '') + '</span>';
-    if (done && st.type === 'reflect') res = '<span class="score ok">Saved</span>';
+    if (done && st.type !== 'reflect') res = '<span class="score ' + (sc.c === sc.n ? 'ok' : 'bad') + '"><span class="px-mark" aria-hidden="true">' + (sc.c === sc.n ? '&#10003;' : '!') + '</span> ' + sc.c + ' of ' + sc.n + ' right' + (S.attempts[si] > 1 ? ' &middot; try ' + S.attempts[si] : '') + '</span>';
+    if (done && st.type === 'reflect') res = '<span class="score ok"><span class="px-mark" aria-hidden="true">&#10003;</span> Saved</span>';
     return '<div class="px-actions">' +
       (done ? '<button type="button" class="btn ghost" data-act="retry">' + (st.type === 'reflect' ? 'Edit responses' : '&#8635; Retry station') + '</button>'
             : '<button type="button" class="btn" data-act="check"' + (canCheck ? '' : ' disabled aria-disabled="true"') + '>' + (label || 'Check answers') + '</button>') +
@@ -250,18 +271,26 @@
       '<div id="px-hintbox" aria-live="polite"></div>';
   }
   function verdict(ok, label, why) {
-    return '<div class="rationale show ' + (ok ? 'ok' : 'bad') + '"><b>' + (ok ? 'Correct.' : label) + '</b> ' + esc(why) + '</div>';
+    return '<div class="rationale show ' + (ok ? 'ok' : 'bad') + '"><b><span class="px-mark" aria-hidden="true">' + (ok ? '&#10003;' : '&#10005;') + '</span> ' + (ok ? 'Correct.' : 'Not yet. ' + label) + '</b> ' + esc(why) + '</div>';
+  }
+  // One summary at the top of a checked station; it receives focus after Check (no live region)
+  function resultSummary(si) {
+    if (!isDone(si) || stations[si].type === 'reflect') return '';
+    var sc = stationScore(si), all = sc.c === sc.n;
+    return '<p class="px-result ' + (all ? 'ok' : 'bad') + '" id="px-result" tabindex="-1"><span class="px-mark" aria-hidden="true">' + (all ? '&#10003;' : '!') + '</span> ' +
+      sc.c + ' of ' + sc.n + ' right. ' + (all ? 'Read the reasoning below, then move on.' : 'Read the feedback under each item marked Not yet, then retry the station when you are ready.') + '</p>';
   }
 
   function renderSort(st, si, card) {
     var a = ans(si), done = isDone(si);
-    var html = header(st, si) + '<div class="quiz-card">';
+    var html = header(st, si) + '<div class="quiz-card">' + resultSummary(si);
     st.items.forEach(function (it, i) {
       var right = a[i] === it.answer;
       html += '<div class="q"><p class="q-stem" id="si-' + si + '-' + i + '"><span class="qn">' + (i + 1) + '.</span>' + esc(it.text) + '</p>' +
         '<div class="px-seg" role="group" aria-labelledby="si-' + si + '-' + i + '">' + st.buckets.map(function (b, k) {
           var cls = done ? (k === it.answer && !right ? 'is-answer' : (a[i] === k ? (right ? 'is-right' : 'is-wrong') : '')) : '';
-          return '<button type="button" class="' + cls + '" data-i="' + i + '" data-k="' + k + '" aria-pressed="' + (a[i] === k) + '"' + (done ? ' disabled' : '') + '>' + esc(b) + '</button>';
+          var mk = cls === 'is-answer' ? mark(true, 'correct answer') : (cls === 'is-right' ? mark(true, 'your answer, correct') : (cls === 'is-wrong' ? mark(false, 'your answer, not correct') : ''));
+          return '<button type="button" class="' + cls + '" data-i="' + i + '" data-k="' + k + '" aria-pressed="' + (a[i] === k) + '"' + (done ? ' disabled' : '') + '>' + esc(b) + mk + '</button>';
         }).join('') + '</div>' +
         (done ? verdict(right, 'Answer: ' + esc(st.buckets[it.answer]) + '.', it.why) : '') + '</div>';
     });
@@ -274,17 +303,20 @@
 
   function renderScenario(st, si, card) {
     var a = ans(si), done = isDone(si), qn = 0;
-    var html = header(st, si) + '<div class="quiz-card">';
+    var html = header(st, si) + '<div class="quiz-card">' + resultSummary(si);
     st.items.forEach(function (it, i) {
       html += '<div class="px-case-block">' + (it.title ? '<p class="eyebrow">' + esc(it.title) + '</p>' : '') + '<div class="px-case">' + esc(it.text) + '</div>' + tableHTML(it.table);
       it.parts.forEach(function (pt, j) {
         var key = i + '.' + j, name = 'q' + si + '_' + i + '_' + j, sid = 'qs-' + si + '-' + i + '-' + j; qn++;
         html += '<div class="q"><p class="q-stem" id="' + sid + '"><span class="qn">Q' + qn + '.</span>' + esc(pt.q) + '</p><fieldset class="options" aria-labelledby="' + sid + '">';
-        pt.options.forEach(function (o, k) {
+        var order = perm(si, key, pt);
+        order.forEach(function (k, pos) {
+          var o = pt.options[k];
           var cls = done ? (k === pt.answer ? ' correct' : (a[key] === k ? ' wrong' : '')) + ' locked' : '';
-          html += '<label class="opt' + cls + '"><input type="radio" name="' + name + '" data-key="' + key + '" value="' + k + '"' + (a[key] === k ? ' checked' : '') + (done ? ' disabled' : '') + '><span><span class="opt-letter">' + LETTERS[k] + '.</span> ' + esc(o) + '</span></label>';
+          var mk = done ? (k === pt.answer ? mark(true, 'best answer') : (a[key] === k ? mark(false, 'your answer') : '')) : '';
+          html += '<label class="opt' + cls + '"><input type="radio" name="' + name + '" data-key="' + key + '" value="' + k + '"' + (a[key] === k ? ' checked' : '') + (done ? ' disabled' : '') + '><span><span class="opt-letter">' + LETTERS[pos] + '.</span> ' + esc(o) + mk + '</span></label>';
         });
-        html += '</fieldset>' + (done ? verdict(a[key] === pt.answer, 'Best answer: ' + LETTERS[pt.answer] + '.', pt.why) : '') + '</div>';
+        html += '</fieldset>' + (done ? verdict(a[key] === pt.answer, 'Best answer: ' + LETTERS[order.indexOf(pt.answer)] + '.', pt.why) : '') + '</div>';
       });
       html += '</div>';
     });
@@ -298,14 +330,14 @@
 
   function renderOrder(st, si, card) {
     var done = isDone(si), groups = groupsOf(st);
-    var html = header(st, si) + '<div class="quiz-card">';
+    var html = header(st, si) + '<div class="quiz-card">' + resultSummary(si);
     groups.forEach(function (g, gi) {
       var ord = orderOf(si, gi);
       html += '<div class="px-case-block">' + (g.title ? '<p class="eyebrow">' + esc(g.title) + '</p>' : '') + (g.text ? '<div class="px-case">' + esc(g.text) + '</div>' : '') + tableHTML(g.table) +
         '<p class="px-ord-end">' + esc(g.topLabel || st.topLabel || 'First') + '</p><ol class="px-order" aria-label="' + esc(g.title || st.title) + '">';
       ord.forEach(function (itemIdx, pos) {
         var it = g.items[itemIdx], okPos = it.accept || [it.rank], ok = okPos.indexOf(pos) >= 0;
-        html += '<li class="px-ord-item' + (done ? (ok ? ' ok' : ' bad') : '') + '"><span class="px-ord-n">' + (pos + 1) + '</span><span class="px-ord-t">' + esc(it.text) + '</span>' +
+        html += '<li class="px-ord-item' + (done ? (ok ? ' ok' : ' bad') : '') + '"><span class="px-ord-n">' + (pos + 1) + (done ? '<span class="sr-only">' + (ok ? ' (in a correct position)' : ' (not in the right position)') + '</span>' : '') + '</span><span class="px-ord-t">' + esc(it.text) + '</span>' +
           (done ? '' : '<span class="px-ord-btns"><button type="button" data-g="' + gi + '" data-p="' + pos + '" data-d="-1" aria-label="Move up: ' + esc(it.text) + '"' + (pos === 0 ? ' disabled' : '') + '>&#9650;</button><button type="button" data-g="' + gi + '" data-p="' + pos + '" data-d="1" aria-label="Move down: ' + esc(it.text) + '"' + (pos === ord.length - 1 ? ' disabled' : '') + '>&#9660;</button></span>') +
           (done ? verdict(ok, 'Belongs at ' + (okPos.length > 1 ? 'position ' + okPos.map(function (x) { return x + 1; }).join(' or ') : 'position ' + (it.rank + 1)) + '.', it.why) : '') + '</li>';
       });
@@ -327,7 +359,7 @@
 
   function renderCalc(st, si, card) {
     var a = ans(si), done = isDone(si);
-    var html = header(st, si) + '<div class="quiz-card">';
+    var html = header(st, si) + '<div class="quiz-card">' + resultSummary(si);
     st.items.forEach(function (it, i) {
       var u = units(si)[i];
       html += '<div class="px-case-block">' + (it.title ? '<p class="eyebrow">' + esc(it.title) + '</p>' : '') + (it.text ? '<div class="px-case">' + esc(it.text) + '</div>' : '') + tableHTML(it.table) +
@@ -350,7 +382,7 @@
       html += '<div class="px-conf-row" role="group" aria-label="Confidence: ' + esc(c.name) + '"><span>' + esc(c.name) + '</span><div class="px-seg">' +
         [1, 2, 3, 4, 5].map(function (n) { return '<button type="button" data-c="' + c.key + '" data-n="' + n + '" aria-pressed="' + (S.conf[c.key] === n) + '"' + (done ? ' disabled' : '') + '>' + n + '</button>'; }).join('') + '</div></div>';
     });
-    html += '<p class="lead-p" style="margin:.4rem 0 0;font-size:.82rem">1 = not confident &middot; 5 = ready for exam questions on this concept</p>';
+    html += '<p class="lead-p" style="margin:.4rem 0 0;font-size:.82rem">1 = not confident &middot; 5 = confident enough to answer exam questions or teach this concept</p>';
     st.prompts.forEach(function (pr) {
       html += '<div class="px-field"><label for="tx-' + pr.key + '">' + esc(pr.label) + '</label><textarea id="tx-' + pr.key + '" data-k="' + pr.key + '"' + (done ? ' readonly' : '') + '>' + esc(S.text[pr.key] || '') + '</textarea></div>';
     });
@@ -363,57 +395,56 @@
   /* ---------- Report ---------- */
   function fmtTime(ms) { var m = Math.round(ms / 60000); return m < 1 ? 'under 1 minute' : (m >= 60 ? Math.floor(m / 60) + ' h ' + (m % 60) + ' min' : m + ' min'); }
   function renderReport(card) {
-    var tot = { c: 0, n: 0 }, rows = '', review = [];
+    var tried = 0, rows = '', review = [];
     stations.forEach(function (st, si) {
-      if (st.type === 'reflect') { rows += '<tr><td>' + (si + 1) + '. ' + esc(st.title) + '</td><td>' + (isDone(si) ? 'Completed' : 'Not completed') + '</td><td class="num">&ndash;</td></tr>'; return; }
+      if (st.type === 'reflect') { rows += '<tr><td>' + (si + 1) + '. ' + esc(st.title) + '</td><td>' + (isDone(si) ? 'Completed' : 'Not completed') + '</td><td>&ndash;</td></tr>'; return; }
       var sc = stationScore(si);
-      if (isDone(si)) { tot.c += sc.c; tot.n += sc.n; units(si).forEach(function (u) { if (!u.ok) review.push({ st: st, u: u }); }); }
-      rows += '<tr><td>' + (si + 1) + '. ' + esc(st.title) + '</td><td>' + (isDone(si) ? 'Checked' + (S.attempts[si] > 1 ? ', ' + S.attempts[si] + ' attempts' : '') : 'Not attempted') + '</td><td class="num">' + (isDone(si) ? sc.c + ' / ' + sc.n : '&ndash;') + '</td></tr>';
+      if (isDone(si)) { tried++; units(si).forEach(function (u) { if (!u.ok) review.push({ st: st, u: u }); }); }
+      rows += '<tr><td>' + (si + 1) + '. ' + esc(st.title) + '</td><td>' + (isDone(si) ? 'Practiced' + (S.attempts[si] > 1 ? ', ' + S.attempts[si] + ' tries' : '') : 'Not started') + '</td><td>' + (isDone(si) ? sc.c + ' of ' + sc.n + ' right' : '&ndash;') + '</td></tr>';
     });
-    var pct = tot.n ? Math.round(100 * tot.c / tot.n) : 0, m = mastery();
-    var mrows = cfg.concepts.map(function (c) { var v = m[c.key]; return '<tr><td>' + esc(c.name) + '</td><td class="num">' + (v.n ? v.c + ' / ' + v.n + ' (' + Math.round(100 * v.c / v.n) + '%)' : 'Not attempted') + '</td><td class="num">' + (S.conf[c.key] ? S.conf[c.key] + ' / 5' : '&ndash;') + '</td></tr>'; }).join('');
+    var m = mastery();
+    var mrows = cfg.concepts.map(function (c) { var v = m[c.key]; return '<tr><td>' + esc(c.name) + '</td><td>' + (v.n ? v.c + ' of ' + v.n + ' right' : 'Not tried yet') + '</td><td class="num">' + (S.conf[c.key] ? S.conf[c.key] + ' of 5' : '&ndash;') + '</td></tr>'; }).join('');
     var refl = stations.filter(function (s) { return s.type === 'reflect'; }).map(function (st) {
       return st.prompts.map(function (pr) { return '<p class="px-refl"><b>' + esc(pr.label) + '</b>' + (S.text[pr.key] ? esc(S.text[pr.key]).replace(/\n/g, '<br>') : '<em>No response.</em>') + '</p>'; }).join('');
     }).join('');
     var allDone = stations.every(function (_, i) { return isDone(i); });
 
     card.innerHTML =
-      '<div class="px-print-banner"><div class="t">CRISC 5-Day Faculty Workshop &middot; CRISC Practices &middot; Activity ' + esc(cfg.id) + ' &middot; Summary Report</div><div class="h">' + esc(cfg.title) + '</div></div>' +
-      '<div class="px-no-print"><p class="eyebrow">Summary report</p><h2 class="h2" id="px-h2" tabindex="-1">Your results</h2><div class="rule"></div>' +
-      '<p class="lead-p">Enter your name, then print the report or save it as a PDF. In the print dialog, choose <b>Save as PDF</b> as the destination.' + (allDone ? '' : ' <b>Some stations are not complete yet.</b> You can still print a partial report.') + '</p></div>' +
+      '<div class="px-print-banner"><div class="t">CRISC 5-Day Faculty Workshop &middot; CRISC Practices &middot; Activity ' + esc(cfg.id) + ' &middot; Practice Record</div><div class="h">' + esc(cfg.title) + '</div></div>' +
+      '<div class="px-no-print"><p class="eyebrow">Practice record</p><h2 class="h2" id="px-h2" tabindex="-1">Your practice record</h2><div class="rule"></div>' +
+      '<p class="lead-p">This record lists the stations you practiced, the answers you gave with the practitioner&rsquo;s reasoning, items to revisit, and your reflections. It is a record of practice, not a grade. You can keep it as documentation for continuing education (CPE). Add your name, then print it or save it as a PDF. In the print dialog, choose <b>Save as PDF</b>.' + (allDone ? '' : ' <b>Some stations are not done yet.</b> You can still print a partial record.') + '</p></div>' +
       '<div class="quiz-card px-report">' +
       '<div class="px-report-head">' +
-        '<div class="px-field"><label for="rp-name">Learner name</label><input type="text" id="rp-name" value="' + esc(S.name) + '" autocomplete="name"></div>' +
+        '<div class="px-field"><label for="rp-name">Your name</label><input type="text" id="rp-name" value="' + esc(S.name) + '" autocomplete="name"></div>' +
         '<div class="px-field' + (S.team.trim() ? '' : ' px-empty') + '" id="rp-team-wrap"><label for="rp-team">Team members (optional)</label><input type="text" id="rp-team" value="' + esc(S.team) + '"></div>' +
       '</div>' +
       '<div class="table-wrap"><table class="data"><tbody>' +
         '<tr><td class="term">Activity</td><td>' + esc(cfg.id) + ', ' + esc(cfg.title) + ' (' + esc(cfg.domain) + ')</td></tr>' +
-        '<tr><td class="term">Report generated</td><td>' + new Date().toLocaleString() + '</td></tr>' +
+        '<tr><td class="term">Record generated</td><td>' + new Date().toLocaleString() + '</td></tr>' +
         '<tr><td class="term">Active time</td><td>' + fmtTime(S.elapsed) + '</td></tr>' +
-        '<tr><td class="term">Overall score</td><td><b>' + (tot.n ? tot.c + ' of ' + tot.n + ' (' + pct + '%)' : 'No stations checked yet') + '</b></td></tr>' +
+        '<tr><td class="term">Stations practiced</td><td>' + stations.filter(function (_, i) { return isDone(i); }).length + ' of ' + stations.length + '</td></tr>' +
       '</tbody></table></div>' +
-      '<h3>Score by station</h3><div class="table-wrap"><table class="data"><thead><tr><th>Station</th><th>Status</th><th class="num">Score</th></tr></thead><tbody>' + rows +
-        '<tr class="px-total"><td>Total</td><td></td><td class="num">' + (tot.n ? tot.c + ' / ' + tot.n : '&ndash;') + '</td></tr></tbody></table></div>' +
-      '<h3>Mastery by concept</h3><div class="table-wrap"><table class="data"><thead><tr><th>Concept</th><th class="num">Correct</th><th class="num">Self-rated confidence</th></tr></thead><tbody>' + mrows + '</tbody></table></div>' +
-      '<h3>Items to review</h3>' + (review.length ? '<ol class="px-review">' + review.map(function (r) {
-        return '<li><b>' + esc(r.u.prompt) + '</b><br>Your answer: ' + esc(r.u.given) + '. Correct: ' + esc(r.u.correct) + '.<br>' + esc(r.u.why) +
+      '<h3>What was completed</h3><div class="table-wrap"><table class="data"><thead><tr><th>Station</th><th>Status</th><th>Last check</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
+      '<h3>Self-check by concept</h3><div class="table-wrap"><table class="data"><thead><tr><th>Concept</th><th>Last check</th><th class="num">Self-rated confidence</th></tr></thead><tbody>' + mrows + '</tbody></table></div>' +
+      '<h3>Items to revisit</h3>' + (review.length ? '<ol class="px-review">' + review.map(function (r) {
+        return '<li><b>' + esc(r.u.prompt) + '</b><br>Your answer: ' + esc(r.u.given) + '. Best answer: ' + esc(r.u.correct) + '.<br>' + esc(r.u.why) +
           (r.st.review ? ' <span class="px-no-print">(<a href="' + esc(r.st.review.href) + '">' + esc(r.st.review.label) + '</a>)</span><span class="px-print-inline">Review: ' + esc(r.st.review.label) + '.</span>' : '') + '</li>';
-      }).join('') + '</ol>' : '<p class="px-refl">' + (tot.n ? 'No missed items. Well done.' : 'Check at least one station to see items to review.') + '</p>') +
-      '<h3>Recommended next steps</h3><ul class="px-review">' + cfg.concepts.map(function (c) {
+      }).join('') + '</ol>' : '<p class="px-refl">' + (tried ? 'Nothing to revisit from your last checks.' : 'Check at least one station to see items to revisit.') + '</p>') +
+      '<h3>Suggested next steps</h3><ul class="px-review">' + cfg.concepts.map(function (c) {
         var v = m[c.key], p = v.n ? v.c / v.n : null;
-        if (p === null) return '<li><b>' + esc(c.name) + ':</b> not attempted yet.</li>';
-        return '<li><b>' + esc(c.name) + ':</b> ' + (p >= 0.8 ? 'solid. Move on to timed practice questions.' : (p >= 0.6 ? 'developing. Reread the lesson section and retry the station.' : 'needs work. Review ' + esc(c.review || cfg.lessonLabel) + ' before continuing.')) + '</li>';
+        if (p === null) return '<li><b>' + esc(c.name) + ':</b> not tried yet.</li>';
+        return '<li><b>' + esc(c.name) + ':</b> ' + (p >= 0.8 ? 'going well. Try timed practice questions next.' : (p >= 0.6 ? 'developing. Reread the lesson section and retry the station.' : 'worth another pass. Review ' + esc(c.review || cfg.lessonLabel) + ', then retry.')) + '</li>';
       }).join('') + '</ul>' +
       '<h3>Reflections</h3>' + (refl || '<p class="px-refl">None.</p>') +
-      '<div class="px-sign"><div>Learner signature</div><div>Instructor initials / date</div></div>' +
       '<div class="px-actions"><button type="button" class="btn" data-nav="print">&#128424; Print / Save as PDF</button><button type="button" class="btn ghost" data-nav="restart">&#8635; Start over</button></div>' +
+      '<p class="lb-result" id="rp-msg" tabindex="-1" hidden></p>' +
       '</div>';
-    card.querySelector('#rp-name').addEventListener('input', function (e) { S.name = e.target.value; save(); e.target.style.borderColor = ''; });
+    card.querySelector('#rp-name').addEventListener('input', function (e) { S.name = e.target.value; save(); });
     card.querySelector('#rp-team').addEventListener('input', function (e) { S.team = e.target.value; save(); card.querySelector('#rp-team-wrap').classList.toggle('px-empty', !S.team.trim()); });
   }
 
   /* ---------- Navigation: lesson-style pager, never a dead Next ---------- */
-  function stepName(i) { return i === REPORT ? 'Summary report' : 'Station ' + (i + 1) + ': ' + (stations[i].short || stations[i].title); }
+  function stepName(i) { return i === REPORT ? 'Practice record' : 'Station ' + (i + 1) + ': ' + (stations[i].short || stations[i].title); }
   function pager() {
     var prev = S.cur > 0
       ? '<a href="#" class="prev" data-nav="prev"><span class="pager-dir">&#8592; Previous</span><span class="pager-name">' + esc(stepName(S.cur - 1)) + '</span></a>'
@@ -434,8 +465,8 @@
     card.querySelectorAll('[data-act]').forEach(function (b) {
       b.addEventListener('click', function () {
         var si = S.cur, st = stations[si];
-        if (b.dataset.act === 'check') { S.checked[si] = true; S.attempts[si] = (S.attempts[si] || 0) + 1; save(); render(); }
-        if (b.dataset.act === 'retry') { S.checked[si] = false; if (st.type !== 'reflect') S.ans[si] = {}; save(); render(); }
+        if (b.dataset.act === 'check') checkStation(si);
+        if (b.dataset.act === 'retry') retryStation(si);
         if (b.dataset.act === 'pop') { openFacts(si); return; }
         if (b.dataset.act === 'hint') {
           var box = document.getElementById('px-hintbox'), open = b.getAttribute('aria-expanded') === 'true';
@@ -449,14 +480,32 @@
         var n = b.dataset.nav; e.preventDefault();
         if (n === 'prev') go(S.cur - 1);
         if (n === 'next') go(S.cur + 1);
-        if (n === 'print') {
-          if (!S.name.trim()) { var f = document.getElementById('rp-name'); f.focus(); f.style.borderColor = 'var(--gold)'; if (!confirm('No learner name entered. Print anyway?')) return; }
-          window.print();
+        if (n === 'print') window.print();
+        if (n === 'restart') {
+          var msg = document.getElementById('rp-msg');
+          if (b.dataset.armed !== '1') {
+            // In-page confirmation instead of confirm(): first press arms, second press clears
+            b.dataset.armed = '1'; b.innerHTML = '&#8635; Yes, clear everything';
+            if (msg) { msg.hidden = false; msg.className = 'lb-result bad'; msg.innerHTML = '<span class="px-mark" aria-hidden="true">!</span> Start over clears every answer and reflection for this activity in this browser. Select <b>Yes, clear everything</b> to continue, or go to another step to keep your work.'; msg.focus(); }
+            return;
+          }
+          resetActivity();
         }
-        if (n === 'restart') { if (confirm('Start over? This clears every answer and reflection for this activity in this browser.')) { var nm = S.name; S = blank(); S.name = nm; save(); go(0); } }
       });
     });
   }
+  function checkStation(si) {
+    S.checked[si] = true; S.attempts[si] = (S.attempts[si] || 0) + 1; save(); render();
+    // Announce the result once by moving focus to the summary (no live region)
+    var r = document.getElementById('px-result') || document.querySelector('#px-card .px-actions .score');
+    if (r) { if (!r.hasAttribute('tabindex')) r.setAttribute('tabindex', '-1'); r.focus(); }
+  }
+  function retryStation(si) {
+    S.checked[si] = false; if (stations[si].type !== 'reflect') S.ans[si] = {};
+    Object.keys(PERM).forEach(function (k) { if (k.indexOf(si + ':') === 0) delete PERM[k]; }); // new answer order each attempt
+    save(); render(); var h2 = document.getElementById('px-h2'); if (h2) h2.focus();
+  }
+  function resetActivity() { var nm = S.name; S = blank(); S.name = nm; PERM = {}; save(); go(0); }
   function rerender(btn) {
     var sel = btn ? '[data-i="' + btn.dataset.i + '"][data-k="' + btn.dataset.k + '"],[data-c="' + btn.dataset.c + '"][data-n="' + btn.dataset.n + '"]' : null;
     var y = window.scrollY; render(); window.scrollTo(0, y);

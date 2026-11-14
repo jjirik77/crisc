@@ -62,8 +62,8 @@
       <li><span><strong>Specify</strong> the fields of a useful risk register and link each entry to an owner, KRIs, and an action plan. <em class="bloom-tag">Bloom: Apply</em></span></li>
       <li><span><strong>Compare</strong> qualitative, semi-quantitative, and quantitative methods, and calculate SLE and ALE. <em class="bloom-tag">Bloom: Analyze</em></span></li>
       <li><span><strong>Interpret</strong> a FAIR-style Monte Carlo result and a loss exceedance curve against a tolerance statement. <em class="bloom-tag">Bloom: Evaluate</em></span></li>
-      <li><span><strong>Design</strong> a spreadsheet Monte Carlo lab that teaches students why ranges beat single-point estimates. <em class="bloom-tag">Bloom: Create</em></span></li>
     </ul>
+    <div class="tip"><span class="tip-label">&#129520; Teaching Kit</span>This lesson&rsquo;s Faculty Teaching Segment ends with a model assignment and rubric. It is one of your two options in the <a href="teaching-kit.html#day3">Day 3 build block</a>. Workshop goal: adapt at least three model assignments, from at least two domains, for courses you teach.</div>
   </section>
 
   <section class="block">
@@ -353,7 +353,7 @@
               </div>
               <div class="les-row">
                 <div class="iw-panel les-in">
-                  <h5 class="iw-h5">Brightwater scenario</h5>
+                  <h4 class="iw-h5">Brightwater scenario</h4>
                   <div class="les-presets" role="group" aria-label="Scenario preset">
                     <button type="button" class="iw-btn" id="les-p1" aria-pressed="true">Ransomware on core banking</button>
                     <button type="button" class="iw-btn" id="les-p2" aria-pressed="false">Wire-transfer fraud</button>
@@ -581,6 +581,7 @@
             <li><strong>Course fit:</strong> an IT risk management, GRC, or business continuity course at the upper-division or graduate level. Supports the CAE-CD Cybersecurity Planning and Management (CPM), Business Continuity and Disaster Recovery (BCD), and IA Compliance (IAC) Knowledge Units.</li>
           </ul>
           <div class="tip"><span class="tip-label">&#127891; Teaching note</span>Run the simulator in pairs. One student is the risk practitioner and adjusts only the ranges; the other is the risk owner and adjusts only the control effect and tolerance. Each pair submits a one-page worksheet (provided as a file) that records the inputs, the four tiles, and a two-sentence recommendation. Then ask every pair to narrow the loss range by half and report how much the verdict changed. Students discover that better estimates can change a decision as much as a new control.</div>
+                  <div class="tip"><span class="tip-label">&#129520; Build it in your Teaching Kit</span>In today&rsquo;s build block, adapt this model for a course you teach: rewrite the prompt for your students, edit the rubric, and pair it with a lab or activity. <a href="teaching-kit.html#day3">Open the Day 3 build block &#8594;</a></div>
         </article>
 
       </div>
@@ -612,7 +613,7 @@
   </section>
 
   <section class="block" id="knowledge-check">
-    <p class="eyebrow">Scored Knowledge Check</p>
+    <p class="eyebrow">Knowledge Check (self-check)</p>
     <h2 class="h2">Test your understanding</h2>
     <div class="rule"></div>
     <p class="lead" style="margin-bottom:1.5rem">Select the best answer for each question, then submit for your score and the rationale for every item. Like the exam, several options may be true; choose the best one.</p>
@@ -700,7 +701,7 @@
             <label class="opt"><input type="radio" name="q7" value="C"><span><span class="opt-letter">C.</span> $400,000</span></label>
             <label class="opt"><input type="radio" name="q7" value="D"><span><span class="opt-letter">D.</span> $2,500,000</span></label>
           </fieldset>
-          <div class="rationale"><b>Correct: B.</b> SLE = $2,000,000 &times; 0.25 = $500,000. ARO = 1 / 5 = 0.2. ALE = $500,000 &times; 0.2 = $100,000. Option A is the SLE, not the ALE. Option C multiplies by the wrong rate, and D multiplies instead of dividing by the interval.</div>
+          <div class="rationale"><b>Correct: B.</b> SLE = $2,000,000 &times; 0.25 = $500,000. ARO = 1 / 5 = 0.2. ALE = $500,000 &times; 0.2 = $100,000. Option A is the SLE, not the ALE. Option C applies the ARO to the full asset value instead of the SLE, and D multiplies instead of dividing by the interval.</div>
         </div>
 
         <div class="q" data-answer="C">
@@ -739,6 +740,5 @@
 </footer>
 
 <script src="crisc-lesson.js"></script>
-<script src="assistant.js" defer></script>
 </body>
 </html>

@@ -67,16 +67,16 @@ window.ACTIVITY = {
         {
           title: 'Case 2: Four proposals, four tiers', text: 'The committee classifies four AI uses at the EU clinics under the EU AI Act.',
           parts: [
-            { q: 'A model that ranks emergency department patients by urgency of care', options: ['Unacceptable (prohibited)', 'High-risk', 'Limited risk (transparency duties)', 'Minimal risk'], answer: 1, why: 'Emergency healthcare patient triage is listed as high-risk. It carries duties for risk management, data quality, human oversight, and documentation.' },
-            { q: 'A website chatbot that answers questions about visiting hours and parking', options: ['Unacceptable (prohibited)', 'High-risk', 'Limited risk (transparency duties)', 'Minimal risk'], answer: 2, why: 'People must be told they are talking to an AI system. That transparency duty is the limited-risk tier.' },
-            { q: 'A score that rates patients’ general trustworthiness from their social behavior and limits their access to services', options: ['Unacceptable (prohibited)', 'High-risk', 'Limited risk (transparency duties)', 'Minimal risk'], answer: 0, why: 'Social scoring that leads to unfavorable treatment is a prohibited practice.' },
-            { q: 'A spam filter on hospital email', options: ['Unacceptable (prohibited)', 'High-risk', 'Limited risk (transparency duties)', 'Minimal risk'], answer: 3, why: 'A spam filter carries minimal risk and no specific obligations under the Act.' }
+            { q: 'A model that ranks emergency department patients by urgency of care', options: ['Unacceptable (prohibited practice)', 'High-risk (strict obligations)', 'Limited risk (transparency duties)', 'Minimal risk (no specific duties)'], answer: 1, why: 'Emergency healthcare patient triage is listed as high-risk. It carries duties for risk management, data quality, human oversight, and documentation.' },
+            { q: 'A website chatbot that answers questions about visiting hours and parking', options: ['Unacceptable (prohibited practice)', 'High-risk (strict obligations)', 'Limited risk (transparency duties)', 'Minimal risk (no specific duties)'], answer: 2, why: 'People must be told they are talking to an AI system. That transparency duty is the limited-risk tier.' },
+            { q: 'A score that rates patients’ general trustworthiness from their social behavior and limits their access to services', options: ['Unacceptable (prohibited practice)', 'High-risk (strict obligations)', 'Limited risk (transparency duties)', 'Minimal risk (no specific duties)'], answer: 0, why: 'Social scoring that leads to unfavorable treatment is a prohibited practice.' },
+            { q: 'A spam filter on hospital email', options: ['Unacceptable (prohibited practice)', 'High-risk (strict obligations)', 'Limited risk (transparency duties)', 'Minimal risk (no specific duties)'], answer: 3, why: 'A spam filter carries minimal risk and no specific obligations under the Act.' }
           ]
         },
         {
           title: 'Case 3: Public tools on the wards', text: 'A survey finds that some clinicians paste patient notes into public generative AI tools to draft letters.',
           parts: [
-            { q: 'What should Merrow Valley do FIRST?', options: ['Block every AI website at the firewall', 'Inventory current AI use and issue an acceptable use policy grounded in a risk assessment', 'Buy an enterprise AI license for every clinician', 'Ignore it until a breach occurs'], answer: 1, why: 'Know the use, assess it, then set rules. A blanket ban drives use underground; unrestricted use ignores the data risk.' }
+            { q: 'What should Merrow Valley do FIRST?', options: ['Block every AI website at the firewall until a policy is written and approved', 'Inventory current AI use and set an acceptable use policy based on risk', 'Buy an enterprise AI license for every clinician so data stays in a managed tool', 'Ignore it until a breach occurs'], answer: 1, why: 'Know the use, assess it, then set rules. A blanket ban drives use underground; unrestricted use ignores the data risk.' }
           ]
         }
       ]
@@ -162,19 +162,19 @@ window.ACTIVITY = {
           title: 'Case 3: The analytics extract', text: 'An analytics extract holds identifiable records of every patient since 2012, with no retention rule. The IT director says, “It is encrypted, so privacy is covered.”',
           parts: [
             { q: 'Which principle does the extract breach?', options: ['Storage limitation', 'Lawfulness', 'Integrity and confidentiality', 'Accuracy'], answer: 0, why: 'Identifiable data kept longer than the purpose requires breaches storage limitation.' },
-            { q: 'What is the BEST response to the IT director?', options: ['Agree, since encryption is the main privacy control', 'Explain that encryption protects confidentiality but does not address retention, purpose, or minimization, and recommend a retention rule with automated deletion', 'Recommend stronger encryption', 'Move the extract to a different server'], answer: 1, why: 'A system can be perfectly secure and still breach privacy law. Retention needs its own control.' }
+            { q: 'What is the BEST response to the IT director?', options: ['Agree, since encryption is the main privacy control and the server is access-restricted', 'Explain that encryption does not fix retention, and recommend automated deletion', 'Recommend stronger encryption and access logging so the extract is fully protected', 'Move the extract to a different server'], answer: 1, why: 'A system can be perfectly secure and still breach privacy law. Retention needs its own control.' }
           ]
         },
         {
           title: 'Case 4: The readmission model', text: 'The data science team plans a model that profiles every patient at large scale to predict readmission and adjust follow-up care. Design is not yet final.',
           parts: [
-            { q: 'What should happen FIRST?', options: ['Build the model and review it after launch', 'Conduct a data protection impact assessment before design is final', 'Encrypt the training data', 'Ask patients to opt out if they object'], answer: 1, why: 'Large-scale profiling is likely to result in high risk to individuals, so GDPR Article 35 requires a DPIA before the processing. Doing it before design is final lets its findings shape the design.' }
+            { q: 'What should happen FIRST?', options: ['Build the model and review it after launch with real patient outcomes', 'Conduct a data protection impact assessment before design is final', 'Encrypt the training data', 'Ask patients to opt out if they object, through a notice on the portal'], answer: 1, why: 'Large-scale profiling is likely to result in high risk to individuals, so GDPR Article 35 requires a DPIA before the processing. Doing it before design is final lets its findings shape the design.' }
           ]
         },
         {
           title: 'Case 5: The misdirected export', text: 'On Monday at 09:00, the clinic confirms that a file of patient records was sent to the wrong external party and cannot be recovered.',
           parts: [
-            { q: 'If the breach is reportable, by when should the supervisory authority be notified, where feasible?', options: ['Within 24 hours', 'Within 72 hours of becoming aware, so by Thursday at 09:00', 'Within 30 days', 'Only if a patient complains'], answer: 1, why: 'The GDPR requires notice without undue delay and, where feasible, within 72 hours of becoming aware of a reportable breach.' },
+            { q: 'If the breach is reportable, by when should the supervisory authority be notified, where feasible?', options: ['Within 24 hours, so by Tuesday at 09:00', 'Within 72 hours, so by Thursday at 09:00', 'Within 30 days, as for a data subject request', 'Only if a patient complains'], answer: 1, why: 'The GDPR requires notice without undue delay and, where feasible, within 72 hours of becoming aware of a reportable breach.' },
             { q: 'A regulator asks Merrow Valley to show how it complies with all of these principles. Which principle requires it to be able to do that?', options: ['Transparency', 'Accountability', 'Accuracy', 'Purpose limitation'], answer: 1, why: 'Accountability means being able to demonstrate compliance, through policies, DPIAs, training, and audit evidence.' }
           ]
         }
@@ -192,6 +192,5 @@ window.ACTIVITY = {
 };
 </script>
 <script src="practice.js"></script>
-<script src="assistant.js" defer></script>
 </body>
 </html>

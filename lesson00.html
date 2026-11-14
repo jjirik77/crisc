@@ -62,8 +62,8 @@
       <li><span><strong>Apply</strong> the ISACA Code of Professional Ethics to situations a risk practitioner faces. <em class="bloom-tag">Bloom: Apply</em></span></li>
       <li><span><strong>Assign</strong> common risk decisions to the correct owner: board, risk owner, control owner, risk practitioner, or internal audit. <em class="bloom-tag">Bloom: Analyze</em></span></li>
       <li><span><strong>Use</strong> best-answer tactics (FIRST, BEST, MOST, PRIMARY) to eliminate plausible but weaker options. <em class="bloom-tag">Bloom: Evaluate</em></span></li>
-      <li><span><strong>Design</strong> a role-and-ownership RACI assignment that places CRISC content in your own program. <em class="bloom-tag">Bloom: Create</em></span></li>
     </ul>
+    <div class="tip"><span class="tip-label">&#129520; Teaching Kit</span>This lesson&rsquo;s Faculty Teaching Segment ends with a model assignment and rubric. It is one of your two options in the <a href="teaching-kit.html#day1">Day 1 build block</a>. Workshop goal: adapt at least three model assignments, from at least two domains, for courses you teach.</div>
   </section>
 
   <section class="block">
@@ -360,7 +360,7 @@
               </div>
               <div class="dos-flex">
                 <div class="iw-panel dos-in">
-                  <h5 class="iw-h5">Decisions at Larchmont Community Health</h5>
+                  <h4 class="iw-h5">Decisions at Larchmont Community Health</h4>
                   <div id="dos-rows"></div>
                   <div class="dos-actions">
                     <button type="button" class="iw-btn" id="dos-check">Check answers</button>
@@ -422,7 +422,7 @@
             }
             function showWhy(i,force){
               var d=D[i], a=ans[i], k=order.indexOf(i)+1;
-              if(mode==='challenge' && !graded && !force){$('dos-why').innerHTML='<b>Decision '+k+':</b> answer recorded. Grades and explanations appear when you check.';return;}
+              if(mode==='challenge' && !graded && !force){$('dos-why').innerHTML='<b>Decision '+k+':</b> answer recorded. Results and explanations appear when you check.';return;}
               if(mode==='challenge' && !graded){$('dos-why').innerHTML='<b>Decision '+k+':</b> explanations unlock after you check your answers.';return;}
               var status=!a?'Not answered yet. ':(a===d.a?'Correct. ':'You chose '+RN[a]+'. ');
               $('dos-why').innerHTML='<b>Decision '+k+': '+RN[d.a]+'.</b> '+status+d.w;
@@ -522,6 +522,7 @@
             <li><strong>Course fit:</strong> an introductory GRC, security management, or IT risk course. It supports the CAE-CD Cybersecurity Planning and Management (CPM), Policy, Legal, Ethics, and Compliance (PLE), and Cybersecurity Principles (CSP) Knowledge Units.</li>
           </ul>
           <div class="tip"><span class="tip-label">&#127891; Teaching note</span>Run the sorter in pairs. Have each pair complete Challenge mode once, then hand out a printed copy of the ten decisions and ask them to write the RACI letters for every role, not just the owner. The discussion about who is Consulted and Informed is where students learn that the practitioner is involved in almost everything and accountable for very little.</div>
+                  <div class="tip"><span class="tip-label">&#129520; Build it in your Teaching Kit</span>In today&rsquo;s build block, adapt this model for a course you teach: rewrite the prompt for your students, edit the rubric, and pair it with a lab or activity. <a href="teaching-kit.html#day1">Open the Day 1 build block &#8594;</a></div>
         </article>
 
       </div>
@@ -554,7 +555,7 @@
   </section>
 
   <section class="block" id="knowledge-check">
-    <p class="eyebrow">Scored Knowledge Check</p>
+    <p class="eyebrow">Knowledge Check (self-check)</p>
     <h2 class="h2">Test your understanding</h2>
     <div class="rule"></div>
     <p class="lead" style="margin-bottom:1.5rem">Select the best answer for each question, then submit for your score and the rationale for every item. Like the exam, several options may be true; choose the best one.</p>
@@ -681,6 +682,5 @@
 </footer>
 
 <script src="crisc-lesson.js"></script>
-<script src="assistant.js" defer></script>
 </body>
 </html>

@@ -85,27 +85,27 @@ window.ACTIVITY = {
         {
           title: 'Case 1: The sudden jump', text: 'The KRI has been at about 4% for a year. This month the GRC tool shows 22%. The board pack is due in three days.',
           parts: [
-            { q: 'What should you do FIRST?', concept: 'data', options: ['Report 22% to the board as a red KRI', 'Validate the data: reconcile the figure to the scanner and asset inventory, and confirm it with the data owner', 'Ask the patch team to work the weekend', 'Raise the red threshold to 25% until the cause is known'], answer: 1, why: 'A surprising value is validated before anyone relies on it. A wrong number can trigger the wrong decision and damage the risk function’s credibility.' },
-            { q: 'Validation shows 40 decommissioned devices were still in the scan scope. The corrected value is 12%. What now?', options: ['Nothing, since the jump was mostly a data error', 'Follow the red action: escalate to the VP of Grid Operations with the effect on residual risk and the options, and log the scan-scope fix', 'Patch the systems yourself to bring it back to green', 'Report it as amber, because it is close'], answer: 1, why: 'Twelve percent is red. The predefined action is escalation to the risk owner, who decides. The data-quality fix is recorded too.' }
+            { q: 'What should you do FIRST?', concept: 'data', options: ['Report 22% to the board as a red KRI, since a threshold breach must go up at once', 'Validate it: reconcile it to the scanner and inventory with the data owner', 'Ask the patch team to work the weekend', 'Raise the red threshold to 25% until the cause is known, and note the change'], answer: 1, why: 'A surprising value is validated before anyone relies on it. A wrong number can trigger the wrong decision and damage the risk function’s credibility.' },
+            { q: 'Validation shows 40 decommissioned devices were still in the scan scope. The corrected value is 12%. What now?', options: ['Nothing beyond fixing the scan scope, since the jump was mostly a data error', 'Follow the red action: escalate to the VP of Grid Operations with options, and log the scope fix', 'Patch the systems yourself to bring it back to green', 'Report it as amber, because it is close to the threshold and the data were unreliable'], answer: 1, why: 'Twelve percent is red. The predefined action is escalation to the risk owner, who decides. The data-quality fix is recorded too.' }
           ]
         },
         {
           title: 'Case 2: Ten months of amber', text: 'A second KRI, unapproved vendor remote sessions, has shown amber every month for ten months. No one acts on it any more, and incidents have not followed.',
           parts: [
-            { q: 'What is the BEST response?', options: ['Remove the KRI from the dashboard', 'Recalibrate the thresholds with the risk owner, linked to appetite, and document the change', 'Change the color scheme so amber is less prominent', 'Leave it, since amber is not red'], answer: 1, why: 'Thresholds set too low create alert fatigue. They are reviewed with the risk owner and tied to appetite, and the change is recorded.' }
+            { q: 'What is the BEST response?', options: ['Remove the KRI from the dashboard, since it no longer tells anyone anything new', 'Recalibrate the thresholds with the owner, tied to appetite, and document it', 'Change the color scheme so amber is less prominent', 'Leave it, since amber is not red and the risk owner has already seen it'], answer: 1, why: 'Thresholds set too low create alert fatigue. They are reviewed with the risk owner and tied to appetite, and the change is recorded.' }
           ]
         },
         {
           title: 'Case 3: The request before the board meeting', text: 'The OT operations manager asks you to raise the red threshold on the patch KRI from 10% to 15% this week so the board dashboard shows amber.',
           parts: [
-            { q: 'What should you do?', options: ['Agree, because thresholds are a judgment call', 'Agree, but add a footnote', 'Decline. Thresholds are tied to appetite and change only through the risk owner with a documented rationale, and the board sees the current status', 'Remove the KRI from this quarter’s board report'], answer: 2, why: 'Moving a threshold to change a color hides the risk from the people who set appetite. Honest reporting is part of the practitioner’s integrity.' }
+            { q: 'What should you do?', options: ['Agree, because thresholds are a judgment call and the owner knows the business best', 'Agree for this quarter, and move the threshold back once the number improves', 'Decline: thresholds change only through the risk owner, with a documented rationale', 'Remove the KRI from this quarter’s board report'], answer: 2, why: 'Moving a threshold to change a color hides the risk from the people who set appetite. Honest reporting is part of the practitioner’s integrity.' }
           ]
         },
         {
           title: 'Case 4: The slipping action plan', text: 'The action plan to replace vendor VPN access with a monitored jump host has missed its milestone twice. Status has stayed amber, and nobody has escalated it.',
           parts: [
-            { q: 'What is the BEST action for the risk practitioner?', concept: 'plan', options: ['Move the due date back so the plan shows green', 'Report the delay and its effect on residual risk to the risk owner, and take repeated slippage to the risk committee', 'Accept the delay on the risk owner’s behalf', 'Close the plan and open a new one'], answer: 1, why: 'A late action keeps the risk above target longer than the owner agreed. The practitioner reports and escalates; the practitioner does not reset deadlines or accept the delay.' },
-            { q: 'The jump host is installed and the team has ticked every task. When can the plan close?', concept: 'plan', options: ['Now, because all tasks are complete', 'When evidence shows the target residual risk has been reached, such as no vendor sessions outside the jump host for a full period', 'When the vendor signs off', 'At the end of the fiscal year'], answer: 1, why: 'A plan closes when evidence shows the target residual risk was reached, not when the last task is ticked.' }
+            { q: 'What is the BEST action for the risk practitioner?', concept: 'plan', options: ['Move the due date back so the plan shows green, and note the reason in the tracker', 'Report the delay and its effect to the risk owner; take repeated slippage to the committee', 'Accept the delay on the risk owner’s behalf to keep the project moving', 'Close the plan and open a new one'], answer: 1, why: 'A late action keeps the risk above target longer than the owner agreed. The practitioner reports and escalates; the practitioner does not reset deadlines or accept the delay.' },
+            { q: 'The jump host is installed and the team has ticked every task. When can the plan close?', concept: 'plan', options: ['Now, because all tasks are complete and the team has signed the completion record', 'When evidence shows the target residual risk was reached for a full period', 'When the vendor signs off that its remote access now goes through the jump host', 'At the end of the fiscal year'], answer: 1, why: 'A plan closes when evidence shows the target residual risk was reached, not when the last task is ticked.' }
           ]
         }
       ]
@@ -119,26 +119,26 @@ window.ACTIVITY = {
         {
           title: 'Case 1: The audit and risk committee', text: 'The board’s audit and risk committee meets quarterly for two hours and covers finance, safety, and cyber.',
           parts: [
-            { q: 'Which report fits?', options: ['A list of every open vulnerability by CVE number', 'A one- or two-page summary of top risks against appetite, with trends, major incidents, and decisions required', 'A live dashboard with drill-down to individual devices', 'A daily exception list'], answer: 1, why: 'The board needs to know whether the enterprise is within appetite and what decisions it must make. Technical detail belongs in operational reports.' }
+            { q: 'Which report fits?', options: ['A list of every open vulnerability by CVE number and severity', 'A one- or two-page summary of top risks against appetite and decisions needed', 'A live dashboard with drill-down to individual devices, so directors can explore', 'A daily exception list'], answer: 1, why: 'The board needs to know whether the enterprise is within appetite and what decisions it must make. Technical detail belongs in operational reports.' }
           ]
         },
         {
           title: 'Case 2: The executive team', text: 'Saltreach’s executive team meets monthly to steer the business units.',
           parts: [
-            { q: 'Which report fits?', options: ['A scorecard with the risk profile by business unit, KRIs, action-plan status, and emerging risks', 'Raw firewall logs', 'The annual audit plan', 'A list of patch tickets assigned to each technician'], answer: 0, why: 'Executives manage across units. A monthly scorecard with KRIs and plan status supports that.' }
+            { q: 'Which report fits?', options: ['A scorecard of the risk profile by unit, KRIs, plan status, and emerging risks', 'Raw firewall logs', 'The annual audit plan with the status of each engagement', 'A list of patch tickets assigned to each technician, with their ages, priorities, and due dates'], answer: 0, why: 'Executives manage across units. A monthly scorecard with KRIs and plan status supports that.' }
           ]
         },
         {
           title: 'Case 3: The substation maintenance lead', text: 'The maintenance lead for the northern substations runs a crew that patches field devices.',
           parts: [
-            { q: 'Which report fits?', options: ['The quarterly board heat map', 'A weekly exception list of the specific unpatched devices at her sites, with ticket numbers and due dates', 'The enterprise risk appetite statement', 'An annual trend of cyber losses'], answer: 1, why: 'Control owners and operations need specific exceptions and tasks, often daily or weekly.' }
+            { q: 'Which report fits?', options: ['The quarterly board heat map, filtered to the risks that involve her sites', 'A weekly list of the unpatched devices at her sites, with tickets and due dates', 'The enterprise risk appetite statement', 'An annual trend of cyber losses across all regions and business units'], answer: 1, why: 'Control owners and operations need specific exceptions and tasks, often daily or weekly.' }
           ]
         },
         {
           title: 'Case 4: The draft board pack', text: 'A draft board report has 40 technical metrics, a heat map without trend arrows, and no stated decisions. The data date is missing.',
           parts: [
-            { q: 'What is the BEST improvement?', options: ['Add more metrics so nothing is missed', 'Cut it to the top risks against appetite, add trend arrows and a short narrative, state the data date and limits, and end with the decisions needed', 'Replace the heat map with a larger heat map', 'Send the full metrics file as an appendix and leave the report as it is'], answer: 1, why: 'Good board reports use business language, show direction of travel, compare against appetite, and end with the decision or action needed.' },
-            { q: 'Why should the heat map be paired with trends and a narrative?', options: ['Heat maps are too slow to read', 'Heat maps can suggest false precision, hide uncertainty, and cannot show aggregation', 'Boards are not allowed to see heat maps', 'Heat maps only work for financial risk'], answer: 1, why: 'A heat map is fast to read but limited. Trend arrows and a short narrative supply what it cannot show.' }
+            { q: 'What is the BEST improvement?', options: ['Add more metrics, color-coded by owner, so nothing is missed and every team is visible', 'Cut to top risks against appetite, with trends, narrative, and decisions needed', 'Replace the heat map with a larger heat map', 'Send the full metrics file as an appendix and leave the report as it is'], answer: 1, why: 'Good board reports use business language, show direction of travel, compare against appetite, and end with the decision or action needed.' },
+            { q: 'Why should the heat map be paired with trends and a narrative?', options: ['Heat maps take boards too long to read without a color legend', 'They suggest false precision, hide uncertainty, and miss aggregation', 'Boards are not allowed to see heat maps', 'Heat maps only work for financial risk, where impact is in dollars'], answer: 1, why: 'A heat map is fast to read but limited. Trend arrows and a short narrative supply what it cannot show.' }
           ]
         }
       ]
@@ -186,6 +186,5 @@ window.ACTIVITY = {
 };
 </script>
 <script src="practice.js"></script>
-<script src="assistant.js" defer></script>
 </body>
 </html>

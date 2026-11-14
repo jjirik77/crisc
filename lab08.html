@@ -700,10 +700,12 @@
   });
   if (!API) { var waitApi = setInterval(function () { if (window.LAB_API) { API = API || window.LAB_API; clearInterval(waitApi); decorateReport(); } }, 200); }
 
+  // Developer test hooks: available only when the URL contains ?selftest
+  var SELFTEST_ON = /[?&]selftest\b/.test(window.location.search);
   // Automated test hook: release every inject in Solo mode and commit a path
-  window.LAB_TEST_UNLOCK = function () { var a = API || window.LAB_API; if (!a) return; a.note('mode', 'solo'); a.note('solo', 8); a.note('maxSeen', 8); var d = {}; B.INJECTS.forEach(function (x, k) { d[x.id] = (x.best + 1 + (k % 3)) % 4; }); a.note('dec', d); if (CUR) renderLive(true); };
+  if (SELFTEST_ON) window.LAB_TEST_UNLOCK = function () { var a = API || window.LAB_API; if (!a) return; a.note('mode', 'solo'); a.note('solo', 8); a.note('maxSeen', 8); var d = {}; B.INJECTS.forEach(function (x, k) { d[x.id] = (x.best + 1 + (k % 3)) % 4; }); a.note('dec', d); if (CUR) renderLive(true); };
 
-  window.LAB_SELFTEST = function () {
+  if (SELFTEST_ON) window.LAB_SELFTEST = function () {
     var log = [], P = [], now = nowSec(), i, j;
     // 1) Round-trip encode/decode
     var states = [
@@ -898,6 +900,5 @@ window.LAB = {
 };
 </script>
 <script src="lab.js"></script>
-<script src="assistant.js" defer></script>
 </body>
 </html>

@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
 <title>CRISC Practice Exam | CRISC Workshop</title>
 <link rel="stylesheet" href="crisc-lesson.css">
 <style>
@@ -23,11 +24,11 @@
   .dt-row { border-top: 1px solid var(--border); }
   .dt-name { font-family: Arial, sans-serif; font-size: 0.86rem; font-weight: 700; color: var(--text-primary); }
   .dt-wt { font-family: 'Arial Narrow', Arial, sans-serif; font-weight: 900; color: var(--gold); font-size: 0.9rem; }
-  .dt-row select { width: 100%; font-family: Arial, sans-serif; font-size: 0.9rem; color: var(--text-primary); background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; padding: 0.5rem; cursor: pointer; }
-  .dt-row select:focus { outline: none; border-color: var(--gold); }
-  .dt-row input[type=number], .dt-controls input[type=number] { font-family: Arial, sans-serif; font-size: 0.95rem; text-align: center; color: var(--text-primary); background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; padding: 0.45rem; }
+  .dt-row select { width: 100%; font-family: Arial, sans-serif; font-size: 0.9rem; color: var(--text-primary); background: var(--card-bg); border: 1px solid var(--field-border); border-radius: 4px; padding: 0.5rem; cursor: pointer; }
+  .dt-row select:focus { outline: 3px solid var(--gold); outline-offset: 1px; border-color: var(--gold); }
+  .dt-row input[type=number], .dt-controls input[type=number] { font-family: Arial, sans-serif; font-size: 0.95rem; text-align: center; color: var(--text-primary); background: var(--card-bg); border: 1px solid var(--field-border); border-radius: 4px; padding: 0.45rem; }
   .dt-row input[type=number] { width: 100%; }
-  .dt-row input:focus, .dt-controls input:focus { outline: none; border-color: var(--gold); }
+  .dt-row input:focus, .dt-controls input:focus { outline: 3px solid var(--gold); outline-offset: 1px; border-color: var(--gold); }
   .dt-controls { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
   .dt-controls label { font-family: Arial, sans-serif; font-size: 0.86rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.5rem; }
   .dt-controls input[type=number] { width: 4.6rem; }
@@ -43,8 +44,8 @@
   .ai-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.8rem; }
   .ai-row .field { display: grid; gap: 0.4rem; }
   .ai-row label { font-family: 'Arial Narrow', Arial, sans-serif; font-weight: 900; font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-primary); }
-  .ai-row select { font-family: Arial, sans-serif; font-size: 0.88rem; color: var(--text-primary); background: var(--card-bg); border: 1px solid var(--border); border-radius: 4px; padding: 0.5rem; }
-  .ai-body textarea { width: 100%; font-family: 'SFMono-Regular', Consolas, Menlo, monospace; font-size: 0.78rem; line-height: 1.5; color: var(--text-primary); border: 1px solid var(--blue-pale-border); border-radius: 6px; padding: 0.8rem; resize: vertical; }
+  .ai-row select { font-family: Arial, sans-serif; font-size: 0.88rem; color: var(--text-primary); background: var(--card-bg); border: 1px solid var(--field-border); border-radius: 4px; padding: 0.5rem; }
+  .ai-body textarea { width: 100%; font-family: 'SFMono-Regular', Consolas, Menlo, monospace; font-size: 0.78rem; line-height: 1.5; color: var(--text-primary); border: 1px solid var(--field-border); border-radius: 6px; padding: 0.8rem; resize: vertical; }
   #genPrompt { min-height: 180px; background: var(--blue-pale); } #pasteIn { min-height: 110px; background: var(--card-bg); }
   #addMsg { font-family: Arial, sans-serif; font-size: 0.82rem; font-weight: 700; }
   .row-btns { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; }
@@ -52,6 +53,28 @@
   #timerWrap { display: flex; align-items: center; gap: 0.5rem; }
   .timer { font-family: 'Arial Narrow', Arial, sans-serif; font-weight: 900; font-size: 1.35rem; color: var(--text-primary); letter-spacing: 0.04em; }
   .timer.low { color: var(--wrong); }
+  .timer.low::before { content: "! "; }
+  .exam-top .btn { padding: .45rem .9rem; font-size: .74rem; }
+  .time-tools { display: flex; gap: .4rem; flex-wrap: wrap; }
+  .time-warn { flex-basis: 100%; margin: 0; font: 700 .82rem Arial, sans-serif; color: var(--wrong); }
+  .time-warn:empty { display: none; }
+  .timing-opts { border: 0; margin: .8rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: .4rem 1.1rem; font: .84rem Arial, sans-serif; color: var(--text-secondary); }
+  .timing-opts legend { font-weight: 700; color: var(--text-primary); padding: 0; margin-bottom: .3rem; }
+  .timing-opts label { display: flex; gap: .4rem; align-items: center; }
+  .note-box { margin: 1rem 0 0; padding: .8rem 1rem; border: 1px solid var(--border); border-left: 4px solid var(--gold); border-radius: 0 6px 6px 0; background: var(--card-bg); font: .9rem/1.55 Arial, sans-serif; color: var(--text-primary); }
+  .note-box:empty { display: none; }
+  #progress:focus, .note-box:focus, #resultHeading:focus, #reviewHeading:focus, #startHeading:focus, #submitHead:focus { outline: 2px solid var(--gold); outline-offset: 2px; }
+  .submit-box { margin-top: 1.25rem; padding: 1rem 1.2rem; border: 1px solid var(--border); border-left: 4px solid var(--gold); border-radius: 0 6px 6px 0; background: var(--blue-pale); }
+  .submit-box[hidden] { display: none; }
+  .submit-box h3 { font: 700 1.05rem Georgia, serif; margin: 0 0 .4rem; color: var(--text-primary); }
+  .submit-box p { font: .9rem/1.55 Arial, sans-serif; margin: 0 0 .8rem; color: var(--text-secondary); }
+  .ai-badge { display: inline-block; margin: 0 0 .9rem .4rem; font: 700 .64rem Arial, sans-serif; letter-spacing: .06em; text-transform: uppercase; color: #92400e; background: #fdf2e4; border: 1px solid #92400e; padding: .2rem .5rem; border-radius: 2px; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  :root { --field-border: #8f7a8d; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+    html { scroll-behavior: auto !important; }
+  }
   .timer-label { font-family: Arial, sans-serif; font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
   .exam-progress { font-family: Arial, sans-serif; font-size: 0.86rem; font-weight: 700; color: var(--text-secondary); }
   .domain-badge { display: inline-block; font-family: 'Arial Narrow', Arial, sans-serif; font-weight: 900; font-size: 0.64rem; letter-spacing: 0.08em; text-transform: uppercase; color: #fff; background: var(--navy); padding: 0.25rem 0.6rem; border-radius: 2px; margin-bottom: 0.9rem; }
@@ -62,10 +85,12 @@
   .flag-btn { background: transparent; border: 1px solid var(--border); color: var(--text-muted); border-radius: 20px; padding: 0.45rem 1rem; font-family: Arial, sans-serif; font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: all 0.15s; }
   .flag-btn.on { border-color: var(--gold); color: var(--gold); background: var(--gold-pale); }
   .navgrid { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.5rem; }
-  .navgrid button { width: 2.3rem; height: 2.3rem; border: 1px solid var(--border); background: var(--card-bg); border-radius: 4px; font-family: 'Arial Narrow', Arial, sans-serif; font-weight: 700; font-size: 0.82rem; cursor: pointer; color: var(--text-muted); transition: all 0.12s; }
+  .navgrid button { min-width: 2.6rem; height: 2.6rem; padding: 0 .25rem; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; line-height: 1; border: 1px solid var(--field-border); background: var(--card-bg); border-radius: 4px; font-family: 'Arial Narrow', Arial, sans-serif; font-weight: 700; font-size: 0.82rem; cursor: pointer; color: var(--text-muted); transition: all 0.12s; }
   .navgrid button.answered { background: var(--blue-pale); border-color: var(--blue-pale-border); color: var(--text-primary); }
   .navgrid button.flagged { box-shadow: inset 0 -4px 0 var(--gold); }
-  .navgrid button.current { outline: 2px solid var(--gold); outline-offset: 1px; }
+  .navgrid button.current { outline: 2px solid var(--gold); outline-offset: 1px; font-weight: 900; text-decoration: underline; color: var(--text-primary); }
+  .navgrid .nv-g { font-size: 0.66rem; min-height: 0.7rem; margin-top: 0.1rem; color: var(--text-primary); }
+  .navgrid button.flagged .nv-g { color: var(--gold); }
   .legend-row { display: flex; gap: 1.25rem; flex-wrap: wrap; font-family: Arial, sans-serif; font-size: 0.76rem; color: var(--text-muted); margin-top: 1rem; }
   .legend-row span { display: flex; align-items: center; gap: 0.35rem; }
   .swatch { width: 0.9rem; height: 0.9rem; border-radius: 3px; border: 1px solid var(--border); display: inline-block; }
@@ -116,14 +141,20 @@
 
   <section class="block panel active" id="startPanel">
     <p class="eyebrow">Begin</p>
-    <h2 class="h2">Build your exam</h2>
+    <h2 class="h2" id="startHeading" tabindex="-1">Build your exam</h2>
     <div class="rule"></div>
 
     <div class="full-cta">
       <div>
         <div class="fc-title">Full Blueprint Exam</div>
-        <div class="fc-sub">Up to 150 questions across all four domains, weighted to the current CRISC exam content outline (D1 26% &middot; D2 22% &middot; D3 32% &middot; D4 20%), timed at the real exam pace of 150 questions in <strong>4 hours</strong>.</div>
+        <div class="fc-sub">Up to 150 questions across all four domains, weighted to the current CRISC exam content outline (D1 26% &middot; D2 22% &middot; D3 32% &middot; D4 20%), timed by default at the real exam pace of 150 questions in <strong>4 hours</strong>. You can choose extra time or no timer, and you can pause or add time during the exam.</div>
         <div class="fc-note" id="fullNote"></div>
+        <fieldset class="timing-opts"><legend>Timing for the full exam</legend>
+          <label><input type="radio" name="fullTiming" value="1" checked> Timed at exam pace (simulation)</label>
+          <label><input type="radio" name="fullTiming" value="1.5"> Extended time (1.5&times;)</label>
+          <label><input type="radio" name="fullTiming" value="2"> Extended time (2&times;)</label>
+          <label><input type="radio" name="fullTiming" value="0"> Untimed</label>
+        </fieldset>
       </div>
       <button type="button" class="btn" id="fullBtn" onclick="startFull()">Start Full Exam &#8594;</button>
     </div>
@@ -142,9 +173,10 @@
         <button type="button" class="btn secondary" onclick="allWeights()">&#9878;&#65039; Set all to exam weight</button>
         <span id="totalLine">Total: 0 questions</span>
       </div>
-      <label class="field-check"><input type="checkbox" id="timedChk" checked onchange="updateTotals()"><span><b>Timed mode.</b> 1.6 minutes per question (the real exam pace). Auto-submits at zero.</span></label>
+      <label class="field-check"><input type="checkbox" id="timedChk" checked onchange="updateTotals()"><span><b>Timed mode.</b> 1.6 minutes per question (the real exam pace). You can pause or add 30 minutes during the exam. Auto-submits at zero.</span></label>
       <p class="lead" id="estLine" style="margin:0"></p>
       <div><button type="button" class="btn" onclick="startCustom()">Begin Custom Exam &#8594;</button></div>
+      <p class="note-box" id="startMsg" tabindex="-1"></p>
     </div>
 
     <div class="bank-status" id="bankStatus"></div>
@@ -184,26 +216,34 @@
 
   <section class="block panel" id="examPanel">
     <div class="exam-top">
-      <span class="exam-progress" id="progress">Question 1 of 20</span>
-      <span id="timerWrap"><span class="timer-label">Time left</span><span class="timer" id="timer">00:00</span></span>
-      <button type="button" class="btn" onclick="submitExam(false)">Submit Exam</button>
+      <span class="exam-progress" id="progress" tabindex="-1">Question 1 of 20</span>
+      <span id="timerWrap"><span class="timer-label">Time left</span><span class="timer" id="timer">00:00</span>
+        <span class="time-tools"><button type="button" class="btn secondary" id="pauseBtn" onclick="togglePause()" aria-pressed="false">Pause</button><button type="button" class="btn secondary" onclick="addTime()">+30 min</button></span></span>
+      <button type="button" class="btn" onclick="askSubmit()">Submit Exam</button>
+      <p class="time-warn" id="timeWarn" role="status"></p>
     </div>
     <div class="qcard" id="qcard"></div>
     <div class="exam-actions">
       <button type="button" class="btn secondary" id="prevBtn" onclick="prev()">&#8592; Previous</button>
       <button type="button" class="flag-btn" id="flagBtn" onclick="toggleFlag()">&#9873; Flag</button>
       <button type="button" class="btn secondary" id="nextBtn" onclick="next()">Next &#8594;</button>
+      <button type="button" class="btn" id="reviewSubmitBtn" onclick="askSubmit()" hidden>Review and submit &#8594;</button>
     </div>
-    <div class="navgrid" id="navGrid" aria-label="Question navigator"></div>
+    <div class="submit-box" id="submitBox" hidden>
+      <h3 id="submitHead" tabindex="-1">Ready to submit?</h3>
+      <p id="submitText"></p>
+      <div class="row-btns"><button type="button" class="btn" onclick="submitExam(false)">Submit now</button><button type="button" class="btn secondary" onclick="keepWorking()">Keep working</button></div>
+    </div>
+    <div class="navgrid" id="navGrid" role="group" aria-label="Question navigator"></div>
     <div class="legend-row">
-      <span><span class="swatch" style="background:var(--blue-pale)"></span> Answered</span>
-      <span><span class="swatch" style="box-shadow:inset 0 -4px 0 var(--gold)"></span> Flagged</span>
-      <span><span class="swatch" style="outline:2px solid var(--gold)"></span> Current</span>
+      <span><span class="swatch" style="background:var(--blue-pale)"></span> &#10003; Answered</span>
+      <span><span class="swatch" style="box-shadow:inset 0 -4px 0 var(--gold)"></span> &#9873; Flagged</span>
+      <span><span class="swatch" style="outline:2px solid var(--gold)"></span> <u><b>Underlined</b></u> = current question</span>
     </div>
   </section>
 
   <section class="block panel" id="resultPanel">
-    <p class="eyebrow">Results</p><h2 class="h2">Your score</h2><div class="rule"></div>
+    <p class="eyebrow">Results</p><h2 class="h2" id="resultHeading" tabindex="-1">Your score</h2><div class="rule"></div>
     <div class="result-score"><div class="num" id="scoreNum">0%</div><div class="detail" id="scoreDetail"></div><div class="msg" id="scoreMsg"></div></div>
     <h3 class="h2" style="font-size:1.3rem">By domain</h3><div class="rule"></div>
     <div id="domBreak" style="margin-bottom:2rem"></div>
@@ -212,9 +252,9 @@
   </section>
 
   <section class="block panel" id="reviewPanel">
-    <p class="eyebrow">Review</p><h2 class="h2">Answer review and rationale</h2><div class="rule"></div>
+    <p class="eyebrow">Review</p><h2 class="h2" id="reviewHeading" tabindex="-1">Answer review and rationale</h2><div class="rule"></div>
     <div id="reviewList"></div>
-    <div class="row-btns" style="margin-top:1rem"><button type="button" class="btn" onclick="show('result');window.scrollTo({top:0,behavior:'smooth'})">&#8592; Back to Score</button><button type="button" class="btn secondary" onclick="restart()">New Exam</button></div>
+    <div class="row-btns" style="margin-top:1rem"><button type="button" class="btn" onclick="show('result');toTop();focusEl('resultHeading')">&#8592; Back to Score</button><button type="button" class="btn secondary" onclick="restart()">New Exam</button></div>
   </section>
 
 </main>
@@ -233,7 +273,16 @@ const WEIGHTS = {D1:0.26, D2:0.22, D3:0.32, D4:0.20};
 const BP150 = {D1:39, D2:33, D3:48, D4:30};
 const STORE_KEY = 'crisc-added-questions';
 let added = []; try { added = JSON.parse(localStorage.getItem(STORE_KEY)||'[]'); if(!Array.isArray(added)) added=[]; } catch(e){ added=[]; }
-let exam=[], answers={}, flags={}, cur=0, timer=null, timeLeft=0, timed=true;
+// Anything in the added bank came from an outside AI: treat it as untrusted text and badge it
+added = added.filter(x=>x && typeof x==='object').map(x=>Object.assign({}, x, {ai:true}));
+let exam=[], answers={}, flags={}, cur=0, timer=null, timeLeft=0, timed=true, paused=false, warned={};
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function clean(s, max){ return String(s==null?'':s).replace(/<[^>]*>/g,'').slice(0, max); }
+function reduceMotion(){ try { return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch(e){ return false; } }
+function toTop(){ window.scrollTo({top:0, behavior: reduceMotion()?'auto':'smooth'}); }
+function focusEl(id){ const el=document.getElementById(id); if(el){ try{ el.focus({preventScroll:true}); }catch(e){ el.focus(); } } }
+function startMsg(t){ const m=document.getElementById('startMsg'); m.textContent=t; if(t) m.focus(); }
+function aiBadge(q){ return q.ai ? '<span class="ai-badge">AI-added &middot; not reviewed</span>' : ''; }
 
 function bank(){ return BUILTIN.concat(added); }
 function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
@@ -256,71 +305,107 @@ function updateBank(){
   updateTotals();
 }
 
-function launch(qs, forceTimed){
-  if(qs.length===0){ alert('No questions selected.'); return; }
-  exam=shuffle(qs); answers={}; flags={}; cur=0;
-  timed = (forceTimed===undefined) ? document.getElementById('timedChk').checked : forceTimed;
+function launch(qs, factor){
+  if(qs.length===0){ startMsg('No questions selected.'); return; }
+  startMsg('');
+  exam=shuffle(qs); answers={}; flags={}; cur=0; paused=false; warned={};
+  // factor: 1 = exam pace, 1.5 or 2 = extended time, 0 = untimed; undefined = custom exam checkbox
+  if(factor===undefined) factor = document.getElementById('timedChk').checked ? 1 : 0;
+  timed = factor>0;
+  document.getElementById('submitBox').hidden=true; document.getElementById('timeWarn').textContent='';
   show('exam'); buildNav(); renderQ();
   if(timer) clearInterval(timer);
-  if(timed){ timeLeft=Math.round(exam.length*96); document.getElementById('timerWrap').style.display=''; startTimer(); }
+  if(timed){ timeLeft=Math.round(exam.length*96*factor); document.getElementById('timerWrap').style.display=''; setPauseBtn(); startTimer(); }
   else { document.getElementById('timerWrap').style.display='none'; }
-  window.scrollTo({top:0,behavior:'smooth'});
+  toTop(); focusEl('progress');
 }
 function startCustom(){
   const c=getCounts(); let qs=[];
   DOMS.forEach(d=>{ if(c[d]>0){ qs=qs.concat(shuffle(bank().filter(q=>q.d===d)).slice(0,c[d])); } });
-  if(qs.length===0){ alert('Choose a count for at least one domain, or use Set all to exam weight.'); return; }
+  if(qs.length===0){ startMsg('Choose a count for at least one domain, or use Set all to exam weight.'); return; }
   launch(qs);
 }
 function startFull(){
   const chosen=new Set(); let qs=[];
   DOMS.forEach(d=>{ const pool=shuffle(bank().filter(q=>q.d===d)).slice(0,BP150[d]); pool.forEach(x=>chosen.add(x)); qs=qs.concat(pool); });
   if(qs.length<150){ const rest=bank().filter(q=>!chosen.has(q)); qs=qs.concat(shuffle(rest).slice(0,150-qs.length)); }
-  launch(qs.slice(0,150), true);
+  const sel=document.querySelector('input[name="fullTiming"]:checked');
+  launch(qs.slice(0,150), sel ? parseFloat(sel.value) : 1);
 }
-function startTimer(){ updateTimer(); timer=setInterval(()=>{ timeLeft--; updateTimer(); if(timeLeft<=0){ clearInterval(timer); submitExam(true);} },1000); }
-function updateTimer(){ const m=Math.floor(timeLeft/60), s=timeLeft%60; const el=document.getElementById('timer'); el.textContent=m+':'+String(s).padStart(2,'0'); el.classList.toggle('low', timeLeft<=60); }
+function startTimer(){ updateTimer(); if(timer) clearInterval(timer); timer=setInterval(()=>{ if(paused) return; timeLeft--; updateTimer(); if(timeLeft<=0){ clearInterval(timer); submitExam(true);} },1000); }
+function updateTimer(){
+  const m=Math.floor(timeLeft/60), s=timeLeft%60; const el=document.getElementById('timer'); el.textContent=m+':'+String(s).padStart(2,'0'); el.classList.toggle('low', timeLeft<=60);
+  // Text warnings (one polite status message each) at 5 minutes and 1 minute
+  const w=document.getElementById('timeWarn');
+  if(timeLeft<=300 && timeLeft>60 && !warned[5]){ warned[5]=true; w.textContent='5 minutes left. Use Pause or +30 min if you need more time.'; }
+  if(timeLeft<=60 && !warned[1]){ warned[1]=true; w.textContent='1 minute left. The exam submits itself at zero unless you add time.'; }
+}
+function setPauseBtn(){ const b=document.getElementById('pauseBtn'); b.textContent=paused?'Resume':'Pause'; b.setAttribute('aria-pressed', paused?'true':'false'); }
+function togglePause(){ paused=!paused; setPauseBtn(); document.getElementById('timeWarn').textContent = paused ? 'Timer paused. Select Resume to continue.' : ''; }
+function addTime(){ timeLeft+=1800; warned={}; updateTimer(); document.getElementById('timeWarn').textContent='Added 30 minutes.'; }
 function renderQ(){
   const q=exam[cur];
-  let h='<span class="domain-badge">'+DOMAINS[q.d]+'</span><p class="q-stem"><span class="qn">Q'+(cur+1)+'.</span>'+q.q+'</p><fieldset class="options"><legend>Question '+(cur+1)+'</legend>';
-  q.o.forEach((t,i)=>{ const L='ABCD'[i]; h+='<label class="opt"><input type="radio" name="ex" value="'+L+'" '+(answers[cur]===L?'checked':'')+' onchange="pick(\''+L+'\')"><span><span class="opt-letter">'+L+'.</span> '+t+'</span></label>'; });
+  let h='<span class="domain-badge">'+DOMAINS[q.d]+'</span>'+aiBadge(q)+'<p class="q-stem"><span class="qn">Q'+(cur+1)+'.</span>'+esc(q.q)+'</p><fieldset class="options"><legend>Question '+(cur+1)+'</legend>';
+  q.o.forEach((t,i)=>{ const L='ABCD'[i]; h+='<label class="opt"><input type="radio" name="ex" value="'+L+'" '+(answers[cur]===L?'checked':'')+' onchange="pick(\''+L+'\')"><span><span class="opt-letter">'+L+'.</span> '+esc(t)+'</span></label>'; });
   h+='</fieldset>';
   document.getElementById('qcard').innerHTML=h;
   document.getElementById('progress').textContent='Question '+(cur+1)+' of '+exam.length;
   const fb=document.getElementById('flagBtn'); fb.classList.toggle('on',!!flags[cur]); fb.innerHTML=flags[cur]?'&#9873; Flagged':'&#9873; Flag';
-  document.getElementById('prevBtn').disabled=cur===0; document.getElementById('nextBtn').disabled=cur===exam.length-1; markNav();
+  const last=cur===exam.length-1;
+  document.getElementById('prevBtn').disabled=cur===0;
+  // No dead Next on the last question: show Review and submit instead
+  document.getElementById('nextBtn').hidden=last; document.getElementById('reviewSubmitBtn').hidden=!last; markNav();
 }
 function pick(L){ answers[cur]=L; markNav(); }
 function toggleFlag(){ flags[cur]=!flags[cur]; renderQ(); }
-function go(i){ cur=i; renderQ(); window.scrollTo({top:0,behavior:'smooth'}); }
-function prev(){ if(cur>0){cur--;renderQ();} } function next(){ if(cur<exam.length-1){cur++;renderQ();} }
-function buildNav(){ const g=document.getElementById('navGrid'); g.innerHTML=''; exam.forEach((q,i)=>{ const b=document.createElement('button'); b.textContent=i+1; b.onclick=()=>go(i); g.appendChild(b); }); }
-function markNav(){ const b=document.getElementById('navGrid').children; for(let i=0;i<exam.length;i++){ let c=''; if(answers[i])c+=' answered'; if(flags[i])c+=' flagged'; if(i===cur)c+=' current'; b[i].className=c.trim(); } }
+function go(i){ cur=i; renderQ(); toTop(); }
+function prev(){ if(cur>0){cur--;renderQ();} }
+function next(){ if(cur<exam.length-1){ cur++; renderQ(); if(cur===exam.length-1) document.getElementById('reviewSubmitBtn').focus(); } }
+function buildNav(){ const g=document.getElementById('navGrid'); g.innerHTML=''; exam.forEach((q,i)=>{ const b=document.createElement('button'); b.type='button'; b.innerHTML='<span class="nv-n">'+(i+1)+'</span><span class="nv-g" aria-hidden="true"></span>'; b.onclick=()=>go(i); g.appendChild(b); }); }
+function markNav(){
+  const b=document.getElementById('navGrid').children;
+  for(let i=0;i<exam.length;i++){
+    let c='', st=[];
+    if(answers[i]){ c+=' answered'; st.push('answered'); } else st.push('not answered');
+    if(flags[i]){ c+=' flagged'; st.push('flagged'); }
+    if(i===cur){ c+=' current'; st.push('current question'); b[i].setAttribute('aria-current','true'); } else b[i].removeAttribute('aria-current');
+    b[i].className=c.trim();
+    b[i].querySelector('.nv-g').textContent=(answers[i]?'\u2713':'')+(flags[i]?'\u2691':'');
+    b[i].setAttribute('aria-label','Question '+(i+1)+', '+st.join(', '));
+  }
+}
+function askSubmit(){
+  const un=exam.length-Object.keys(answers).length, fl=Object.keys(flags).filter(k=>flags[k]).length;
+  document.getElementById('submitText').textContent = (un ? un+' question'+(un===1?' is':'s are')+' not answered. ' : 'Every question is answered. ') + (fl ? fl+' question'+(fl===1?' is':'s are')+' flagged for review. Use the navigator below to go back to any of them.' : '') ;
+  document.getElementById('submitBox').hidden=false; focusEl('submitHead');
+}
+function keepWorking(){ document.getElementById('submitBox').hidden=true; const c=document.querySelector('#navGrid .current'); if(c) c.focus(); }
 function submitExam(auto){
-  if(!auto){ const un=exam.length-Object.keys(answers).length; if(un>0 && !confirm(un+' question(s) unanswered. Submit anyway?')) return; }
+  // Manual submits are confirmed in the page (askSubmit) before this runs
   if(timer) clearInterval(timer);
+  document.getElementById('submitBox').hidden=true;
   let correct=0; const byDom={};
   exam.forEach((q,i)=>{ byDom[q.d]=byDom[q.d]||{c:0,t:0}; byDom[q.d].t++; if(answers[i]===q.a){correct++; byDom[q.d].c++;} });
   const pct=Math.round(correct/exam.length*100);
   document.getElementById('scoreNum').textContent=pct+'%';
-  document.getElementById('scoreDetail').textContent=correct+' of '+exam.length+' correct';
-  document.getElementById('scoreMsg').textContent = pct>=75?'Strong: in the exam-ready range. Keep your weakest domains sharp.':(pct>=60?'On track: drill the lower-scoring domains below.':'Keep studying: focus your next sessions on the low-scoring domains below.');
+  document.getElementById('scoreDetail').textContent=correct+' of '+exam.length+' correct'+(auto?' (time ran out, so the exam was submitted)':'')+'.';
+  document.getElementById('scoreMsg').textContent = pct>=75?'75% or higher on this practice set. Keep your weakest domains sharp.':(pct>=60?'On track: drill the lower-scoring domains below.':'Keep studying: focus your next sessions on the low-scoring domains below.');
   document.getElementById('domBreak').innerHTML = DOMS.filter(d=>byDom[d]).map(d=>{ const o=byDom[d], p=Math.round(o.c/o.t*100); return '<div class="dbar-row"><div class="dbar-label"><span>'+DOMAINS[d]+'</span><span class="dbar-pct">'+o.c+'/'+o.t+' · '+p+'%</span></div><div class="dbar-bg"><div class="dbar-fill" style="width:'+p+'%"></div></div></div>'; }).join('');
   const missed={}; exam.forEach((q,i)=>{ if(answers[i]!==q.a){ const s=q.sub||'Core'; missed[s]=(missed[s]||0)+1; } });
   const mk=Object.keys(missed).sort((a,b)=>missed[b]-missed[a]);
-  document.getElementById('subGaps').innerHTML = mk.length ? '<div class="dbar-label" style="margin-bottom:.55rem"><span><b>Sub-topics to revisit</b>: missed questions by topic</span></div>'+mk.map(s=>'<span style="display:inline-block;background:var(--gold-pale);color:var(--gold);font-size:.8rem;font-weight:600;padding:.22rem .6rem;border-radius:12px;margin:.2rem .35rem .2rem 0">'+s+' &times;'+missed[s]+'</span>').join('') : '<p style="color:var(--correct);font-weight:600;margin:0">No sub-topic gaps. Every question correct. &#10003;</p>';
-  show('result'); window.scrollTo({top:0,behavior:'smooth'});
+  document.getElementById('subGaps').innerHTML = mk.length ? '<div class="dbar-label" style="margin-bottom:.55rem"><span><b>Sub-topics to revisit</b>: missed questions by topic</span></div>'+mk.map(s=>'<span style="display:inline-block;background:var(--gold-pale);color:var(--gold);font-size:.8rem;font-weight:600;padding:.22rem .6rem;border-radius:12px;margin:.2rem .35rem .2rem 0">'+esc(s)+' &times;'+missed[s]+'</span>').join('') : '<p style="color:var(--correct);font-weight:600;margin:0">No sub-topic gaps. Every question correct. &#10003;</p>';
+  show('result'); toTop(); focusEl('resultHeading');
 }
 function reviewExam(){
   document.getElementById('reviewList').innerHTML = exam.map((q,i)=>{
     const ua=answers[i];
-    const opts=q.o.map((t,j)=>{ const L='ABCD'[j]; let cls='opt'; if(L===q.a)cls+=' correct'; else if(L===ua)cls+=' wrong'; return '<div class="'+cls+'"><span><span class="opt-letter">'+L+'.</span> '+t+'</span></div>'; }).join('');
+    const opts=q.o.map((t,j)=>{ const L='ABCD'[j]; let cls='opt', mk=''; if(L===q.a){ cls+=' correct'; mk=' <span aria-hidden="true">&#10003;</span><span class="sr-only">(correct answer)</span>'; } else if(L===ua){ cls+=' wrong'; mk=' <span aria-hidden="true">&#10005;</span><span class="sr-only">(your answer)</span>'; } return '<div class="'+cls+'"><span><span class="opt-letter">'+L+'.</span> '+esc(t)+mk+'</span></div>'; }).join('');
     const tag = ua===q.a ? '<span style="color:var(--correct);font-weight:700">✓ Correct</span>' : (ua ? '<span style="color:var(--wrong);font-weight:700">✗ Your answer: '+ua+'</span>' : '<span style="color:var(--text-muted);font-weight:700">Unanswered</span>');
-    return '<div class="review-item"><span class="domain-badge">'+DOMAINS[q.d]+(q.sub?' &middot; '+q.sub:'')+'</span><p class="q-stem"><span class="qn">Q'+(i+1)+'.</span>'+q.q+'</p><div style="margin:0.5rem 0 0.75rem">'+tag+'</div><div class="options">'+opts+'</div><div class="rationale show"><b>Correct: '+q.a+'.</b> '+q.r+'</div></div>';
+    return '<div class="review-item"><span class="domain-badge">'+DOMAINS[q.d]+(q.sub?' &middot; '+esc(q.sub):'')+'</span>'+aiBadge(q)+'<p class="q-stem"><span class="qn">Q'+(i+1)+'.</span>'+esc(q.q)+'</p><div style="margin:0.5rem 0 0.75rem">'+tag+'</div><div class="options">'+opts+'</div><div class="rationale show"><b>Correct: '+q.a+'.</b> '+esc(q.r)+'</div></div>';
   }).join('');
-  show('review'); window.scrollTo({top:0,behavior:'smooth'});
+  show('review'); toTop(); focusEl('reviewHeading');
 }
-function restart(){ if(timer)clearInterval(timer); show('start'); window.scrollTo({top:0,behavior:'smooth'}); }
+function restart(){ if(timer)clearInterval(timer); paused=false; show('start'); toTop(); focusEl('startHeading'); }
 /* AI generation */
 function buildGenPrompt(){
   const gd=document.getElementById('genDomain').value, gc=document.getElementById('genCount').value, gl=document.getElementById('genLevel').value;
@@ -330,7 +415,7 @@ function buildGenPrompt(){
   let p='Generate '+gc+' original CRISC (Certified in Risk and Information Systems Control) practice questions covering '+spec+', at a '+gl+' level.\n\n';
   p+='Return ONLY a JSON array: no prose, no markdown, no code fences. Each element must match this schema EXACTLY:\n';
   p+='{"d":"D3","sub":"short sub-topic, e.g. Key Risk Indicators","q":"the question stem","o":["first option","second option","third option","fourth option"],"a":"B","r":"one or two sentences on why the correct answer is right"}\n\n';
-  p+='Rules:\n- "d" is one of "D1","D2","D3","D4"; '+rule+'.\n- "o" must contain exactly four options; do NOT include letter labels inside the option text.\n- "a" is the letter ("A","B","C","D") of the single best answer; vary which letter is correct.\n- Scenario-based, best-answer questions (FIRST, BEST, MOST, PRIMARY) grounded in the CRISC risk practitioner mindset: the practitioner advises and the risk owner decides; business objectives come first; assess before responding; process and ownership before tools. Accurate to the current ISACA CRISC Exam Content Outline (Governance; Risk Assessment; Risk Response and Reporting; Technology and Security).\n- Write plausible distractors of similar length; never use "all of the above" or "none of the above".\n- Original items only; do not reproduce ISACA Review Manual or QAE questions.\n- Plain text inside fields; you may use the tags <b> or <em>, nothing else. Do not use em dashes.\n- Vary scenarios; avoid recycling identical textbook phrasing.\n\nOutput only the JSON array, valid and ready to parse.';
+  p+='Rules:\n- "d" is one of "D1","D2","D3","D4"; '+rule+'.\n- "o" must contain exactly four options; do NOT include letter labels inside the option text.\n- "a" is the letter ("A","B","C","D") of the single best answer; vary which letter is correct.\n- Scenario-based, best-answer questions (FIRST, BEST, MOST, PRIMARY) grounded in the CRISC risk practitioner mindset: the practitioner advises and the risk owner decides; business objectives come first; assess before responding; process and ownership before tools. Accurate to the current ISACA CRISC Exam Content Outline (Governance; Risk Assessment; Risk Response and Reporting; Technology and Security).\n- Write plausible distractors of similar length; never use "all of the above" or "none of the above".\n- Original items only; do not reproduce ISACA Review Manual or QAE questions.\n- Plain text inside fields; do not use HTML tags or markup. Do not use em dashes.\n- Vary scenarios; avoid recycling identical textbook phrasing.\n\nOutput only the JSON array, valid and ready to parse.';
   document.getElementById('genPrompt').value=p;
 }
 function copyGen(){ const ta=document.getElementById('genPrompt'); ta.select(); ta.setSelectionRange(0,ta.value.length); const m=document.getElementById('genMsg'); const d=(ok)=>{m.textContent=ok?'✓ Copied!':'Press Ctrl/Cmd+C';setTimeout(()=>m.textContent='',2500);}; if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(ta.value).then(()=>d(true)).catch(()=>d(false));}else{try{document.execCommand('copy');d(true);}catch(e){d(false);}} }
@@ -340,7 +425,7 @@ function addQuestions(){
   let arr; try{ arr=JSON.parse(raw); }catch(e){ setAddMsg('Could not parse JSON. Paste the full array exactly as returned.', false); return; }
   if(!Array.isArray(arr)){ setAddMsg('Expected a JSON array of questions.', false); return; }
   let ok=0, bad=0;
-  arr.forEach(it=>{ if(it && ['D1','D2','D3','D4'].includes(it.d) && Array.isArray(it.o) && it.o.length===4 && ['A','B','C','D'].includes(it.a) && typeof it.q==='string' && typeof it.r==='string'){ added.push({d:it.d,q:String(it.q),o:it.o.map(String),a:it.a,r:String(it.r),sub:(typeof it.sub==='string'&&it.sub)?it.sub:'AI-added'}); ok++; } else { bad++; } });
+  arr.forEach(it=>{ if(it && ['D1','D2','D3','D4'].includes(it.d) && Array.isArray(it.o) && it.o.length===4 && ['A','B','C','D'].includes(it.a) && typeof it.q==='string' && typeof it.r==='string'){ added.push({d:it.d,q:clean(it.q,2000),o:it.o.map(o=>clean(o,600)),a:it.a,r:clean(it.r,2000),sub:(typeof it.sub==='string'&&it.sub)?clean(it.sub,80):'AI-added',ai:true}); ok++; } else { bad++; } });
   try { localStorage.setItem(STORE_KEY, JSON.stringify(added)); } catch(e){} document.getElementById('pasteIn').value=''; updateBank();
   setAddMsg('Added '+ok+' question'+(ok===1?'':'s')+(bad?' · '+bad+' skipped (invalid format)':'')+'.', ok>0);
 }
@@ -348,6 +433,5 @@ function clearAdded(){ if(!added.length){ setAddMsg('No added questions to clear
 
 buildGenPrompt(); updateBank();
 </script>
-<script src="assistant.js" defer></script>
 </body>
 </html>

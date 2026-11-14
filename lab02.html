@@ -234,7 +234,7 @@
         reviewNote: 'Apply the appetite threshold to inherent scores, then read the heat map for the shape of each risk.' },
       { id: 'owner', type: 'choice', points: 12, short: 'Owner of S2', title: 'The risk owner for S2',
         task: 'Using the ownership rule, who should own S2, business email compromise of closing wires?',
-        options: ['Keisha Barnwell, CISO, because the attack starts with email', 'Walter Nguyen, CIO, because he runs the email gateway', 'Dmitri Hale, VP Payments Operations, because he owns the wire-transfer process', 'You, the risk analyst, because you wrote the scenario'],
+        options: ['Keisha Barnwell, CISO, because the attack starts with email and her team filters it', 'Walter Nguyen, CIO, because he runs the email gateway and the payment systems', 'Dmitri Hale, VP Payments Operations, who owns the wire-transfer process', 'You, the risk analyst, because you wrote the scenario'],
         answer: 2,
         hint: 'The ownership rule assigns the risk to the business owner of the process or system the scenario names, not to the owner of the control that might stop it.',
         debrief: '<p><b>The VP Payments Operations</b> owns S2. The loss lands on the wire-transfer process he runs, he can change the process (call-back verification to a known number, dual approval above a threshold), and he must accept any residual risk. The CISO and CIO own controls that help, such as email filtering and banner warnings, so they are control owners and are consulted.</p><p>The risk analyst never owns a register entry. You facilitate the scenario and challenge the ratings; the owner validates and decides.</p>',
@@ -410,6 +410,5 @@
 </script>
 <script src="evidence.js"></script>
 <script src="lab.js"></script>
-<script src="assistant.js" defer></script>
 </body>
 </html>

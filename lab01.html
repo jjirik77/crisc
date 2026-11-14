@@ -220,7 +220,7 @@
         reviewNote: 'Check every RACI row for one A, at least one R, audit independence, and the policy on who accepts risk.' },
       { id: 'fix6', type: 'choice', points: 10, short: 'Fix R6', title: 'The right fix for the access review row (R6)',
         task: 'Internal audit is Accountable for the quarterly EHR user access review in the draft. What is the best correction?',
-        options: ['Keep internal audit as A and add the CISO as R, so a second line role does the work', 'Make the control owner A/R, change internal audit to I, and let audit test the review independently under R8', 'Make the CISO A, because access reviews are a security control', 'Remove the row, because audit already reviews access every year'],
+        options: ['Keep internal audit as A and add the CISO as R, so a second line role does the work', 'Make the control owner A/R and change internal audit to I; audit tests it under R8', 'Make the CISO A/R, because access reviews are a security control the CISO sets', 'Remove the row, because audit already reviews access every year'],
         answer: 1,
         hint: 'Who operates the control, and who should later give assurance that it works? One role cannot do both.',
         debrief: '<p>The <b>control owner</b> (the Manager of Clinical Applications) runs the review and answers for it, so the row becomes A/R for the control owner. Internal audit drops to I, and it tests the review as part of R8, where its independence is intact. If audit performed or owned the control, it would later be auditing its own work.</p><p>Making the CISO accountable moves ownership to the second line, which should set the standard and monitor, not run first-line controls. Removing the row loses a key control entirely.</p>',
@@ -417,6 +417,5 @@
 </script>
 <script src="evidence.js"></script>
 <script src="lab.js"></script>
-<script src="assistant.js" defer></script>
 </body>
 </html>

@@ -1,10 +1,18 @@
 /* CRISC 5-Day Faculty Workshop: shared engine for hands-on labs.
    A lab page sets window.LAB = { ... } and loads this file after practice.css.
-   Flow: Ticket brief -> Workbench (lab-specific tool + checklist) -> Lab report.
+   Flow: Ticket brief -> Workbench (lab-specific tool + checklist) -> Practice record.
    Checklist item types: "set" (list of IDs), "number" (numeric with tolerance),
-   "choice" (multiple choice), "text" (written deliverable, graded for completeness).
-   Self-checking: each item can be checked and retried; revealing the debrief before
-   the item is verified forfeits its points. The report prints or saves as PDF. */
+   "choice" (multiple choice), "text" (written deliverable; complete when every field is filled).
+   Practice only: no points or totals. Each item can be checked and retried as often as
+   needed. A wrong check says what to recheck and offers the practitioner's debrief at once, with
+   no penalty; after a second wrong check the hint opens on its own. A learner who opens the
+   debrief can still try again, and the practice record notes "used debrief".
+   Choice options are shown in a random order on each page load (checked against the original index),
+   except when the options are IDs or an ordered scale, the item has inj (B8 decisions mirror the
+   lettered tabletop options), or the item or lab sets shuffle: false.
+   Optional item data: wrongFeedback = { optionIndex: 'message' } for choice items, or
+   [{ value, tol, msg }] for number items, to target known errors.
+   The practice record prints or saves as PDF. */
 (function () {
   'use strict';
   var CATALOG = {
@@ -36,7 +44,7 @@
   if (!L) return;
   var KEY = 'crisc-lab-' + L.id, LETTERS = 'ABCDEFGH';
   var items = L.checklist;
-  var STEPS = [{ key: 'brief', title: 'Ticket brief' }, { key: 'work', title: L.workbenchTitle || 'Workbench' }, { key: 'report', title: 'Lab report' }];
+  var STEPS = [{ key: 'brief', title: 'Ticket brief' }, { key: 'work', title: L.workbenchTitle || 'Workbench' }, { key: 'report', title: 'Practice record' }];
 
   function blank() { return { v: 1, step: 0, a: {}, st: {}, tries: {}, revealed: {}, name: '', team: '', elapsed: 0, notes: '' }; }
   var S = blank();
@@ -46,11 +54,34 @@
   setInterval(function () { var n = Date.now(); if (document.visibilityState === 'visible') S.elapsed += Math.min(n - last, 10000); last = n; save(); }, 5000);
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
-  function totalPts() { return items.reduce(function (s, it) { return s + it.points; }, 0); }
-  function earned() { return items.reduce(function (s, it) { return s + (S.st[it.id] === 'ok' ? it.points : 0); }, 0); }
   function doneCount() { return items.filter(function (it) { return S.st[it.id] === 'ok'; }).length; }
 
-  /* ---------- Grading ---------- */
+  /* ---------- Answer order: shuffle choice options, but never IDs or ordered scales ---------- */
+  var ORDER_SCALE = /^(unacceptable|high|limited|minimal|low|medium|moderate|critical|minor|major|severe|negligible|catastrophic|rare|unlikely|possible|likely|almost|very|none|always|never|often|sometimes)\b/i;
+  var ORDER_ID = /^\s*(\$?\d[\d.,]*%?|[A-Z]{1,4}-?\d+[a-z]?|(tier|level|step|phase|stage|option|scenario|rank)\s*[\dA-Z]\b)/i;
+  function keepOrder(opts) {
+    if (!opts || opts.length < 3) return true;
+    var ids = opts.filter(function (o) { return ORDER_ID.test(String(o)); }).length;
+    var rest = opts.filter(function (o) { return !ORDER_ID.test(String(o)); });
+    if (ids === opts.length || (ids === opts.length - 1 && /^(none|all|both|neither)\b/i.test(String(rest[0]).trim()))) return true;
+    return opts.every(function (o) { return ORDER_SCALE.test(String(o).trim()); });
+  }
+  function shuffled(n) { var a = []; for (var i = 0; i < n; i++) a.push(i); for (var j = n - 1; j > 0; j--) { var k = Math.floor(Math.random() * (j + 1)), t = a[j]; a[j] = a[k]; a[k] = t; } return a; }
+  var PERM = {};
+  function perm(it) {
+    if (!PERM[it.id]) PERM[it.id] = (it.shuffle === false || L.shuffle === false || it.inj != null || keepOrder(it.options)) ? it.options.map(function (_, k) { return k; }) : shuffled(it.options.length);
+    return PERM[it.id];
+  }
+  function shownLetter(it, k) { return LETTERS[perm(it).indexOf(k)]; }
+
+  /* ---------- Checking: practice feedback only ---------- */
+  function num(x) { return parseFloat(String(x == null ? '' : x).replace(/[$,\s%]/g, '')); }
+  function recheck(it, lead) {
+    var fb = it.wrongFeedback, g = S.a[it.id];
+    if (fb && it.type === 'choice' && fb[+g]) return fb[+g];
+    if (fb && it.type === 'number' && fb.length) { var v = num(g); for (var i = 0; i < fb.length; i++) if (!isNaN(v) && Math.abs(v - fb[i].value) <= (fb[i].tol || 0)) return fb[i].msg; }
+    return it.reviewNote ? lead + ' ' + it.reviewNote : 'Recheck the figures and the rules in the lab.';
+  }
   function norm(x) { return String(x).trim().toUpperCase(); }
   function parseSet(s) { return String(s || '').split(/[\s,;]+/).map(norm).filter(Boolean).filter(function (v, i, arr) { return arr.indexOf(v) === i; }); }
   function expected(it) { return typeof it.answer === 'function' ? it.answer() : it.answer; }
@@ -59,13 +90,13 @@
     if (it.type === 'set') {
       var got = parseSet(g), want = exp.map(norm);
       var missing = want.filter(function (x) { return got.indexOf(x) < 0; }), extra = got.filter(function (x) { return want.indexOf(x) < 0; });
-      return { ok: !missing.length && !extra.length, msg: missing.length || extra.length ? (missing.length ? missing.length + ' expected ' + (missing.length === 1 ? 'item is' : 'items are') + ' missing. ' : '') + (extra.length ? extra.length + ' ' + (extra.length === 1 ? 'entry does not belong' : 'entries do not belong') + ': ' + extra.join(', ') + '.' : '') : 'All ' + want.length + ' items identified.' };
+      return { ok: !missing.length && !extra.length, msg: missing.length || extra.length ? 'Not yet. ' + (missing.length ? missing.length + ' expected ' + (missing.length === 1 ? 'item is' : 'items are') + ' missing. ' : '') + (extra.length ? extra.length + ' ' + (extra.length === 1 ? 'entry does not belong' : 'entries do not belong') + ': ' + extra.join(', ') + '. ' : '') + (it.reviewNote ? 'Recheck: ' + it.reviewNote : '') : 'All ' + want.length + ' items identified.' };
     }
-    if (it.type === 'number') { var v = parseFloat(String(g).replace(/[$,\s%]/g, '')); var ok = !isNaN(v) && Math.abs(v - exp) <= (it.tol || 0); return { ok: ok, msg: ok ? 'Correct.' : 'Not quite. Recheck the figures and the rules in the lab.' }; }
-    if (it.type === 'choice') { var okc = +g === exp; return { ok: okc, msg: okc ? 'Correct.' : 'Not the best answer.' }; }
+    if (it.type === 'number') { var v = num(g); var ok = !isNaN(v) && Math.abs(v - exp) <= (it.tol || 0); return { ok: ok, msg: ok ? 'Correct.' : 'Not yet. ' + recheck(it, 'Recheck your figures against this rule:') }; }
+    if (it.type === 'choice') { var okc = g != null && g !== '' && +g === exp; return { ok: okc, msg: okc ? 'Correct.' : 'Not yet. ' + recheck(it, 'Recheck your choice against this principle:') }; }
     if (it.type === 'text') {
-      var miss = it.fields.filter(function (f) { return String((g || {})[f.key] || '').trim().length < (f.min || 20); });
-      return { ok: !miss.length, msg: miss.length ? 'Complete every element. Still too short: ' + miss.map(function (f) { return f.label; }).join(', ') + '.' : 'All elements are complete. Compare your wording with the model finding below.' };
+      var miss = it.fields.filter(function (f) { return !String((g || {})[f.key] || '').trim(); });
+      return { ok: !miss.length, msg: miss.length ? 'Fill in every field. Still empty: ' + miss.map(function (f) { return f.label; }).join(', ') + '.' : 'Complete. Compare your wording with the model below.' };
     }
     return { ok: false, msg: '' };
   }
@@ -77,14 +108,15 @@
   function givenText(it) {
     var g = S.a[it.id];
     if (!answered(it)) return '(no answer)';
-    if (it.type === 'choice') return LETTERS[+g] + '. ' + it.options[+g];
+    if (it.type === 'choice') return it.options[+g];
     if (it.type === 'set') return parseSet(g).join(', ');
     if (it.type === 'text') return '';
     return String(g);
   }
+  // Option text only (no letter): letters change with the shuffled display order
   function correctText(it) {
     var exp = expected(it);
-    if (it.type === 'choice') return LETTERS[exp] + '. ' + it.options[exp];
+    if (it.type === 'choice') return it.options[exp];
     if (it.type === 'set') return exp.join(', ');
     if (it.type === 'number') return String(exp);
     return '';
@@ -112,13 +144,13 @@
         '<span class="lesson-badge-lg">CRISC Risk Lab &middot; Lab ' + esc(L.id) + ' &middot; ' + esc(L.domain) + '</span>' +
         '<h1>' + heroTitle() + '</h1><p class="lesson-lede">' + esc(L.lede) + '</p>' +
         '<div class="meta-chips"><span class="meta-chip">Ticket: <strong>' + esc(L.ticket.number) + '</strong></span><span class="meta-chip">Time: <strong>' + esc(L.time) + '</strong></span><span class="meta-chip">Level: <strong>' + esc(L.level) + '</strong></span>' +
-        '<span class="meta-chip">Checklist: <strong>' + items.length + ' items, ' + totalPts() + ' pts</strong></span><span class="meta-chip">Mode: <strong>Individual or team</strong></span>' +
+        '<span class="meta-chip">Checklist: <strong>' + items.length + ' items</strong></span><span class="meta-chip">Format: <strong>Practice</strong></span><span class="meta-chip">Mode: <strong>Individual or team</strong></span>' +
         '<a class="meta-chip" style="text-decoration:none" href="' + esc(L.lessonHref) + '">Review: <strong>' + esc(L.lessonLabel) + '</strong></a></div>' +
       '</div></header>' +
       '<div class="px-layout">' +
         '<aside class="px-rail" aria-label="Lab navigation">' +
           '<p class="eyebrow">Lab steps</p><ol class="px-steps" id="lb-steps"></ol>' +
-          '<section class="px-mastery" aria-live="polite"><p class="eyebrow">Checklist progress</p><div id="lb-prog"></div><ol class="lb-check" id="lb-check"></ol></section>' +
+          '<section class="px-mastery"><p class="eyebrow">Checklist progress</p><div id="lb-prog"></div><ol class="lb-check" id="lb-check"></ol></section>' +
           '<div class="px-more"><details><summary>All activities</summary>' + catalogList(CATALOG.activities) + '</details>' +
           '<details><summary>All labs</summary>' + catalogList(CATALOG.labs) + '</details><a class="px-hub" href="labs.html">CRISC Risk Lab home &rarr;</a><a class="px-hub" href="practices.html">CRISC Practices home &rarr;</a></div>' +
         '</aside>' +
@@ -137,11 +169,13 @@
       b.addEventListener('click', function () { go(i); });
       li.appendChild(b); ol.appendChild(li);
     });
-    var pct = Math.round(100 * earned() / totalPts());
-    document.getElementById('lb-prog').innerHTML = '<div class="px-m-item"><div class="px-m-row"><span>' + doneCount() + ' of ' + items.length + ' verified</span><b>' + earned() + ' / ' + totalPts() + '</b></div><div class="px-bar ' + (pct >= 80 ? 'hi' : '') + '" role="img" aria-label="Score ' + pct + ' percent"><i style="width:' + pct + '%"></i></div></div>';
+    var pct = Math.round(100 * doneCount() / items.length);
+    document.getElementById('lb-prog').innerHTML = '<div class="px-m-item"><div class="px-m-row"><span>' + doneCount() + ' of ' + items.length + ' items done</span></div><div class="px-bar ' + (pct >= 80 ? 'hi' : '') + '" role="img" aria-label="' + doneCount() + ' of ' + items.length + ' checklist items done"><i style="width:' + pct + '%"></i></div></div>';
     document.getElementById('lb-check').innerHTML = items.map(function (it, i) {
-      var st = S.st[it.id], cls = st === 'ok' ? 'ok' : (S.revealed[it.id] ? 'rev' : (S.tries[it.id] ? 'bad' : ''));
-      return '<li><button type="button" class="lb-ci ' + cls + '" data-jump="' + i + '"><span class="lb-ci-dot" aria-hidden="true">' + (st === 'ok' ? '&#10003;' : (S.revealed[it.id] ? '!' : i + 1)) + '</span><span>' + esc(it.short || it.title) + '</span><span class="sr-only">' + (st === 'ok' ? ' (verified)' : '') + '</span></button></li>';
+      var st = S.st[it.id], rv = S.revealed[it.id], cls = st === 'ok' ? 'ok' : (rv ? 'rev' : (S.tries[it.id] ? 'bad' : ''));
+      var glyph = st === 'ok' ? '&#10003;' : (rv ? '!' : (S.tries[it.id] ? '&#10005;' : i + 1));
+      var sr = st === 'ok' ? (rv ? ' (done, used debrief)' : ' (done)') : (rv ? ' (debrief viewed, not yet correct)' : (S.tries[it.id] ? ' (not yet correct)' : ' (not started)'));
+      return '<li><button type="button" class="lb-ci ' + cls + '" data-jump="' + i + '"><span class="lb-ci-dot" aria-hidden="true">' + glyph + '</span><span>' + esc(it.short || it.title) + '</span><span class="sr-only">' + sr + '</span></button></li>';
     }).join('');
     document.querySelectorAll('[data-jump]').forEach(function (b) {
       b.addEventListener('click', function () { var i = +b.dataset.jump; if (S.step !== 1) go(1); var t = document.getElementById('ci-' + i); if (t) { t.scrollIntoView({ block: 'start' }); var h = t.querySelector('.q-stem'); if (h) { h.setAttribute('tabindex', '-1'); h.focus({ preventScroll: true }); } } });
@@ -162,7 +196,7 @@
       '<div class="lb-ticket"><div class="lb-ticket-head"><span class="lb-tno">' + esc(t.number) + '</span><span class="lb-prio">' + esc(t.priority || 'Normal priority') + '</span></div>' +
       '<dl class="lb-meta"><dt>From</dt><dd>' + esc(t.from) + '</dd><dt>To</dt><dd>' + esc(t.to) + '</dd><dt>Subject</dt><dd><b>' + esc(t.subject) + '</b></dd>' + (t.due ? '<dt>Due</dt><dd>' + esc(t.due) + '</dd>' : '') + '</dl>' +
       '<div class="lb-body">' + t.body + '</div></div>' +
-      '<div class="quiz-card" style="margin-top:1.4rem"><p class="q-stem">Your checklist</p><ol class="lb-brief-list">' + items.map(function (it) { return '<li><b>' + esc(it.title) + '</b> <span class="lb-pts">' + it.points + ' pts</span></li>'; }).join('') + '</ol>' +
+      '<div class="quiz-card" style="margin-top:1.4rem"><p class="q-stem">Your checklist</p><ol class="lb-brief-list">' + items.map(function (it) { return '<li><b>' + esc(it.title) + '</b></li>'; }).join('') + '</ol>' +
       (L.howTo ? '<div class="tip"><span class="tip-label">&#128161; How this lab works</span>' + L.howTo + '</div>' : '') + '</div>' + rangePanel();
   }
 
@@ -271,25 +305,33 @@
 
   /* ---------- Step 2: workbench + checklist ---------- */
   function itemHTML(it, i) {
-    var st = S.st[it.id], g = S.a[it.id], locked = st === 'ok';
+    var st = S.st[it.id], g = S.a[it.id], locked = st === 'ok', rv = !!S.revealed[it.id], tries = S.tries[it.id] || 0;
     var lk = !locked && typeof it.locked === 'function' ? it.locked() : false;
-    if (lk) return '<div class="q lb-item lb-locked" id="ci-' + i + '"><p class="q-stem"><span class="qn">' + (i + 1) + '.</span>' + esc(it.title) + ' <span class="lb-pts">' + it.points + ' pts</span></p><p class="lead-p">&#128274; ' + esc(lk) + '</p></div>';
-    var h = '<div class="q lb-item' + (locked ? ' ok' : '') + '" id="ci-' + i + '"><p class="q-stem"><span class="qn">' + (i + 1) + '.</span>' + esc(it.title) + ' <span class="lb-pts">' + it.points + ' pts</span></p>' +
+    if (lk) return '<div class="q lb-item lb-locked" id="ci-' + i + '"><p class="q-stem"><span class="qn">' + (i + 1) + '.</span>' + esc(it.title) + '</p><p class="lead-p">&#128274; ' + esc(lk) + '</p></div>';
+    var h = '<div class="q lb-item' + (locked ? ' ok' : '') + '" id="ci-' + i + '"><p class="q-stem"><span class="qn">' + (i + 1) + '.</span>' + esc(it.title) + '</p>' +
       '<p class="lead-p" style="margin-bottom:.8rem">' + it.task + '</p>';
     if (it.type === 'set') h += '<div class="px-field"><label for="in-' + it.id + '">' + esc(it.label || 'Enter the IDs, separated by commas') + '</label><input type="text" id="in-' + it.id + '" data-id="' + it.id + '" value="' + esc(g || '') + '"' + (locked ? ' readonly' : '') + ' placeholder="' + esc(it.placeholder || '') + '" autocomplete="off" spellcheck="false"></div>';
     if (it.type === 'number') h += '<div class="px-calc"><input type="number" step="any" id="in-' + it.id + '" data-id="' + it.id + '" value="' + esc(g == null ? '' : g) + '"' + (locked ? ' readonly' : '') + ' aria-label="' + esc(it.title) + '">' + (it.unit ? '<span>' + esc(it.unit) + '</span>' : '') + '</div>';
-    if (it.type === 'choice') h += '<fieldset class="options" aria-label="' + esc(it.title) + '">' + it.options.map(function (o, k) {
-      var cls = locked ? (k === expected(it) ? ' correct' : '') + ' locked' : '';
-      return '<label class="opt' + cls + '"><input type="radio" name="ch-' + it.id + '" data-id="' + it.id + '" value="' + k + '"' + (+g === k && g != null ? ' checked' : '') + (locked ? ' disabled' : '') + '><span><span class="opt-letter">' + LETTERS[k] + '.</span> ' + esc(o) + '</span></label>';
+    if (it.type === 'choice') h += '<fieldset class="options" aria-label="' + esc(it.title) + '">' + perm(it).map(function (k, pos) {
+      var o = it.options[k], isKey = locked && k === expected(it);
+      var cls = locked ? (isKey ? ' correct' : '') + ' locked' : '';
+      return '<label class="opt' + cls + '"><input type="radio" name="ch-' + it.id + '" data-id="' + it.id + '" value="' + k + '"' + (g != null && g !== '' && +g === k ? ' checked' : '') + (locked ? ' disabled' : '') + '><span><span class="opt-letter">' + LETTERS[pos] + '.</span> ' + esc(o) + (isKey ? ' <span class="px-mark" aria-hidden="true">&#10003;</span><span class="sr-only">(correct answer)</span>' : '') + '</span></label>';
     }).join('') + '</fieldset>';
     if (it.type === 'text') h += it.fields.map(function (f) { return '<div class="px-field"><label for="in-' + it.id + '-' + f.key + '">' + esc(f.label) + '</label><textarea id="in-' + it.id + '-' + f.key + '" data-id="' + it.id + '" data-f="' + f.key + '"' + (locked ? ' readonly' : '') + ' placeholder="' + esc(f.placeholder || '') + '">' + esc((g || {})[f.key] || '') + '</textarea></div>'; }).join('');
-    var res = S.tries[it.id] ? grade(it) : null;
-    h += '<div class="px-actions">' + (locked ? '<span class="score ok">&#10003; Verified &middot; ' + it.points + ' pts</span>' : '<button type="button" class="btn" data-check="' + it.id + '">Check</button>' +
-      (it.hint ? '<button type="button" class="btn secondary" data-hint="' + it.id + '" aria-expanded="false">Hint</button>' : '') +
-      (S.tries[it.id] && !S.revealed[it.id] ? '<button type="button" class="btn ghost" data-reveal="' + it.id + '">Reveal debrief (0 pts)</button>' : '') +
-      (res ? '<span class="score bad">' + esc(res.msg) + '</span>' : '')) + '</div><div id="hint-' + it.id + '"></div>';
-    if (locked && res && res.msg !== 'Correct.') h += '<div class="rationale show ok"><b>' + esc(res.msg) + '</b></div>';
-    if (locked || S.revealed[it.id]) h += '<div class="lb-debrief"><span class="lb-debrief-label">&#128270; Practitioner&rsquo;s debrief</span>' + (S.revealed[it.id] && !locked && it.type !== 'text' ? '<p><b>Expected answer:</b> ' + esc(correctText(it)) + '</p>' : '') + it.debrief + '</div>';
+    var res = tries ? grade(it) : null, autoHint = !locked && it.hint && tries >= 2 && res && !res.ok;
+    if (locked) {
+      h += '<p class="lb-result ok" id="res-' + it.id + '" tabindex="-1"><span class="px-mark" aria-hidden="true">&#10003;</span> ' +
+        (it.type === 'text' ? 'Complete. Compare your wording with the model below.' : 'Correct.') + (rv ? ' You used the debrief on this item.' : '') + '</p>';
+    } else {
+      h += '<div class="px-actions"><button type="button" class="btn" data-check="' + it.id + '">Check</button>' +
+        (it.hint ? '<button type="button" class="btn secondary" data-hint="' + it.id + '" aria-expanded="' + (autoHint ? 'true' : 'false') + '">Hint</button>' : '') +
+        (tries && !rv ? '<button type="button" class="btn ghost" data-reveal="' + it.id + '">Show the practitioner&rsquo;s debrief</button>' : '') + '</div>';
+      if (res) h += '<p class="lb-result bad" id="res-' + it.id + '" tabindex="-1"><span class="px-mark" aria-hidden="true">' + (it.type === 'text' ? '!' : '&#10005;') + '</span> ' + esc(res.msg) +
+        (autoHint ? ' The hint is open below.' : '') + (!rv ? ' You can also open the practitioner&rsquo;s debrief at no cost.' : ' Change your answer and check again when you are ready.') + '</p>';
+    }
+    h += '<div id="hint-' + it.id + '">' + (autoHint ? '<div class="tip"><span class="tip-label">&#128161; Hint</span>' + it.hint + '</div>' : '') + '</div>';
+    if (locked || rv) h += '<div class="lb-debrief"><span class="lb-debrief-label" id="dbf-' + it.id + '" tabindex="-1">&#128270; Practitioner&rsquo;s debrief</span>' +
+      (rv && !locked && it.type !== 'text' ? '<p><b>Expected answer:</b> ' + (it.type === 'choice' ? shownLetter(it, expected(it)) + '. ' : '') + esc(correctText(it)) + '</p>' : '') + it.debrief + '</div>';
     return h + '</div>';
   }
   function renderWork(card) {
@@ -316,31 +358,37 @@
     box.querySelectorAll('input[type=text],input[type=number]').forEach(function (inp) { if (inp.dataset.w) return; inp.dataset.w = 1; inp.addEventListener('input', function () { S.a[inp.dataset.id] = inp.value; save(); }); inp.addEventListener('keydown', function (e) { if (e.key === 'Enter') { var b = box.querySelector('[data-check="' + inp.dataset.id + '"]'); if (b) b.click(); } }); });
     box.querySelectorAll('input[type=radio]').forEach(function (r) { if (r.dataset.w) return; r.dataset.w = 1; r.addEventListener('change', function () { S.a[r.dataset.id] = +r.value; save(); }); });
     box.querySelectorAll('textarea').forEach(function (t) { if (t.dataset.w) return; t.dataset.w = 1; t.addEventListener('input', function () { var o = S.a[t.dataset.id] || {}; o[t.dataset.f] = t.value; S.a[t.dataset.id] = o; save(); }); });
-    box.querySelectorAll('[data-check]').forEach(function (b) { if (b.dataset.w) return; b.dataset.w = 1; b.addEventListener('click', function () {
-      var id = b.dataset.check, i = idx(id), it = items[i];
-      if (!answered(it)) { document.getElementById('hint-' + id).innerHTML = '<div class="rationale show bad"><b>Enter an answer first.</b></div>'; return; }
-      S.tries[id] = (S.tries[id] || 0) + 1; var r = grade(it);
-      if (r.ok && !S.revealed[id]) S.st[id] = 'ok';
-      save(); rerenderItem(i, '#ci-' + i + ' .px-actions .score, #ci-' + i + ' [data-check]');
-    }); });
+    box.querySelectorAll('[data-check]').forEach(function (b) { if (b.dataset.w) return; b.dataset.w = 1; b.addEventListener('click', function () { checkItem(b.dataset.check); }); });
     box.querySelectorAll('[data-hint]').forEach(function (b) { if (b.dataset.w) return; b.dataset.w = 1; b.addEventListener('click', function () {
       var id = b.dataset.hint, open = b.getAttribute('aria-expanded') === 'true', it = items[idx(id)];
       document.getElementById('hint-' + id).innerHTML = open ? '' : '<div class="tip"><span class="tip-label">&#128161; Hint</span>' + it.hint + '</div>'; b.setAttribute('aria-expanded', !open);
     }); });
-    box.querySelectorAll('[data-reveal]').forEach(function (b) { if (b.dataset.w) return; b.dataset.w = 1; b.addEventListener('click', function () {
-      if (!confirm('Reveal the debrief? This item will earn 0 points, but you can still record your answer.')) return;
-      var id = b.dataset.reveal; S.revealed[id] = true; save(); rerenderItem(idx(id));
-    }); });
+    box.querySelectorAll('[data-reveal]').forEach(function (b) { if (b.dataset.w) return; b.dataset.w = 1; b.addEventListener('click', function () { showDebrief(b.dataset.reveal); }); });
   }
+  // Check one item. Focus moves to the single result message, which announces it once (no live region).
+  function checkItem(id) {
+    var i = idx(id), it = items[i];
+    if (!answered(it)) { var hb = document.getElementById('hint-' + id); hb.innerHTML = '<p class="lb-result bad" tabindex="-1" id="need-' + id + '"><span class="px-mark" aria-hidden="true">!</span> Enter an answer first.</p>'; var nd = document.getElementById('need-' + id); if (nd) nd.focus(); return; }
+    S.tries[id] = (S.tries[id] || 0) + 1; var r = grade(it);
+    if (r.ok) S.st[id] = 'ok'; // also after the debrief was shown; the record then says "used debrief"
+    save(); rerenderItem(i, '#res-' + id);
+    return r;
+  }
+  // The debrief is free: no penalty, and the item can still be tried again
+  function showDebrief(id) { S.revealed[id] = true; save(); rerenderItem(idx(id), '#dbf-' + id); }
   function idx(id) { for (var i = 0; i < items.length; i++) if (items[i].id === id) return i; return -1; }
 
   /* ---------- Step 3: report ---------- */
   function fmtTime(ms) { var m = Math.round(ms / 60000); return m < 1 ? 'under 1 minute' : (m >= 60 ? Math.floor(m / 60) + ' h ' + (m % 60) + ' min' : m + ' min'); }
+  function statusText(it) {
+    var ok = S.st[it.id] === 'ok', rv = S.revealed[it.id], t = S.tries[it.id];
+    if (ok) return (it.type === 'text' ? 'Complete' : 'Correct') + (rv ? ', used debrief' : '');
+    if (rv) return 'Debrief viewed, not yet correct';
+    return t ? (it.type === 'text' ? 'In progress' : 'Not yet correct') : 'Not started';
+  }
   function renderReport(card) {
-    var e = earned(), T = totalPts(), pct = Math.round(100 * e / T);
     var rows = items.map(function (it, i) {
-      var st = S.st[it.id] === 'ok' ? 'Verified' : (S.revealed[it.id] ? 'Debrief revealed' : (S.tries[it.id] ? 'Not yet correct' : 'Not attempted'));
-      return '<tr><td>' + (i + 1) + '. ' + esc(it.title) + '</td><td>' + st + (S.tries[it.id] > 1 ? ' (' + S.tries[it.id] + ' checks)' : '') + '</td><td class="num">' + (S.st[it.id] === 'ok' ? it.points : 0) + ' / ' + it.points + '</td></tr>';
+      return '<tr><td>' + (i + 1) + '. ' + esc(it.title) + '</td><td>' + statusText(it) + (S.tries[it.id] > 1 ? ' (' + S.tries[it.id] + ' checks)' : '') + '</td></tr>';
     }).join('');
     var answers = items.filter(function (it) { return it.type !== 'text'; }).map(function (it) {
       var ok = S.st[it.id] === 'ok';
@@ -352,28 +400,29 @@
     }).join('');
     var review = items.filter(function (it) { return S.st[it.id] !== 'ok' && (S.tries[it.id] || S.revealed[it.id]); });
     card.innerHTML =
-      '<div class="px-print-banner"><div class="t">CRISC 5-Day Faculty Workshop &middot; CRISC Risk Lab &middot; Lab ' + esc(L.id) + ' &middot; Lab Report</div><div class="h">' + esc(L.title) + '</div></div>' +
-      '<div class="px-no-print"><p class="eyebrow">Step 3 of 3</p><h2 class="h2" id="px-h2" tabindex="-1">Lab report</h2><div class="rule"></div>' +
-      '<p class="lead-p">Enter your name, or your team name and members, then print the report or save it as a PDF. In the print dialog, choose <b>Save as PDF</b>.' + (doneCount() < items.length ? ' <b>Some checklist items are not verified yet.</b> You can still print a partial report.' : '') + '</p></div>' +
+      '<div class="px-print-banner"><div class="t">CRISC 5-Day Faculty Workshop &middot; CRISC Risk Lab &middot; Lab ' + esc(L.id) + ' &middot; Practice Record</div><div class="h">' + esc(L.title) + '</div></div>' +
+      '<div class="px-no-print"><p class="eyebrow">Step 3 of 3</p><h2 class="h2" id="px-h2" tabindex="-1">Practice record</h2><div class="rule"></div>' +
+      '<p class="lead-p">This record lists what you completed, the decisions and answers you recorded, your written deliverables, and your notes. It is a record of practice, not a grade. You can keep it as documentation for continuing education (CPE). Add your name, or your team name and members, then print it or save it as a PDF. In the print dialog, choose <b>Save as PDF</b>.' + (doneCount() < items.length ? ' <b>Some checklist items are not done yet.</b> You can still print a partial record.' : '') + '</p></div>' +
       '<div class="quiz-card px-report"><div class="px-report-head">' +
-        '<div class="px-field"><label for="rp-name">Learner or team name</label><input type="text" id="rp-name" value="' + esc(S.name) + '" autocomplete="name"></div>' +
+        '<div class="px-field"><label for="rp-name">Your name or team name</label><input type="text" id="rp-name" value="' + esc(S.name) + '" autocomplete="name"></div>' +
         '<div class="px-field' + (S.team.trim() ? '' : ' px-empty') + '" id="rp-team-wrap"><label for="rp-team">Team members (optional)</label><input type="text" id="rp-team" value="' + esc(S.team) + '"></div></div>' +
       '<div class="table-wrap"><table class="data"><tbody>' +
         '<tr><td class="term">Lab</td><td>' + esc(L.id) + ', ' + esc(L.title) + ' (' + esc(L.domain) + ')</td></tr>' +
         '<tr><td class="term">Ticket</td><td>' + esc(L.ticket.number) + ', ' + esc(L.ticket.subject) + '</td></tr>' +
-        '<tr><td class="term">Report generated</td><td>' + new Date().toLocaleString() + '</td></tr>' +
+        '<tr><td class="term">Record generated</td><td>' + new Date().toLocaleString() + '</td></tr>' +
         '<tr><td class="term">Active time</td><td>' + fmtTime(S.elapsed) + '</td></tr>' +
-        '<tr><td class="term">Score</td><td><b>' + e + ' of ' + T + ' (' + pct + '%)</b>, ' + doneCount() + ' of ' + items.length + ' checklist items verified</td></tr>' +
+        '<tr><td class="term">Checklist</td><td>' + doneCount() + ' of ' + items.length + ' items done</td></tr>' +
       '</tbody></table></div>' +
-      '<h3>Checklist results</h3><div class="table-wrap"><table class="data"><thead><tr><th>Item</th><th>Status</th><th class="num">Points</th></tr></thead><tbody>' + rows +
-        '<tr class="px-total"><td>Total</td><td></td><td class="num">' + e + ' / ' + T + '</td></tr></tbody></table></div>' +
+      '<h3>What was completed</h3><div class="table-wrap"><table class="data"><thead><tr><th>Item</th><th>Status</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
       '<h3>Answers recorded</h3><ul class="px-review">' + answers + '</ul>' + textItems +
-      '<h3>Items to review</h3>' + (review.length ? '<ol class="px-review">' + review.map(function (it) { return '<li><b>' + esc(it.title) + '.</b> ' + esc(it.reviewNote || '') + ' <span class="px-no-print">(<a href="' + esc(L.lessonHref) + '">' + esc(L.lessonLabel) + '</a>)</span><span class="px-print-inline">Review: ' + esc(L.lessonLabel) + '.</span></li>'; }).join('') + '</ol>' : '<p class="px-refl">' + (doneCount() ? 'Nothing outstanding among attempted items.' : 'No items attempted yet.') + '</p>') +
-      '<div class="px-sign"><div>Learner signature</div><div>Instructor initials / date</div></div>' +
+      '<h3>Items to revisit</h3>' + (review.length ? '<ol class="px-review">' + review.map(function (it) { return '<li><b>' + esc(it.title) + '.</b> ' + esc(it.reviewNote || '') + ' <span class="px-no-print">(<a href="' + esc(L.lessonHref) + '">' + esc(L.lessonLabel) + '</a>)</span><span class="px-print-inline">Review: ' + esc(L.lessonLabel) + '.</span></li>'; }).join('') + '</ol>' : '<p class="px-refl">' + (doneCount() ? 'Nothing open among the items you tried.' : 'No items tried yet.') + '</p>') +
+      '<h3>Notes and reflections</h3><div class="px-field"><label for="rp-notes">What will you reuse or adapt in your own course? (optional)</label><textarea id="rp-notes">' + esc(S.notes || '') + '</textarea></div>' +
       rangePanel() +
-      '<div class="px-actions"><button type="button" class="btn" data-nav="print">&#128424; Print / Save as PDF</button><button type="button" class="btn ghost" data-nav="restart">&#8635; Reset lab</button></div></div>';
-    card.querySelector('#rp-name').addEventListener('input', function (ev) { S.name = ev.target.value; save(); ev.target.style.borderColor = ''; });
+      '<div class="px-actions"><button type="button" class="btn" data-nav="print">&#128424; Print / Save as PDF</button><button type="button" class="btn ghost" data-nav="restart">&#8635; Reset lab</button></div>' +
+      '<p class="lb-result" id="rp-msg" tabindex="-1" hidden></p></div>';
+    card.querySelector('#rp-name').addEventListener('input', function (ev) { S.name = ev.target.value; save(); });
     card.querySelector('#rp-team').addEventListener('input', function (ev) { S.team = ev.target.value; save(); card.querySelector('#rp-team-wrap').classList.toggle('px-empty', !S.team.trim()); });
+    card.querySelector('#rp-notes').addEventListener('input', function (ev) { S.notes = ev.target.value; save(); });
   }
 
   /* ---------- Navigation ---------- */
@@ -396,11 +445,21 @@
         var n = b.dataset.nav; e.preventDefault();
         if (n === 'prev') go(S.step - 1);
         if (n === 'next') go(S.step + 1);
-        if (n === 'print') { if (!S.name.trim()) { var f = document.getElementById('rp-name'); f.focus(); f.style.borderColor = 'var(--gold)'; if (!confirm('No name entered. Print anyway?')) return; } window.print(); }
-        if (n === 'restart') { if (confirm('Reset this lab? This clears every answer and the score in this browser.')) { var nm = S.name, tm = S.team; S = blank(); S.name = nm; S.team = tm; save(); if (L.onReset) L.onReset(); go(0); } }
+        if (n === 'print') window.print();
+        if (n === 'restart') {
+          var msg = document.getElementById('rp-msg');
+          if (b.dataset.armed !== '1') {
+            // In-page confirmation instead of confirm(): first press arms, second press resets
+            b.dataset.armed = '1'; b.innerHTML = '&#8635; Yes, clear all answers';
+            if (msg) { msg.hidden = false; msg.className = 'lb-result bad'; msg.innerHTML = '<span class="px-mark" aria-hidden="true">!</span> Reset clears every answer, check, and note for this lab in this browser. Select <b>Yes, clear all answers</b> to continue, or go to another step to keep your work.'; msg.focus(); }
+            return;
+          }
+          resetLab();
+        }
       });
     });
   }
+  function resetLab() { var nm = S.name, tm = S.team; S = blank(); S.name = nm; S.team = tm; PERM = {}; save(); if (L.onReset) L.onReset(); go(0); }
   function go(i) {
     S.step = Math.max(0, Math.min(2, i)); save(); render();
     var top = document.querySelector('.px-layout').getBoundingClientRect().top + window.scrollY - 70;

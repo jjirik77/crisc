@@ -180,7 +180,7 @@
     checklist: [
       { id: 'tier', type: 'choice', points: 12, short: 'Vendor tier', title: 'Tier the vendor',
         task: 'Under Standard TPRM-01, which tier is Tracklane Systems?',
-        options: ['Tier 3 (Moderate): annual spend is under $250,000', 'Tier 2 (High): it holds Confidential data but has no critical dependency', 'Tier 1 (Critical): it processes Confidential data and supports a process with an MTD of 24 hours or less through a live production integration', 'Tier 1 (Critical) only if the SOC 2 report has a qualified opinion'],
+        options: ['Tier 3 (Moderate): annual spend is under $250,000, the threshold procurement uses for higher tiers', 'Tier 2 (High): it holds Confidential data but has no critical dependency', 'Tier 1 (Critical): it holds Confidential data and supports a process with an MTD of 24 hours or less', 'Tier 1 (Critical) only if the SOC 2 report has a qualified opinion or open exceptions'],
         answer: 2,
         hint: 'Use the Tiering tab. TPRM-01 tiers on data and dependency. Spend is not a criterion.',
         debrief: '<p>Tracklane processes driver identities and real-time GPS location, which Corveth classifies as <b>Confidential</b>. Dispatch depends on it through a live API, and dispatch has an MTD of 12 hours. Both conditions are met, so the vendor is <b>Tier 1</b>. That sets the depth of review: full annual reassessment, a SOC 2 Type II report, contract security clauses, and monitoring of fourth parties.</p><p>Spend measures what Corveth pays, not what Corveth stands to lose. A low-cost vendor holding sensitive data on a critical path is a common blind spot when procurement thresholds drive tiering. The audit opinion has nothing to do with tier; tier decides how hard you look, before you look.</p>',
@@ -207,7 +207,7 @@
         reviewNote: 'Compare required clauses with the contract, then read the matches for weak terms.' },
       { id: 'carve', type: 'choice', points: 12, short: 'Carve-out', title: 'What the carve-out means',
         task: 'The SOC 2 report uses the <b>carve-out method</b> for Stratovault Cloud. What does that mean for Corveth?',
-        options: ['Stratovault’s controls are covered by Tracklane’s opinion, so no further work is needed', 'Stratovault’s controls are excluded from the report; Corveth needs separate assurance, such as Stratovault’s own SOC 2 report, and should confirm Tracklane monitors it', 'The carve-out means Stratovault failed its audit, so Corveth should require Tracklane to change hosting providers', 'Corveth must audit Stratovault directly under the right-to-audit clause before renewal'],
+        options: ['Stratovault’s controls are covered by Tracklane’s opinion, so Corveth needs no further assurance over hosting', 'Stratovault’s controls are excluded; Corveth needs separate assurance, such as Stratovault’s own SOC 2 report', 'The carve-out means Stratovault failed its audit, so Corveth should require Tracklane to change hosting providers', 'Corveth must audit Stratovault directly under the right-to-audit clause before renewal'],
         answer: 1,
         hint: 'Read the subservice organization pane and the report summary. Carve-out and inclusive are the two methods. Which one tests the subservice organization’s controls?',
         debrief: '<p>Under the carve-out method the auditor did <b>not</b> test Stratovault’s controls. Physical security, infrastructure availability, and storage at the hosting layer are outside the opinion. Corveth needs assurance from another source: Stratovault’s own SOC 2 Type II report (and its CUECs, which Tracklane must perform), plus Tracklane’s monitoring control CC9.2, which the report shows operating.</p><p>A carve-out is normal and is not a failure. Corveth has no contract with Stratovault, so auditing it directly is not realistic. The practitioner records the reliance and the evidence that covers it.</p>',
@@ -221,7 +221,7 @@
         reviewNote: 'Compare the fourth-party list with the questionnaire and the contract’s data-location clause.' },
       { id: 'resp', type: 'choice', points: 16, short: 'Response and owner', title: 'Recommend the response and the owner',
         task: 'What should the risk practitioner recommend, and to whom?',
-        options: ['Terminate the contract now, because the vendor gave inaccurate questionnaire answers', 'Accept the vendor as is, because the SOC 2 opinion is unqualified; the risk practitioner signs the acceptance', 'Recommend to Dana Whitcombe, as risk owner, a conditional renewal: Tier 1 treatment, contract amendments (TP-07 and 72-hour notice), a written explanation and remediation for FP-04 and FP-05 before signature, Stratovault assurance, remediation plans for the three exceptions, and CUEC-05 assigned to Corveth IT. She decides and accepts the residual risk', 'Transfer the risk by requiring Tracklane to raise its cyber insurance to $10,000,000, and renew without other changes'],
+        options: ['Recommend to Dana Whitcombe that Corveth terminate now, because the vendor gave inaccurate questionnaire answers and breached the data-location clause', 'Accept the vendor as is, because the SOC 2 opinion is unqualified; the risk practitioner signs the acceptance and tracks the three exceptions', 'Recommend a conditional renewal to Dana Whitcombe as risk owner: contract fixes, answers on FP-04 and FP-05 before signature, and plans for the other gaps. She decides', 'Transfer the risk by requiring Tracklane to raise its cyber insurance to $10,000,000, and renew without other changes'],
         answer: 2,
         hint: 'The practitioner recommends; who decides? Is there a response that addresses each gap without abandoning a critical service on short notice?',
         debrief: '<p>A conditional renewal treats each gap with the right tool: contract terms for TP-07 and TP-04, a pre-signature condition for the undisclosed fourth parties, separate assurance for the carve-out, remediation plans for the exceptions, and a Corveth control for CUEC-05. <b>Dana Whitcombe</b> owns the relationship and the risk, so she decides, accepts what remains, and is named in the register. The practitioner tracks the actions and adds KRIs, such as new fourth parties without approval and open SOC 2 exceptions.</p><p>Terminating a Tier 1 vendor that dispatch depends on, with no exit plan, may create more risk than it removes; it stays an option if Tracklane will not fix the data-location breach. Accepting on the opinion alone ignores the findings. Insurance pays after a loss; it does not fix offshore access to driver data.</p>',
@@ -332,6 +332,5 @@
 })();
 </script>
 <script src="lab.js"></script>
-<script src="assistant.js" defer></script>
 </body>
 </html>

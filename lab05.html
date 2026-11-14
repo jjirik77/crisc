@@ -236,7 +236,7 @@ window.LAB = {
       reviewNote: 'Access used after separation is escalated as a potential incident, not held for the report.' },
     { id: 'method', type: 'choice', points: 8, short: 'C2 test method', title: 'Name the C2 test method',
       task: 'You matched every HR separation against the SIS accounts yourself and compared the result with what the control should have produced. Which test method is that?',
-      options: ['Inquiry, because you used reports the service desk provided', 'Observation, because you watched the data in the evidence tool', 'Reperformance, because you independently executed the control’s logic over the population and compared outcomes', 'Walkthrough, because you traced the deprovisioning process end to end'],
+      options: ['Inquiry, because you used reports the service desk and HR provided on request', 'Observation, because you watched the data in the evidence tool', 'Reperformance, because you executed the control’s logic over the population yourself', 'Walkthrough, because you traced the deprovisioning process from HR notice to account removal'],
       answer: 2,
       hint: 'Which method has the tester carry out the control independently and compare the result?',
       debrief: '<p>This is <b>reperformance</b>, the strongest of the four methods: you executed the control’s logic yourself and compared the result with what the control should have produced. Inquiry asks people. Observation watches the control happen at a moment in time. A walkthrough traces one transaction to confirm design and implementation. It supports design effectiveness but does not test operation across a period.</p><p>Note that the data came from the system owners, so completeness still matters. Reconciling the HR export to the HR system’s separation count is part of the workpaper.</p>',
@@ -250,7 +250,7 @@ window.LAB = {
       reviewNote: 'Under a zero-exception standard, any confirmed exception means the control did not operate effectively.' },
     { id: 'c2design', type: 'choice', points: 12, short: 'C2 root cause', title: 'Conclude on C2 design and operation',
       task: 'All three deprovisioning exceptions are adjuncts, whose separations are entered by Academic Affairs. The C2 narrative says the service desk acts on termination notices from Human Resources. What is the best conclusion?',
-      options: ['Operating deficiency only: the service desk was slow on three tickets and needs coaching', 'Design deficiency: the trigger covers only HR-processed separations, so adjunct separations never reach the service desk. Report it to the control owner and the risk owner with a recommended fix', 'Effective: 39 of 42 accounts were removed, which is above 90 percent', 'No conclusion is possible until internal audit retests the control in January'],
+      options: ['Operating deficiency only: the service desk was slow on three tickets and needs coaching on the standard', 'Design deficiency: the trigger covers only HR separations, so adjuncts never reach the service desk', 'Effective: 39 of 42 accounts were removed, above 90 percent, and the misses were all adjuncts', 'No conclusion is possible until internal audit retests the control in January'],
       answer: 1,
       hint: 'Ask whether the control would have worked for adjuncts even if every analyst did everything the narrative says.',
       debrief: '<p>This is a <b>design deficiency</b>. Even performed perfectly, C2 never fires for adjuncts, because Academic Affairs ends their contracts outside the HR process that sends the notice. The four adjuncts who were removed were caught by chance, when a department chair happened to file a ticket. Coaching the service desk would fix nothing.</p><p>The practitioner reports the deficiency and recommends a fix, such as adding adjunct contract end dates to the deprovisioning feed and a monthly HR-to-SIS reconciliation as a detective KCI. The control owner designs the fix, and Dr. Faulk, as risk owner, decides on the response and the timeline. A percentage above 90 is not a pass under a zero-exception standard, and waiting for audit leaves live accounts open.</p>',
@@ -409,6 +409,5 @@ window.LAB = {
 </script>
 <script src="evidence.js"></script>
 <script src="lab.js"></script>
-<script src="assistant.js" defer></script>
 </body>
 </html>
